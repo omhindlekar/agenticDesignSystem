@@ -1,0 +1,58 @@
+{
+  "id": "checkbox",
+  "purpose": "Lets the user toggle a binary choice on or off, or select multiple items from a group. Each checkbox operates independently.",
+  "variants": ["default", "indeterminate"],
+  "states": ["unchecked", "checked", "indeterminate", "focus", "disabled", "error"],
+  "props": [
+    { "name": "label", "type": "string", "required": true, "description": "Visible label text for the checkbox" },
+    { "name": "checked", "type": "boolean", "required": false, "description": "Controlled checked state" },
+    { "name": "defaultChecked", "type": "boolean", "required": false, "description": "Uncontrolled default checked state" },
+    { "name": "indeterminate", "type": "boolean", "required": false, "description": "Shows an indeterminate state for partially selected groups" },
+    { "name": "disabled", "type": "boolean", "required": false, "description": "Disables the checkbox" },
+    { "name": "required", "type": "boolean", "required": false, "description": "Marks the field as required" },
+    { "name": "errorMessage", "type": "string", "required": false, "description": "Error message shown below the checkbox" },
+    { "name": "helperText", "type": "string", "required": false, "description": "Supporting text shown below the checkbox" },
+    { "name": "name", "type": "string", "required": false, "description": "HTML name attribute for form submission" },
+    { "name": "value", "type": "string", "required": false, "description": "HTML value submitted with the form" },
+    { "name": "onChange", "type": "(checked: boolean) => void", "required": false, "description": "Called when checked state changes" }
+  ],
+  "whenToUse": [
+    "For binary on/off choices such as agreeing to terms or enabling a setting",
+    "For selecting multiple items from a list simultaneously",
+    "To represent a parent item with a partially selected group of children using indeterminate state"
+  ],
+  "whenNotToUse": [
+    "For mutually exclusive choices where only one option can be active — use a radio group",
+    "For triggering an immediate action — use a Toggle or Button instead",
+    "As a navigation control"
+  ],
+  "related": ["input", "select", "button"],
+  "antiPatterns": [
+    "Using checkboxes where only one selection is allowed at a time",
+    "Omitting a visible label",
+    "Using Checkbox as a navigation element"
+  ],
+  "tokensUsed": [
+    "color-interactive-default",
+    "color-interactive-hover",
+    "color-interactive-disabled",
+    "color-interactive-focus-ring",
+    "color-border-default",
+    "color-border-danger",
+    "color-text-primary",
+    "color-text-disabled",
+    "color-text-inverse",
+    "space-component-padding-xs",
+    "space-component-gap-sm",
+    "radius-component-sm",
+    "font-size-label-md",
+    "font-weight-body"
+  ],
+  "a11yNotes": [
+    "Must use a native <input type='checkbox'> or role='checkbox' with full ARIA state management",
+    "Must have a visible label — do not use aria-label as the only label",
+    "indeterminate state must set aria-checked='mixed'",
+    "Touch target must be at least 44x44 CSS pixels including the label",
+    "Focus ring must be visible and use color-interactive-focus-ring"
+  ]
+}
