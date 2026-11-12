@@ -12,8 +12,15 @@ export interface ModelProvider {
   complete(prompt: string, options: CompleteOptions): Promise<CompleteResult>;
 }
 
+export interface Pricing {
+  inputPerMTokenUsd: number;
+  outputPerMTokenUsd: number;
+}
+
 export interface ProviderConfig {
   provider?: string;
   model: string;
   cache?: { enabled: boolean };
+  maxCallsPerRun?: number;
+  pricing?: Pricing;
 }

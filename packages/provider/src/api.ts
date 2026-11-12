@@ -1,16 +1,18 @@
 import Anthropic from '@anthropic-ai/sdk';
-import type { ModelProvider, CompleteOptions, CompleteResult } from './types.js';
+import type { ModelProvider, CompleteOptions, CompleteResult, Pricing } from './types.js';
 
-// Published token prices (USD per million tokens) as of model claude-sonnet-4-6.
-// Update here when Anthropic changes pricing — no other file needs to change.
-const PRICE_PER_M_INPUT = 3.0;
-const PRICE_PER_M_OUTPUT = 15.0;
+const DEFAULT_PRICING: Pricing = {
+  inputPerMTokenUsd: 3.0,
+  outputPerMTokenUsd: 15.0,
+};
 
 export class ApiProvider implements ModelProvider {
   private readonly client: Anthropic;
+  private readonly pricing: Pricing;
 
-  constructor() {
+  constructor(pricing?: Pricing) {
     this.client = new Anthropic();
+    this.pricing = pricing ?? DEFAULT_PRICING;
   }
 
   async complete(prompt: string, opts: CompleteOptions): Promise<CompleteResult> {
@@ -28,8 +30,8 @@ export class ApiProvider implements ModelProvider {
     const inputTokens = message.usage?.input_tokens ?? 0;
     const outputTokens = message.usage?.output_tokens ?? 0;
     const costUsd =
-      (inputTokens / 1_000_000) * PRICE_PER_M_INPUT +
-      (outputTokens / 1_000_000) * PRICE_PER_M_OUTPUT;
+      (inputTokens / 1_000_000) * this.pricing.inputPerMTokenUsd +
+      (outputTokens / 1_000_000) * this.pricing.outputPerMTokenUsd;
 
     return { text: textBlock.text, costUsd };
   }

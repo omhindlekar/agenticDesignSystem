@@ -24,7 +24,7 @@ export function createProvider(config: ProviderConfig, repoRoot: string): ModelP
       break;
     }
     case 'api':
-      base = new ApiProvider();
+      base = new ApiProvider(config.pricing);
       break;
     case 'claude-cli':
       base = new ClaudeCliProvider();

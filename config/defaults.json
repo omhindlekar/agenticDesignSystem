@@ -4,7 +4,12 @@
   "cache": { "enabled": true },
   "costCapPerRunUsd": 1.0,
   "costCapPerDayUsd": 10.0,
+  "maxCallsPerRun": 10,
   "retryLimit": 2,
+  "pricing": {
+    "inputPerMTokenUsd": 3.0,
+    "outputPerMTokenUsd": 15.0
+  },
   "tokenLint": {
     "includePaths": ["components"],
     "extensions": [".tsx", ".ts", ".css", ".scss"]
