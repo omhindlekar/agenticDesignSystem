@@ -17,6 +17,7 @@ export interface AgentStepResult {
 interface Config {
   retryLimit: number;
   costCapPerRunUsd: number;
+  maxCallsPerRun?: number;
 }
 
 export interface OrchestratorDeps {
@@ -42,8 +43,9 @@ function loadConfig(repoRoot: string): Config {
   const raw = JSON.parse(readFileSync(join(repoRoot, 'config', 'defaults.json'), 'utf8')) as {
     retryLimit: number;
     costCapPerRunUsd: number;
+    maxCallsPerRun?: number;
   };
-  return { retryLimit: raw.retryLimit, costCapPerRunUsd: raw.costCapPerRunUsd };
+  return { retryLimit: raw.retryLimit, costCapPerRunUsd: raw.costCapPerRunUsd, maxCallsPerRun: raw.maxCallsPerRun };
 }
 
 type RetrySuccess<T> = { kind: 'success'; value: T; costUsd: number; attempts: number };
@@ -105,6 +107,8 @@ export async function runOrchestrator(
   const logWriter = deps.logWriter;
 
   let cumulativeCost = 0;
+  let totalCalls = 0;
+  const maxCalls = config.maxCallsPerRun ?? Infinity;
 
   // Step 1: Context agent (no retry — runtime errors escalate immediately)
   let contextPack: ContextPack;
@@ -158,6 +162,7 @@ export async function runOrchestrator(
   }
 
   cumulativeCost += composerResult.costUsd;
+  totalCalls += composerResult.attempts;
 
   if (composerResult.kind === 'failure') {
     return {
@@ -165,6 +170,24 @@ export async function runOrchestrator(
       runId,
       outcome: 'escalate',
       error: `Composer failed after ${composerResult.attempts} attempt(s): ${composerResult.error}`,
+    };
+  }
+
+  // Max-calls check after composer (guards CLI provider where costUsd is always 0)
+  if (totalCalls >= maxCalls) {
+    if (logWriter) {
+      await logWriter.write(makeLogEntry(
+        runId, 'orchestrator',
+        RunLogWriter.hashContent(input.taskId),
+        RunLogWriter.hashContent(''),
+        0, 'escalate', cumulativeCost,
+      ));
+    }
+    return {
+      taskId: input.taskId,
+      runId,
+      outcome: 'escalate',
+      error: `Max calls per run exceeded after composer: ${totalCalls} >= ${maxCalls}`,
     };
   }
 
@@ -212,6 +235,7 @@ export async function runOrchestrator(
   }
 
   cumulativeCost += builderResult.costUsd;
+  totalCalls += builderResult.attempts;
 
   if (builderResult.kind === 'failure') {
     return {
@@ -219,6 +243,24 @@ export async function runOrchestrator(
       runId,
       outcome: 'escalate',
       error: `Builder failed after ${builderResult.attempts} attempt(s): ${builderResult.error}`,
+    };
+  }
+
+  // Max-calls check after builder
+  if (totalCalls >= maxCalls) {
+    if (logWriter) {
+      await logWriter.write(makeLogEntry(
+        runId, 'orchestrator',
+        RunLogWriter.hashContent(input.taskId),
+        RunLogWriter.hashContent(''),
+        0, 'escalate', cumulativeCost,
+      ));
+    }
+    return {
+      taskId: input.taskId,
+      runId,
+      outcome: 'escalate',
+      error: `Max calls per run exceeded after builder: ${totalCalls} >= ${maxCalls}`,
     };
   }
 

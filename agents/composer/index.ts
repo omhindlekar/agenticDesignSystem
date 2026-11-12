@@ -1,18 +1,18 @@
-import Anthropic from '@anthropic-ai/sdk';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { createProvider } from '../../packages/provider/src/index.js';
 import { buildComposerPrompt, parseComposerResponse } from './tools.js';
+import type { ProviderConfig } from '../../packages/provider/src/types.js';
 import type { ComposerInput } from './schema.js';
 import type { ScreenSpec } from '../../packages/schemas/src/screen-spec.js';
 
-interface Config {
-  model: string;
+interface Config extends ProviderConfig {
   costCapPerRunUsd: number;
 }
 
 function loadConfig(repoRoot: string): Config {
   const raw = JSON.parse(readFileSync(join(repoRoot, 'config', 'defaults.json'), 'utf8')) as Config;
-  return { model: raw.model, costCapPerRunUsd: raw.costCapPerRunUsd };
+  return raw;
 }
 
 export async function runComposer(
@@ -21,20 +21,10 @@ export async function runComposer(
   repoRoot = join(new URL(import.meta.url).pathname, '..', '..', '..'),
 ): Promise<ScreenSpec> {
   const config = loadConfig(repoRoot);
-  const client = new Anthropic();
+  const provider = createProvider(config, repoRoot);
 
   const prompt = buildComposerPrompt(input, previousError);
+  const { text } = await provider.complete(prompt, { model: config.model, maxTokens: 2048 });
 
-  const message = await client.messages.create({
-    model: config.model,
-    max_tokens: 2048,
-    messages: [{ role: 'user', content: prompt }],
-  });
-
-  const textBlock = message.content.find((b) => b.type === 'text');
-  if (!textBlock || textBlock.type !== 'text') {
-    throw new Error('Composer: model returned no text content');
-  }
-
-  return parseComposerResponse(input.taskId, textBlock.text, input.contextPack);
+  return parseComposerResponse(input.taskId, text, input.contextPack);
 }
