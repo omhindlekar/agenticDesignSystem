@@ -6,13 +6,15 @@ A multi-agent design system, built as a proof of concept (POC) to show one desig
 
 ## Current scope
 
-POC: phases 0 to 2 only. Do not start phase 3 (Maintainer and Docs agents) or phase 4.
+Work in this order, one phase at a time, and stop at each phase's exit criteria:
+1. Phase 1.5: real components, Storybook, the `generate` command
+2. Phase 2b: QA agent, four checks, golden set
+3. Phase 3: Maintainer and Docs agents, drift detection, versioning
+4. Phase 4: insight reports, variations, second theme, telemetry
 
-- Phase 0: repo layout, CI skeleton, schema package, run-log writer, two-tier tokens, token lint
-- Phase 1: component metadata, `rules/rules.yaml`, `AGENTS.md`, Context agent
-- Phase 2: Orchestrator, Composer, Builder and QA agents, plus token lint, visual regression, accessibility and rules audit
-
-Work on one phase at a time. Stop at its exit criteria and wait for review. If I did not name a phase, ask which one.
+Current phase: 1.5. Do not start a later phase unless I name it.
+Model calls go through packages/provider. Default provider is fake; real runs use
+the cli provider (my subscription). Never require an API key.
 
 ## Decisions
 
