@@ -22,5 +22,6 @@ export interface ProviderConfig {
   model: string;
   cache?: { enabled: boolean };
   maxCallsPerRun?: number;
-  pricing?: Pricing;
+  /** Pricing per model name. Key is the model ID; value is per-million-token USD cost. */
+  pricing?: Record<string, Pricing>;
 }

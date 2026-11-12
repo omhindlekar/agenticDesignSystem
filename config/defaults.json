@@ -7,8 +7,9 @@
   "maxCallsPerRun": 10,
   "retryLimit": 2,
   "pricing": {
-    "inputPerMTokenUsd": 3.0,
-    "outputPerMTokenUsd": 15.0
+    "claude-haiku-4-5-20251001": { "inputPerMTokenUsd": 0.80, "outputPerMTokenUsd": 4.0 },
+    "claude-sonnet-4-6":         { "inputPerMTokenUsd": 3.0,  "outputPerMTokenUsd": 15.0 },
+    "claude-opus-4-7":           { "inputPerMTokenUsd": 15.0, "outputPerMTokenUsd": 75.0 }
   },
   "tokenLint": {
     "includePaths": ["components"],
