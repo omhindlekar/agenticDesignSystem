@@ -17,12 +17,13 @@ function loadConfig(repoRoot: string): Config {
 
 export async function runComposer(
   input: ComposerInput,
+  previousError?: string,
   repoRoot = join(new URL(import.meta.url).pathname, '..', '..', '..'),
 ): Promise<ScreenSpec> {
   const config = loadConfig(repoRoot);
   const client = new Anthropic();
 
-  const prompt = buildComposerPrompt(input);
+  const prompt = buildComposerPrompt(input, previousError);
 
   const message = await client.messages.create({
     model: config.model,
@@ -35,5 +36,5 @@ export async function runComposer(
     throw new Error('Composer: model returned no text content');
   }
 
-  return parseComposerResponse(input.taskId, textBlock.text);
+  return parseComposerResponse(input.taskId, textBlock.text, input.contextPack);
 }
