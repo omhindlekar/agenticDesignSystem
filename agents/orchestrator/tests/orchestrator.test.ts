@@ -223,3 +223,61 @@ describe('FR-8: Orchestrator run log and cost tracking', () => {
     expect(escalateEntry).toBeTruthy();
   });
 });
+
+// ─── NFR-11 fix-5: maxCallsPerRun enforcement ────────────────────────────────
+
+describe('NFR-11 fix-5: Orchestrator maxCallsPerRun enforcement', () => {
+  it('NFR-11: fix-5: escalates when total call count after composer >= maxCallsPerRun', async () => {
+    // composer succeeds on first attempt (1 call), maxCallsPerRun = 1 → escalate before builder
+    const result = await runOrchestrator(
+      { taskId: 'task-014', brief: 'A primary button', schemaVersion: SCHEMA_VERSION },
+      makeDeps({ config: { retryLimit: 2, costCapPerRunUsd: 100.0, maxCallsPerRun: 1 } }),
+    );
+    expect(result.outcome).toBe('escalate');
+    expect(result.error).toMatch(/max calls/i);
+  });
+
+  it('NFR-11: fix-5: escalates when total call count after builder >= maxCallsPerRun', async () => {
+    // composer = 1 call, builder = 1 call → total = 2; maxCallsPerRun = 2 → escalate after builder
+    const result = await runOrchestrator(
+      { taskId: 'task-015', brief: 'A primary button', schemaVersion: SCHEMA_VERSION },
+      makeDeps({ config: { retryLimit: 2, costCapPerRunUsd: 100.0, maxCallsPerRun: 2 } }),
+    );
+    expect(result.outcome).toBe('escalate');
+    expect(result.error).toMatch(/max calls/i);
+  });
+
+  it('NFR-11: fix-5: does not escalate when call count stays under maxCallsPerRun', async () => {
+    // composer = 1 call, builder = 1 call → total = 2; maxCallsPerRun = 10 → pass
+    const result = await runOrchestrator(
+      { taskId: 'task-016', brief: 'A primary button', schemaVersion: SCHEMA_VERSION },
+      makeDeps({ config: { retryLimit: 2, costCapPerRunUsd: 100.0, maxCallsPerRun: 10 } }),
+    );
+    expect(result.outcome).toBe('pass');
+  });
+
+  it('NFR-11: fix-5: retries count towards maxCallsPerRun total', async () => {
+    // composer fails once then succeeds → 2 composer calls + 1 builder = 3; limit = 3 → escalate
+    const composerRunner = vi
+      .fn()
+      .mockResolvedValueOnce({ result: { bad: 'payload' }, costUsd: 0 })
+      .mockResolvedValueOnce({ result: mockScreenSpec, costUsd: 0 });
+    const result = await runOrchestrator(
+      { taskId: 'task-017', brief: 'A primary button', schemaVersion: SCHEMA_VERSION },
+      makeDeps({
+        config: { retryLimit: 2, costCapPerRunUsd: 100.0, maxCallsPerRun: 3 },
+        composerRunner,
+      }),
+    );
+    expect(result.outcome).toBe('escalate');
+    expect(result.error).toMatch(/max calls/i);
+  });
+
+  it('NFR-11: fix-5: escalation message mentions the call count and limit', async () => {
+    const result = await runOrchestrator(
+      { taskId: 'task-018', brief: 'A primary button', schemaVersion: SCHEMA_VERSION },
+      makeDeps({ config: { retryLimit: 2, costCapPerRunUsd: 100.0, maxCallsPerRun: 1 } }),
+    );
+    expect(result.error).toMatch(/1/);
+  });
+});
