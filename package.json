@@ -16,6 +16,7 @@
     "build": "npm run build --workspaces --if-present"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^1.8.0",
     "js-yaml": "^5.5.0",
     "zod": "^3.23.0"
   },
