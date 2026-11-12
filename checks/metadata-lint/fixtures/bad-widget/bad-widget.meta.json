@@ -1,0 +1,10 @@
+{
+  "id": "bad-widget",
+  "variants": ["primary", "secondary"],
+  "states": ["default", "hover", "focus", "disabled"],
+  "props": [
+    { "name": "label", "type": "string", "required": true },
+    { "name": "variant", "type": "'primary' | 'secondary'", "required": false },
+    { "name": "disabled", "type": "boolean", "required": false }
+  ]
+}

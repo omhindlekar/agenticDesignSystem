@@ -1,0 +1,7 @@
+/* Fixture: no focus or disabled selectors; an extra "busy" state not in metadata. */
+.bad-widget:hover {
+  color: var(--color-text-primary);
+}
+.bad-widget[data-state~="busy"] {
+  color: var(--color-text-secondary);
+}

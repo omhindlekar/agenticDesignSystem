@@ -59,6 +59,7 @@ Work on one phase at a time. Stop at its exit criteria and wait for review. If I
 - Lint: `npm run lint`
 - Token lint: `npm run token-lint -- components`
 - Baseline metrics: `npm run baseline-metrics -- .`
-- Storybook: `TODO` (phase 1)
+- Build tokens CSS: `npm run tokens:build` (writes `styles/tokens.css`; commit the result)
+- Storybook: `npm run storybook` (dev server on port 6006), `npm run build-storybook` (static build)
 - Visual regression: `TODO` (phase 2)
 - Golden set: `TODO` (phase 2)

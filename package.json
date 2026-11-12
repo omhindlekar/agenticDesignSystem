@@ -14,7 +14,11 @@
     "token-lint": "tsx checks/token-lint/index.ts",
     "baseline-metrics": "tsx checks/baseline-metrics/index.ts",
     "build": "npm run build --workspaces --if-present",
-    "tokens:build": "tsx scripts/build-tokens.ts"
+    "tokens:build": "tsx scripts/build-tokens.ts",
+    "prestorybook": "npm run tokens:build",
+    "storybook": "storybook dev -p 6006",
+    "prebuild-storybook": "npm run tokens:build",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.8.0",

@@ -30,6 +30,6 @@
     "node_modules",
     "dist",
     "**/node_modules",
-    "checks/token-lint/fixtures/**"
+    "checks/*/fixtures/**"
   ]
 }
