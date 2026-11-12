@@ -1,18 +1,18 @@
-import Anthropic from '@anthropic-ai/sdk';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { createProvider } from '../../packages/provider/src/index.js';
 import { buildBuilderPrompt, parseBuilderResponse, validateBuilderOutput, typeCheckBuilderOutput } from './tools.js';
 import { BuilderOutputSchema } from './schema.js';
+import type { ProviderConfig } from '../../packages/provider/src/types.js';
 import type { BuilderInput, BuilderOutput } from './schema.js';
 
-interface Config {
-  model: string;
+interface Config extends ProviderConfig {
   costCapPerRunUsd: number;
 }
 
 function loadConfig(repoRoot: string): Config {
   const raw = JSON.parse(readFileSync(join(repoRoot, 'config', 'defaults.json'), 'utf8')) as Config;
-  return { model: raw.model, costCapPerRunUsd: raw.costCapPerRunUsd };
+  return raw;
 }
 
 export async function runBuilder(
@@ -21,22 +21,12 @@ export async function runBuilder(
   repoRoot = join(new URL(import.meta.url).pathname, '..', '..', '..'),
 ): Promise<BuilderOutput> {
   const config = loadConfig(repoRoot);
-  const client = new Anthropic();
+  const provider = createProvider(config, repoRoot);
 
   const prompt = buildBuilderPrompt(input, previousError);
+  const { text } = await provider.complete(prompt, { model: config.model, maxTokens: 4096 });
 
-  const message = await client.messages.create({
-    model: config.model,
-    max_tokens: 4096,
-    messages: [{ role: 'user', content: prompt }],
-  });
-
-  const textBlock = message.content.find((b) => b.type === 'text');
-  if (!textBlock || textBlock.type !== 'text') {
-    throw new Error('Builder: model returned no text content');
-  }
-
-  const tsx = parseBuilderResponse(textBlock.text);
+  const tsx = parseBuilderResponse(text);
 
   // Token lint — calls checks/token-lint, no code duplication
   const lintResult = validateBuilderOutput(tsx);

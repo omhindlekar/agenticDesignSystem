@@ -1,5 +1,7 @@
 {
   "model": "claude-sonnet-4-6",
+  "provider": "fake",
+  "cache": { "enabled": true },
   "costCapPerRunUsd": 1.0,
   "costCapPerDayUsd": 10.0,
   "retryLimit": 2,

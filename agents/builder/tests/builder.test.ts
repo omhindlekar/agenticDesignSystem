@@ -154,10 +154,12 @@ describe('FR-7: Builder output validation — TypeScript type check', () => {
   });
 });
 
-describe('FR-7: Builder integration (requires ANTHROPIC_API_KEY)', () => {
-  const hasKey = !!process.env['ANTHROPIC_API_KEY'];
+describe('FR-7: Builder integration (requires a live provider)', () => {
+  // Runs when MODEL_PROVIDER=api (ANTHROPIC_API_KEY set) or MODEL_PROVIDER=claude-cli
+  const hasLiveProvider =
+    !!process.env['ANTHROPIC_API_KEY'] || process.env['MODEL_PROVIDER'] === 'claude-cli';
 
-  it.skipIf(!hasKey)('FR-7: runBuilder returns TSX that passes token lint and type check', async () => {
+  it.skipIf(!hasLiveProvider)('FR-7: runBuilder returns TSX that passes token lint and type check', async () => {
     const { runBuilder } = await import('../index.js');
     const output = await runBuilder(builderInput, undefined, repoRoot);
     expect(output.tsx).toContain('export function');

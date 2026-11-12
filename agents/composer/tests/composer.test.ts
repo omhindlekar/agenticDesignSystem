@@ -165,10 +165,12 @@ describe('FR-6: Composer registry enforcement', () => {
   });
 });
 
-describe('FR-6: Composer integration (requires ANTHROPIC_API_KEY)', () => {
-  const hasKey = !!process.env['ANTHROPIC_API_KEY'];
+describe('FR-6: Composer integration (requires a live provider)', () => {
+  // Runs when MODEL_PROVIDER=api (ANTHROPIC_API_KEY set) or MODEL_PROVIDER=claude-cli
+  const hasLiveProvider =
+    !!process.env['ANTHROPIC_API_KEY'] || process.env['MODEL_PROVIDER'] === 'claude-cli';
 
-  it.skipIf(!hasKey)('FR-6: runComposer returns valid ScreenSpec from real API', async () => {
+  it.skipIf(!hasLiveProvider)('FR-6: runComposer returns valid ScreenSpec from live provider', async () => {
     const { runComposer } = await import('../index.js');
     const spec = await runComposer(composerInput);
     expect(spec.taskId).toBe('task-001');
