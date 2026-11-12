@@ -3,15 +3,15 @@ import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import type { ModelProvider, CompleteOptions, CompleteResult } from './types.js';
 
-export function hashKey(model: string, prompt: string): string {
-  return createHash('sha256').update(`${model}|${prompt}`).digest('hex');
+export function hashKey(model: string, maxTokens: number, prompt: string): string {
+  return createHash('sha256').update(`${model}|${maxTokens}|${prompt}`).digest('hex');
 }
 
 export class FakeProvider implements ModelProvider {
   constructor(private readonly fixturesDir: string) {}
 
   async complete(prompt: string, opts: CompleteOptions): Promise<CompleteResult> {
-    const key = hashKey(opts.model, prompt);
+    const key = hashKey(opts.model, opts.maxTokens, prompt);
     const fixturePath = join(this.fixturesDir, `${key}.json`);
 
     if (!existsSync(fixturePath)) {

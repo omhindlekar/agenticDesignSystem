@@ -16,7 +16,7 @@ export class CachingProvider implements ModelProvider {
   }
 
   async complete(prompt: string, opts: CompleteOptions): Promise<CompleteResult> {
-    const key = hashKey(opts.model, prompt);
+    const key = hashKey(opts.model, opts.maxTokens, prompt);
     const cachePath = join(this.cacheDir, `${key}.json`);
 
     if (existsSync(cachePath)) {
