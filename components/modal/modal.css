@@ -1,0 +1,116 @@
+.ads-modal {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-index-modal);
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: var(--space-layout-page);
+  border: none;
+  background: transparent;
+  font-family: var(--font-family-body);
+  color: var(--color-text-primary);
+}
+
+.ads-modal[data-state~="open"] {
+  display: grid;
+  place-items: center;
+}
+
+.ads-modal[data-state~="closed"] {
+  display: none;
+}
+
+.ads-modal::backdrop {
+  background: transparent;
+}
+
+.ads-modal__overlay {
+  position: fixed;
+  inset: 0;
+  background-color: var(--color-background-overlay);
+  opacity: var(--opacity-overlay);
+}
+
+.ads-modal__panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-component-gap-md);
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--size-modal-md);
+  max-height: 100%;
+  overflow: auto;
+  padding: var(--space-component-padding-lg);
+  border-radius: var(--radius-component-lg);
+  background-color: var(--color-background-surface);
+  box-shadow: var(--shadow-component-modal);
+}
+
+.ads-modal__panel:focus-visible {
+  outline: var(--border-width-focus) solid var(--color-interactive-focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.ads-modal[data-size="sm"] .ads-modal__panel {
+  max-width: var(--size-modal-sm);
+}
+
+.ads-modal[data-size="lg"] .ads-modal__panel {
+  max-width: var(--size-modal-lg);
+}
+
+.ads-modal[data-size="fullscreen"] {
+  padding: 0;
+}
+
+.ads-modal[data-size="fullscreen"] .ads-modal__panel {
+  max-width: none;
+  height: 100%;
+  border-radius: 0;
+}
+
+.ads-modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-component-gap-md);
+}
+
+.ads-modal__title {
+  margin: 0;
+  font-size: var(--font-size-heading-md);
+  font-weight: var(--font-weight-heading);
+  line-height: var(--line-height-heading);
+}
+
+.ads-modal[data-variant="danger"] .ads-modal__title {
+  color: var(--color-text-danger);
+}
+
+.ads-modal__body {
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+}
+
+.ads-modal__status {
+  display: flex;
+  align-items: center;
+  gap: var(--space-component-gap-sm);
+  margin: 0;
+  color: var(--color-text-secondary);
+}
+
+.ads-modal[data-state~="loading"] .ads-modal__body {
+  color: var(--color-text-secondary);
+}
+
+.ads-modal__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-component-gap-sm);
+}

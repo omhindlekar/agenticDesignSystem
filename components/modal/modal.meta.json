@@ -12,7 +12,8 @@
     { "name": "size", "type": "'sm' | 'md' | 'lg' | 'fullscreen'", "required": false, "description": "Modal width. Defaults to md" },
     { "name": "footer", "type": "React.ReactNode", "required": false, "description": "Action buttons rendered in the modal footer" },
     { "name": "closeOnOverlayClick", "type": "boolean", "required": false, "description": "Dismisses the modal when the overlay is clicked. Defaults to true" },
-    { "name": "initialFocusRef", "type": "React.RefObject<HTMLElement>", "required": false, "description": "Element that receives focus when the modal opens. Defaults to the first focusable element" }
+    { "name": "initialFocusRef", "type": "React.RefObject<HTMLElement | null>", "required": false, "description": "Element that receives focus when the modal opens. Defaults to the first focusable element" },
+    { "name": "loading", "type": "boolean", "required": false, "description": "Shows a loading status in the body and sets aria-busy on the dialog" }
   ],
   "whenToUse": [
     "To confirm a destructive action before it executes",

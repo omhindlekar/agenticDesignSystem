@@ -10,7 +10,9 @@
     { "name": "onClick", "type": "() => void", "required": false, "description": "Makes the card interactive when provided — sets role='button' and tabIndex=0" },
     { "name": "href", "type": "string", "required": false, "description": "Renders the card as a link when provided" },
     { "name": "aria-label", "type": "string", "required": false, "description": "Accessible label for interactive cards without a visible heading" },
-    { "name": "as", "type": "React.ElementType", "required": false, "description": "Polymorphic root element. Defaults to div" }
+    { "name": "as", "type": "React.ElementType", "required": false, "description": "Polymorphic root element. Defaults to div" },
+    { "name": "selected", "type": "boolean", "required": false, "description": "Marks an interactive card as the current selection. Sets aria-pressed (button) or aria-current (link)" },
+    { "name": "disabled", "type": "boolean", "required": false, "description": "Prevents interaction on an interactive card and applies disabled styling. Sets aria-disabled" }
   ],
   "whenToUse": [
     "To group a single subject's content — image, title, description and actions — into one container",

@@ -2,7 +2,7 @@
   "id": "select",
   "purpose": "Allows the user to pick one option from a predefined list. Best suited for four or more mutually exclusive choices where showing all options at once would take too much space.",
   "variants": ["default", "error", "success"],
-  "states": ["default", "open", "focus", "selected", "disabled", "error", "success"],
+  "states": ["default", "focus", "selected", "disabled", "error", "success"],
   "props": [
     { "name": "label", "type": "string", "required": true, "description": "Visible label associated with the select" },
     { "name": "options", "type": "Array<{ value: string; label: string; disabled?: boolean }>", "required": true, "description": "List of options to display" },
@@ -13,7 +13,8 @@
     { "name": "required", "type": "boolean", "required": false, "description": "Marks the field as required" },
     { "name": "errorMessage", "type": "string", "required": false, "description": "Error message shown below the select" },
     { "name": "helperText", "type": "string", "required": false, "description": "Supporting text shown below the select" },
-    { "name": "onChange", "type": "(value: string) => void", "required": false, "description": "Called when selection changes" }
+    { "name": "onChange", "type": "(value: string) => void", "required": false, "description": "Called when selection changes" },
+    { "name": "variant", "type": "'default' | 'error' | 'success'", "required": false, "description": "Validation style. Defaults to error when errorMessage is set, otherwise default" }
   ],
   "whenToUse": [
     "When the user must choose one option from four or more mutually exclusive choices",

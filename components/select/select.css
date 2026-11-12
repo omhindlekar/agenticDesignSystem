@@ -1,0 +1,46 @@
+.ads-select__field {
+  min-height: var(--size-touch-target-min);
+  padding: var(--space-component-padding-sm) var(--space-component-padding-md);
+  border: var(--border-width-default) solid var(--color-border-strong);
+  border-radius: var(--radius-component-sm);
+  background-color: var(--color-background-surface);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  cursor: pointer;
+  transition: border-color var(--motion-duration-fast) ease;
+}
+
+.ads-select__field:focus-visible {
+  outline: var(--border-width-focus) solid var(--color-interactive-focus-ring);
+  outline-offset: var(--focus-ring-offset);
+  border-color: var(--color-border-interactive);
+}
+
+.ads-select[data-state~="default"] .ads-select__field {
+  color: var(--color-text-secondary);
+}
+
+.ads-select[data-state~="selected"] .ads-select__field {
+  color: var(--color-text-primary);
+}
+
+.ads-select[data-state~="error"] .ads-select__field {
+  border-color: var(--color-border-danger);
+}
+
+.ads-select[data-state~="success"] .ads-select__field {
+  border-color: var(--color-text-success);
+}
+
+.ads-select[data-state~="disabled"] .ads-select__field {
+  background-color: var(--color-background-subtle);
+  border-color: var(--color-border-default);
+  color: var(--color-text-disabled);
+  cursor: not-allowed;
+}
+
+.ads-select[data-state~="disabled"] .ads-field__label {
+  color: var(--color-text-disabled);
+}

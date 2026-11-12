@@ -1,0 +1,44 @@
+.ads-checkbox__row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-component-gap-sm);
+  min-height: var(--size-touch-target-min);
+}
+
+.ads-checkbox__box {
+  flex: none;
+  width: var(--size-control-indicator);
+  height: var(--size-control-indicator);
+  margin: 0;
+  accent-color: var(--color-interactive-default);
+  cursor: pointer;
+}
+
+.ads-checkbox__box:focus-visible {
+  outline: var(--border-width-focus) solid var(--color-interactive-focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.ads-checkbox__row .ads-field__label {
+  cursor: pointer;
+}
+
+.ads-checkbox[data-state~="unchecked"] .ads-checkbox__box {
+  accent-color: var(--color-interactive-default);
+}
+
+.ads-checkbox[data-state~="checked"] .ads-checkbox__box,
+.ads-checkbox[data-state~="indeterminate"] .ads-checkbox__box {
+  accent-color: var(--color-interactive-default);
+}
+
+.ads-checkbox[data-state~="error"] .ads-checkbox__box {
+  outline: var(--border-width-default) solid var(--color-border-danger);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.ads-checkbox[data-state~="disabled"] .ads-checkbox__box,
+.ads-checkbox[data-state~="disabled"] .ads-field__label {
+  color: var(--color-text-disabled);
+  cursor: not-allowed;
+}

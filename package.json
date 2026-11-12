@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "install:all": "npm install",
-    "type-check": "tsc --noEmit -p tsconfig.json",
+    "type-check": "tsc --noEmit -p tsconfig.json && tsc -p tsconfig.components.json",
     "lint": "eslint . --ext .ts,.tsx",
     "test": "vitest run --config vitest.config.ts",
     "token-lint": "tsx checks/token-lint/index.ts",
@@ -19,17 +19,28 @@
   "dependencies": {
     "@anthropic-ai/sdk": "^1.8.0",
     "js-yaml": "^5.5.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
     "zod": "^3.23.0"
   },
   "devDependencies": {
+    "@storybook/react-vite": "10.6.7",
+    "@testing-library/dom": "10.4.1",
+    "@testing-library/react": "16.3.3",
+    "@testing-library/user-event": "14.6.1",
     "@types/js-yaml": "^4.0.9",
     "@types/react": "^19.3.0",
+    "@types/react-dom": "19.3.0",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
     "eslint": "^9.0.0",
+    "jsdom": "31.0.0",
+    "storybook": "10.6.7",
+    "storybook-addon-pseudo-states": "10.6.7",
     "ts-node": "^10.9.2",
     "tsx": "^4.19.0",
     "typescript": "^5.5.0",
+    "vite": "8.3.8",
     "vitest": "^2.0.0"
   }
 }

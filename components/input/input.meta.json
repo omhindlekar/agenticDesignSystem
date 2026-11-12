@@ -15,7 +15,8 @@
     { "name": "required", "type": "boolean", "required": false, "description": "Marks the field as required" },
     { "name": "errorMessage", "type": "string", "required": false, "description": "Error message shown below the input" },
     { "name": "helperText", "type": "string", "required": false, "description": "Supporting text shown below the input" },
-    { "name": "onChange", "type": "(value: string) => void", "required": false, "description": "Called when value changes" }
+    { "name": "onChange", "type": "(value: string) => void", "required": false, "description": "Called when value changes" },
+    { "name": "variant", "type": "'default' | 'error' | 'success'", "required": false, "description": "Validation style. Defaults to error when errorMessage is set, otherwise default" }
   ],
   "whenToUse": [
     "For single-line free-form text entry such as name, email, or search",
