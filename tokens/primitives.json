@@ -1,0 +1,84 @@
+{
+  "tokens": [
+    { "name": "color-white", "tier": "primitive", "value": "#ffffff", "description": "Pure white" },
+    { "name": "color-black", "tier": "primitive", "value": "#000000", "description": "Pure black" },
+
+    { "name": "color-gray-50",  "tier": "primitive", "value": "#f9fafb", "description": "Gray tint 50" },
+    { "name": "color-gray-100", "tier": "primitive", "value": "#f3f4f6", "description": "Gray tint 100" },
+    { "name": "color-gray-200", "tier": "primitive", "value": "#e5e7eb", "description": "Gray tint 200" },
+    { "name": "color-gray-300", "tier": "primitive", "value": "#d1d5db", "description": "Gray tint 300" },
+    { "name": "color-gray-400", "tier": "primitive", "value": "#9ca3af", "description": "Gray tint 400" },
+    { "name": "color-gray-500", "tier": "primitive", "value": "#6b7280", "description": "Gray tint 500" },
+    { "name": "color-gray-600", "tier": "primitive", "value": "#4b5563", "description": "Gray tint 600" },
+    { "name": "color-gray-700", "tier": "primitive", "value": "#374151", "description": "Gray tint 700" },
+    { "name": "color-gray-800", "tier": "primitive", "value": "#1f2937", "description": "Gray tint 800" },
+    { "name": "color-gray-900", "tier": "primitive", "value": "#111827", "description": "Gray tint 900" },
+
+    { "name": "color-blue-50",  "tier": "primitive", "value": "#eff6ff", "description": "Blue tint 50" },
+    { "name": "color-blue-100", "tier": "primitive", "value": "#dbeafe", "description": "Blue tint 100" },
+    { "name": "color-blue-200", "tier": "primitive", "value": "#bfdbfe", "description": "Blue tint 200" },
+    { "name": "color-blue-500", "tier": "primitive", "value": "#3b82f6", "description": "Blue tint 500" },
+    { "name": "color-blue-600", "tier": "primitive", "value": "#2563eb", "description": "Blue tint 600" },
+    { "name": "color-blue-700", "tier": "primitive", "value": "#1d4ed8", "description": "Blue tint 700" },
+    { "name": "color-blue-800", "tier": "primitive", "value": "#1e40af", "description": "Blue tint 800" },
+
+    { "name": "color-red-50",  "tier": "primitive", "value": "#fef2f2", "description": "Red tint 50" },
+    { "name": "color-red-100", "tier": "primitive", "value": "#fee2e2", "description": "Red tint 100" },
+    { "name": "color-red-500", "tier": "primitive", "value": "#ef4444", "description": "Red tint 500" },
+    { "name": "color-red-600", "tier": "primitive", "value": "#dc2626", "description": "Red tint 600" },
+    { "name": "color-red-700", "tier": "primitive", "value": "#b91c1c", "description": "Red tint 700" },
+
+    { "name": "color-green-50",  "tier": "primitive", "value": "#f0fdf4", "description": "Green tint 50" },
+    { "name": "color-green-100", "tier": "primitive", "value": "#dcfce7", "description": "Green tint 100" },
+    { "name": "color-green-500", "tier": "primitive", "value": "#22c55e", "description": "Green tint 500" },
+    { "name": "color-green-600", "tier": "primitive", "value": "#16a34a", "description": "Green tint 600" },
+    { "name": "color-green-700", "tier": "primitive", "value": "#15803d", "description": "Green tint 700" },
+
+    { "name": "color-yellow-50",  "tier": "primitive", "value": "#fefce8", "description": "Yellow tint 50" },
+    { "name": "color-yellow-400", "tier": "primitive", "value": "#facc15", "description": "Yellow tint 400" },
+    { "name": "color-yellow-500", "tier": "primitive", "value": "#eab308", "description": "Yellow tint 500" },
+    { "name": "color-yellow-600", "tier": "primitive", "value": "#ca8a04", "description": "Yellow tint 600" },
+
+    { "name": "space-0",  "tier": "primitive", "value": "0px",   "description": "0 spacing" },
+    { "name": "space-1",  "tier": "primitive", "value": "4px",   "description": "4px spacing" },
+    { "name": "space-2",  "tier": "primitive", "value": "8px",   "description": "8px spacing" },
+    { "name": "space-3",  "tier": "primitive", "value": "12px",  "description": "12px spacing" },
+    { "name": "space-4",  "tier": "primitive", "value": "16px",  "description": "16px spacing" },
+    { "name": "space-5",  "tier": "primitive", "value": "20px",  "description": "20px spacing" },
+    { "name": "space-6",  "tier": "primitive", "value": "24px",  "description": "24px spacing" },
+    { "name": "space-8",  "tier": "primitive", "value": "32px",  "description": "32px spacing" },
+    { "name": "space-10", "tier": "primitive", "value": "40px",  "description": "40px spacing" },
+    { "name": "space-12", "tier": "primitive", "value": "48px",  "description": "48px spacing" },
+    { "name": "space-16", "tier": "primitive", "value": "64px",  "description": "64px spacing" },
+
+    { "name": "radius-none", "tier": "primitive", "value": "0px",   "description": "No border radius" },
+    { "name": "radius-sm",   "tier": "primitive", "value": "4px",   "description": "Small border radius" },
+    { "name": "radius-md",   "tier": "primitive", "value": "8px",   "description": "Medium border radius" },
+    { "name": "radius-lg",   "tier": "primitive", "value": "12px",  "description": "Large border radius" },
+    { "name": "radius-xl",   "tier": "primitive", "value": "16px",  "description": "Extra-large border radius" },
+    { "name": "radius-full", "tier": "primitive", "value": "9999px","description": "Fully rounded (pill/circle)" },
+
+    { "name": "font-size-xs",   "tier": "primitive", "value": "0.75rem",  "description": "12px equivalent" },
+    { "name": "font-size-sm",   "tier": "primitive", "value": "0.875rem", "description": "14px equivalent" },
+    { "name": "font-size-base", "tier": "primitive", "value": "1rem",     "description": "16px equivalent" },
+    { "name": "font-size-lg",   "tier": "primitive", "value": "1.125rem", "description": "18px equivalent" },
+    { "name": "font-size-xl",   "tier": "primitive", "value": "1.25rem",  "description": "20px equivalent" },
+    { "name": "font-size-2xl",  "tier": "primitive", "value": "1.5rem",   "description": "24px equivalent" },
+    { "name": "font-size-3xl",  "tier": "primitive", "value": "1.875rem", "description": "30px equivalent" },
+
+    { "name": "font-weight-regular",  "tier": "primitive", "value": "400", "description": "Regular weight" },
+    { "name": "font-weight-medium",   "tier": "primitive", "value": "500", "description": "Medium weight" },
+    { "name": "font-weight-semibold", "tier": "primitive", "value": "600", "description": "Semibold weight" },
+    { "name": "font-weight-bold",     "tier": "primitive", "value": "700", "description": "Bold weight" },
+
+    { "name": "line-height-tight",  "tier": "primitive", "value": "1.25", "description": "Tight line height" },
+    { "name": "line-height-normal", "tier": "primitive", "value": "1.5",  "description": "Normal line height" },
+    { "name": "line-height-loose",  "tier": "primitive", "value": "1.75", "description": "Loose line height" },
+
+    { "name": "shadow-none", "tier": "primitive", "value": "none",                                                                                      "description": "No shadow" },
+    { "name": "shadow-sm",   "tier": "primitive", "value": "0 1px 2px 0 rgba(0,0,0,0.05)",                                                             "description": "Small shadow" },
+    { "name": "shadow-md",   "tier": "primitive", "value": "0 4px 6px -1px rgba(0,0,0,0.10), 0 2px 4px -2px rgba(0,0,0,0.10)",                        "description": "Medium shadow" },
+    { "name": "shadow-lg",   "tier": "primitive", "value": "0 10px 15px -3px rgba(0,0,0,0.10), 0 4px 6px -4px rgba(0,0,0,0.10)",                      "description": "Large shadow" },
+    { "name": "shadow-xl",   "tier": "primitive", "value": "0 20px 25px -5px rgba(0,0,0,0.10), 0 8px 10px -6px rgba(0,0,0,0.10)",                     "description": "Extra-large shadow" }
+  ]
+}

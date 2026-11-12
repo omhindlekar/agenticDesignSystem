@@ -1,0 +1,66 @@
+{
+  "tokens": [
+    { "name": "color-background-page",        "tier": "semantic", "reference": "color-gray-50",   "description": "Page background" },
+    { "name": "color-background-surface",     "tier": "semantic", "reference": "color-white",     "description": "Card and modal surface background" },
+    { "name": "color-background-subtle",      "tier": "semantic", "reference": "color-gray-100",  "description": "Subtle section background" },
+    { "name": "color-background-overlay",     "tier": "semantic", "reference": "color-gray-900",  "description": "Modal overlay, applied with opacity" },
+
+    { "name": "color-text-primary",           "tier": "semantic", "reference": "color-gray-900",  "description": "Primary body and heading text" },
+    { "name": "color-text-secondary",         "tier": "semantic", "reference": "color-gray-600",  "description": "Supporting and caption text" },
+    { "name": "color-text-disabled",          "tier": "semantic", "reference": "color-gray-400",  "description": "Disabled text" },
+    { "name": "color-text-inverse",           "tier": "semantic", "reference": "color-white",     "description": "Text on dark backgrounds" },
+    { "name": "color-text-link",              "tier": "semantic", "reference": "color-blue-600",  "description": "Link text" },
+    { "name": "color-text-link-hover",        "tier": "semantic", "reference": "color-blue-700",  "description": "Link text on hover" },
+    { "name": "color-text-danger",            "tier": "semantic", "reference": "color-red-600",   "description": "Error and destructive-action text" },
+    { "name": "color-text-success",           "tier": "semantic", "reference": "color-green-700", "description": "Success state text" },
+
+    { "name": "color-interactive-default",    "tier": "semantic", "reference": "color-blue-600",  "description": "Default interactive element background (buttons, links)" },
+    { "name": "color-interactive-hover",      "tier": "semantic", "reference": "color-blue-700",  "description": "Interactive element hover state" },
+    { "name": "color-interactive-active",     "tier": "semantic", "reference": "color-blue-800",  "description": "Interactive element active/pressed state" },
+    { "name": "color-interactive-disabled",   "tier": "semantic", "reference": "color-gray-200",  "description": "Disabled interactive element background" },
+    { "name": "color-interactive-focus-ring", "tier": "semantic", "reference": "color-blue-500",  "description": "Keyboard focus ring colour" },
+
+    { "name": "color-border-default",         "tier": "semantic", "reference": "color-gray-200",  "description": "Default border on inputs, cards, dividers" },
+    { "name": "color-border-strong",          "tier": "semantic", "reference": "color-gray-400",  "description": "Stronger border for emphasis" },
+    { "name": "color-border-interactive",     "tier": "semantic", "reference": "color-blue-600",  "description": "Border on focused interactive elements" },
+    { "name": "color-border-danger",          "tier": "semantic", "reference": "color-red-500",   "description": "Error-state border" },
+
+    { "name": "color-status-success-bg",      "tier": "semantic", "reference": "color-green-50",  "description": "Success alert/badge background" },
+    { "name": "color-status-success-text",    "tier": "semantic", "reference": "color-green-700", "description": "Success alert/badge text" },
+    { "name": "color-status-danger-bg",       "tier": "semantic", "reference": "color-red-50",    "description": "Danger/error alert background" },
+    { "name": "color-status-danger-text",     "tier": "semantic", "reference": "color-red-700",   "description": "Danger/error text" },
+    { "name": "color-status-warning-bg",      "tier": "semantic", "reference": "color-yellow-50", "description": "Warning alert background" },
+    { "name": "color-status-warning-text",    "tier": "semantic", "reference": "color-yellow-600","description": "Warning text" },
+    { "name": "color-status-info-bg",         "tier": "semantic", "reference": "color-blue-50",   "description": "Informational alert background" },
+    { "name": "color-status-info-text",       "tier": "semantic", "reference": "color-blue-700",  "description": "Informational text" },
+
+    { "name": "space-component-padding-xs",   "tier": "semantic", "reference": "space-1", "description": "Extra-small component internal padding" },
+    { "name": "space-component-padding-sm",   "tier": "semantic", "reference": "space-2", "description": "Small component internal padding" },
+    { "name": "space-component-padding-md",   "tier": "semantic", "reference": "space-4", "description": "Medium component internal padding" },
+    { "name": "space-component-padding-lg",   "tier": "semantic", "reference": "space-6", "description": "Large component internal padding" },
+    { "name": "space-component-gap-sm",       "tier": "semantic", "reference": "space-2", "description": "Small gap between child elements" },
+    { "name": "space-component-gap-md",       "tier": "semantic", "reference": "space-4", "description": "Medium gap between child elements" },
+    { "name": "space-layout-section",         "tier": "semantic", "reference": "space-8", "description": "Space between page sections" },
+    { "name": "space-layout-page",            "tier": "semantic", "reference": "space-6", "description": "Page edge padding" },
+
+    { "name": "radius-component-sm",   "tier": "semantic", "reference": "radius-sm",   "description": "Small component corner radius (checkboxes, tags)" },
+    { "name": "radius-component-md",   "tier": "semantic", "reference": "radius-md",   "description": "Medium component corner radius (inputs, cards)" },
+    { "name": "radius-component-lg",   "tier": "semantic", "reference": "radius-lg",   "description": "Large component corner radius (modals)" },
+    { "name": "radius-component-pill", "tier": "semantic", "reference": "radius-full", "description": "Fully rounded (pill buttons, badges)" },
+
+    { "name": "font-size-label-sm",  "tier": "semantic", "reference": "font-size-xs",   "description": "Small label and caption text size" },
+    { "name": "font-size-label-md",  "tier": "semantic", "reference": "font-size-sm",   "description": "Default label text size" },
+    { "name": "font-size-body",      "tier": "semantic", "reference": "font-size-base", "description": "Default body text size" },
+    { "name": "font-size-heading-sm","tier": "semantic", "reference": "font-size-lg",   "description": "Small heading size" },
+    { "name": "font-size-heading-md","tier": "semantic", "reference": "font-size-xl",   "description": "Medium heading size" },
+    { "name": "font-size-heading-lg","tier": "semantic", "reference": "font-size-2xl",  "description": "Large heading size" },
+
+    { "name": "font-weight-body",    "tier": "semantic", "reference": "font-weight-regular",  "description": "Body text weight" },
+    { "name": "font-weight-label",   "tier": "semantic", "reference": "font-weight-medium",   "description": "Label and button text weight" },
+    { "name": "font-weight-heading", "tier": "semantic", "reference": "font-weight-semibold", "description": "Heading text weight" },
+
+    { "name": "shadow-component-card",  "tier": "semantic", "reference": "shadow-sm", "description": "Default card elevation shadow" },
+    { "name": "shadow-component-modal", "tier": "semantic", "reference": "shadow-xl", "description": "Modal elevation shadow" },
+    { "name": "shadow-component-focus", "tier": "semantic", "reference": "shadow-md", "description": "Focus ring drop shadow" }
+  ]
+}
