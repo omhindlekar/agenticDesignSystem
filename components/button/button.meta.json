@@ -1,0 +1,55 @@
+{
+  "id": "button",
+  "purpose": "Triggers an action or submits a form. The primary interactive element for user-initiated operations.",
+  "variants": ["primary", "secondary", "ghost", "danger"],
+  "states": ["default", "hover", "active", "focus", "disabled", "loading"],
+  "props": [
+    { "name": "label", "type": "string", "required": true, "description": "Visible button text" },
+    { "name": "variant", "type": "'primary' | 'secondary' | 'ghost' | 'danger'", "required": false, "description": "Visual style. Defaults to primary" },
+    { "name": "size", "type": "'sm' | 'md' | 'lg'", "required": false, "description": "Button size. Defaults to md" },
+    { "name": "disabled", "type": "boolean", "required": false, "description": "Prevents interaction and applies disabled styling" },
+    { "name": "loading", "type": "boolean", "required": false, "description": "Shows a spinner and disables pointer events" },
+    { "name": "iconStart", "type": "React.ReactNode", "required": false, "description": "Icon placed before the label" },
+    { "name": "iconEnd", "type": "React.ReactNode", "required": false, "description": "Icon placed after the label" },
+    { "name": "onClick", "type": "() => void", "required": false, "description": "Click handler" },
+    { "name": "type", "type": "'button' | 'submit' | 'reset'", "required": false, "description": "HTML button type. Defaults to button" }
+  ],
+  "whenToUse": [
+    "To trigger an action such as saving, deleting, or submitting",
+    "As the primary call to action on a page or dialog",
+    "To confirm or cancel a destructive operation"
+  ],
+  "whenNotToUse": [
+    "For navigation — use a link or anchor element instead",
+    "When the action opens a new page or external URL — use a link",
+    "As a tab or toggle — use the appropriate tab or toggle component"
+  ],
+  "related": ["icon-button", "link", "modal"],
+  "antiPatterns": [
+    "Using more than one primary button in the same view",
+    "Using the danger variant for non-destructive actions",
+    "Nesting a button inside another button"
+  ],
+  "tokensUsed": [
+    "color-interactive-default",
+    "color-interactive-hover",
+    "color-interactive-active",
+    "color-interactive-disabled",
+    "color-interactive-focus-ring",
+    "color-text-inverse",
+    "color-text-disabled",
+    "space-component-padding-sm",
+    "space-component-padding-md",
+    "space-component-gap-sm",
+    "radius-component-sm",
+    "font-size-label-md",
+    "font-weight-label"
+  ],
+  "a11yNotes": [
+    "Must have a visible text label or an aria-label when icon-only",
+    "disabled prop must set aria-disabled and prevent focus, not remove from tab order",
+    "loading state must set aria-busy='true' and announce to screen readers",
+    "Touch target must be at least 44x44 CSS pixels",
+    "Focus ring must be visible and use color-interactive-focus-ring"
+  ]
+}

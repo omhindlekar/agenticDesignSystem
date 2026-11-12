@@ -10,6 +10,7 @@ export const RuleSchema = z.object({
   severity: RuleSeveritySchema,
   check: RuleCheckSchema,
   appliesTo: z.array(z.string()).min(1),
+  checkName: z.string().optional(),
   example: z.string().optional(),
   counterExample: z.string().optional(),
 });

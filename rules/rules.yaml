@@ -1,0 +1,231 @@
+rules:
+  # ── Token rules ─────────────────────────────────────────────────────────────
+  - id: DS-T-001
+    scope: token
+    severity: error
+    statement: >
+      All colour values in component source files must reference a semantic
+      token via a CSS custom property (e.g. var(--color-interactive-default)).
+      Bare hex, rgb() or hsl() literals are forbidden.
+    check: auto
+    checkName: token-lint
+    appliesTo:
+      - button
+      - input
+      - select
+      - checkbox
+      - card
+      - modal
+    example: "color: var(--color-interactive-default)"
+    counterExample: "color: #2563eb"
+
+  - id: DS-T-002
+    scope: token
+    severity: error
+    statement: >
+      All spacing values (margin, padding, gap) must reference a semantic
+      spacing token. Bare pixel or rem literals for spacing are forbidden.
+    check: auto
+    checkName: token-lint
+    appliesTo:
+      - button
+      - input
+      - select
+      - checkbox
+      - card
+      - modal
+    example: "padding: var(--space-component-padding-md)"
+    counterExample: "padding: 16px"
+
+  - id: DS-T-003
+    scope: token
+    severity: error
+    statement: >
+      All border-radius values must reference a semantic radius token.
+      Bare pixel or rem literals for border-radius are forbidden.
+    check: auto
+    checkName: token-lint
+    appliesTo:
+      - button
+      - input
+      - select
+      - checkbox
+      - card
+      - modal
+    example: "borderRadius: var(--radius-component-md)"
+    counterExample: "borderRadius: 8px"
+
+  # ── Layout rules ─────────────────────────────────────────────────────────────
+  - id: DS-L-001
+    scope: layout
+    severity: error
+    statement: >
+      Typography values (font-size, font-weight, line-height) must reference
+      semantic tokens. Hardcoded numeric or string font values are forbidden.
+    check: auto
+    checkName: token-lint
+    appliesTo:
+      - button
+      - input
+      - select
+      - checkbox
+      - card
+      - modal
+    example: "fontSize: var(--font-size-label-md)"
+    counterExample: "fontSize: '14px'"
+
+  - id: DS-L-002
+    scope: layout
+    severity: warning
+    statement: >
+      Elevation (box-shadow) must reference a semantic shadow token.
+      Hardcoded box-shadow values are forbidden.
+    check: auto
+    checkName: token-lint
+    appliesTo:
+      - card
+      - modal
+    example: "boxShadow: var(--shadow-component-card)"
+    counterExample: "boxShadow: '0 1px 3px rgba(0,0,0,0.1)'"
+
+  # ── Accessibility rules ───────────────────────────────────────────────────────
+  - id: DS-A-001
+    scope: accessibility
+    severity: error
+    statement: >
+      Text and interactive elements must meet WCAG 2.2 AA colour-contrast
+      requirements: 4.5:1 for normal text, 3:1 for large text and UI components.
+    check: auto
+    checkName: a11y
+    appliesTo:
+      - button
+      - input
+      - select
+      - checkbox
+      - card
+      - modal
+    example: "Use color-text-primary on color-background-surface (passes 4.5:1)"
+    counterExample: "Light grey text on white background"
+
+  - id: DS-A-002
+    scope: accessibility
+    severity: error
+    statement: >
+      Every interactive element must display a visible focus ring when reached
+      by keyboard. The focus ring must use the color-interactive-focus-ring token.
+    check: auto
+    checkName: a11y
+    appliesTo:
+      - button
+      - input
+      - select
+      - checkbox
+    example: "outline: 2px solid var(--color-interactive-focus-ring)"
+    counterExample: "outline: none"
+
+  - id: DS-A-003
+    scope: accessibility
+    severity: error
+    statement: >
+      Touch targets for interactive elements must be at least 44x44 CSS pixels
+      to satisfy WCAG 2.2 success criterion 2.5.5.
+    check: auto
+    checkName: a11y
+    appliesTo:
+      - button
+      - checkbox
+    example: "min-height: 44px; min-width: 44px"
+    counterExample: "height: 24px; width: 24px with no padding"
+
+  - id: DS-A-004
+    scope: accessibility
+    severity: error
+    statement: >
+      Form controls (input, select, checkbox) must have a programmatically
+      associated label — a <label> with matching htmlFor/id, or aria-labelledby.
+      Placeholder text alone is not a label.
+    check: auto
+    checkName: a11y
+    appliesTo:
+      - input
+      - select
+      - checkbox
+    example: "<label htmlFor='email'>Email</label><input id='email' />"
+    counterExample: "<input placeholder='Email' />"
+
+  - id: DS-A-005
+    scope: accessibility
+    severity: error
+    statement: >
+      Modal dialogs must trap keyboard focus while open and restore focus to the
+      trigger element when closed. Use role='dialog' and aria-modal='true'.
+    check: auto
+    checkName: a11y
+    appliesTo:
+      - modal
+    example: "role='dialog' aria-modal='true' aria-labelledby='modal-title'"
+    counterExample: "div with no ARIA attributes that covers the page"
+
+  # ── Component-usage rules ─────────────────────────────────────────────────────
+  - id: DS-C-001
+    scope: component
+    severity: error
+    statement: >
+      Use Button only for user actions. For navigation to another page or URL,
+      use a link (<a> element) instead.
+    check: manual
+    appliesTo:
+      - button
+    example: "<Button onClick={handleSave}>Save</Button>"
+    counterExample: "<Button onClick={() => router.push('/home')}>Home</Button>"
+
+  - id: DS-C-002
+    scope: component
+    severity: error
+    statement: >
+      Destructive actions (delete, remove, overwrite) must use the danger
+      variant and must be confirmed by the user before execution, typically
+      inside a Modal.
+    check: manual
+    appliesTo:
+      - button
+      - modal
+    example: "<Button variant='danger' onClick={openConfirmModal}>Delete</Button>"
+    counterExample: "<Button onClick={deleteImmediately}>Delete</Button>"
+
+  - id: DS-C-003
+    scope: component
+    severity: warning
+    statement: >
+      Select should only be used when there are four or more options.
+      For two or three options, use a radio group instead.
+    check: manual
+    appliesTo:
+      - select
+    example: "Country select with 200 options"
+    counterExample: "Gender select with 2 options"
+
+  - id: DS-C-004
+    scope: component
+    severity: warning
+    statement: >
+      A Card must not be nested inside another Card. Use layout spacing
+      tokens to separate items instead.
+    check: manual
+    appliesTo:
+      - card
+    example: "A grid of Card components side by side"
+    counterExample: "A Card with a Card child inside its body"
+
+  - id: DS-C-005
+    scope: component
+    severity: warning
+    statement: >
+      Modal dialogs should not be stacked. Opening a second modal on top of an
+      existing one is not permitted. Use a single modal with multi-step content
+      instead.
+    check: manual
+    appliesTo:
+      - modal
+    example: "A multi-step form in one modal with step indicators"
+    counterExample: "A confirmation modal opened from inside another modal"

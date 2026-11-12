@@ -1,0 +1,62 @@
+{
+  "id": "input",
+  "purpose": "Collects a single line of free-form text from the user. Used in forms for names, emails, passwords, search queries and other short text values.",
+  "variants": ["default", "error", "success"],
+  "states": ["default", "focus", "filled", "disabled", "error", "success", "read-only"],
+  "props": [
+    { "name": "label", "type": "string", "required": true, "description": "Visible label text associated with the input" },
+    { "name": "value", "type": "string", "required": false, "description": "Controlled input value" },
+    { "name": "defaultValue", "type": "string", "required": false, "description": "Uncontrolled default value" },
+    { "name": "placeholder", "type": "string", "required": false, "description": "Placeholder text shown when empty" },
+    { "name": "type", "type": "'text' | 'email' | 'password' | 'search' | 'tel' | 'url' | 'number'", "required": false, "description": "HTML input type. Defaults to text" },
+    { "name": "name", "type": "string", "required": false, "description": "HTML name attribute for form submission" },
+    { "name": "disabled", "type": "boolean", "required": false, "description": "Disables the input" },
+    { "name": "readOnly", "type": "boolean", "required": false, "description": "Renders input as read-only" },
+    { "name": "required", "type": "boolean", "required": false, "description": "Marks the field as required" },
+    { "name": "errorMessage", "type": "string", "required": false, "description": "Error message shown below the input" },
+    { "name": "helperText", "type": "string", "required": false, "description": "Supporting text shown below the input" },
+    { "name": "onChange", "type": "(value: string) => void", "required": false, "description": "Called when value changes" }
+  ],
+  "whenToUse": [
+    "For single-line free-form text entry such as name, email, or search",
+    "When the user needs to enter a value that cannot be predicted in advance",
+    "Inside a form to collect structured user input"
+  ],
+  "whenNotToUse": [
+    "For multi-line text — use a textarea instead",
+    "For choosing from a known set of options — use Select or a radio group",
+    "For yes/no or on/off choices — use Checkbox or Toggle"
+  ],
+  "related": ["select", "checkbox", "button", "modal"],
+  "antiPatterns": [
+    "Omitting a visible label — always provide a label element, not just a placeholder",
+    "Using placeholder text as the only label",
+    "Nesting an Input inside another Input"
+  ],
+  "tokensUsed": [
+    "color-background-surface",
+    "color-border-default",
+    "color-border-interactive",
+    "color-border-danger",
+    "color-text-primary",
+    "color-text-secondary",
+    "color-text-disabled",
+    "color-interactive-focus-ring",
+    "color-status-danger-text",
+    "color-status-success-text",
+    "space-component-padding-sm",
+    "space-component-gap-sm",
+    "radius-component-md",
+    "font-size-label-md",
+    "font-size-body",
+    "font-weight-body",
+    "font-weight-label"
+  ],
+  "a11yNotes": [
+    "Every input must have an associated label element via htmlFor/id pair",
+    "Error messages must be linked via aria-describedby",
+    "required fields must set aria-required='true'",
+    "Disabled inputs must set aria-disabled='true' and retain focus visibility",
+    "Password inputs must offer a show/hide toggle for WCAG 1.3.5"
+  ]
+}

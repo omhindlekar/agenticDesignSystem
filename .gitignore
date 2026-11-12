@@ -10,6 +10,9 @@ playwright-report/
 runs/*
 !runs/.gitkeep
 
+# Builder TSX type-check scratch directory
+.ads-typecheck-tmp/
+
 # Build artifacts
 *.js.map
 *.d.ts.map

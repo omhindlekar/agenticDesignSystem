@@ -1,0 +1,62 @@
+{
+  "id": "select",
+  "purpose": "Allows the user to pick one option from a predefined list. Best suited for four or more mutually exclusive choices where showing all options at once would take too much space.",
+  "variants": ["default", "error", "success"],
+  "states": ["default", "open", "focus", "selected", "disabled", "error", "success"],
+  "props": [
+    { "name": "label", "type": "string", "required": true, "description": "Visible label associated with the select" },
+    { "name": "options", "type": "Array<{ value: string; label: string; disabled?: boolean }>", "required": true, "description": "List of options to display" },
+    { "name": "value", "type": "string", "required": false, "description": "Controlled selected value" },
+    { "name": "defaultValue", "type": "string", "required": false, "description": "Uncontrolled default selection" },
+    { "name": "placeholder", "type": "string", "required": false, "description": "Text shown when no option is selected" },
+    { "name": "disabled", "type": "boolean", "required": false, "description": "Disables the select" },
+    { "name": "required", "type": "boolean", "required": false, "description": "Marks the field as required" },
+    { "name": "errorMessage", "type": "string", "required": false, "description": "Error message shown below the select" },
+    { "name": "helperText", "type": "string", "required": false, "description": "Supporting text shown below the select" },
+    { "name": "onChange", "type": "(value: string) => void", "required": false, "description": "Called when selection changes" }
+  ],
+  "whenToUse": [
+    "When the user must choose one option from four or more mutually exclusive choices",
+    "When screen space is limited and listing all options inline would crowd the layout",
+    "Inside a form for fields like country, timezone, or category"
+  ],
+  "whenNotToUse": [
+    "For fewer than four options — use a radio group instead",
+    "For multiple simultaneous selections — use a multi-select or checkbox group",
+    "For yes/no decisions — use a Checkbox or Toggle"
+  ],
+  "related": ["input", "checkbox", "button"],
+  "antiPatterns": [
+    "Using Select when only two or three options exist",
+    "Omitting a label — always provide a visible label",
+    "Using Select for navigation menus"
+  ],
+  "tokensUsed": [
+    "color-background-surface",
+    "color-background-page",
+    "color-border-default",
+    "color-border-interactive",
+    "color-border-danger",
+    "color-text-primary",
+    "color-text-secondary",
+    "color-text-disabled",
+    "color-interactive-focus-ring",
+    "color-status-danger-text",
+    "space-component-padding-sm",
+    "space-component-padding-md",
+    "space-component-gap-sm",
+    "radius-component-md",
+    "font-size-label-md",
+    "font-size-body",
+    "font-weight-body",
+    "font-weight-label",
+    "shadow-component-card"
+  ],
+  "a11yNotes": [
+    "Must have an associated label element via htmlFor/id pair",
+    "Must be keyboard navigable with arrow keys and Enter/Space",
+    "Error messages must be linked via aria-describedby",
+    "Uses role='combobox' or native <select> — do not use a div without full ARIA implementation",
+    "Dropdown list must be announced to screen readers when it opens"
+  ]
+}

@@ -16,9 +16,13 @@
     "build": "npm run build --workspaces --if-present"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^1.8.0",
+    "js-yaml": "^5.5.0",
     "zod": "^3.23.0"
   },
   "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
+    "@types/react": "^19.3.0",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
     "eslint": "^9.0.0",

@@ -1,0 +1,51 @@
+{
+  "id": "modal",
+  "purpose": "Displays content that requires user attention or action in a layer above the page. Blocks interaction with the page behind it until the user responds or dismisses the modal.",
+  "variants": ["default", "danger", "fullscreen"],
+  "states": ["open", "closed", "loading"],
+  "props": [
+    { "name": "isOpen", "type": "boolean", "required": true, "description": "Controls whether the modal is visible" },
+    { "name": "onClose", "type": "() => void", "required": true, "description": "Called when the user dismisses the modal" },
+    { "name": "title", "type": "string", "required": true, "description": "Modal heading, used as the accessible dialog name" },
+    { "name": "children", "type": "React.ReactNode", "required": true, "description": "Modal body content" },
+    { "name": "variant", "type": "'default' | 'danger' | 'fullscreen'", "required": false, "description": "Visual variant. danger uses warning colours for destructive actions. Defaults to default" },
+    { "name": "size", "type": "'sm' | 'md' | 'lg' | 'fullscreen'", "required": false, "description": "Modal width. Defaults to md" },
+    { "name": "footer", "type": "React.ReactNode", "required": false, "description": "Action buttons rendered in the modal footer" },
+    { "name": "closeOnOverlayClick", "type": "boolean", "required": false, "description": "Dismisses the modal when the overlay is clicked. Defaults to true" },
+    { "name": "initialFocusRef", "type": "React.RefObject<HTMLElement>", "required": false, "description": "Element that receives focus when the modal opens. Defaults to the first focusable element" }
+  ],
+  "whenToUse": [
+    "To confirm a destructive action before it executes",
+    "To gather a small amount of information from the user without navigating away from the current page",
+    "To show critical information that requires the user to acknowledge before continuing"
+  ],
+  "whenNotToUse": [
+    "For long-form content or multi-step flows — use a dedicated page or drawer",
+    "As a notification or toast — use an alert or toast component instead",
+    "When the user does not need to take action — use an inline message or tooltip"
+  ],
+  "related": ["button", "card"],
+  "antiPatterns": [
+    "Opening a modal from inside another modal — stack modals never more than one deep",
+    "Omitting a title — every modal needs a visible heading for screen readers",
+    "Blocking the user without offering a way to dismiss"
+  ],
+  "tokensUsed": [
+    "color-background-surface",
+    "color-background-overlay",
+    "color-text-primary",
+    "color-interactive-focus-ring",
+    "shadow-component-modal",
+    "radius-component-lg",
+    "space-component-padding-lg",
+    "space-component-gap-md"
+  ],
+  "a11yNotes": [
+    "Must use role='dialog' and aria-modal='true'",
+    "Must set aria-labelledby pointing to the modal title element",
+    "Must trap focus within the modal while open — no Tab escape",
+    "Must restore focus to the trigger element when closed",
+    "Escape key must close the modal",
+    "Overlay must have role='presentation' and not be focusable"
+  ]
+}
