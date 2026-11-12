@@ -1,0 +1,27 @@
+node_modules/
+dist/
+storybook-static/
+playwright-report/
+.env
+.env.*
+!.env.example
+
+# Run logs — keep the directory but not the content
+runs/*
+!runs/.gitkeep
+
+# Build artifacts
+*.js.map
+*.d.ts.map
+coverage/
+.nyc_output/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
