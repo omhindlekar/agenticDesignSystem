@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "lib": ["ES2022"],
+    "strict": true,
+    "exactOptionalPropertyTypes": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "outDir": "dist",
+    "rootDir": ".",
+    "paths": {
+      "@ads/schemas": ["./packages/schemas/src/index.ts"],
+      "@ads/run-log": ["./packages/run-log/src/index.ts"]
+    }
+  },
+  "include": [
+    "packages/*/src/**/*",
+    "packages/*/tests/**/*",
+    "checks/**/*",
+    "config/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/node_modules",
+    "checks/token-lint/fixtures/**"
+  ]
+}
