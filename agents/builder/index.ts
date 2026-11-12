@@ -1,7 +1,7 @@
 import Anthropic from '@anthropic-ai/sdk';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { buildBuilderPrompt, parseBuilderResponse, validateBuilderOutput } from './tools.js';
+import { buildBuilderPrompt, parseBuilderResponse, validateBuilderOutput, typeCheckBuilderOutput } from './tools.js';
 import { BuilderOutputSchema } from './schema.js';
 import type { BuilderInput, BuilderOutput } from './schema.js';
 
@@ -17,12 +17,13 @@ function loadConfig(repoRoot: string): Config {
 
 export async function runBuilder(
   input: BuilderInput,
+  previousError?: string,
   repoRoot = join(new URL(import.meta.url).pathname, '..', '..', '..'),
 ): Promise<BuilderOutput> {
   const config = loadConfig(repoRoot);
   const client = new Anthropic();
 
-  const prompt = buildBuilderPrompt(input);
+  const prompt = buildBuilderPrompt(input, previousError);
 
   const message = await client.messages.create({
     model: config.model,
@@ -37,12 +38,19 @@ export async function runBuilder(
 
   const tsx = parseBuilderResponse(textBlock.text);
 
-  const result = validateBuilderOutput(tsx);
-  if (!result.valid) {
-    const summary = result.violations
+  // Token lint — calls checks/token-lint, no code duplication
+  const lintResult = validateBuilderOutput(tsx);
+  if (!lintResult.valid) {
+    const summary = lintResult.violations
       .map((v) => `line ${v.line}: [${v.pattern}] ${v.match}`)
       .join('; ');
     throw new Error(`Builder output failed token lint: ${summary}`);
+  }
+
+  // TypeScript type check on the generated TSX
+  const typeResult = typeCheckBuilderOutput(tsx, repoRoot);
+  if (!typeResult.valid) {
+    throw new Error(`Builder output failed type check: ${typeResult.errors.slice(0, 3).join('; ')}`);
   }
 
   return BuilderOutputSchema.parse({ taskId: input.taskId, tsx });

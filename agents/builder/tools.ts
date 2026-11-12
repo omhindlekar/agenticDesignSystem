@@ -1,16 +1,24 @@
-import type { BuilderInput } from './schema.js';
+import { mkdirSync, writeFileSync, rmSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import { join } from 'node:path';
+import { lintString } from '../../checks/token-lint/index.js';
 import type { LintViolation } from '../../checks/token-lint/index.js';
+import type { BuilderInput } from './schema.js';
 
-export function buildBuilderPrompt(input: BuilderInput): string {
+export function buildBuilderPrompt(input: BuilderInput, previousError?: string): string {
   const componentList = input.contextPack.componentIds.map((c) => `- ${c.id}`).join('\n');
   const tokenList = input.contextPack.tokenIds.map((t) => `- ${t.id}`).join('\n');
   const specJson = JSON.stringify(input.spec, null, 2);
+
+  const retrySection = previousError
+    ? `\nPREVIOUS ATTEMPT FAILED — fix this error before returning:\n${previousError}\n`
+    : '';
 
   return `You are a UI builder for a design system. Given a screen specification, generate a single React TSX file.
 
 SCREEN SPECIFICATION:
 ${specJson}
-
+${retrySection}
 APPROVED COMPONENTS (import and use only these):
 ${componentList}
 
@@ -36,58 +44,63 @@ export function parseBuilderResponse(raw: string): string {
     .trim();
 }
 
-type LintViolationInMemory = Omit<LintViolation, 'file'>;
-
-interface ValidationResult {
+export interface ValidationResult {
   valid: boolean;
-  violations: LintViolationInMemory[];
+  violations: LintViolation[];
 }
 
-const LINT_RULES = [
-  {
-    pattern: 'hex-color',
-    regex: /(?<!var\([^)]*)'?"?#([0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})\b/g,
-  },
-  {
-    pattern: 'rgb-color',
-    regex: /\brgba?\s*\(\s*[\d.]+\s*,\s*[\d.]+\s*,\s*[\d.]+/g,
-  },
-  {
-    pattern: 'hsl-color',
-    regex: /\bhsla?\s*\(\s*[\d.]+\s*,\s*[\d.]+%\s*,\s*[\d.]+%/g,
-  },
-  {
-    pattern: 'hardcoded-spacing',
-    regex: /(?:margin|padding|gap)\s*:\s*['"]?\d+(?:\.\d+)?px/g,
-  },
-  {
-    pattern: 'hardcoded-radius',
-    regex: /(?:border-?[Rr]adius)\s*:\s*['"]?\d+(?:\.\d+)?px/g,
-  },
-] as const;
-
 export function validateBuilderOutput(tsx: string): ValidationResult {
-  const lines = tsx.split('\n');
-  const violations: LintViolationInMemory[] = [];
+  const violations = lintString(tsx, '<generated>');
+  return { valid: violations.length === 0, violations };
+}
 
-  for (const { pattern, regex } of LINT_RULES) {
-    for (let lineIdx = 0; lineIdx < lines.length; lineIdx++) {
-      const line = lines[lineIdx] ?? '';
-      if (/^\s*\/\//.test(line)) continue;
+export interface TypeCheckResult {
+  valid: boolean;
+  errors: string[];
+}
 
-      const localRegex = new RegExp(regex.source, regex.flags);
-      let match: RegExpExecArray | null;
-      while ((match = localRegex.exec(line)) !== null) {
-        violations.push({
-          line: lineIdx + 1,
-          column: match.index + 1,
-          pattern,
-          match: match[0],
-          ruleId: 'FR-1',
-        });
-      }
+export function typeCheckBuilderOutput(tsx: string, repoRoot: string): TypeCheckResult {
+  const checkDir = join(repoRoot, '.ads-typecheck-tmp');
+
+  mkdirSync(checkDir, { recursive: true });
+
+  try {
+    writeFileSync(join(checkDir, 'screen.tsx'), tsx, 'utf8');
+    writeFileSync(
+      join(checkDir, 'tsconfig.json'),
+      JSON.stringify({
+        compilerOptions: {
+          target: 'ES2020',
+          lib: ['ES2020', 'DOM'],
+          jsx: 'react',
+          esModuleInterop: true,
+          allowSyntheticDefaultImports: true,
+          skipLibCheck: true,
+          noEmit: true,
+          strict: false,
+          moduleResolution: 'node',
+        },
+        include: ['screen.tsx'],
+      }),
+      'utf8',
+    );
+
+    const tscPath = join(repoRoot, 'node_modules', '.bin', 'tsc');
+    const proc = spawnSync(tscPath, ['--project', 'tsconfig.json'], {
+      encoding: 'utf8',
+      cwd: checkDir,
+    });
+
+    if (proc.status === 0) return { valid: true, errors: [] };
+
+    const output = (proc.stdout ?? '') + (proc.stderr ?? '');
+    const errors = output.split('\n').filter(Boolean);
+    return { valid: false, errors };
+  } finally {
+    try {
+      rmSync(checkDir, { recursive: true, force: true });
+    } catch {
+      // best-effort cleanup
     }
   }
-
-  return { valid: violations.length === 0, violations };
 }

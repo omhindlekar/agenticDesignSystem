@@ -1,6 +1,11 @@
 import { describe, it, expect } from 'vitest';
-import { buildBuilderPrompt, parseBuilderResponse, validateBuilderOutput } from '../tools.js';
+import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { buildBuilderPrompt, parseBuilderResponse, validateBuilderOutput, typeCheckBuilderOutput } from '../tools.js';
 import type { BuilderInput } from '../schema.js';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const repoRoot = join(__dirname, '..', '..', '..');
 
 const builderInput: BuilderInput = {
   taskId: 'task-001',
@@ -74,6 +79,16 @@ describe('FR-7: Builder prompt building', () => {
     const prompt = buildBuilderPrompt(builderInput);
     expect(prompt.toLowerCase()).toMatch(/hardcod|literal|hex|rgb/);
   });
+
+  it('FR-7: prompt includes previousError when provided', () => {
+    const prompt = buildBuilderPrompt(builderInput, 'token lint: hex color at line 5');
+    expect(prompt).toContain('token lint: hex color at line 5');
+  });
+
+  it('FR-7: prompt without previousError contains no previous-attempt section', () => {
+    const prompt = buildBuilderPrompt(builderInput);
+    expect(prompt).not.toContain('PREVIOUS ATTEMPT FAILED');
+  });
 });
 
 describe('FR-7: Builder response parsing', () => {
@@ -95,7 +110,7 @@ describe('FR-7: Builder response parsing', () => {
   });
 });
 
-describe('FR-7: Builder output validation — token lint', () => {
+describe('FR-7: Builder output validation — token lint via checks/token-lint', () => {
   it('FR-7: clean TSX using CSS vars passes token lint', () => {
     const result = validateBuilderOutput(cleanTsx);
     expect(result.violations).toHaveLength(0);
@@ -113,16 +128,42 @@ describe('FR-7: Builder output validation — token lint', () => {
     const result = validateBuilderOutput(spaceTsx);
     expect(result.valid).toBe(false);
   });
+
+  it('FR-7: violation objects come from checks/token-lint (have file, line, column, pattern, ruleId)', () => {
+    const result = validateBuilderOutput(dirtyTsx);
+    const v = result.violations[0]!;
+    expect(typeof v.file).toBe('string');
+    expect(typeof v.line).toBe('number');
+    expect(typeof v.column).toBe('number');
+    expect(v.ruleId).toBe('FR-1');
+  });
+});
+
+describe('FR-7: Builder output validation — TypeScript type check', () => {
+  it('FR-7: clean React TSX passes TypeScript type check', () => {
+    const result = typeCheckBuilderOutput(cleanTsx, repoRoot);
+    expect(result.valid).toBe(true);
+    expect(result.errors).toHaveLength(0);
+  });
+
+  it('FR-7: TSX with a syntax error fails TypeScript type check', () => {
+    const badTsx = `export function Screen() { return <div props={unclosed; }; }`;
+    const result = typeCheckBuilderOutput(badTsx, repoRoot);
+    expect(result.valid).toBe(false);
+    expect(result.errors.length).toBeGreaterThan(0);
+  });
 });
 
 describe('FR-7: Builder integration (requires ANTHROPIC_API_KEY)', () => {
   const hasKey = !!process.env['ANTHROPIC_API_KEY'];
 
-  it.skipIf(!hasKey)('FR-7: runBuilder returns TSX that passes token lint', async () => {
+  it.skipIf(!hasKey)('FR-7: runBuilder returns TSX that passes token lint and type check', async () => {
     const { runBuilder } = await import('../index.js');
-    const output = await runBuilder(builderInput);
+    const output = await runBuilder(builderInput, undefined, repoRoot);
     expect(output.tsx).toContain('export function');
-    const result = validateBuilderOutput(output.tsx);
-    expect(result.valid).toBe(true);
+    const lintResult = validateBuilderOutput(output.tsx);
+    expect(lintResult.valid).toBe(true);
+    const typeResult = typeCheckBuilderOutput(output.tsx, repoRoot);
+    expect(typeResult.valid).toBe(true);
   });
 });
