@@ -61,6 +61,21 @@
 
     { "name": "shadow-component-card",  "tier": "semantic", "reference": "shadow-sm", "description": "Default card elevation shadow" },
     { "name": "shadow-component-modal", "tier": "semantic", "reference": "shadow-xl", "description": "Modal elevation shadow" },
-    { "name": "shadow-component-focus", "tier": "semantic", "reference": "shadow-md", "description": "Focus ring drop shadow" }
+    { "name": "shadow-component-focus", "tier": "semantic", "reference": "shadow-md", "description": "Focus ring drop shadow" },
+
+    { "name": "border-width-default", "tier": "semantic", "reference": "border-width-1", "description": "Default border width for inputs, cards and secondary buttons" },
+    { "name": "border-width-focus", "tier": "semantic", "reference": "border-width-2", "description": "Focus ring outline width" },
+    { "name": "focus-ring-offset", "tier": "semantic", "reference": "space-0-5", "description": "Gap between an element and its focus ring" },
+    { "name": "size-touch-target-min", "tier": "semantic", "reference": "size-11", "description": "Minimum interactive target size (WCAG 2.2 AA 2.5.8, 44px recommended)" },
+    { "name": "size-control-indicator", "tier": "semantic", "reference": "size-5", "description": "Checkbox box and spinner size" },
+    { "name": "size-modal-sm", "tier": "semantic", "reference": "size-96", "description": "Small modal max width" },
+    { "name": "size-modal-md", "tier": "semantic", "reference": "size-128", "description": "Medium modal max width" },
+    { "name": "size-modal-lg", "tier": "semantic", "reference": "size-192", "description": "Large modal max width" },
+    { "name": "font-family-body", "tier": "semantic", "reference": "font-family-sans", "description": "Body and UI text font family" },
+    { "name": "line-height-body", "tier": "semantic", "reference": "line-height-normal", "description": "Body and label line height" },
+    { "name": "line-height-heading", "tier": "semantic", "reference": "line-height-tight", "description": "Heading line height" },
+    { "name": "opacity-overlay", "tier": "semantic", "reference": "opacity-50", "description": "Modal overlay opacity" },
+    { "name": "z-index-modal", "tier": "semantic", "reference": "z-index-overlay", "description": "Modal and overlay stacking order" },
+    { "name": "motion-duration-fast", "tier": "semantic", "reference": "duration-fast", "description": "Hover and focus transition duration" }
   ]
 }

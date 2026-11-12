@@ -1,4 +1,5 @@
 import { readFile, readdir } from 'node:fs/promises';
+import { readFileSync } from 'node:fs';
 import { join, extname } from 'node:path';
 import { existsSync, statSync } from 'node:fs';
 
@@ -40,6 +41,36 @@ const LINT_RULES: LintRule[] = [
     // border-radius / borderRadius with a bare px value
     regex: /(?:border-?[Rr]adius)\s*:\s*['"]?\d+(?:\.\d+)?px/g,
   },
+  {
+    pattern: 'hardcoded-font-size',
+    regex: /font-?[Ss]ize\s*:\s*['"]?\d/g,
+  },
+  {
+    pattern: 'hardcoded-font-weight',
+    regex: /font-?[Ww]eight\s*:\s*['"]?\d/g,
+  },
+  {
+    pattern: 'hardcoded-font-family',
+    // Anything other than var(...) or inherit
+    regex: /font-?[Ff]amily\s*:\s*(?!['"]?(?:var\(|inherit))['"]?[A-Za-z"]/g,
+  },
+  {
+    pattern: 'hardcoded-line-height',
+    regex: /line-?[Hh]eight\s*:\s*['"]?\d/g,
+  },
+  {
+    pattern: 'hardcoded-border-width',
+    // border, border-width, border-top, ... starting with a literal px width
+    regex: /\bborder(?:-?(?:[Ww]idth|[Tt]op|[Rr]ight|[Bb]ottom|[Ll]eft))?\s*:\s*['"]?\d+(?:\.\d+)?px/g,
+  },
+  {
+    pattern: 'hardcoded-outline',
+    regex: /\boutline(?:-?(?:[Ww]idth|[Oo]ffset))?\s*:\s*['"]?\d+(?:\.\d+)?px/g,
+  },
+  {
+    pattern: 'hardcoded-z-index',
+    regex: /z-?[Ii]ndex\s*:\s*['"]?-?\d/g,
+  },
 ];
 
 export function lintString(content: string, fileName = '<generated>'): LintViolation[] {
@@ -70,14 +101,54 @@ export function lintString(content: string, fileName = '<generated>'): LintViola
   return violations;
 }
 
-export async function lintFile(filePath: string): Promise<LintViolation[]> {
+/** Names of every semantic token. Components may reference only these via var(--name). */
+export function loadSemanticTokenNames(repoRoot: string): Set<string> {
+  const raw = JSON.parse(readFileSync(join(repoRoot, 'tokens', 'semantic.json'), 'utf8')) as {
+    tokens: Array<{ name: string }>;
+  };
+  return new Set(raw.tokens.map((t) => t.name));
+}
+
+/** Flags every var(--x) whose x is not a semantic token (primitives and unknown names). */
+export function lintTokenReferences(
+  content: string,
+  fileName: string,
+  semanticNames: Set<string>,
+): LintViolation[] {
+  const violations: LintViolation[] = [];
+  const lines = content.split('\n');
+  for (let lineIdx = 0; lineIdx < lines.length; lineIdx++) {
+    const line = lines[lineIdx] ?? '';
+    const re = /var\(\s*--([a-z0-9-]+)\s*[,)]/g;
+    let m: RegExpExecArray | null;
+    while ((m = re.exec(line)) !== null) {
+      const name = m[1] ?? '';
+      if (!semanticNames.has(name)) {
+        violations.push({
+          file: fileName,
+          line: lineIdx + 1,
+          column: m.index + 1,
+          pattern: 'non-semantic-token',
+          match: `var(--${name})`,
+          ruleId: 'FR-1',
+        });
+      }
+    }
+  }
+  return violations;
+}
+
+export async function lintFile(filePath: string, semanticNames?: Set<string>): Promise<LintViolation[]> {
   const source = await readFile(filePath, 'utf8');
-  return lintString(source, filePath);
+  const violations = lintString(source, filePath);
+  if (semanticNames) violations.push(...lintTokenReferences(source, filePath, semanticNames));
+  return violations;
 }
 
 export async function lintDirectory(
   dir: string,
   extensions: string[] = ['.tsx', '.ts', '.css', '.scss'],
+  semanticNames?: Set<string>,
 ): Promise<LintViolation[]> {
   if (!existsSync(dir)) return [];
   const entries = await readdir(dir, { withFileTypes: true });
@@ -86,9 +157,9 @@ export async function lintDirectory(
   for (const entry of entries) {
     const fullPath = join(dir, entry.name);
     if (entry.isDirectory()) {
-      violations.push(...(await lintDirectory(fullPath, extensions)));
+      violations.push(...(await lintDirectory(fullPath, extensions, semanticNames)));
     } else if (entry.isFile() && extensions.includes(extname(entry.name))) {
-      violations.push(...(await lintFile(fullPath)));
+      violations.push(...(await lintFile(fullPath, semanticNames)));
     }
   }
 
@@ -98,7 +169,7 @@ export async function lintDirectory(
 // CLI entrypoint
 if (process.argv[1] && statSync(process.argv[1]).ino === statSync(new URL(import.meta.url).pathname).ino) {
   const targetDir = process.argv[2] ?? 'components';
-  lintDirectory(targetDir).then((violations) => {
+  lintDirectory(targetDir, undefined, loadSemanticTokenNames(process.cwd())).then((violations) => {
     if (violations.length === 0) {
       console.log('token-lint: 0 violations');
       process.exit(0);

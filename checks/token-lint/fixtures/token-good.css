@@ -1,0 +1,10 @@
+/* Fixture: everything comes from semantic tokens — lint must pass */
+.good {
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-label);
+  font-family: var(--font-family-body);
+  line-height: var(--line-height-body);
+  border: var(--border-width-default) solid var(--color-border-default);
+  outline: var(--border-width-focus) solid var(--color-interactive-focus-ring);
+  z-index: var(--z-index-modal);
+}

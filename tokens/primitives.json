@@ -79,6 +79,19 @@
     { "name": "shadow-sm",   "tier": "primitive", "value": "0 1px 2px 0 rgba(0,0,0,0.05)",                                                             "description": "Small shadow" },
     { "name": "shadow-md",   "tier": "primitive", "value": "0 4px 6px -1px rgba(0,0,0,0.10), 0 2px 4px -2px rgba(0,0,0,0.10)",                        "description": "Medium shadow" },
     { "name": "shadow-lg",   "tier": "primitive", "value": "0 10px 15px -3px rgba(0,0,0,0.10), 0 4px 6px -4px rgba(0,0,0,0.10)",                      "description": "Large shadow" },
-    { "name": "shadow-xl",   "tier": "primitive", "value": "0 20px 25px -5px rgba(0,0,0,0.10), 0 8px 10px -6px rgba(0,0,0,0.10)",                     "description": "Extra-large shadow" }
+    { "name": "shadow-xl",   "tier": "primitive", "value": "0 20px 25px -5px rgba(0,0,0,0.10), 0 8px 10px -6px rgba(0,0,0,0.10)",                     "description": "Extra-large shadow" },
+
+    { "name": "space-0-5", "tier": "primitive", "value": "0.125rem", "description": "2px equivalent" },
+    { "name": "border-width-1", "tier": "primitive", "value": "1px", "description": "Hairline border width" },
+    { "name": "border-width-2", "tier": "primitive", "value": "2px", "description": "Thick border width" },
+    { "name": "size-5", "tier": "primitive", "value": "1.25rem", "description": "20px equivalent" },
+    { "name": "size-11", "tier": "primitive", "value": "2.75rem", "description": "44px equivalent; WCAG 2.2 target size" },
+    { "name": "size-96", "tier": "primitive", "value": "24rem", "description": "384px equivalent" },
+    { "name": "size-128", "tier": "primitive", "value": "32rem", "description": "512px equivalent" },
+    { "name": "size-192", "tier": "primitive", "value": "48rem", "description": "768px equivalent" },
+    { "name": "font-family-sans", "tier": "primitive", "value": "system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif", "description": "System sans-serif stack" },
+    { "name": "opacity-50", "tier": "primitive", "value": "0.5", "description": "Half opacity" },
+    { "name": "z-index-overlay", "tier": "primitive", "value": "1000", "description": "Overlay stacking layer" },
+    { "name": "duration-fast", "tier": "primitive", "value": "120ms", "description": "Fast transition duration" }
   ]
 }
