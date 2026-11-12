@@ -53,11 +53,12 @@ Work on one phase at a time. Stop at its exit criteria and wait for review. If I
 
 ## Commands
 
-Fill these in during phase 0 and keep them current.
-
-- Install: `TODO`
-- Test: `TODO`
-- Lint and token lint: `TODO`
-- Storybook: `TODO`
-- Visual regression: `TODO`
-- Golden set: `TODO`
+- Install: `npm install`
+- Test: `npm test`
+- Type check: `npm run type-check`
+- Lint: `npm run lint`
+- Token lint: `npm run token-lint -- components`
+- Baseline metrics: `npm run baseline-metrics -- .`
+- Storybook: `TODO` (phase 1)
+- Visual regression: `TODO` (phase 2)
+- Golden set: `TODO` (phase 2)
