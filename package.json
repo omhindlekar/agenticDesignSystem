@@ -13,7 +13,8 @@
     "test": "vitest run --config vitest.config.ts",
     "token-lint": "tsx checks/token-lint/index.ts",
     "baseline-metrics": "tsx checks/baseline-metrics/index.ts",
-    "build": "npm run build --workspaces --if-present"
+    "build": "npm run build --workspaces --if-present",
+    "tokens:build": "tsx scripts/build-tokens.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.8.0",
