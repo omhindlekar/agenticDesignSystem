@@ -42,9 +42,8 @@ const LINT_RULES: LintRule[] = [
   },
 ];
 
-export async function lintFile(filePath: string): Promise<LintViolation[]> {
-  const source = await readFile(filePath, 'utf8');
-  const lines = source.split('\n');
+export function lintString(content: string, fileName = '<generated>'): LintViolation[] {
+  const lines = content.split('\n');
   const violations: LintViolation[] = [];
 
   for (const { pattern, regex } of LINT_RULES) {
@@ -57,7 +56,7 @@ export async function lintFile(filePath: string): Promise<LintViolation[]> {
       let match: RegExpExecArray | null;
       while ((match = localRegex.exec(line)) !== null) {
         violations.push({
-          file: filePath,
+          file: fileName,
           line: lineIdx + 1,
           column: match.index + 1,
           pattern,
@@ -69,6 +68,11 @@ export async function lintFile(filePath: string): Promise<LintViolation[]> {
   }
 
   return violations;
+}
+
+export async function lintFile(filePath: string): Promise<LintViolation[]> {
+  const source = await readFile(filePath, 'utf8');
+  return lintString(source, filePath);
 }
 
 export async function lintDirectory(
