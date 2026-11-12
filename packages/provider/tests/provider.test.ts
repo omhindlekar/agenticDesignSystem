@@ -203,10 +203,8 @@ describe('NFR-11: createProvider factory', () => {
   // NFR-11 fix-6: createProvider passes pricing from config to ApiProvider
   it('NFR-11: fix-6: createProvider passes pricing config to ApiProvider', async () => {
     const { ApiProvider } = await import('../src/api.js');
-    // Construct directly with custom pricing and verify costUsd is computed correctly
-    const pricing = { inputPerMTokenUsd: 6.0, outputPerMTokenUsd: 30.0 };
-    const provider = new ApiProvider(pricing);
-    // Can't call real API — just verify constructor accepts pricing without throwing
+    const pricingTable = { [TEST_MODEL]: { inputPerMTokenUsd: 6.0, outputPerMTokenUsd: 30.0 } };
+    const provider = new ApiProvider(pricingTable);
     expect(provider).toBeInstanceOf(ApiProvider);
   });
 });
@@ -214,33 +212,29 @@ describe('NFR-11: createProvider factory', () => {
 // ─── NFR-11: ClaudeCliProvider (fix-1, fix-2, fix-3) ─────────────────────────
 
 describe('NFR-11: ClaudeCliProvider (fix-1/2/3: temp cwd, stdin, error handling)', () => {
-  it('NFR-11: fix-1: uses --bare flag to prevent CLAUDE.md loading', () => {
+  it('NFR-11: fix-1: does NOT pass --bare as a CLI arg (it forces API key auth, breaking subscription login)', () => {
     const src = readFileSync(join(__dirname, '..', 'src', 'cli.ts'), 'utf8');
-    expect(src).toContain('--bare');
+    // The string literal '--bare' must not appear as an argument — comments may mention it.
+    expect(src).not.toContain("'--bare'");
   });
 
   it('NFR-11: fix-1: uses --tools flag with empty string to disable tools', () => {
-
     const src = readFileSync(join(__dirname, '..', 'src', 'cli.ts'), 'utf8');
     expect(src).toContain("'--tools'");
-    expect(src).toContain("''");
   });
 
   it('NFR-11: fix-1: uses --output-format text flag', () => {
-
     const src = readFileSync(join(__dirname, '..', 'src', 'cli.ts'), 'utf8');
     expect(src).toContain('--output-format');
     expect(src).toContain('text');
   });
 
   it('NFR-11: fix-2: passes prompt via stdin (input option), not as a CLI argument', () => {
-
     const src = readFileSync(join(__dirname, '..', 'src', 'cli.ts'), 'utf8');
     expect(src).toContain('input: prompt');
   });
 
   it('NFR-11: fix-1: uses a temporary empty cwd (mkdtempSync)', () => {
-
     const src = readFileSync(join(__dirname, '..', 'src', 'cli.ts'), 'utf8');
     expect(src).toContain('mkdtempSync');
     expect(src).toContain('cwd: tmpDir');
@@ -268,20 +262,22 @@ describe('NFR-11: ClaudeCliProvider (fix-1/2/3: temp cwd, stdin, error handling)
     );
   });
 
-  it('NFR-11: fix-3: throws on rate-limit message in stdout', async () => {
+  // Rate-limit detection must use stderr + non-zero exit only — never inspect stdout,
+  // since the model may legitimately output "429" or "overloaded" as part of its answer.
+  it('NFR-11: fix-3: stdout containing "429" and "overloaded" is accepted when exit is 0', async () => {
     const { ClaudeCliProvider } = await import('../src/cli.js');
     const fakeSpawner = vi.fn().mockReturnValue({
       status: 0,
-      stdout: 'rate limit exceeded, please slow down',
+      stdout: 'The HTTP 429 status means overloaded — back off and retry.',
       stderr: '', error: undefined, pid: 0, output: [], signal: null,
     });
     const p = new ClaudeCliProvider(fakeSpawner);
-    await expect(p.complete('hello', { model: TEST_MODEL, maxTokens: 256 })).rejects.toThrow(
-      /rate limit/i,
-    );
+    const result = await p.complete('explain 429', { model: TEST_MODEL, maxTokens: 256 });
+    expect(result.text).toContain('429');
+    expect(result.text).toContain('overloaded');
   });
 
-  it('NFR-11: fix-3: throws on "429" in stderr', async () => {
+  it('NFR-11: fix-3: throws with rate-limit message when non-zero exit + 429 in stderr', async () => {
     const { ClaudeCliProvider } = await import('../src/cli.js');
     const fakeSpawner = vi.fn().mockReturnValue({
       status: 1, stdout: '', stderr: '429 Too Many Requests', error: undefined, pid: 0, output: [], signal: null,
@@ -292,8 +288,18 @@ describe('NFR-11: ClaudeCliProvider (fix-1/2/3: temp cwd, stdin, error handling)
     );
   });
 
-  it('NFR-11: fix-3: has a timeout set', () => {
+  it('NFR-11: fix-3: non-zero exit without rate-limit pattern throws generic exit error', async () => {
+    const { ClaudeCliProvider } = await import('../src/cli.js');
+    const fakeSpawner = vi.fn().mockReturnValue({
+      status: 1, stdout: '', stderr: 'internal error', error: undefined, pid: 0, output: [], signal: null,
+    });
+    const p = new ClaudeCliProvider(fakeSpawner);
+    await expect(p.complete('hello', { model: TEST_MODEL, maxTokens: 256 })).rejects.toThrow(
+      /exited with status 1/i,
+    );
+  });
 
+  it('NFR-11: fix-3: has a timeout set', () => {
     const src = readFileSync(join(__dirname, '..', 'src', 'cli.ts'), 'utf8');
     expect(src).toContain('timeout');
   });
@@ -308,27 +314,40 @@ describe('NFR-11: ClaudeCliProvider (fix-1/2/3: temp cwd, stdin, error handling)
     const p = new ClaudeCliProvider(fakeSpawner);
     await p.complete('hello', { model: TEST_MODEL, maxTokens: 256 });
     const fsAfter = readdirSync(os.tmpdir()).filter((f) => f.startsWith('claude-cli-'));
-    // No new claude-cli- dirs should remain
     expect(fsAfter.length).toBe(fsBefore.length);
   });
 });
 
 // ─── NFR-11: ApiProvider pricing from config (fix-6) ─────────────────────────
 
-describe('NFR-11: fix-6: ApiProvider pricing from config', () => {
-  it('NFR-11: fix-6: ApiProvider accepts custom pricing in constructor', async () => {
+describe('NFR-11: fix-6: ApiProvider pricing keyed by model name', () => {
+  it('NFR-11: fix-6: ApiProvider accepts a per-model pricing table', async () => {
     const { ApiProvider } = await import('../src/api.js');
-    const p = new ApiProvider({ inputPerMTokenUsd: 1.0, outputPerMTokenUsd: 5.0 });
+    const table = { 'claude-sonnet-4-6': { inputPerMTokenUsd: 3.0, outputPerMTokenUsd: 15.0 } };
+    const p = new ApiProvider(table);
     expect(p).toBeInstanceOf(ApiProvider);
   });
 
-  it('NFR-11: fix-6: config/defaults.json contains pricing field', () => {
+  it('NFR-11: fix-6: config/defaults.json pricing is a map keyed by model name', () => {
+    type PricingEntry = { inputPerMTokenUsd: number; outputPerMTokenUsd: number };
     const defaults = JSON.parse(
       readFileSync(join(repoRoot, 'config', 'defaults.json'), 'utf8'),
-    ) as { pricing?: { inputPerMTokenUsd: number; outputPerMTokenUsd: number } };
+    ) as { pricing?: Record<string, PricingEntry> };
     expect(defaults.pricing).toBeDefined();
-    expect(typeof defaults.pricing?.inputPerMTokenUsd).toBe('number');
-    expect(typeof defaults.pricing?.outputPerMTokenUsd).toBe('number');
+    // At least the default model must have an entry
+    const entry = defaults.pricing?.['claude-sonnet-4-6'];
+    expect(typeof entry?.inputPerMTokenUsd).toBe('number');
+    expect(typeof entry?.outputPerMTokenUsd).toBe('number');
+  });
+
+  it('NFR-11: fix-6: config/defaults.json has entries for haiku, sonnet, and opus', () => {
+    type PricingEntry = { inputPerMTokenUsd: number; outputPerMTokenUsd: number };
+    const defaults = JSON.parse(
+      readFileSync(join(repoRoot, 'config', 'defaults.json'), 'utf8'),
+    ) as { pricing?: Record<string, PricingEntry> };
+    expect(defaults.pricing?.['claude-haiku-4-5-20251001']).toBeDefined();
+    expect(defaults.pricing?.['claude-sonnet-4-6']).toBeDefined();
+    expect(defaults.pricing?.['claude-opus-4-7']).toBeDefined();
   });
 });
 

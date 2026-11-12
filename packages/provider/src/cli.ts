@@ -5,6 +5,7 @@ import { join } from 'node:path';
 import type { SpawnSyncReturns } from 'node:child_process';
 import type { ModelProvider, CompleteOptions, CompleteResult } from './types.js';
 
+// Rate-limit signals come from the CLI layer (stderr / non-zero exit), never from model output.
 const RATE_LIMIT_PATTERNS = /rate.?limit|429|too many requests|overloaded/i;
 
 type Spawner = (
@@ -21,22 +22,23 @@ export class ClaudeCliProvider implements ModelProvider {
   }
 
   async complete(prompt: string, opts: CompleteOptions): Promise<CompleteResult> {
-    // Temp empty dir as cwd so CLAUDE.md auto-discovery finds nothing.
+    // Temp empty dir as cwd: no CLAUDE.md present, so auto-discovery finds nothing.
+    // Note: --bare is intentionally omitted — it forces ANTHROPIC_API_KEY auth and
+    // breaks subscription (Claude Max / Pro) logins.
     const tmpDir = mkdtempSync(join(tmpdir(), 'claude-cli-'));
     try {
       const result = this.spawner(
         'claude',
         [
           '-p',
-          '--bare',          // skip hooks, CLAUDE.md auto-discovery, LSP, plugins, auto-memory
-          '--tools', '',     // disable all built-in tools
+          '--tools', '',            // disable all built-in tools
           '--output-format', 'text',
           '--model', opts.model,
         ],
         {
-          input: prompt,     // prompt via stdin, not as a CLI argument
+          input: prompt,            // prompt via stdin, not as a CLI argument
           encoding: 'utf8',
-          cwd: tmpDir,
+          cwd: tmpDir,              // empty dir — no CLAUDE.md to load
           timeout: 120_000,
           maxBuffer: 10 * 1024 * 1024,
         },
@@ -47,10 +49,11 @@ export class ClaudeCliProvider implements ModelProvider {
       }
 
       const stderr = result.stderr?.trim() ?? '';
-      const stdout = (result.stdout ?? '').trim();
 
-      if (RATE_LIMIT_PATTERNS.test(stdout) || RATE_LIMIT_PATTERNS.test(stderr)) {
-        throw new Error(`ClaudeCliProvider: rate limit detected. stdout: ${stdout} stderr: ${stderr}`);
+      // Rate-limit signals live in stderr or non-zero exit only — never inspect stdout
+      // for rate-limit strings, since the model itself may legitimately output them.
+      if (result.status !== 0 && RATE_LIMIT_PATTERNS.test(stderr)) {
+        throw new Error(`ClaudeCliProvider: rate limit detected. stderr: ${stderr}`);
       }
 
       if (result.status !== 0) {
@@ -60,6 +63,7 @@ export class ClaudeCliProvider implements ModelProvider {
         );
       }
 
+      const stdout = (result.stdout ?? '').trim();
       if (!stdout) {
         throw new Error('ClaudeCliProvider: claude returned empty output');
       }
