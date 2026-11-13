@@ -7,8 +7,7 @@
   min-width: var(--size-touch-target-min);
   padding: var(--space-component-padding-sm) var(--space-component-padding-md);
   border: var(--border-width-default) solid transparent;
-  border-radius: var(--radius-component-sm);
-  font-family: var(--font-family-body);
+  font-family: var(--font-family-display);
   font-size: var(--font-size-label-md);
   font-weight: var(--font-weight-label);
   line-height: var(--line-height-body);
@@ -82,11 +81,16 @@
 
 .ads-button[data-state~="disabled"] {
   background-color: var(--color-interactive-disabled);
-  border-color: transparent;
+  border-color: var(--color-border-disabled);
   color: var(--color-text-disabled);
   cursor: not-allowed;
 }
 
 .ads-button[data-state~="loading"] {
   cursor: progress;
+}
+
+/* Inside a button the indicator takes the label colour, so it reads on any fill. */
+.ads-button .ads-spinner {
+  border-top-color: currentColor;
 }

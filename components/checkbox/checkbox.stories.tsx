@@ -22,6 +22,7 @@ export const Indeterminate: Story = {
   args: { label: 'Select all', indeterminate: true },
   parameters: { ads: { state: 'indeterminate' } },
 };
+export const Hover: Story = { parameters: { ads: { state: 'hover' }, pseudo: { hover: true } } };
 export const Focus: Story = { parameters: { ads: { state: 'focus' }, pseudo: { focusVisible: true } } };
 export const Disabled: Story = { args: { disabled: true }, parameters: { ads: { state: 'disabled' } } };
 export const Error: Story = {

@@ -63,20 +63,24 @@ export function Checkbox({
       })}
     >
       <div className="ads-checkbox__row">
-        <input
-          ref={ref}
-          id={id}
-          type="checkbox"
-          className="ads-checkbox__box"
-          name={name}
-          value={value}
-          disabled={disabled}
-          required={required}
-          aria-invalid={errorMessage ? true : undefined}
-          aria-describedby={describedBy(helperId, errorId)}
-          onChange={handleChange}
-          {...checkedProps}
-        />
+        <span className="ads-checkbox__control">
+          <input
+            ref={ref}
+            id={id}
+            type="checkbox"
+            className="ads-checkbox__box"
+            name={name}
+            value={value}
+            disabled={disabled}
+            required={required}
+            aria-invalid={errorMessage ? true : undefined}
+            aria-describedby={describedBy(helperId, errorId)}
+            onChange={handleChange}
+            {...checkedProps}
+          />
+          {/* Drawn check or dash. The native mark is hidden so corners stay square. */}
+          <span className="ads-checkbox__mark" aria-hidden="true" />
+        </span>
         <label className="ads-field__label" htmlFor={id}>
           {label}
           {required ? <span className="ads-field__required" aria-hidden="true"> *</span> : null}

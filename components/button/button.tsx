@@ -48,7 +48,15 @@ export function Button({
       aria-busy={loading || undefined}
       onClick={handleClick}
     >
-      {loading ? <span className="ads-spinner" aria-hidden="true" /> : iconStart}
+      {loading ? (
+        <>
+          <span className="ads-spinner" aria-hidden="true" />
+          {/* Shown instead of the spinner under prefers-reduced-motion. */}
+          <span className="ads-spinner__text" aria-hidden="true">Loading</span>
+        </>
+      ) : (
+        iconStart
+      )}
       <span className="ads-button__label">{label}</span>
       {loading ? <span className="ads-visually-hidden">(loading)</span> : iconEnd}
     </button>

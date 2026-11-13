@@ -46,9 +46,8 @@
   max-height: 100%;
   overflow: auto;
   padding: var(--space-component-padding-lg);
-  border-radius: var(--radius-component-lg);
+  border: var(--border-width-default) solid var(--color-border-default);
   background-color: var(--color-background-surface);
-  box-shadow: var(--shadow-component-modal);
 }
 
 .ads-modal__panel:focus-visible {
@@ -71,7 +70,7 @@
 .ads-modal[data-size="fullscreen"] .ads-modal__panel {
   max-width: none;
   height: 100%;
-  border-radius: 0;
+  border: none;
 }
 
 .ads-modal__header {
@@ -83,6 +82,8 @@
 
 .ads-modal__title {
   margin: 0;
+  font-family: var(--font-family-display);
+  color: var(--color-text-heading);
   font-size: var(--font-size-heading-md);
   font-weight: var(--font-weight-heading);
   line-height: var(--line-height-heading);

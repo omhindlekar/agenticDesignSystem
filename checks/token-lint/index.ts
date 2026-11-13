@@ -2,6 +2,8 @@ import { readFile, readdir } from 'node:fs/promises';
 import { readFileSync } from 'node:fs';
 import { join, extname } from 'node:path';
 import { existsSync, statSync } from 'node:fs';
+import { resolveSemanticTokens } from '../../scripts/build-tokens.js';
+import { checkContrast } from './contrast.js';
 
 export interface LintViolation {
   file: string;
@@ -10,53 +12,92 @@ export interface LintViolation {
   pattern: string;
   match: string;
   ruleId: 'FR-1';
+  /** The rules.yaml rule this violation breaks, when there is one. */
+  ruleRef?: string;
 }
 
 type LintRule = {
   pattern: string;
   regex: RegExp;
+  ruleRef?: string;
 };
+
+/** Every rules.yaml ID token lint can cite. A test keeps this in step with rules.yaml. */
+export const RULE_REFS = [
+  'DS-T-001',
+  'DS-T-002',
+  'DS-T-003',
+  'DS-T-004',
+  'DS-L-001',
+  'DS-L-002',
+  'DS-L-003',
+  'DS-A-001',
+  'DS-A-006',
+] as const;
 
 const LINT_RULES: LintRule[] = [
   {
     pattern: 'hex-color',
-    // Matches #rgb, #rrggbb, #rrggbbaa — but not inside CSS var() references
-    regex: /(?<!var\([^)]*)'?"?#([0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})\b/g,
+    // #rgb, #rgba, #rrggbb, #rrggbbaa anywhere, including var() fallbacks,
+    // and %23-encoded hex inside SVG data URIs.
+    regex: /(?:#|%23)(?:[0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{3,4})\b/g,
+    ruleRef: 'DS-T-001',
   },
   {
     pattern: 'rgb-color',
     regex: /\brgba?\s*\(\s*[\d.]+\s*,\s*[\d.]+\s*,\s*[\d.]+/g,
+    ruleRef: 'DS-T-001',
   },
   {
     pattern: 'hsl-color',
     regex: /\bhsla?\s*\(\s*[\d.]+\s*,\s*[\d.]+%\s*,\s*[\d.]+%/g,
+    ruleRef: 'DS-T-001',
   },
   {
     pattern: 'hardcoded-spacing',
     // margin/padding/gap with a bare px value (not inside var())
     regex: /(?:margin|padding|gap)\s*:\s*['"]?\d+(?:\.\d+)?px/g,
+    ruleRef: 'DS-T-002',
   },
   {
     pattern: 'hardcoded-radius',
     // border-radius / borderRadius with a bare px value
     regex: /(?:border-?[Rr]adius)\s*:\s*['"]?\d+(?:\.\d+)?px/g,
+    ruleRef: 'DS-T-003',
+  },
+  {
+    pattern: 'non-zero-radius',
+    // Any border radius (shorthand, per-corner, CSS or camelCase) other than 0 or var(--radius-*).
+    regex:
+      /\bborder(?:-(?:top|bottom|start|end)-(?:left|right|start|end))?-radius\s*:\s*['"]?(?=[^\s'"])(?!(?:0(?:px)?\s*['"]?\s*(?:[;,}]|$)|var\(--radius-))[^;,}\n]+|\bborder(?:Top|Bottom|Start|End)?(?:Left|Right|Start|End)?Radius\s*:\s*['"]?(?=[^\s'"])(?!(?:0(?:px)?\s*['"]?\s*(?:[;,}]|$)|var\(--radius-))[^;,}\n]+/g,
+    ruleRef: 'DS-T-004',
+  },
+  {
+    pattern: 'hardcoded-shadow',
+    // Elevation comes from borders; a shadow must be none or a semantic token.
+    regex: /\bbox-?[Ss]hadow\s*:\s*['"]?(?=[^\s'"])(?!none\b|var\(--shadow-)[^;,}\n]+/g,
+    ruleRef: 'DS-L-002',
   },
   {
     pattern: 'hardcoded-font-size',
     regex: /font-?[Ss]ize\s*:\s*['"]?\d/g,
+    ruleRef: 'DS-L-001',
   },
   {
     pattern: 'hardcoded-font-weight',
     regex: /font-?[Ww]eight\s*:\s*['"]?\d/g,
+    ruleRef: 'DS-L-001',
   },
   {
     pattern: 'hardcoded-font-family',
     // Anything other than var(...) or inherit
     regex: /font-?[Ff]amily\s*:\s*(?!['"]?(?:var\(|inherit))['"]?[A-Za-z"]/g,
+    ruleRef: 'DS-L-001',
   },
   {
     pattern: 'hardcoded-line-height',
     regex: /line-?[Hh]eight\s*:\s*['"]?\d/g,
+    ruleRef: 'DS-L-001',
   },
   {
     pattern: 'hardcoded-border-width',
@@ -77,7 +118,7 @@ export function lintString(content: string, fileName = '<generated>'): LintViola
   const lines = content.split('\n');
   const violations: LintViolation[] = [];
 
-  for (const { pattern, regex } of LINT_RULES) {
+  for (const { pattern, regex, ruleRef } of LINT_RULES) {
     for (let lineIdx = 0; lineIdx < lines.length; lineIdx++) {
       const line = lines[lineIdx] ?? '';
       // Skip comment lines
@@ -93,11 +134,118 @@ export function lintString(content: string, fileName = '<generated>'): LintViola
           pattern,
           match: match[0],
           ruleId: 'FR-1',
+          ...(ruleRef ? { ruleRef } : {}),
         });
       }
     }
   }
 
+  return violations;
+}
+
+// ── Font roles (DS-L-003) ─────────────────────────────────────────────────────
+
+/** Selectors for text that must use the SemiCondensed display font. */
+const DISPLAY_ROLE = /\.ads-button\b|__label\b|__title\b|__heading\b|\bbadge\b|(?:^|[\s,>+~])(?:th|h[1-6])\b/;
+/** Selectors for text that must use the Saira body font. */
+const BODY_ROLE = /__field\b|__message\b|__body\b|__helper\b/;
+const DISPLAY_FONT = /var\(--font-family-display\)/;
+
+/**
+ * Headings, buttons, labels, table headers and badges use var(--font-family-display);
+ * inputs, helper text and body copy do not. A role's base rule (a bare class such as
+ * `.ads-button`) must set the display font itself; modifier rules may inherit it.
+ */
+export function lintFontRoles(css: string, fileName = '<generated>'): LintViolation[] {
+  const violations: LintViolation[] = [];
+  const baseRoles = new Map<string, number>();
+  const hasFamily = new Set<string>();
+  const block = /([^{}]+)\{([^{}]*)\}/g;
+  let m: RegExpExecArray | null;
+
+  while ((m = block.exec(css)) !== null) {
+    const selectorText = (m[1] ?? '').replace(/\/\*[\s\S]*?\*\//g, '').trim();
+    const body = m[2] ?? '';
+    const line = css.slice(0, m.index + (m[0].length - m[0].trimStart().length)).split('\n').length;
+    const family = /font-family\s*:\s*([^;]+)/.exec(body)?.[1]?.trim();
+    const selectors = selectorText.split(',').map((x) => x.trim());
+    const push = (pattern: string, match: string): void => {
+      violations.push({ file: fileName, line, column: 1, pattern, match, ruleId: 'FR-1', ruleRef: 'DS-L-003' });
+    };
+
+    for (const sel of selectors) {
+      const isBase = /^\.[\w-]+$/.test(sel);
+      if (DISPLAY_ROLE.test(` ${sel}`)) {
+        if (family !== undefined && !DISPLAY_FONT.test(family)) push('display-font-role', `${sel} { font-family: ${family} }`);
+        if (isBase && !baseRoles.has(sel)) baseRoles.set(sel, line);
+        if (family !== undefined) hasFamily.add(sel);
+      } else if (BODY_ROLE.test(sel) && family !== undefined && DISPLAY_FONT.test(family)) {
+        push('body-font-role', `${sel} { font-family: ${family} }`);
+      }
+    }
+  }
+
+  for (const [sel, line] of baseRoles) {
+    if (!hasFamily.has(sel)) {
+      violations.push({
+        file: fileName,
+        line,
+        column: 1,
+        pattern: 'display-font-role',
+        match: `${sel} does not set font-family: var(--font-family-display)`,
+        ruleId: 'FR-1',
+        ruleRef: 'DS-L-003',
+      });
+    }
+  }
+  return violations;
+}
+
+// ── Token files: square corners (DS-T-004) ────────────────────────────────────
+
+interface RawToken {
+  name: string;
+  tier: string;
+  value?: string;
+  reference?: string;
+  description?: string;
+}
+
+const readTokens = (repoRoot: string, file: string): RawToken[] =>
+  (JSON.parse(readFileSync(join(repoRoot, 'tokens', file), 'utf8')) as { tokens: RawToken[] }).tokens;
+
+/**
+ * Flags any radius token that is not 0. With no `tokens` argument it checks
+ * tokens/primitives.json and tokens/semantic.json under `repoRoot`.
+ */
+export function lintTokenFiles(tokens?: RawToken[], fileName = 'tokens', repoRoot = process.cwd()): LintViolation[] {
+  const sets: Array<[string, RawToken[]]> = tokens
+    ? [[fileName, tokens]]
+    : [
+        ['tokens/primitives.json', readTokens(repoRoot, 'primitives.json')],
+        ['tokens/semantic.json', readTokens(repoRoot, 'semantic.json')],
+      ];
+  const primitiveValues = new Map<string, string>();
+  for (const [, list] of sets) for (const t of list) if (t.value !== undefined) primitiveValues.set(t.name, t.value);
+
+  const violations: LintViolation[] = [];
+  for (const [file, list] of sets) {
+    list.forEach((t, i) => {
+      if (!t.name.startsWith('radius-')) return;
+      const value = t.value ?? primitiveValues.get(t.reference ?? '') ?? '';
+      if (parseFloat(value) !== 0) {
+        violations.push({
+          file,
+          line: i + 1,
+          column: 1,
+          pattern: 'non-zero-radius-token',
+          match: `${t.name}: ${value}`,
+          ruleId: 'FR-1',
+          ruleRef: 'DS-T-004',
+        });
+      }
+    });
+  }
   return violations;
 }
 
@@ -141,6 +289,7 @@ export function lintTokenReferences(
 export async function lintFile(filePath: string, semanticNames?: Set<string>): Promise<LintViolation[]> {
   const source = await readFile(filePath, 'utf8');
   const violations = lintString(source, filePath);
+  if (extname(filePath) === '.css') violations.push(...lintFontRoles(source, filePath));
   if (semanticNames) violations.push(...lintTokenReferences(source, filePath, semanticNames));
   return violations;
 }
@@ -169,13 +318,27 @@ export async function lintDirectory(
 // CLI entrypoint
 if (process.argv[1] && statSync(process.argv[1]).ino === statSync(new URL(import.meta.url).pathname).ino) {
   const targetDir = process.argv[2] ?? 'components';
-  lintDirectory(targetDir, undefined, loadSemanticTokenNames(process.cwd())).then((violations) => {
+  const repoRoot = process.cwd();
+  lintDirectory(targetDir, undefined, loadSemanticTokenNames(repoRoot)).then((violations) => {
+    violations.push(...lintTokenFiles(undefined, undefined, repoRoot));
+    for (const c of checkContrast(resolveSemanticTokens(repoRoot))) {
+      violations.push({
+        file: 'tokens/semantic.json',
+        line: 0,
+        column: 0,
+        pattern: 'contrast',
+        match: `${c.fg} (${c.fgValue}) on ${c.bg} (${c.bgValue}) is ${c.ratio.toFixed(2)}:1, needs ${c.min}:1`,
+        ruleId: 'FR-1',
+        ruleRef: c.ruleRef,
+      });
+    }
     if (violations.length === 0) {
       console.log('token-lint: 0 violations');
       process.exit(0);
     }
     for (const v of violations) {
-      console.error(`${v.file}:${v.line}:${v.column} [${v.pattern}] ${v.match}`);
+      const ref = v.ruleRef ? ` ${v.ruleRef}` : '';
+      console.error(`${v.file}:${v.line}:${v.column} [${v.pattern}${ref}] ${v.match}`);
     }
     console.error(`\ntoken-lint: ${violations.length} violation(s) — rule FR-1`);
     process.exit(1);

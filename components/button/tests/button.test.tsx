@@ -41,6 +41,37 @@ describe('Button', () => {
     expect(onClick).not.toHaveBeenCalled();
   });
 
+  it('NFR-9: disabled uses aria-disabled="true", not the native disabled attribute', () => {
+    render(<Button label="Save" disabled />);
+    const btn = screen.getByRole('button');
+    expect(btn.getAttribute('aria-disabled')).toBe('true');
+    expect(btn.hasAttribute('disabled')).toBe(false);
+  });
+
+  it('NFR-9: disabled ignores Space as well as Enter and click', async () => {
+    const onClick = vi.fn();
+    render(<Button label="Save" disabled onClick={onClick} />);
+    const user = userEvent.setup();
+    await user.tab();
+    await user.keyboard(' ');
+    await user.keyboard('{Enter}');
+    expect(onClick).not.toHaveBeenCalled();
+  });
+
+  it('NFR-9: a disabled submit button does not submit its form', async () => {
+    const onSubmit = vi.fn((e: Event) => e.preventDefault());
+    render(
+      <form onSubmit={(e) => onSubmit(e.nativeEvent)}>
+        <Button label="Send" type="submit" disabled />
+      </form>,
+    );
+    const user = userEvent.setup();
+    await user.click(screen.getByRole('button'));
+    await user.tab();
+    await user.keyboard('{Enter}');
+    expect(onSubmit).not.toHaveBeenCalled();
+  });
+
   it('NFR-9: loading sets aria-busy, keeps the label and blocks clicks', async () => {
     const onClick = vi.fn();
     render(<Button label="Save" loading onClick={onClick} />);

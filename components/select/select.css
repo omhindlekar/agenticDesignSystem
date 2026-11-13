@@ -1,21 +1,51 @@
+/* Wrapper that draws the chevron; a native <select> cannot hold pseudo-elements. */
+.ads-select__control {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Chevron: two sides of a square, rotated. Square corners, no image. */
+.ads-select__control::after {
+  content: '';
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-end: var(--space-component-padding-md);
+  width: var(--space-component-padding-sm);
+  height: var(--space-component-padding-sm);
+  border-inline-end: var(--border-width-focus) solid var(--color-text-secondary);
+  border-block-end: var(--border-width-focus) solid var(--color-text-secondary);
+  transform: translateY(-75%) rotate(45deg);
+  pointer-events: none;
+}
+
 .ads-select__field {
+  appearance: none;
   min-height: var(--size-touch-target-min);
-  padding: var(--space-component-padding-sm) var(--space-component-padding-md);
-  border: var(--border-width-default) solid var(--color-border-strong);
-  border-radius: var(--radius-component-sm);
+  margin: 0;
+  padding-block: var(--space-component-padding-sm);
+  padding-inline: var(--space-component-padding-md) var(--space-layout-section);
+  border: var(--border-width-default) solid var(--color-border-input);
   background-color: var(--color-background-surface);
   color: var(--color-text-primary);
   font-family: var(--font-family-body);
   font-size: var(--font-size-body);
   line-height: var(--line-height-body);
   cursor: pointer;
-  transition: border-color var(--motion-duration-fast) ease;
+  transition:
+    border-color var(--motion-duration-fast) ease,
+    background-color var(--motion-duration-fast) ease;
+}
+
+.ads-select__field:hover:not(:disabled) {
+  border-color: var(--color-border-input-hover);
 }
 
 .ads-select__field:focus-visible {
   outline: var(--border-width-focus) solid var(--color-interactive-focus-ring);
   outline-offset: var(--focus-ring-offset);
   border-color: var(--color-border-interactive);
+  background-color: var(--color-background-focus-tint);
 }
 
 .ads-select[data-state~="default"] .ads-select__field {
@@ -31,14 +61,23 @@
 }
 
 .ads-select[data-state~="success"] .ads-select__field {
-  border-color: var(--color-text-success);
+  border-color: var(--color-border-success);
+}
+
+/* Natively disabled: not focusable, so no ring and no hover response. */
+.ads-select__field:disabled {
+  outline: none;
 }
 
 .ads-select[data-state~="disabled"] .ads-select__field {
-  background-color: var(--color-background-subtle);
-  border-color: var(--color-border-default);
+  background-color: var(--color-interactive-disabled);
+  border-color: var(--color-border-disabled);
   color: var(--color-text-disabled);
   cursor: not-allowed;
+}
+
+.ads-select[data-state~="disabled"] .ads-select__control::after {
+  border-color: var(--color-border-disabled);
 }
 
 .ads-select[data-state~="disabled"] .ads-field__label {
