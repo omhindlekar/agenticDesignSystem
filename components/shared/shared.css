@@ -15,9 +15,9 @@
   flex: none;
   width: var(--size-control-indicator);
   height: var(--size-control-indicator);
-  /* Square by design: a spinning square, not a circle. */
-  border: var(--border-width-focus) solid var(--color-interactive-default);
-  border-right-color: transparent;
+  /* Square by design: a spinning square, not a circle. Neutral track, blue indicator. */
+  border: var(--border-width-focus) solid var(--color-spinner-track);
+  border-top-color: var(--color-interactive-default);
   animation: ads-spin calc(var(--motion-duration-fast) * 6) linear infinite;
 }
 
@@ -27,9 +27,19 @@
   }
 }
 
+/* Static text that replaces the spinner when motion is reduced. */
+.ads-spinner__text {
+  display: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .ads-spinner {
+    display: none;
     animation: none;
+  }
+
+  .ads-spinner__text {
+    display: inline;
   }
 }
 

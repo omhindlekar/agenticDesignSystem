@@ -11,7 +11,7 @@
   --color-text-primary: #1b1f27;
   --color-text-heading: #0a2057;
   --color-text-secondary: #666666;
-  --color-text-disabled: #bdc1c7;
+  --color-text-disabled: #7a808a;
   --color-text-inverse: #ffffff;
   --color-text-link: #285bb0;
   --color-text-link-hover: #1e4691;
@@ -30,6 +30,7 @@
   --color-border-input: #7a808a;
   --color-border-input-hover: #666666;
   --color-border-disabled: #bdc1c7;
+  --color-spinner-track: #e0e3e8;
   --color-border-interactive: #285bb0;
   --color-border-danger: #c22826;
   --color-border-success: #4d7c0f;

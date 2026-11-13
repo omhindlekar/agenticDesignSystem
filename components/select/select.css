@@ -37,7 +37,7 @@
     background-color var(--motion-duration-fast) ease;
 }
 
-.ads-select__field:hover {
+.ads-select__field:hover:not(:disabled) {
   border-color: var(--color-border-input-hover);
 }
 
@@ -62,6 +62,11 @@
 
 .ads-select[data-state~="success"] .ads-select__field {
   border-color: var(--color-border-success);
+}
+
+/* Natively disabled: not focusable, so no ring and no hover response. */
+.ads-select__field:disabled {
+  outline: none;
 }
 
 .ads-select[data-state~="disabled"] .ads-select__field {

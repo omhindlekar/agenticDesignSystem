@@ -12,7 +12,7 @@
     background-color var(--motion-duration-fast) ease;
 }
 
-.ads-input__field:hover {
+.ads-input__field:hover:not(:disabled) {
   border-color: var(--color-border-input-hover);
 }
 
@@ -42,6 +42,11 @@
 .ads-input[data-state~="read-only"] .ads-input__field {
   background-color: var(--color-background-sunken);
   border-color: var(--color-border-default);
+}
+
+/* Natively disabled: not focusable, so no ring and no hover response. */
+.ads-input__field:disabled {
+  outline: none;
 }
 
 .ads-input[data-state~="disabled"] .ads-input__field {

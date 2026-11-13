@@ -90,8 +90,7 @@
   cursor: progress;
 }
 
-/* Inside a button the spinner takes the label colour, so it reads on any fill. */
+/* Inside a button the indicator takes the label colour, so it reads on any fill. */
 .ads-button .ads-spinner {
-  border-color: currentColor;
-  border-right-color: transparent;
+  border-top-color: currentColor;
 }

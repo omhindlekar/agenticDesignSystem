@@ -27,7 +27,7 @@
     border-color var(--motion-duration-fast) ease;
 }
 
-.ads-checkbox__box:hover {
+.ads-checkbox__box:hover:not(:disabled) {
   border-color: var(--color-border-input-hover);
 }
 
@@ -37,8 +37,8 @@
   background-color: var(--color-interactive-default);
 }
 
-.ads-checkbox__box:checked:hover,
-.ads-checkbox__box:indeterminate:hover {
+.ads-checkbox__box:checked:hover:not(:disabled),
+.ads-checkbox__box:indeterminate:hover:not(:disabled) {
   border-color: var(--color-interactive-hover);
   background-color: var(--color-interactive-hover);
 }
@@ -91,6 +91,11 @@
 
 .ads-checkbox[data-state~="error"] .ads-checkbox__box {
   border-color: var(--color-border-danger);
+}
+
+/* Natively disabled: not focusable, so no ring and no hover response. */
+.ads-checkbox__box:disabled {
+  outline: none;
 }
 
 .ads-checkbox[data-state~="disabled"] .ads-checkbox__box {

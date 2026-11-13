@@ -66,7 +66,7 @@ describe('FR-1 visual direction: semantic mapping', () => {
     ['color-border-input', 'color-neutral-500'],
     ['color-border-input-hover', 'color-neutral-600'],
     ['color-interactive-disabled', 'color-neutral-100'],
-    ['color-text-disabled', 'color-neutral-300'],
+    ['color-text-disabled', 'color-neutral-500'],
     ['color-text-success', 'color-lime-700'],
     ['color-status-success-fill', 'color-lime-500'],
     ['color-text-on-success', 'color-blue-900'],
