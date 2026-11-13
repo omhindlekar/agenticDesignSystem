@@ -1,7 +1,7 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import type * as React from 'react';
 import { dataState, describedBy } from '../shared/state';
-import { CheckIcon, DashIcon, ErrorIcon } from '../shared/icons';
+import { Icon } from '../icon/icon';
 import '../shared/shared.css';
 import './checkbox.css';
 
@@ -84,8 +84,12 @@ export function Checkbox({
           {/* Square state layer over the 40px hit area, shown on hover, focus and press. */}
           <span className="ads-checkbox__layer" aria-hidden="true" />
           {/* Both icons render; CSS shows the one matching :checked or :indeterminate. */}
-          <CheckIcon className="ads-checkbox__check" />
-          <DashIcon className="ads-checkbox__dash" />
+          <span className="ads-checkbox__check">
+            <Icon name="check" />
+          </span>
+          <span className="ads-checkbox__dash">
+            <Icon name="remove" />
+          </span>
         </label>
         <label className="ads-field__label ads-checkbox__label" htmlFor={id}>
           {label}
@@ -97,7 +101,7 @@ export function Checkbox({
       ) : null}
       {errorMessage ? (
         <p id={errorId} className="ads-field__message" data-tone="error">
-          <ErrorIcon />
+          <Icon name="report" size="sm" />
           {errorMessage}
         </p>
       ) : null}

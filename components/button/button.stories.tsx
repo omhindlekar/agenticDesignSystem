@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Button } from './button';
-import { CheckIcon } from '../shared/icons';
+import { Icon } from '../icon/icon';
 
 const meta = {
   title: 'Components/Button',
@@ -34,7 +34,7 @@ export const TextDanger: Story = {
 export const Small: Story = { args: { size: 'sm' }, parameters: { ads: { variant: 'contained' } } };
 export const Large: Story = { args: { size: 'lg' }, parameters: { ads: { variant: 'contained' } } };
 export const WithLeadingIcon: Story = {
-  args: { variant: 'outlined', iconStart: <CheckIcon /> },
+  args: { variant: 'outlined', iconStart: <Icon name="add" /> },
   parameters: { ads: { variant: 'outlined' } },
 };
 

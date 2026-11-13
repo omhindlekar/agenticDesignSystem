@@ -367,3 +367,32 @@
 .fd-elevation__tile[data-level="4"] {
   box-shadow: var(--elevation-4);
 }
+
+/* Iconography */
+.fd-icon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(calc(var(--size-modal-sm) / 2), 1fr));
+  gap: var(--space-component-gap-sm);
+}
+
+.fd-icon-cell {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-component-padding-xs);
+  padding: var(--space-component-padding-sm);
+  border: var(--border-width-default) solid var(--color-border-default);
+  background-color: var(--color-background-surface);
+  color: var(--color-text-primary);
+}
+
+.fd-icon-sizes {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-component-gap-sm);
+}
+
+.fd-icon-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-component-padding-xs);
+}

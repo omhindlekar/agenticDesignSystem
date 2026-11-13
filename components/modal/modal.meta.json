@@ -25,14 +25,14 @@
     "As a notification or toast — use an alert or toast component instead",
     "When the user does not need to take action — use an inline message or tooltip"
   ],
-  "related": ["button", "card"],
+  "related": ["button", "icon-button", "card"],
   "antiPatterns": [
     "Opening a modal from inside another modal — stack modals never more than one deep",
     "Omitting a title — every modal needs a visible heading for screen readers",
     "Blocking the user without offering a way to dismiss"
   ],
   "spec": {
-    "anatomy": ["Scrim, panel with header (title, close), body and footer actions"],
+    "anatomy": ["Scrim, panel with header (title, close IconButton), body and footer actions"],
     "sizes": ["Panel padding `space-component-padding-lg` (24px); widths `size-modal-sm`, `size-modal-md`, `size-modal-lg`; footer gap `space-component-gap-sm` (8px)"],
     "typography": ["Title `type-h3-size` (SemiCondensed 20px, `color-text-heading`); body `type-body1-size` in `color-text-secondary`"],
     "states": ["Panel at `elevation-4` with a 1px `color-border-default`; scrim `color-background-overlay` at `opacity-overlay`", "danger: title in `color-text-danger`, role alertdialog"],

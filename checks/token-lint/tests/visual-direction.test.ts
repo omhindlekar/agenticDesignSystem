@@ -173,6 +173,9 @@ describe('FR-1 foundations: spacing and control heights', () => {
     ['space-component-padding-field', '12px'],
     ['border-width-control', '2px'],
     ['z-index-state-layer', '-1'],
+    ['size-icon-sm', '1rem'],
+    ['size-icon-md', '1.25rem'],
+    ['size-icon-lg', '1.5rem'],
   ])('FR-1: %s is %s', (name, value) => {
     expect(sem.get(name)).toBe(value);
   });

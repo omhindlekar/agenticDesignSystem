@@ -98,4 +98,12 @@ describe('Modal', () => {
     render(<Modal isOpen onClose={() => {}} title="T" loading>Body</Modal>);
     expect(screen.getByRole('dialog').getAttribute('aria-busy')).toBe('true');
   });
+
+  it('NFR-9: the close control is an icon button named Close, with no visible text', () => {
+    render(<Modal isOpen onClose={() => {}} title="T">Body</Modal>);
+    const close = screen.getByRole('button', { name: 'Close' });
+    expect(close.classList.contains('ads-icon-button')).toBe(true);
+    expect(close.textContent).toBe('');
+    expect(close.querySelector('svg')).not.toBeNull();
+  });
 });

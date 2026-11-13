@@ -146,7 +146,7 @@ describe('FR-3 metadata spec', () => {
     ),
   );
 
-  it.each(['button', 'input', 'select', 'checkbox', 'card', 'modal'])('FR-3: %s metadata has a spec naming only real tokens', (id) => {
+  it.each(['button', 'input', 'select', 'checkbox', 'card', 'modal', 'icon', 'icon-button'])('FR-3: %s metadata has a spec naming only real tokens', (id) => {
     const meta = JSON.parse(readFileSync(join(root, 'components', id, `${id}.meta.json`), 'utf8')) as {
       spec?: Record<string, string[]>;
     };
@@ -158,5 +158,17 @@ describe('FR-3 metadata spec', () => {
     for (const m of text.matchAll(/`([a-z][a-z0-9-]+)`/g)) {
       expect(semantic.has(m[1] ?? ''), `${id}.spec names unknown token ${m[1]}`).toBe(true);
     }
+  });
+});
+
+describe('FR-1 icons come only from the Icon component', () => {
+  it('FR-1: the hand-drawn shared icon set is retired', async () => {
+    const { existsSync } = await import('node:fs');
+    expect(existsSync(join(root, 'components', 'shared', 'icons.tsx'))).toBe(false);
+  });
+
+  it('FR-1: the select chevron is the keyboard_arrow_down icon', () => {
+    const tsx = readFileSync(join(root, 'components', 'select', 'select.tsx'), 'utf8');
+    expect(tsx).toMatch(/<Icon name="keyboard_arrow_down"/);
   });
 });
