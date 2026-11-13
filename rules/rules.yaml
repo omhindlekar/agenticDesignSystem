@@ -73,6 +73,9 @@ rules:
       - card
       - modal
       - icon-button
+      - textarea
+      - search-field
+      - field
     example: "border: var(--border-width-default) solid var(--color-border-default)"
     counterExample: "border-radius: 50%"
 
@@ -127,6 +130,9 @@ rules:
       - checkbox
       - card
       - modal
+      - textarea
+      - search-field
+      - field
     example: ".ads-button { font-family: var(--font-family-display) }"
     counterExample: ".ads-modal__title { font-family: var(--font-family-body) }"
 
@@ -150,6 +156,9 @@ rules:
       - modal
       - icon
       - icon-button
+      - textarea
+      - search-field
+      - field
     example: "Use color-text-primary on color-background-surface (passes 4.5:1)"
     counterExample: "Light grey text on white background"
 
@@ -169,6 +178,9 @@ rules:
       - select
       - checkbox
       - icon-button
+      - textarea
+      - search-field
+      - field
     example: "outline: var(--border-width-focus) solid var(--color-interactive-focus-ring); outline-offset: var(--focus-ring-offset)"
     counterExample: "outline: none"
 
@@ -202,6 +214,9 @@ rules:
       - input
       - select
       - checkbox
+      - textarea
+      - search-field
+      - field
     example: "<label htmlFor='email'>Email</label><input id='email' />"
     counterExample: "<input placeholder='Email' />"
 
@@ -238,6 +253,9 @@ rules:
       - card
       - modal
       - icon-button
+      - textarea
+      - search-field
+      - field
     example: "opacity: var(--opacity-state-hover)"
     counterExample: "opacity: 0.08"
 
@@ -259,6 +277,9 @@ rules:
       - card
       - modal
       - icon-button
+      - textarea
+      - search-field
+      - field
     example: "@media (prefers-reduced-motion: no-preference) { .x { transition: color var(--motion-duration-standard) var(--motion-easing-standard); } }"
     counterExample: "transition: all 300ms ease"
 
@@ -281,6 +302,7 @@ rules:
       - select
       - checkbox
       - modal
+      - search-field
     example: "<IconButton icon=\"close\" label=\"Close dialog\" />"
     counterExample: "<button><svg viewBox=\"0 0 24 24\">…</svg></button>"
 

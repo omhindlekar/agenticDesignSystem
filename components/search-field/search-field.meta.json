@@ -1,0 +1,160 @@
+{
+  "id": "search-field",
+  "purpose": "Lets the user search or filter content. Shows a search icon, a Clear button while it has a value; Escape clears and Enter submits.",
+  "variants": [
+    "default"
+  ],
+  "states": [
+    "default",
+    "hover",
+    "focus",
+    "filled",
+    "disabled"
+  ],
+  "props": [
+    {
+      "name": "label",
+      "type": "string",
+      "required": true,
+      "description": "Accessible label (visible unless hideLabel)"
+    },
+    {
+      "name": "hideLabel",
+      "type": "boolean",
+      "required": false,
+      "description": "Hides the label visually but keeps it for assistive tech, for search boxes whose purpose is obvious from context"
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "required": false,
+      "description": "Controlled value"
+    },
+    {
+      "name": "defaultValue",
+      "type": "string",
+      "required": false,
+      "description": "Initial value when uncontrolled"
+    },
+    {
+      "name": "placeholder",
+      "type": "string",
+      "required": false,
+      "description": "Hint shown when empty"
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "required": false,
+      "description": "Form field name"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "description": "Disables the field"
+    },
+    {
+      "name": "onChange",
+      "type": "(value: string) => void",
+      "required": false,
+      "description": "Called with the new value as the user types"
+    },
+    {
+      "name": "onSubmit",
+      "type": "(value: string) => void",
+      "required": false,
+      "description": "Called when the user presses Enter"
+    },
+    {
+      "name": "onClear",
+      "type": "() => void",
+      "required": false,
+      "description": "Called when the value is cleared by Escape or the Clear button"
+    }
+  ],
+  "whenToUse": [
+    "To search a page, a list or a table",
+    "To filter a long list as the user types"
+  ],
+  "whenNotToUse": [
+    "To pick one value from a known list — use Combobox",
+    "For general text entry — use Input"
+  ],
+  "related": [
+    "input",
+    "combobox"
+  ],
+  "antiPatterns": [
+    "Hiding the label when the search scope is not obvious",
+    "Submitting on every keystroke for slow searches"
+  ],
+  "spec": {
+    "anatomy": [
+      "Optional visible label, 40px field with a leading search icon and a trailing Clear IconButton"
+    ],
+    "sizes": [
+      "`size-control-md` (40px) tall; icon `size-icon-md`; Clear button `size-control-sm`"
+    ],
+    "typography": [
+      "Value `type-body1-size`; label `type-label-size`"
+    ],
+    "states": [
+      "Border `color-border-input` / `color-border-input-hover`; focus ring `color-interactive-focus-ring`; disabled at `opacity-disabled`"
+    ],
+    "motion": [
+      "Border colour over `motion-duration-standard`; none under reduced motion"
+    ]
+  },
+  "tokensUsed": [
+    "border-width-default",
+    "border-width-focus",
+    "color-background-surface",
+    "color-border-disabled",
+    "color-border-input",
+    "color-border-input-hover",
+    "color-border-interactive",
+    "color-interactive-disabled",
+    "color-interactive-focus-ring",
+    "color-state-layer",
+    "color-state-layer-danger",
+    "color-text-danger",
+    "color-text-primary",
+    "color-text-secondary",
+    "color-text-success",
+    "focus-ring-offset",
+    "font-family-body",
+    "motion-duration-standard",
+    "motion-easing-standard",
+    "opacity-disabled",
+    "opacity-state-focus",
+    "opacity-state-hover",
+    "opacity-state-pressed",
+    "size-control-md",
+    "size-control-sm",
+    "size-icon-md",
+    "space-component-padding-field",
+    "space-component-padding-sm",
+    "space-component-padding-xs",
+    "type-body1-family",
+    "type-body1-letter-spacing",
+    "type-body1-line-height",
+    "type-body1-size",
+    "type-caption-family",
+    "type-caption-letter-spacing",
+    "type-caption-line-height",
+    "type-caption-size",
+    "type-caption-weight",
+    "type-label-family",
+    "type-label-letter-spacing",
+    "type-label-line-height",
+    "type-label-size",
+    "type-label-weight",
+    "z-index-state-layer"
+  ],
+  "a11yNotes": [
+    "Uses role searchbox with a label, even when the label is visually hidden",
+    "Escape clears; the Clear button is named Clear search",
+    "Focus ring must be visible and use color-interactive-focus-ring"
+  ]
+}
