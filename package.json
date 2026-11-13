@@ -15,6 +15,7 @@
     "baseline-metrics": "tsx checks/baseline-metrics/index.ts",
     "build": "npm run build --workspaces --if-present",
     "tokens:build": "tsx scripts/build-tokens.ts",
+    "icons:build": "tsx scripts/build-icons.ts",
     "prestorybook": "npm run tokens:build",
     "storybook": "storybook dev -p 6006",
     "prebuild-storybook": "npm run tokens:build",
@@ -32,6 +33,7 @@
     "zod": "^3.23.0"
   },
   "devDependencies": {
+    "@material-symbols/svg-400": "0.48.2",
     "@playwright/test": "^1.56.1",
     "@storybook/react-vite": "10.6.7",
     "@testing-library/dom": "10.4.1",
