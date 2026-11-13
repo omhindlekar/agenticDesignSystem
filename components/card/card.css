@@ -28,7 +28,6 @@
 
 .ads-card[data-variant="interactive"] {
   cursor: pointer;
-  transition: border-color var(--motion-duration-fast) ease;
 }
 
 .ads-card[data-variant="interactive"]:not([aria-disabled]):hover {
@@ -52,4 +51,10 @@
   border-color: var(--color-border-disabled);
   color: var(--color-text-disabled);
   cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ads-card[data-variant="interactive"] {
+    transition: border-color var(--motion-duration-fast) ease;
+  }
 }

@@ -98,9 +98,10 @@ rules:
     scope: layout
     severity: warning
     statement: >
-      Elevation comes from 1px borders, not shadows. box-shadow may only be
-      none or a semantic shadow token (all of which resolve to none).
-      Hardcoded box-shadow values are forbidden.
+      Shadows come only from the elevation tokens (elevation-0 to elevation-4,
+      or the shadow-component-* aliases): cards use level 1, hovered
+      interactive cards and menus level 2, modals level 4. Hardcoded
+      box-shadow values are forbidden.
     check: auto
     checkName: token-lint
     appliesTo:
@@ -134,7 +135,9 @@ rules:
     severity: error
     statement: >
       Text and interactive elements must meet WCAG 2.2 AA colour-contrast
-      requirements: 4.5:1 for normal text, 3:1 for large text and UI components.
+      requirements: 4.5:1 for normal text, 3:1 for large text and UI components,
+      including over hover, focus and pressed state layers. Disabled controls
+      are exempt (SC 1.4.3, 1.4.11) and draw their content at opacity-disabled.
     check: auto
     checkName: a11y
     appliesTo:
@@ -169,15 +172,17 @@ rules:
     scope: accessibility
     severity: error
     statement: >
-      Touch targets for interactive elements must be at least 44x44 CSS pixels
-      to satisfy WCAG 2.2 success criterion 2.5.5.
+      Pointer targets for interactive elements must be at least 24x24 CSS
+      pixels (WCAG 2.2 AA, success criterion 2.5.8). Controls use the control
+      height tokens (32, 40 or 48px); small controls such as the checkbox box
+      sit inside a 40px hit area (size-hit-area).
     check: auto
     checkName: a11y
     appliesTo:
       - button
       - checkbox
-    example: "min-height: 44px; min-width: 44px"
-    counterExample: "height: 24px; width: 24px with no padding"
+    example: "min-height: var(--size-control-md)"
+    counterExample: "A 16px icon button with no padding around it"
 
   - id: DS-A-004
     scope: accessibility
@@ -209,6 +214,47 @@ rules:
     counterExample: "div with no ARIA attributes that covers the page"
 
   # ── Component-usage rules ─────────────────────────────────────────────────────
+  - id: DS-T-005
+    scope: token
+    severity: error
+    statement: >
+      State layers and disabled content use the opacity tokens:
+      opacity-state-hover (8%), opacity-state-focus (12%),
+      opacity-state-pressed (16%) and opacity-disabled (38%), over
+      color-state-layer or the content colour. Literal opacities and literal
+      color-mix() percentages are forbidden.
+    check: auto
+    checkName: token-lint
+    appliesTo:
+      - button
+      - input
+      - select
+      - checkbox
+      - card
+      - modal
+    example: "opacity: var(--opacity-state-hover)"
+    counterExample: "opacity: 0.08"
+
+  - id: DS-M-001
+    scope: motion
+    severity: error
+    statement: >
+      Motion uses the motion tokens: motion-duration-standard (150ms) for
+      state changes and motion-duration-overlay (200ms) for overlays, with
+      motion-easing-standard. Transitions and animations run only inside
+      @media (prefers-reduced-motion: no-preference).
+    check: auto
+    checkName: token-lint
+    appliesTo:
+      - button
+      - input
+      - select
+      - checkbox
+      - card
+      - modal
+    example: "@media (prefers-reduced-motion: no-preference) { .x { transition: color var(--motion-duration-standard) var(--motion-easing-standard); } }"
+    counterExample: "transition: all 300ms ease"
+
   - id: DS-A-006
     scope: accessibility
     severity: error

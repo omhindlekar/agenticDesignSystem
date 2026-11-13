@@ -32,9 +32,6 @@
   font-size: var(--font-size-body);
   line-height: var(--line-height-body);
   cursor: pointer;
-  transition:
-    border-color var(--motion-duration-fast) ease,
-    background-color var(--motion-duration-fast) ease;
 }
 
 .ads-select__field:hover:not(:disabled) {
@@ -82,4 +79,12 @@
 
 .ads-select[data-state~="disabled"] .ads-field__label {
   color: var(--color-text-disabled);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ads-select__field {
+    transition:
+      border-color var(--motion-duration-fast) ease,
+      background-color var(--motion-duration-fast) ease;
+  }
 }

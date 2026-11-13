@@ -6,7 +6,7 @@ import { describe, it, expect } from 'vitest';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { resolveSemanticTokens } from '../../../scripts/build-tokens.js';
-import { contrastRatio, buildContrastPairs, checkContrast } from '../contrast.js';
+import { contrastRatio, buildContrastPairs, checkContrast, blend, exemptPairs } from '../contrast.js';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '../../..');
 
@@ -81,5 +81,40 @@ describe('FR-11 contrast: regressions are caught', () => {
     const tokens = new Map(resolveSemanticTokens(root));
     tokens.set('color-text-primary', 'rebeccapurple');
     expect(checkContrast(tokens).some((x) => x.fg === 'color-text-primary')).toBe(true);
+  });
+});
+
+describe('FR-11 contrast: state layers and disabled content', () => {
+  const tokens = resolveSemanticTokens(root);
+
+  it('FR-11: blend composites a colour at an opacity over a background', () => {
+    expect(blend('#000000', 0.5, '#ffffff')).toBe('#808080');
+    expect(blend('#285bb0', 0, '#ffffff')).toBe('#ffffff');
+  });
+
+  it('FR-11: text, control borders and the focus ring used on state layers are checked over every layer', () => {
+    const pairs = buildContrastPairs(tokens).filter((p) => p.layer);
+    for (const op of ['opacity-state-hover', 'opacity-state-focus', 'opacity-state-pressed']) {
+      for (const fg of ['color-text-link', 'color-text-primary', 'color-border-input-hover', 'color-interactive-focus-ring']) {
+        expect(pairs.some((p) => p.fg === fg && p.layer?.opacity === op && p.layer.color === 'color-state-layer'), `${fg} @ ${op}`).toBe(true);
+      }
+      expect(pairs.some((p) => p.fg === 'color-text-danger-action' && p.layer?.color === 'color-state-layer-danger' && p.layer.opacity === op)).toBe(true);
+    }
+  });
+
+  it('FR-11: a too-strong state layer is caught', () => {
+    const t = new Map(tokens);
+    t.set('opacity-state-pressed', '0.6');
+    expect(checkContrast(t).some((v) => v.layer?.opacity === 'opacity-state-pressed')).toBe(true);
+  });
+
+  it('FR-11: disabled content at opacity-disabled is listed as an exempt pair, not a failure', () => {
+    const exempt = exemptPairs(tokens);
+    expect(exempt.length).toBeGreaterThan(0);
+    for (const e of exempt) {
+      expect(e.reason).toMatch(/disabled/i);
+      expect(e.ratio).toBeGreaterThan(1);
+    }
+    expect(checkContrast(tokens)).toEqual([]);
   });
 });

@@ -16,6 +16,7 @@
     {"name": "color-text-link-hover", "tier": "semantic", "reference": "color-blue-700", "description": "Link text on hover"},
     {"name": "color-text-danger", "tier": "semantic", "reference": "color-red-600", "description": "Error text"},
     {"name": "color-text-success", "tier": "semantic", "reference": "color-lime-700", "description": "Success text. Lime 700 or darker only; never lime 500 on white"},
+    {"name": "color-text-danger-action", "tier": "semantic", "reference": "color-red-700", "description": "Danger-tone action text (outlined and text buttons), which sits on the danger state layer"},
     {"name": "color-text-warning", "tier": "semantic", "reference": "color-amber-700", "description": "Warning text"},
     {"name": "color-text-info", "tier": "semantic", "reference": "color-light-blue-700", "description": "Informational text"},
     {"name": "color-text-on-success", "tier": "semantic", "reference": "color-blue-900", "description": "Text on a lime success fill"},

@@ -7,9 +7,6 @@
   font-family: var(--font-family-body);
   font-size: var(--font-size-body);
   line-height: var(--line-height-body);
-  transition:
-    border-color var(--motion-duration-fast) ease,
-    background-color var(--motion-duration-fast) ease;
 }
 
 .ads-input__field:hover:not(:disabled) {
@@ -58,4 +55,12 @@
 
 .ads-input[data-state~="disabled"] .ads-field__label {
   color: var(--color-text-disabled);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ads-input__field {
+    transition:
+      border-color var(--motion-duration-fast) ease,
+      background-color var(--motion-duration-fast) ease;
+  }
 }

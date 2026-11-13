@@ -12,10 +12,6 @@
   font-weight: var(--font-weight-label);
   line-height: var(--line-height-body);
   cursor: pointer;
-  transition:
-    background-color var(--motion-duration-fast) ease,
-    border-color var(--motion-duration-fast) ease,
-    color var(--motion-duration-fast) ease;
 }
 
 .ads-button[data-size="sm"] {
@@ -93,4 +89,13 @@
 /* Inside a button the indicator takes the label colour, so it reads on any fill. */
 .ads-button .ads-spinner {
   border-top-color: currentColor;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ads-button {
+    transition:
+      background-color var(--motion-duration-fast) ease,
+      border-color var(--motion-duration-fast) ease,
+      color var(--motion-duration-fast) ease;
+  }
 }

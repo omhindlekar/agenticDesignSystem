@@ -18,7 +18,6 @@
   /* Square by design: a spinning square, not a circle. Neutral track, blue indicator. */
   border: var(--border-width-focus) solid var(--color-spinner-track);
   border-top-color: var(--color-interactive-default);
-  animation: ads-spin calc(var(--motion-duration-fast) * 6) linear infinite;
 }
 
 @keyframes ads-spin {
@@ -75,4 +74,10 @@
 
 .ads-field__message[data-tone="success"] {
   color: var(--color-text-success);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ads-spinner {
+    animation: ads-spin calc(var(--motion-duration-fast) * 6) linear infinite;
+  }
 }

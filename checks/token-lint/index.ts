@@ -33,6 +33,8 @@ export const RULE_REFS = [
   'DS-L-003',
   'DS-A-001',
   'DS-A-006',
+  'DS-T-005',
+  'DS-M-001',
 ] as const;
 
 const LINT_RULES: LintRule[] = [
@@ -75,7 +77,7 @@ const LINT_RULES: LintRule[] = [
   {
     pattern: 'hardcoded-shadow',
     // Elevation comes from borders; a shadow must be none or a semantic token.
-    regex: /\bbox-?[Ss]hadow\s*:\s*['"]?(?=[^\s'"])(?!none\b|var\(--shadow-)[^;,}\n]+/g,
+    regex: /\bbox-?[Ss]hadow\s*:\s*['"]?(?=[^\s'"])(?!none\b|var\(--(?:shadow|elevation)-)[^;,}\n]+/g,
     ruleRef: 'DS-L-002',
   },
   {
@@ -98,6 +100,29 @@ const LINT_RULES: LintRule[] = [
     pattern: 'hardcoded-line-height',
     regex: /line-?[Hh]eight\s*:\s*['"]?\d/g,
     ruleRef: 'DS-L-001',
+  },
+  {
+    pattern: 'hardcoded-letter-spacing',
+    regex: /letter-?[Ss]pacing\s*:\s*['"]?(?=[^\s'"])(?!var\(|normal\b|inherit\b|0\s*(?:['"]|[;,}]|$))[^;,}\n]+/g,
+    ruleRef: 'DS-L-001',
+  },
+  {
+    pattern: 'hardcoded-duration',
+    // A literal time (150ms, 1s) anywhere in a transition or animation declaration.
+    regex: /\b(?:transition|animation)(?:-?(?:[Dd]uration|[Dd]elay))?\s*:[^;}\n]*?(?<![\w.-])\d*\.?\d+m?s\b/g,
+    ruleRef: 'DS-M-001',
+  },
+  {
+    pattern: 'hardcoded-opacity',
+    // Opacity other than 0, 1 or a token.
+    regex: /\bopacity\s*:\s*['"]?(?!(?:0|1)\s*(?:['"]|[;,}]|$)|var\()\d*\.?\d+/g,
+    ruleRef: 'DS-T-005',
+  },
+  {
+    pattern: 'hardcoded-color-mix-percent',
+    // A literal percentage inside color-mix(); the amount must come from an opacity token.
+    regex: /color-mix\((?:[^()]|\([^()]*\))*?(?<![\w-])\d+(?:\.\d+)?%/g,
+    ruleRef: 'DS-T-005',
   },
   {
     pattern: 'hardcoded-border-width',
@@ -201,6 +226,52 @@ export function lintFontRoles(css: string, fileName = '<generated>'): LintViolat
   return violations;
 }
 
+// ── Motion guard (DS-M-001) ───────────────────────────────────────────────────
+
+const MOTION_GUARD = /@media\s*\(\s*prefers-reduced-motion\s*:\s*no-preference\s*\)\s*\{/g;
+
+/** Character ranges of every `@media (prefers-reduced-motion: no-preference) { ... }` block. */
+function guardedRanges(css: string): Array<[number, number]> {
+  const ranges: Array<[number, number]> = [];
+  let m: RegExpExecArray | null;
+  const re = new RegExp(MOTION_GUARD.source, 'g');
+  while ((m = re.exec(css)) !== null) {
+    let depth = 1;
+    let i = m.index + m[0].length;
+    while (i < css.length && depth > 0) {
+      if (css[i] === '{') depth++;
+      else if (css[i] === '}') depth--;
+      i++;
+    }
+    ranges.push([m.index, i]);
+  }
+  return ranges;
+}
+
+/** Transitions and animations may only run inside the no-preference guard; `none` is allowed anywhere. */
+export function lintMotionGuard(css: string, fileName = '<generated>'): LintViolation[] {
+  const ranges = guardedRanges(css);
+  const violations: LintViolation[] = [];
+  const re = /\b(transition|animation)(?:-[a-z-]+)?\s*:\s*([^;}]+)/g;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(css)) !== null) {
+    if (/^none\b/.test((m[2] ?? '').trim())) continue;
+    const at = m.index;
+    if (ranges.some(([a, b]) => at > a && at < b)) continue;
+    const line = css.slice(0, at).split('\n').length;
+    violations.push({
+      file: fileName,
+      line,
+      column: at - css.lastIndexOf('\n', at - 1),
+      pattern: 'motion-outside-reduced-motion-guard',
+      match: m[0].trim(),
+      ruleId: 'FR-1',
+      ruleRef: 'DS-M-001',
+    });
+  }
+  return violations;
+}
+
 // ── Token files: square corners (DS-T-004) ────────────────────────────────────
 
 interface RawToken {
@@ -289,7 +360,9 @@ export function lintTokenReferences(
 export async function lintFile(filePath: string, semanticNames?: Set<string>): Promise<LintViolation[]> {
   const source = await readFile(filePath, 'utf8');
   const violations = lintString(source, filePath);
-  if (extname(filePath) === '.css') violations.push(...lintFontRoles(source, filePath));
+  if (extname(filePath) === '.css') {
+    violations.push(...lintFontRoles(source, filePath), ...lintMotionGuard(source, filePath));
+  }
   if (semanticNames) violations.push(...lintTokenReferences(source, filePath, semanticNames));
   return violations;
 }

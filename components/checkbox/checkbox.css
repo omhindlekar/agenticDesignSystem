@@ -22,9 +22,6 @@
   border: var(--border-width-default) solid var(--color-border-input);
   background-color: var(--color-background-surface);
   cursor: pointer;
-  transition:
-    background-color var(--motion-duration-fast) ease,
-    border-color var(--motion-duration-fast) ease;
 }
 
 .ads-checkbox__box:hover:not(:disabled) {
@@ -111,4 +108,13 @@
 .ads-checkbox[data-state~="disabled"] .ads-field__label {
   color: var(--color-text-disabled);
   cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Square box: the native control is restyled so the OS cannot round its corners. */
+.ads-checkbox__box {
+    transition:
+      background-color var(--motion-duration-fast) ease,
+      border-color var(--motion-duration-fast) ease;
+  }
 }
