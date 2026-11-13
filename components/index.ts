@@ -28,3 +28,7 @@ export { Switch } from './switch/switch';
 export type { SwitchProps } from './switch/switch';
 export { SegmentedControl } from './segmented-control/segmented-control';
 export type { SegmentedControlProps } from './segmented-control/segmented-control';
+export { Slider } from './slider/slider';
+export type { SliderProps } from './slider/slider';
+export { NumberField } from './number-field/number-field';
+export type { NumberFieldProps } from './number-field/number-field';

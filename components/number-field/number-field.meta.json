@@ -1,0 +1,178 @@
+{
+  "id": "number-field",
+  "purpose": "Collects an exact number with optional step buttons, formatting it for the user's locale and keeping it within limits.",
+  "variants": [
+    "default",
+    "error"
+  ],
+  "states": [
+    "default",
+    "hover",
+    "focus",
+    "filled",
+    "disabled",
+    "error"
+  ],
+  "props": [
+    {
+      "name": "label",
+      "type": "string",
+      "required": true,
+      "description": "Visible label"
+    },
+    {
+      "name": "value",
+      "type": "number",
+      "required": false,
+      "description": "Controlled value"
+    },
+    {
+      "name": "defaultValue",
+      "type": "number",
+      "required": false,
+      "description": "Initial value when uncontrolled"
+    },
+    {
+      "name": "minValue",
+      "type": "number",
+      "required": false,
+      "description": "Minimum; values are clamped"
+    },
+    {
+      "name": "maxValue",
+      "type": "number",
+      "required": false,
+      "description": "Maximum; values are clamped"
+    },
+    {
+      "name": "step",
+      "type": "number",
+      "required": false,
+      "description": "Step for arrow keys and buttons. Defaults to 1"
+    },
+    {
+      "name": "formatOptions",
+      "type": "Intl.NumberFormatOptions",
+      "required": false,
+      "description": "Formatting, for example currency or percent"
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "required": false,
+      "description": "Form field name"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "description": "Disables the field"
+    },
+    {
+      "name": "required",
+      "type": "boolean",
+      "required": false,
+      "description": "Marks the field required"
+    },
+    {
+      "name": "helperText",
+      "type": "string",
+      "required": false,
+      "description": "Guidance below the field"
+    },
+    {
+      "name": "errorMessage",
+      "type": "string",
+      "required": false,
+      "description": "Error below the field; sets the error state"
+    },
+    {
+      "name": "onChange",
+      "type": "(value: number) => void",
+      "required": false,
+      "description": "Called with the new value"
+    }
+  ],
+  "whenToUse": [
+    "For exact quantities, prices and counts",
+    "When users often nudge the value by a step"
+  ],
+  "whenNotToUse": [
+    "For identifiers that only look like numbers (phone, card, postcode) — use Input",
+    "For approximate values on a scale — use Slider"
+  ],
+  "related": [
+    "input",
+    "slider"
+  ],
+  "antiPatterns": [
+    "Using it for phone numbers or IDs",
+    "Removing the step buttons when the value is usually small"
+  ],
+  "spec": {
+    "anatomy": [
+      "Label above; a 40px field with the value and decrement and increment IconButtons; helper or error text"
+    ],
+    "sizes": [
+      "`size-control-md` (40px) tall; step buttons `size-control-sm`; padding `space-component-padding-field`"
+    ],
+    "typography": [
+      "Value `type-body1-size` in tabular figures; label `type-label-size`"
+    ],
+    "states": [
+      "Border `color-border-input`, `color-border-input-hover`, `color-border-interactive` on focus; ring `color-interactive-focus-ring`; error `color-border-danger`; disabled at `opacity-disabled`"
+    ],
+    "motion": [
+      "Border colour over `motion-duration-standard`; none under reduced motion"
+    ]
+  },
+  "tokensUsed": [
+    "border-width-default",
+    "border-width-focus",
+    "color-background-surface",
+    "color-border-danger",
+    "color-border-disabled",
+    "color-border-input",
+    "color-border-input-hover",
+    "color-border-interactive",
+    "color-interactive-disabled",
+    "color-interactive-focus-ring",
+    "color-state-layer",
+    "color-state-layer-danger",
+    "color-text-danger",
+    "color-text-primary",
+    "color-text-secondary",
+    "color-text-success",
+    "focus-ring-offset",
+    "font-family-body",
+    "motion-duration-standard",
+    "motion-easing-standard",
+    "opacity-disabled",
+    "opacity-state-focus",
+    "opacity-state-hover",
+    "opacity-state-pressed",
+    "size-control-md",
+    "space-component-padding-field",
+    "space-component-padding-xs",
+    "type-body1-family",
+    "type-body1-letter-spacing",
+    "type-body1-line-height",
+    "type-body1-size",
+    "type-caption-family",
+    "type-caption-letter-spacing",
+    "type-caption-line-height",
+    "type-caption-size",
+    "type-caption-weight",
+    "type-label-family",
+    "type-label-letter-spacing",
+    "type-label-line-height",
+    "type-label-size",
+    "type-label-weight",
+    "z-index-state-layer"
+  ],
+  "a11yNotes": [
+    "Arrow Up and Down step the value; the step buttons are named Increase and Decrease",
+    "Formatted for the locale and announced as a number field",
+    "Error text is linked by aria-describedby"
+  ]
+}
