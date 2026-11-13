@@ -17,7 +17,7 @@ export interface AgentStepResult {
 interface Config {
   retryLimit: number;
   costCapPerRunUsd: number;
-  maxCallsPerRun?: number;
+  maxCallsPerRun?: number | undefined;
 }
 
 export interface OrchestratorDeps {
@@ -26,13 +26,13 @@ export interface OrchestratorDeps {
     taskId: string;
     brief: string;
     contextPack: ContextPack;
-    previousError?: string;
+    previousError?: string | undefined;
   }) => Promise<AgentStepResult>;
   builderRunner: (input: {
     taskId: string;
     spec: ScreenSpec;
     contextPack: ContextPack;
-    previousError?: string;
+    previousError?: string | undefined;
   }) => Promise<AgentStepResult>;
   config?: Config;
   repoRoot?: string;
@@ -109,6 +109,23 @@ export async function runOrchestrator(
   let cumulativeCost = 0;
   let totalCalls = 0;
   const maxCalls = config.maxCallsPerRun ?? Infinity;
+  const attempts = { composer: 0, builder: 0 };
+  let spec: ScreenSpec | undefined;
+
+  // Every return goes through here so retries, calls and cost are always reported.
+  const finish = (
+    outcome: OrchestratorResult['outcome'],
+    extra: { error?: string; tsx?: string } = {},
+  ): OrchestratorResult => ({
+    taskId: input.taskId,
+    runId,
+    outcome,
+    ...extra,
+    ...(spec !== undefined ? { spec } : {}),
+    attempts: { ...attempts },
+    calls: totalCalls,
+    costUsd: cumulativeCost,
+  });
 
   // Step 1: Context agent (no retry — runtime errors escalate immediately)
   let contextPack: ContextPack;
@@ -133,12 +150,9 @@ export async function runOrchestrator(
         Date.now() - ctxStart, 'escalate', 0,
       ));
     }
-    return {
-      taskId: input.taskId,
-      runId,
-      outcome: 'escalate',
+    return finish('escalate', {
       error: `Context agent failed: ${err instanceof Error ? err.message : String(err)}`,
-    };
+    });
   }
 
   // Step 2: Composer agent (retry up to retryLimit on schema failure)
@@ -163,14 +177,12 @@ export async function runOrchestrator(
 
   cumulativeCost += composerResult.costUsd;
   totalCalls += composerResult.attempts;
+  attempts.composer = composerResult.attempts;
 
   if (composerResult.kind === 'failure') {
-    return {
-      taskId: input.taskId,
-      runId,
-      outcome: 'escalate',
+    return finish('escalate', {
       error: `Composer failed after ${composerResult.attempts} attempt(s): ${composerResult.error}`,
-    };
+    });
   }
 
   // Max-calls check after composer (guards CLI provider where costUsd is always 0)
@@ -183,12 +195,9 @@ export async function runOrchestrator(
         0, 'escalate', cumulativeCost,
       ));
     }
-    return {
-      taskId: input.taskId,
-      runId,
-      outcome: 'escalate',
+    return finish('escalate', {
       error: `Max calls per run exceeded after composer: ${totalCalls} >= ${maxCalls}`,
-    };
+    });
   }
 
   // Cost cap check after composer
@@ -201,21 +210,19 @@ export async function runOrchestrator(
         0, 'escalate', cumulativeCost,
       ));
     }
-    return {
-      taskId: input.taskId,
-      runId,
-      outcome: 'escalate',
+    return finish('escalate', {
       error: `Cost cap exceeded after composer: $${cumulativeCost.toFixed(4)} >= $${config.costCapPerRunUsd}`,
-    };
+    });
   }
 
-  const spec = composerResult.value;
+  spec = composerResult.value;
+  const validatedSpec = spec;
 
   // Step 3: Builder agent (retry up to retryLimit on schema failure)
   const builderStart = Date.now();
   const builderResult = await withRetry(
     (previousError) =>
-      deps.builderRunner({ taskId: input.taskId, spec, contextPack, previousError }),
+      deps.builderRunner({ taskId: input.taskId, spec: validatedSpec, contextPack, previousError }),
     (v) => {
       if (typeof v !== 'string') throw new Error(`Builder must return a string, got ${typeof v}`);
       return v;
@@ -236,14 +243,12 @@ export async function runOrchestrator(
 
   cumulativeCost += builderResult.costUsd;
   totalCalls += builderResult.attempts;
+  attempts.builder = builderResult.attempts;
 
   if (builderResult.kind === 'failure') {
-    return {
-      taskId: input.taskId,
-      runId,
-      outcome: 'escalate',
+    return finish('escalate', {
       error: `Builder failed after ${builderResult.attempts} attempt(s): ${builderResult.error}`,
-    };
+    });
   }
 
   // Max-calls check after builder
@@ -256,12 +261,9 @@ export async function runOrchestrator(
         0, 'escalate', cumulativeCost,
       ));
     }
-    return {
-      taskId: input.taskId,
-      runId,
-      outcome: 'escalate',
+    return finish('escalate', {
       error: `Max calls per run exceeded after builder: ${totalCalls} >= ${maxCalls}`,
-    };
+    });
   }
 
   // Cost cap check after builder
@@ -274,18 +276,10 @@ export async function runOrchestrator(
         0, 'escalate', cumulativeCost,
       ));
     }
-    return {
-      taskId: input.taskId,
-      runId,
-      outcome: 'escalate',
+    return finish('escalate', {
       error: `Cost cap exceeded after builder: $${cumulativeCost.toFixed(4)} >= $${config.costCapPerRunUsd}`,
-    };
+    });
   }
 
-  return {
-    taskId: input.taskId,
-    runId,
-    outcome: 'pass',
-    tsx: builderResult.value,
-  };
+  return finish('pass', { tsx: builderResult.value });
 }

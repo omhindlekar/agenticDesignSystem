@@ -162,10 +162,73 @@ describe('FR-7: Builder integration (requires a live provider)', () => {
   it.skipIf(!hasLiveProvider)('FR-7: runBuilder returns TSX that passes token lint and type check', async () => {
     const { runBuilder } = await import('../index.js');
     const output = await runBuilder(builderInput, undefined, repoRoot);
-    expect(output.tsx).toContain('export function');
+    expect(output.tsx).toMatch(/export (default )?function/);
     const lintResult = validateBuilderOutput(output.tsx);
     expect(lintResult.valid).toBe(true);
     const typeResult = typeCheckBuilderOutput(output.tsx, repoRoot);
     expect(typeResult.valid).toBe(true);
+  });
+});
+
+describe('FR-7: Builder uses the real design-system components', () => {
+  const apis = [
+    {
+      id: 'button',
+      exportName: 'Button',
+      props: [
+        { name: 'label', type: 'string', required: true },
+        { name: 'variant', type: "'primary' | 'secondary' | 'ghost' | 'danger'", required: false },
+      ],
+    },
+  ];
+
+  it('FR-7: prompt tells the model to import components from @ads/components', () => {
+    const prompt = buildBuilderPrompt(builderInput, undefined, apis);
+    expect(prompt).toContain("from '@ads/components'");
+    expect(prompt).toContain('Button');
+  });
+
+  it('FR-7: prompt lists each component prop with its type and whether it is required', () => {
+    const prompt = buildBuilderPrompt(builderInput, undefined, apis);
+    expect(prompt).toContain('label: string (required)');
+    expect(prompt).toContain("variant?: 'primary' | 'secondary' | 'ghost' | 'danger'");
+  });
+
+  it('FR-7: loadComponentApis reads export names and props from component metadata', async () => {
+    const { loadComponentApis } = await import('../tools.js');
+    const loaded = loadComponentApis(repoRoot, ['button', 'input']);
+    expect(loaded.map((a) => a.exportName)).toEqual(['Button', 'Input']);
+    expect(loaded[0]?.props.find((p) => p.name === 'label')?.required).toBe(true);
+  });
+
+  it('FR-7: TSX importing @ads/components with valid props passes type check', () => {
+    const tsx = `import { Button, Input } from '@ads/components';
+export default function Screen() {
+  return (
+    <div style={{ gap: 'var(--space-component-gap-md)' }}>
+      <Input label="Email" type="email" />
+      <Button label="Save" variant="primary" />
+    </div>
+  );
+}`;
+    const result = typeCheckBuilderOutput(tsx, repoRoot);
+    expect(result.errors).toEqual([]);
+    expect(result.valid).toBe(true);
+  });
+
+  it('FR-7: TSX using a design-system component with a wrong prop fails type check', () => {
+    const tsx = `import { Button } from '@ads/components';
+export default function Screen() {
+  return <Button label="Save" variant="huge" />;
+}`;
+    expect(typeCheckBuilderOutput(tsx, repoRoot).valid).toBe(false);
+  });
+
+  it('FR-7: TSX missing a required prop fails type check', () => {
+    const tsx = `import { Button } from '@ads/components';
+export default function Screen() {
+  return <Button variant="primary" />;
+}`;
+    expect(typeCheckBuilderOutput(tsx, repoRoot).valid).toBe(false);
   });
 });
