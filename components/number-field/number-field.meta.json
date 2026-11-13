@@ -1,6 +1,6 @@
 {
   "id": "number-field",
-  "purpose": "Collects an exact number with optional step buttons, formatting it for the user's locale and keeping it within limits.",
+  "purpose": "Collects an exact number with optional step controls, formatting it for the user's locale and keeping it within limits.",
   "variants": [
     "default",
     "error"

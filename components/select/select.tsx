@@ -1,8 +1,20 @@
-import { useId, useState } from 'react';
-import type * as React from 'react';
-import { dataState, describedBy } from '../shared/state';
+import { useState } from 'react';
+import {
+  Button,
+  FieldError,
+  Label,
+  ListBox,
+  ListBoxItem,
+  Popover,
+  Select as RacSelect,
+  SelectValue,
+  Text,
+} from 'react-aria-components';
+import type { Key } from 'react-aria-components';
 import { Icon } from '../icon/icon';
+import { dataState } from '../shared/state';
 import '../shared/shared.css';
+import '../shared/popover.css';
 import './select.css';
 
 export interface SelectProps {
@@ -11,6 +23,7 @@ export interface SelectProps {
   value?: string;
   defaultValue?: string;
   placeholder?: string;
+  name?: string;
   disabled?: boolean;
   required?: boolean;
   errorMessage?: string;
@@ -19,12 +32,17 @@ export interface SelectProps {
   variant?: 'default' | 'error' | 'success';
 }
 
+/**
+ * Picks one option from a short list. A field-styled button opens a list box with
+ * typeahead and full keyboard support; a hidden native select submits it with forms.
+ */
 export function Select({
   label,
   options,
   value,
   defaultValue,
   placeholder,
+  name,
   disabled = false,
   required = false,
   errorMessage,
@@ -32,73 +50,68 @@ export function Select({
   onChange,
   variant,
 }: SelectProps) {
-  const id = useId();
-  const [uncontrolled, setUncontrolled] = useState(defaultValue ?? '');
+  const [uncontrolled, setUncontrolled] = useState<string | null>(defaultValue ?? null);
   const current = value ?? uncontrolled;
   const resolvedVariant = variant ?? (errorMessage ? 'error' : 'default');
-  const errorId = errorMessage ? `${id}-error` : undefined;
-  const helperId = helperText ? `${id}-helper` : undefined;
-
-  function handleChange(event: React.ChangeEvent<HTMLSelectElement>) {
-    if (value === undefined) setUncontrolled(event.target.value);
-    onChange?.(event.target.value);
-  }
-
-  const valueProps = value !== undefined ? { value } : { defaultValue: defaultValue ?? '' };
+  const disabledKeys = options.filter((o) => o.disabled).map((o) => o.value);
 
   return (
-    <div
+    <RacSelect
       className="ads-field ads-select"
       data-variant={resolvedVariant}
       data-state={dataState(
         {
-          selected: current.length > 0,
+          selected: current !== null && current !== '',
           disabled,
           error: resolvedVariant === 'error',
           success: resolvedVariant === 'success',
         },
         'default',
       )}
+      selectedKey={current}
+      onSelectionChange={(key: Key | null) => {
+        const next = key === null ? '' : String(key);
+        if (value === undefined) setUncontrolled(next);
+        onChange?.(next);
+      }}
+      disabledKeys={disabledKeys}
+      {...(placeholder !== undefined ? { placeholder } : {})}
+      {...(name !== undefined ? { name } : {})}
+      isDisabled={disabled}
+      isRequired={required}
+      isInvalid={resolvedVariant === 'error'}
     >
-      <label className="ads-field__label" htmlFor={id}>
+      <Label className="ads-field__label">
         {label}
         {required ? <span className="ads-field__required" aria-hidden="true"> *</span> : null}
-      </label>
-      <span className="ads-select__control">
-        <select
-          id={id}
-          className="ads-select__field"
-          disabled={disabled}
-          required={required}
-          aria-invalid={resolvedVariant === 'error' || undefined}
-          aria-describedby={describedBy(helperId, errorId)}
-          onChange={handleChange}
-          {...valueProps}
-        >
-          {placeholder !== undefined || current === '' ? (
-            <option value="" disabled>
-              {placeholder ?? ''}
-            </option>
-          ) : null}
-          {options.map((option) => (
-            <option key={option.value} value={option.value} disabled={option.disabled}>
-              {option.label}
-            </option>
-          ))}
-        </select>
+      </Label>
+      <Button className="ads-select__field">
+        <SelectValue className="ads-select__value" />
         <span className="ads-select__chevron">
           <Icon name="keyboard_arrow_down" />
         </span>
-      </span>
+      </Button>
       {helperText ? (
-        <p id={helperId} className="ads-field__message">{helperText}</p>
+        <Text slot="description" className="ads-field__message">
+          {helperText}
+        </Text>
       ) : null}
-      {errorMessage ? (
-        <p id={errorId} className="ads-field__message" data-tone="error">
-          <Icon name="report" size="sm" />
-          {errorMessage}
-        </p>
-      ) : null}
-    </div>
+      <FieldError className="ads-field__message" data-tone="error">
+        <Icon name="report" size="sm" />
+        {errorMessage}
+      </FieldError>
+      <Popover className="ads-popover" offset={4}>
+        <ListBox className="ads-listbox">
+          {options.map((option) => (
+            <ListBoxItem key={option.value} id={option.value} textValue={option.label} className="ads-listbox__item">
+              <span>{option.label}</span>
+              <span className="ads-listbox__check">
+                <Icon name="check" />
+              </span>
+            </ListBoxItem>
+          ))}
+        </ListBox>
+      </Popover>
+    </RacSelect>
   );
 }

@@ -1,43 +1,132 @@
 {
   "id": "select",
-  "purpose": "Allows the user to pick one option from a predefined list. Best suited for four or more mutually exclusive choices where showing all options at once would take too much space.",
-  "variants": ["default", "error", "success"],
-  "states": ["default", "hover", "focus", "selected", "disabled", "error", "success"],
+  "purpose": "Picks one option from a short list. Opens a list of options with typeahead and full keyboard support.",
+  "variants": [
+    "default",
+    "error",
+    "success"
+  ],
+  "states": [
+    "default",
+    "hover",
+    "focus",
+    "selected",
+    "disabled",
+    "error",
+    "success"
+  ],
   "props": [
-    { "name": "label", "type": "string", "required": true, "description": "Visible label associated with the select" },
-    { "name": "options", "type": "Array<{ value: string; label: string; disabled?: boolean }>", "required": true, "description": "List of options to display" },
-    { "name": "value", "type": "string", "required": false, "description": "Controlled selected value" },
-    { "name": "defaultValue", "type": "string", "required": false, "description": "Uncontrolled default selection" },
-    { "name": "placeholder", "type": "string", "required": false, "description": "Text shown when no option is selected" },
-    { "name": "disabled", "type": "boolean", "required": false, "description": "Disables the select" },
-    { "name": "required", "type": "boolean", "required": false, "description": "Marks the field as required" },
-    { "name": "errorMessage", "type": "string", "required": false, "description": "Error message shown below the select" },
-    { "name": "helperText", "type": "string", "required": false, "description": "Supporting text shown below the select" },
-    { "name": "onChange", "type": "(value: string) => void", "required": false, "description": "Called when selection changes" },
-    { "name": "variant", "type": "'default' | 'error' | 'success'", "required": false, "description": "Validation style. Defaults to error when errorMessage is set, otherwise default" }
+    {
+      "name": "label",
+      "type": "string",
+      "required": true,
+      "description": "Visible label associated with the select"
+    },
+    {
+      "name": "options",
+      "type": "Array<{ value: string; label: string; disabled?: boolean }>",
+      "required": true,
+      "description": "List of options to display"
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "required": false,
+      "description": "Controlled selected value"
+    },
+    {
+      "name": "defaultValue",
+      "type": "string",
+      "required": false,
+      "description": "Uncontrolled default selection"
+    },
+    {
+      "name": "placeholder",
+      "type": "string",
+      "required": false,
+      "description": "Text shown when no option is selected"
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "required": false,
+      "description": "Form field name; a hidden native select submits the value with the form"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "description": "Disables the select"
+    },
+    {
+      "name": "required",
+      "type": "boolean",
+      "required": false,
+      "description": "Marks the field as required"
+    },
+    {
+      "name": "errorMessage",
+      "type": "string",
+      "required": false,
+      "description": "Error message shown below the select"
+    },
+    {
+      "name": "helperText",
+      "type": "string",
+      "required": false,
+      "description": "Supporting text shown below the select"
+    },
+    {
+      "name": "onChange",
+      "type": "(value: string) => void",
+      "required": false,
+      "description": "Called when selection changes"
+    },
+    {
+      "name": "variant",
+      "type": "'default' | 'error' | 'success'",
+      "required": false,
+      "description": "Validation style. Defaults to error when errorMessage is set, otherwise default"
+    }
   ],
   "whenToUse": [
-    "When the user must choose one option from four or more mutually exclusive choices",
+    "When the user must choose one option from four to about fifteen choices",
     "When screen space is limited and listing all options inline would crowd the layout",
     "Inside a form for fields like country, timezone, or category"
   ],
   "whenNotToUse": [
-    "For fewer than four options — use a radio group instead",
-    "For multiple simultaneous selections — use a multi-select or checkbox group",
-    "For yes/no decisions — use a Checkbox or Toggle"
+    "For fewer than four options — use RadioGroup",
+    "For long or searchable lists — use Combobox",
+    "For multiple simultaneous selections — use a checkbox group",
+    "For yes/no decisions — use Checkbox or Switch"
   ],
-  "related": ["input", "checkbox", "button"],
+  "related": [
+    "combobox",
+    "radio-group",
+    "input"
+  ],
   "antiPatterns": [
     "Using Select when only two or three options exist",
     "Omitting a label — always provide a visible label",
     "Using Select for navigation menus"
   ],
   "spec": {
-    "anatomy": ["Label above, 40px native select with a square SVG chevron, helper or error text below"],
-    "sizes": ["Field `size-control-md` (40px), `space-component-padding-field` sides, extra end padding for the chevron"],
-    "typography": ["Label `type-label-size`; value `type-body1-size`; messages `type-caption-size`"],
-    "states": ["Same as Input: `color-border-input`, `color-border-input-hover`, focus ring `color-interactive-focus-ring`, error `color-border-danger`", "The option list is the browser's native menu, so `shadow-component-menu` is reserved for a future custom menu"],
-    "motion": ["Border colour over `motion-duration-standard`; none under reduced motion"]
+    "anatomy": [
+      "Label above; 40px field-styled button with the value or placeholder and a chevron; the shared list box popover with a check on the selected option; helper or error text"
+    ],
+    "sizes": [
+      "Field `size-control-md` (40px), `space-component-padding-field` sides, extra end padding for the chevron"
+    ],
+    "typography": [
+      "Label `type-label-size`; value `type-body1-size`; messages `type-caption-size`"
+    ],
+    "states": [
+      "Same field states as Input: `color-border-input`, `color-border-input-hover`, focus ring `color-interactive-focus-ring`, error `color-border-danger`",
+      "The option list uses `shadow-component-menu`, `color-state-layer` on hover and focus, and `color-text-link` for the selected option"
+    ],
+    "motion": [
+      "Popover enters with `motion-easing-enter` over `motion-duration-overlay` and exits with `motion-easing-exit` over `motion-duration-overlay-exit`; chevron rotates over `motion-duration-standard`"
+    ]
   },
   "tokensUsed": [
     "border-width-default",
@@ -61,9 +150,8 @@
     "motion-easing-standard",
     "opacity-disabled",
     "size-control-md",
-    "size-icon-md",
+    "space-component-gap-sm",
     "space-component-padding-field",
-    "space-component-padding-sm",
     "space-component-padding-xs",
     "type-body1-family",
     "type-body1-letter-spacing",
@@ -82,10 +170,9 @@
     "type-label-weight"
   ],
   "a11yNotes": [
-    "Must have an associated label element via htmlFor/id pair",
-    "Must be keyboard navigable with arrow keys and Enter/Space",
-    "Error messages must be linked via aria-describedby",
-    "Uses role='combobox' or native <select> — do not use a div without full ARIA implementation",
-    "Dropdown list must be announced to screen readers when it opens"
+    "The trigger is a button with aria-haspopup listbox, named by the label and the current value",
+    "Enter, Space or Arrow Down open the list; arrows move; Enter selects; Escape closes; typing selects by first letters",
+    "Error messages are linked via aria-describedby",
+    "A hidden native select keeps form submission and autofill working"
   ]
 }

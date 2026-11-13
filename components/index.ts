@@ -32,3 +32,5 @@ export { Slider } from './slider/slider';
 export type { SliderProps } from './slider/slider';
 export { NumberField } from './number-field/number-field';
 export type { NumberFieldProps } from './number-field/number-field';
+export { Combobox } from './combobox/combobox';
+export type { ComboboxProps } from './combobox/combobox';

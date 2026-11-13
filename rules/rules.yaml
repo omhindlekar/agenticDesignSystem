@@ -81,6 +81,7 @@ rules:
       - segmented-control
       - slider
       - number-field
+      - combobox
     example: "border: var(--border-width-default) solid var(--color-border-default)"
     counterExample: "border-radius: 50%"
 
@@ -143,6 +144,7 @@ rules:
       - segmented-control
       - slider
       - number-field
+      - combobox
     example: ".ads-button { font-family: var(--font-family-display) }"
     counterExample: ".ads-modal__title { font-family: var(--font-family-body) }"
 
@@ -174,6 +176,7 @@ rules:
       - segmented-control
       - slider
       - number-field
+      - combobox
     example: "Use color-text-primary on color-background-surface (passes 4.5:1)"
     counterExample: "Light grey text on white background"
 
@@ -201,6 +204,7 @@ rules:
       - segmented-control
       - slider
       - number-field
+      - combobox
     example: "outline: var(--border-width-focus) solid var(--color-interactive-focus-ring); outline-offset: var(--focus-ring-offset)"
     counterExample: "outline: none"
 
@@ -246,6 +250,7 @@ rules:
       - switch
       - slider
       - number-field
+      - combobox
     example: "<label htmlFor='email'>Email</label><input id='email' />"
     counterExample: "<input placeholder='Email' />"
 
@@ -290,6 +295,7 @@ rules:
       - segmented-control
       - slider
       - number-field
+      - combobox
     example: "opacity: var(--opacity-state-hover)"
     counterExample: "opacity: 0.08"
 
@@ -319,6 +325,7 @@ rules:
       - segmented-control
       - slider
       - number-field
+      - combobox
     example: "@media (prefers-reduced-motion: no-preference) { .x { transition: color var(--motion-duration-standard) var(--motion-easing-standard); } }"
     counterExample: "transition: all 300ms ease"
 
@@ -344,6 +351,7 @@ rules:
       - search-field
       - segmented-control
       - number-field
+      - combobox
     example: "<IconButton icon=\"close\" label=\"Close dialog\" />"
     counterExample: "<button><svg viewBox=\"0 0 24 24\">…</svg></button>"
 

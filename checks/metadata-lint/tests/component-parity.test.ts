@@ -14,7 +14,7 @@ import {
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, '../../..');
-const POC_COMPONENTS = ['button', 'input', 'select', 'checkbox', 'card', 'modal', 'icon', 'icon-button', 'textarea', 'search-field', 'field', 'radio-group', 'switch', 'segmented-control', 'slider', 'number-field'] as const;
+const POC_COMPONENTS = ['button', 'input', 'select', 'checkbox', 'card', 'modal', 'icon', 'icon-button', 'textarea', 'search-field', 'field', 'radio-group', 'switch', 'segmented-control', 'slider', 'number-field', 'combobox'] as const;
 
 describe('FR-3 component ↔ metadata parity (real components)', () => {
   for (const name of POC_COMPONENTS) {
@@ -23,6 +23,13 @@ describe('FR-3 component ↔ metadata parity (real components)', () => {
       expect(issues.map((i) => `${i.kind}: ${i.message}`)).toEqual([]);
     });
   }
+});
+
+describe('FR-3 parity: root detection', () => {
+  it('FR-3: skips the hidden <template> React Aria renders before the root', () => {
+    const root = parseRootAttributes('<template><div class="x"></div></template><div data-variant="error" data-state="filled error"></div>');
+    expect(root).toEqual({ variant: 'error', states: ['filled', 'error'] });
+  });
 });
 
 describe('FR-3 parity checker catches mismatches', () => {

@@ -1,6 +1,6 @@
 {
   "id": "segmented-control",
-  "purpose": "Switches between a few views or options with connected toggle buttons. Single mode picks one; multiple mode toggles several.",
+  "purpose": "Switches between a few views or options with connected segments. Single mode picks one; multiple mode toggles several.",
   "variants": [
     "single",
     "multiple"

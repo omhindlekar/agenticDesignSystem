@@ -1,6 +1,6 @@
 {
   "id": "search-field",
-  "purpose": "Lets the user search or filter content. Shows a search icon, a Clear button while it has a value; Escape clears and Enter submits.",
+  "purpose": "Lets the user search or filter content. Shows a search icon and a Clear control while it has a value; Escape clears and Enter submits.",
   "variants": [
     "default"
   ],
