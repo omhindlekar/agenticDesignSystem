@@ -3,7 +3,7 @@
   "tree": {
     "component": "card",
     "props": { "as": "section", "aria-label": "Sign in", "padding": "lg" },
-    "tokenRefs": ["color-background-surface", "color-border-default", "shadow-component-card", "radius-component-md", "space-component-padding-lg"],
+    "tokenRefs": ["color-background-raised", "color-border-default", "space-component-padding-lg"],
     "states": ["default"],
     "children": [
       {
