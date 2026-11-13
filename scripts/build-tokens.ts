@@ -103,12 +103,32 @@ export function buildTokensCss(repoRoot: string): string {
       ...(theme.colorScheme ? [`  color-scheme: ${theme.colorScheme};`] : []),
       ...theme.tokens.map((t) => `  --${t.name}: ${values.get(t.name)};`),
     ];
-    out.push('', ...block(`:root[${theme.attribute}="${theme.value}"]`, lines));
+    // Themes switch the whole page; density can also scope a single container.
+    const selector = theme.attribute === 'data-density' ? `[data-density="${theme.value}"]` : `:root[${theme.attribute}="${theme.value}"]`;
+    out.push('', ...block(selector, lines));
     if (theme.prefersColorScheme) {
       out.push('', `@media (prefers-color-scheme: ${theme.prefersColorScheme}) {`, ...block(':root:not([data-theme])', lines, '  '), '}');
     }
   }
   return [...out, ''].join('\n');
+}
+
+export interface TokensJson {
+  base: Record<string, string>;
+  themes: Record<string, Record<string, string>>;
+  densities: Record<string, Record<string, string>>;
+}
+
+/** The same tokens as tokens.css, for code (breakpoints cannot be read from CSS media queries). */
+export function buildTokensJson(repoRoot: string): TokensJson {
+  const out: TokensJson = { base: Object.fromEntries(resolveSemanticTokens(repoRoot)), themes: {}, densities: {} };
+  for (const theme of loadThemes(repoRoot)) {
+    const values = theme.attribute === 'data-theme' ? resolveTheme(repoRoot, theme.value) : resolveDensity(repoRoot, theme);
+    const overrides = Object.fromEntries(theme.tokens.map((t) => [t.name, values.get(t.name) ?? '']));
+    if (theme.attribute === 'data-theme') out.themes[theme.value] = overrides;
+    else out.densities[theme.value] = overrides;
+  }
+  return out;
 }
 
 /** Density modes only swap size tokens, so they resolve against the base theme. */
@@ -125,5 +145,7 @@ if (process.argv[1] && statSync(process.argv[1]).ino === statSync(thisFile).ino)
   const outPath = join(repoRoot, 'styles', 'tokens.css');
   mkdirSync(dirname(outPath), { recursive: true });
   writeFileSync(outPath, buildTokensCss(repoRoot), 'utf8');
-  console.log(`tokens:build wrote ${outPath}`);
+  const jsonPath = join(repoRoot, 'styles', 'tokens.json');
+  writeFileSync(jsonPath, JSON.stringify(buildTokensJson(repoRoot), null, 2) + '\n', 'utf8');
+  console.log(`tokens:build wrote ${outPath} and ${jsonPath}`);
 }

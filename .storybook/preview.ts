@@ -3,18 +3,24 @@ import '../styles/tokens.css';
 import './preview.css';
 
 /**
- * Applies the toolbar's theme as data-theme on <html>. Light is set explicitly too,
- * so an OS dark preference cannot override the choice made in the toolbar.
+ * Applies the toolbar's theme and density to <html>. Light is set explicitly, so an OS
+ * dark preference cannot override the toolbar; comfortable density removes the attribute.
  */
-const withTheme: Decorator = (Story, context) => {
+const withThemeAndDensity: Decorator = (Story, context) => {
   const theme = (context.globals['theme'] as string | undefined) ?? 'light';
-  const doc = (globalThis as { document?: { documentElement: { setAttribute(name: string, value: string): void } } }).document;
+  const density = (context.globals['density'] as string | undefined) ?? 'comfortable';
+  const doc = (globalThis as {
+    document?: { documentElement: { setAttribute(name: string, value: string): void; removeAttribute(name: string): void } };
+  }).document;
   doc?.documentElement.setAttribute('data-theme', theme);
+  // Comfortable is the default tokens, so it removes the attribute.
+  if (density === 'comfortable') doc?.documentElement.removeAttribute('data-density');
+  else doc?.documentElement.setAttribute('data-density', density);
   return Story();
 };
 
 const preview: Preview = {
-  decorators: [withTheme],
+  decorators: [withThemeAndDensity],
   globalTypes: {
     theme: {
       description: 'Colour theme',
@@ -29,8 +35,20 @@ const preview: Preview = {
         ],
       },
     },
+    density: {
+      description: 'Density',
+      toolbar: {
+        title: 'Density',
+        icon: 'component',
+        dynamicTitle: true,
+        items: [
+          { value: 'comfortable', title: 'Comfortable' },
+          { value: 'compact', title: 'Compact' },
+        ],
+      },
+    },
   },
-  initialGlobals: { theme: 'light' },
+  initialGlobals: { theme: 'light', density: 'comfortable' },
   parameters: {
     layout: 'padded',
     // storybook-addon-pseudo-states copies a story's `pseudo` parameter into the user

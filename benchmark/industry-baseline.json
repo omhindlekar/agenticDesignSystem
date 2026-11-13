@@ -223,9 +223,12 @@
       },
       "baseline": true,
       "verified": false,
-      "status": "missing",
+      "status": "done",
       "phase": "1.9",
-      "evidence": []
+      "evidence": [
+        "tokens/semantic.json",
+        "components/foundations/layout.stories.tsx"
+      ]
     },
     {
       "id": "density",
@@ -240,9 +243,12 @@
       },
       "baseline": true,
       "verified": false,
-      "status": "missing",
+      "status": "done",
       "phase": "1.9",
-      "evidence": [],
+      "evidence": [
+        "tokens/themes/compact.json",
+        "components/foundations/layout.stories.tsx"
+      ],
       "note": "M3 density, Carbon component sizes, Fluent size props"
     },
     {
@@ -258,12 +264,12 @@
       },
       "baseline": true,
       "verified": false,
-      "status": "partial",
+      "status": "done",
       "phase": "1.9",
       "evidence": [
-        "styles/tokens.css"
-      ],
-      "note": "CSS exists; JSON export comes with the layout step"
+        "styles/tokens.css",
+        "styles/tokens.json"
+      ]
     },
     {
       "id": "button",

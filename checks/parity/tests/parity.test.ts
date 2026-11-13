@@ -70,3 +70,15 @@ describe('Parity scorecard: report', () => {
     expect(report.gaps.map((g) => g.id)).toEqual(['b']);
   });
 });
+
+describe('Parity scorecard: phase gates', () => {
+  // Each finished parity phase adds its area here, so it cannot slip back below 100%.
+  const GATED_AREAS = ['foundations'];
+
+  it.each(GATED_AREAS)('%s is at 100% of the industry baseline', (area) => {
+    const report = parityReport(loadScorecard(root));
+    const gaps = report.gaps.filter((g) => g.area === area).map((g) => `${g.id} (${g.status})`);
+    expect(gaps).toEqual([]);
+    expect(report.areas[area]?.percent).toBe(100);
+  });
+});

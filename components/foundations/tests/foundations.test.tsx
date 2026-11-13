@@ -16,6 +16,7 @@ import * as spacing from '../spacing.stories';
 import * as elevation from '../elevation.stories';
 import * as motion from '../motion.stories';
 import * as iconography from '../iconography.stories';
+import * as layout from '../layout.stories';
 import { ICON_NAMES } from '../../icon/icons.generated';
 import { TYPE_ROLES, RAMPS, STEPS } from '../tokens';
 
@@ -28,6 +29,7 @@ const pages: Array<[string, StoryModule, string]> = [
   ['Elevation', elevation as unknown as StoryModule, 'Elevation'],
   ['Motion', motion as unknown as StoryModule, 'Motion'],
   ['Iconography', iconography as unknown as StoryModule, 'Iconography'],
+  ['Layout', layout as unknown as StoryModule, 'Layout'],
 ];
 
 describe('FR-1 Foundations pages', () => {
@@ -72,5 +74,11 @@ describe('FR-1 Foundations pages', () => {
     const css = readFileSync(join(dir, 'foundations.css'), 'utf8');
     expect(css).toMatch(/var\(--motion-easing-enter\)/);
     expect(css).toMatch(/var\(--motion-easing-exit\)/);
+  });
+
+  it('FR-1: Layout shows the breakpoints, the grid and both densities side by side', () => {
+    const html = renderToStaticMarkup((layout.Layout as { render: () => ReactElement }).render());
+    for (const t of ['breakpoint-sm', 'breakpoint-md', 'breakpoint-lg', 'breakpoint-xl', 'layout-columns-lg']) expect(html).toContain(t);
+    expect(html).toContain('data-density="compact"');
   });
 });
