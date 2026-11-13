@@ -2,8 +2,8 @@ import { readFile, readdir } from 'node:fs/promises';
 import { readFileSync } from 'node:fs';
 import { join, extname } from 'node:path';
 import { existsSync, statSync } from 'node:fs';
-import { resolveSemanticTokens } from '../../scripts/build-tokens.js';
-import { checkContrast } from './contrast.js';
+import { loadThemes, resolveTheme } from '../../scripts/build-tokens.js';
+import { checkContrast, AA, HIGH_CONTRAST } from './contrast.js';
 
 export interface LintViolation {
   file: string;
@@ -409,9 +409,10 @@ if (process.argv[1] && statSync(process.argv[1]).ino === statSync(new URL(import
   const repoRoot = process.cwd();
   lintDirectory(targetDir, undefined, loadSemanticTokenNames(repoRoot)).then((violations) => {
     violations.push(...lintTokenFiles(undefined, undefined, repoRoot));
-    for (const c of checkContrast(resolveSemanticTokens(repoRoot))) {
+    const themes = ['light', ...loadThemes(repoRoot).filter((t) => t.attribute === 'data-theme').map((t) => t.value)];
+    for (const theme of themes) for (const c of checkContrast(resolveTheme(repoRoot, theme), theme === 'high-contrast' ? HIGH_CONTRAST : AA)) {
       violations.push({
-        file: 'tokens/semantic.json',
+        file: theme === 'light' ? 'tokens/semantic.json' : `tokens/themes/${theme}.json`,
         line: 0,
         column: 0,
         pattern: 'contrast',

@@ -289,8 +289,9 @@ rules:
     severity: error
     statement: >
       Lime is never used as text on white. Success text uses lime 700 or darker
-      (color-text-success), and text on a lime fill uses blue 900
-      (color-text-on-success on color-status-success-fill). Token lint checks
+      (color-text-success). Text on a light lime fill (lime 500 or lighter) uses
+      blue 900 (color-text-on-success on color-status-success-fill); on the dark
+      theme's deep lime containers (lime 700 or darker) it uses lime 50. Token lint checks
       every semantic text, border and focus-ring pair against its surface.
     check: auto
     checkName: token-lint

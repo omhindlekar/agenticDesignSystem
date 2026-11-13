@@ -16,6 +16,7 @@ import * as spacing from '../spacing.stories';
 import * as elevation from '../elevation.stories';
 import * as motion from '../motion.stories';
 import * as iconography from '../iconography.stories';
+import * as layout from '../layout.stories';
 import { ICON_NAMES } from '../../icon/icons.generated';
 import { TYPE_ROLES, RAMPS, STEPS } from '../tokens';
 
@@ -28,6 +29,7 @@ const pages: Array<[string, StoryModule, string]> = [
   ['Elevation', elevation as unknown as StoryModule, 'Elevation'],
   ['Motion', motion as unknown as StoryModule, 'Motion'],
   ['Iconography', iconography as unknown as StoryModule, 'Iconography'],
+  ['Layout', layout as unknown as StoryModule, 'Layout'],
 ];
 
 describe('FR-1 Foundations pages', () => {
@@ -55,5 +57,28 @@ describe('FR-1 Foundations pages', () => {
     for (const size of ['sm', 'md', 'lg']) {
       expect((html.match(new RegExp(`data-size="${size}"`, 'g')) ?? []).length).toBeGreaterThanOrEqual(ICON_NAMES.length);
     }
+  });
+
+  it('FR-1: Colors shows every tonal role with its contrast ratio', () => {
+    const html = renderToStaticMarkup((colors.Colors as { render: () => ReactElement }).render());
+    for (const role of ['primary', 'info', 'success', 'warning', 'danger', 'neutral']) {
+      expect(html).toContain(`data-role="${role}"`);
+    }
+    const css = readFileSync(join(dir, 'foundations.css'), 'utf8');
+    expect(css).toContain('.fd-tonal[data-role="success"]');
+  });
+
+  it('FR-1: Motion demonstrates enter and exit with their tokens', () => {
+    const html = renderToStaticMarkup((motion.Motion as { render: () => ReactElement }).render());
+    for (const t of ['motion-easing-enter', 'motion-easing-exit', 'motion-duration-overlay-exit']) expect(html).toContain(t);
+    const css = readFileSync(join(dir, 'foundations.css'), 'utf8');
+    expect(css).toMatch(/var\(--motion-easing-enter\)/);
+    expect(css).toMatch(/var\(--motion-easing-exit\)/);
+  });
+
+  it('FR-1: Layout shows the breakpoints, the grid and both densities side by side', () => {
+    const html = renderToStaticMarkup((layout.Layout as { render: () => ReactElement }).render());
+    for (const t of ['breakpoint-sm', 'breakpoint-md', 'breakpoint-lg', 'breakpoint-xl', 'layout-columns-lg']) expect(html).toContain(t);
+    expect(html).toContain('data-density="compact"');
   });
 });

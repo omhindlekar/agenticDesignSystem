@@ -16,6 +16,7 @@
     "build": "npm run build --workspaces --if-present",
     "tokens:build": "tsx scripts/build-tokens.ts",
     "icons:build": "tsx scripts/build-icons.ts",
+    "parity": "tsx checks/parity/index.ts",
     "prestorybook": "npm run tokens:build",
     "storybook": "storybook dev -p 6006",
     "prebuild-storybook": "npm run tokens:build",
