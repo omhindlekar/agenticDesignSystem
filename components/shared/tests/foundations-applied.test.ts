@@ -160,3 +160,15 @@ describe('FR-3 metadata spec', () => {
     }
   });
 });
+
+describe('FR-1 icons come only from the Icon component', () => {
+  it('FR-1: the hand-drawn shared icon set is retired', async () => {
+    const { existsSync } = await import('node:fs');
+    expect(existsSync(join(root, 'components', 'shared', 'icons.tsx'))).toBe(false);
+  });
+
+  it('FR-1: the select chevron is the keyboard_arrow_down icon', () => {
+    const tsx = readFileSync(join(root, 'components', 'select', 'select.tsx'), 'utf8');
+    expect(tsx).toMatch(/<Icon name="keyboard_arrow_down"/);
+  });
+});

@@ -1,7 +1,7 @@
 import { useId, useState } from 'react';
 import type * as React from 'react';
 import { dataState, describedBy } from '../shared/state';
-import { ChevronDownIcon, ErrorIcon } from '../shared/icons';
+import { Icon } from '../icon/icon';
 import '../shared/shared.css';
 import './select.css';
 
@@ -86,14 +86,16 @@ export function Select({
             </option>
           ))}
         </select>
-        <ChevronDownIcon className="ads-select__chevron" />
+        <span className="ads-select__chevron">
+          <Icon name="keyboard_arrow_down" />
+        </span>
       </span>
       {helperText ? (
         <p id={helperId} className="ads-field__message">{helperText}</p>
       ) : null}
       {errorMessage ? (
         <p id={errorId} className="ads-field__message" data-tone="error">
-          <ErrorIcon />
+          <Icon name="report" size="sm" />
           {errorMessage}
         </p>
       ) : null}
