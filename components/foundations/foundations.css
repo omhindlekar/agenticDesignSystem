@@ -1,4 +1,7 @@
 /* Layout for the Foundations pages. Every value is a semantic token. */
+/* Pages that render no component still need the bundled fonts. */
+@import '../shared/fonts.css';
+
 .fd-page {
   display: flex;
   flex-direction: column;
@@ -75,7 +78,7 @@
 /* Semantic colours */
 .fd-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(var(--size-modal-sm), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(calc(var(--size-modal-sm) / 2), 1fr));
   gap: var(--space-component-gap-sm);
 }
 

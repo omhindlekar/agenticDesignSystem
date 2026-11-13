@@ -47,7 +47,8 @@
   border-color: var(--color-border-interactive);
 }
 
-.ads-select[data-state~="default"] .ads-select__field {
+/* Placeholder colour whenever nothing is selected, whatever else the state is. */
+.ads-select:not([data-state~="selected"]) .ads-select__field {
   color: var(--color-text-secondary);
 }
 

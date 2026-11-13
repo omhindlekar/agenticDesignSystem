@@ -48,6 +48,8 @@
   margin: 0;
   border: var(--border-width-control) solid var(--color-border-input);
   background-color: var(--color-background-surface);
+  /* Form controls do not inherit fonts; keep the box on Saira like everything else. */
+  font-family: inherit;
   cursor: pointer;
 }
 
