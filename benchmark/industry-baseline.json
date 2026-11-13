@@ -182,9 +182,12 @@
       },
       "baseline": true,
       "verified": false,
-      "status": "missing",
+      "status": "done",
       "phase": "1.9",
-      "evidence": [],
+      "evidence": [
+        "tokens/semantic.json",
+        "components/foundations/motion.stories.tsx"
+      ],
       "note": "M3 emphasized decelerate and accelerate, Carbon entrance and exit, Fluent decelerate and accelerate curves"
     },
     {

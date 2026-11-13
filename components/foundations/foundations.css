@@ -441,3 +441,35 @@
   background-color: var(--color-container-neutral);
   color: var(--color-on-container-neutral);
 }
+
+/* Enter and exit demo */
+.fd-motion__panel {
+  position: absolute;
+  inset: var(--space-component-padding-sm);
+  display: flex;
+  align-items: center;
+  padding-inline: var(--space-component-padding-md);
+  background-color: var(--color-container-primary);
+  color: var(--color-on-container-primary);
+  opacity: 0;
+  transform: translateY(var(--space-component-padding-sm));
+}
+
+.fd-motion__panel[data-open="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .fd-motion__panel {
+    transition:
+      opacity var(--motion-duration-overlay-exit) var(--motion-easing-exit),
+      transform var(--motion-duration-overlay-exit) var(--motion-easing-exit);
+  }
+
+  .fd-motion__panel[data-open="true"] {
+    transition:
+      opacity var(--motion-duration-overlay) var(--motion-easing-enter),
+      transform var(--motion-duration-overlay) var(--motion-easing-enter);
+  }
+}

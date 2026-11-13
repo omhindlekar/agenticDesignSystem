@@ -245,3 +245,20 @@ describe('FR-1 foundations: tonal colour roles', () => {
     expect(sem.get(`color-on-container-${role}`)).toBe(prim.get(text));
   });
 });
+
+describe('FR-1 foundations: enter and exit motion', () => {
+  const sem = resolveSemanticTokens(root);
+  it.each([
+    ['motion-easing-enter', 'cubic-bezier(0, 0, 0, 1)'],
+    ['motion-easing-exit', 'cubic-bezier(0.3, 0, 1, 1)'],
+    ['motion-duration-exit', '100ms'],
+    ['motion-duration-overlay-exit', '150ms'],
+  ])('FR-1: %s is %s', (name, value) => {
+    expect(sem.get(name)).toBe(value);
+  });
+
+  it('FR-1: exits are shorter than their entrances', () => {
+    expect(parseFloat(sem.get('motion-duration-exit') ?? '')).toBeLessThan(parseFloat(sem.get('motion-duration-standard') ?? ''));
+    expect(parseFloat(sem.get('motion-duration-overlay-exit') ?? '')).toBeLessThan(parseFloat(sem.get('motion-duration-overlay') ?? ''));
+  });
+});

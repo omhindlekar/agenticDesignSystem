@@ -65,4 +65,12 @@ describe('FR-1 Foundations pages', () => {
     const css = readFileSync(join(dir, 'foundations.css'), 'utf8');
     expect(css).toContain('.fd-tonal[data-role="success"]');
   });
+
+  it('FR-1: Motion demonstrates enter and exit with their tokens', () => {
+    const html = renderToStaticMarkup((motion.Motion as { render: () => ReactElement }).render());
+    for (const t of ['motion-easing-enter', 'motion-easing-exit', 'motion-duration-overlay-exit']) expect(html).toContain(t);
+    const css = readFileSync(join(dir, 'foundations.css'), 'utf8');
+    expect(css).toMatch(/var\(--motion-easing-enter\)/);
+    expect(css).toMatch(/var\(--motion-easing-exit\)/);
+  });
 });

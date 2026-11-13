@@ -179,6 +179,10 @@
     {"name": "motion-duration-fast", "tier": "semantic", "reference": "duration-150", "description": "Alias of motion-duration-standard (150ms)"},
     {"name": "motion-duration-standard", "tier": "semantic", "reference": "duration-150", "description": "State changes: hover, focus, press, selection"},
     {"name": "motion-duration-overlay", "tier": "semantic", "reference": "duration-200", "description": "Overlays: modal scrim and panel"},
+    {"name": "motion-easing-enter", "tier": "semantic", "reference": "easing-decelerate", "description": "Elements entering: overlays opening, items appearing"},
+    {"name": "motion-easing-exit", "tier": "semantic", "reference": "easing-accelerate", "description": "Elements leaving: overlays closing, items dismissed"},
+    {"name": "motion-duration-exit", "tier": "semantic", "reference": "duration-100", "description": "Exit of small elements (100ms); exits are shorter than entrances"},
+    {"name": "motion-duration-overlay-exit", "tier": "semantic", "reference": "duration-150", "description": "Exit of overlays such as the modal (150ms)"},
     {"name": "motion-easing-standard", "tier": "semantic", "reference": "easing-standard", "description": "Standard easing for all motion"}
   ]
 }

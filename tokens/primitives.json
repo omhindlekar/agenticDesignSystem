@@ -136,8 +136,11 @@
     {"name": "z-index-overlay", "tier": "primitive", "value": "1000", "description": "Overlay stacking layer"},
     {"name": "font-family-saira", "tier": "primitive", "value": "'Saira', system-ui, -apple-system, 'Segoe UI', sans-serif", "description": "Saira, bundled via @fontsource/saira. Body text"},
     {"name": "font-family-saira-semi-condensed", "tier": "primitive", "value": "'Saira Semi Condensed', 'Saira', system-ui, -apple-system, 'Segoe UI', sans-serif", "description": "Saira SemiCondensed, bundled via @fontsource/saira-semi-condensed. Display text"},
+    {"name": "duration-100", "tier": "primitive", "value": "100ms", "description": "100 milliseconds"},
     {"name": "duration-150", "tier": "primitive", "value": "150ms", "description": "150 milliseconds"},
     {"name": "duration-200", "tier": "primitive", "value": "200ms", "description": "200 milliseconds"},
+    {"name": "easing-decelerate", "tier": "primitive", "value": "cubic-bezier(0, 0, 0, 1)", "description": "Decelerate: enters fast and settles"},
+    {"name": "easing-accelerate", "tier": "primitive", "value": "cubic-bezier(0.3, 0, 1, 1)", "description": "Accelerate: leaves gently and speeds away"},
     {"name": "easing-standard", "tier": "primitive", "value": "cubic-bezier(0.2, 0, 0, 1)", "description": "Standard easing: quick start, gentle settle"}
   ]
 }

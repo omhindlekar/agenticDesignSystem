@@ -181,6 +181,10 @@
   --motion-duration-fast: 150ms;
   --motion-duration-standard: 150ms;
   --motion-duration-overlay: 200ms;
+  --motion-easing-enter: cubic-bezier(0, 0, 0, 1);
+  --motion-easing-exit: cubic-bezier(0.3, 0, 1, 1);
+  --motion-duration-exit: 100ms;
+  --motion-duration-overlay-exit: 150ms;
   --motion-easing-standard: cubic-bezier(0.2, 0, 0, 1);
 }
 
