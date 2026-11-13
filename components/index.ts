@@ -34,3 +34,5 @@ export { NumberField } from './number-field/number-field';
 export type { NumberFieldProps } from './number-field/number-field';
 export { Combobox } from './combobox/combobox';
 export type { ComboboxProps } from './combobox/combobox';
+export { DatePicker } from './date-picker/date-picker';
+export type { DatePickerProps } from './date-picker/date-picker';
