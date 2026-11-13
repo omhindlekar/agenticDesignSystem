@@ -52,6 +52,7 @@
   --space-component-padding-lg: 24px;
   --space-component-gap-sm: 8px;
   --space-component-gap-md: 16px;
+  --space-component-padding-field: 12px;
   --space-layout-section: 32px;
   --space-layout-page: 24px;
   --radius-component-sm: 0;
@@ -78,6 +79,7 @@
   --elevation-3: 0 4px 8px rgba(10,32,87,.10), 0 8px 16px rgba(10,32,87,.06);
   --elevation-4: 0 8px 16px rgba(10,32,87,.12), 0 16px 32px rgba(10,32,87,.08);
   --border-width-default: 1px;
+  --border-width-control: 2px;
   --border-width-focus: 2px;
   --focus-ring-offset: 2px;
   --size-touch-target-min: 2.75rem;
@@ -158,6 +160,7 @@
   --opacity-state-focus: 0.12;
   --opacity-state-pressed: 0.16;
   --opacity-disabled: 0.38;
+  --z-index-state-layer: -1;
   --z-index-modal: 1000;
   --motion-duration-fast: 150ms;
   --motion-duration-standard: 150ms;

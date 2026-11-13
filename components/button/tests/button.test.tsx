@@ -81,10 +81,39 @@ describe('Button', () => {
     expect(onClick).not.toHaveBeenCalled();
   });
 
-  it('FR-3: exposes variant and state as data attributes', () => {
-    render(<Button label="Delete" variant="danger" disabled />);
+  it('FR-3: exposes variant, tone and state as data attributes', () => {
+    render(<Button label="Delete" variant="outlined" tone="danger" disabled />);
     const btn = screen.getByRole('button');
-    expect(btn.getAttribute('data-variant')).toBe('danger');
+    expect(btn.getAttribute('data-variant')).toBe('outlined');
+    expect(btn.getAttribute('data-tone')).toBe('danger');
     expect(btn.getAttribute('data-state')).toBe('disabled');
+  });
+
+  it.each([
+    ['primary', 'contained', 'primary'],
+    ['secondary', 'outlined', 'primary'],
+    ['ghost', 'text', 'primary'],
+    ['danger', 'contained', 'danger'],
+  ] as const)('FR-3: deprecated variant "%s" still renders, as %s with %s tone', (legacy, variant, tone) => {
+    render(<Button label="Go" variant={legacy} />);
+    const btn = screen.getByRole('button');
+    expect(btn.getAttribute('data-variant')).toBe(variant);
+    expect(btn.getAttribute('data-tone')).toBe(tone);
+  });
+
+  it('FR-1: defaults to a contained, primary-tone, medium button', () => {
+    render(<Button label="Save" />);
+    const btn = screen.getByRole('button');
+    expect(btn.getAttribute('data-variant')).toBe('contained');
+    expect(btn.getAttribute('data-tone')).toBe('primary');
+    expect(btn.getAttribute('data-size')).toBe('md');
+  });
+
+  it('FR-1: loading keeps the label in the DOM (so the width holds) and shows a progress indicator', () => {
+    render(<Button label="Save" loading iconStart={<span data-testid="icon" />} />);
+    const btn = screen.getByRole('button', { name: /Save/ });
+    expect(btn.querySelector('.ads-button__label')?.textContent).toBe('Save');
+    expect(btn.querySelector('.ads-button__progress .ads-spinner')).not.toBeNull();
+    expect(screen.getByTestId('icon')).toBeTruthy();
   });
 });

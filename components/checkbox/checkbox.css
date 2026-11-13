@@ -1,30 +1,63 @@
+/* Checkbox: 20px square box inside a 40px square hit area, 14px label. */
 .ads-checkbox__row {
   display: flex;
   align-items: center;
-  gap: var(--space-component-gap-sm);
-  min-height: var(--size-touch-target-min);
+  gap: var(--space-component-padding-xs);
+  min-height: var(--size-hit-area);
 }
 
+/* 40px hit area. It is a <label> around the input, so the whole square toggles it. */
 .ads-checkbox__control {
   position: relative;
   display: inline-grid;
   flex: none;
   place-items: center;
+  width: var(--size-hit-area);
+  height: var(--size-hit-area);
+  isolation: isolate;
+  cursor: pointer;
 }
 
-/* Square box: the native control is restyled so the OS cannot round its corners. */
+.ads-checkbox__layer {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-index-state-layer);
+  background-color: var(--color-state-layer);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ads-checkbox__row:hover .ads-checkbox__box:not(:disabled) ~ .ads-checkbox__layer {
+  opacity: var(--opacity-state-hover);
+}
+
+.ads-checkbox__box:focus-visible ~ .ads-checkbox__layer {
+  opacity: var(--opacity-state-focus);
+}
+
+.ads-checkbox__box:active:not(:disabled) ~ .ads-checkbox__layer {
+  opacity: var(--opacity-state-pressed);
+}
+
+/* The box: native control restyled so the OS cannot round its corners. */
 .ads-checkbox__box {
   appearance: none;
   box-sizing: border-box;
   width: var(--size-control-indicator);
   height: var(--size-control-indicator);
   margin: 0;
-  border: var(--border-width-default) solid var(--color-border-input);
+  border: var(--border-width-control) solid var(--color-border-input);
   background-color: var(--color-background-surface);
   cursor: pointer;
 }
 
-.ads-checkbox__box:hover:not(:disabled) {
+/* Over a state layer the border steps up to the hover token (3:1 on every layer). */
+.ads-checkbox__row:hover .ads-checkbox__box:not(:disabled) {
+  border-color: var(--color-border-input-hover);
+}
+
+.ads-checkbox__box:focus-visible,
+.ads-checkbox__box:active:not(:disabled) {
   border-color: var(--color-border-input-hover);
 }
 
@@ -34,8 +67,8 @@
   background-color: var(--color-interactive-default);
 }
 
-.ads-checkbox__box:checked:hover:not(:disabled),
-.ads-checkbox__box:indeterminate:hover:not(:disabled) {
+.ads-checkbox__row:hover .ads-checkbox__box:checked:not(:disabled),
+.ads-checkbox__row:hover .ads-checkbox__box:indeterminate:not(:disabled) {
   border-color: var(--color-interactive-hover);
   background-color: var(--color-interactive-hover);
 }
@@ -45,35 +78,25 @@
   outline-offset: var(--focus-ring-offset);
 }
 
-/* Mark sits over the box and never takes pointer events. Hidden until checked. */
-.ads-checkbox__mark {
+/* Icons sit over the box and never take pointer events. */
+.ads-checkbox__check,
+.ads-checkbox__dash {
   position: absolute;
   display: none;
-  box-sizing: border-box;
-  pointer-events: none;
+  width: var(--size-control-indicator);
+  height: var(--size-control-indicator);
   color: var(--color-text-inverse);
+  pointer-events: none;
 }
 
-/* Check: two sides of a rectangle, rotated. */
-.ads-checkbox__box:checked + .ads-checkbox__mark {
+.ads-checkbox__box:checked:not(:indeterminate) ~ .ads-checkbox__check,
+.ads-checkbox__box:indeterminate ~ .ads-checkbox__dash {
   display: block;
-  width: calc(var(--size-control-indicator) / 3);
-  height: calc(var(--size-control-indicator) / 1.8);
-  margin-block-start: calc(var(--border-width-focus) * -1);
-  border-inline-end: var(--border-width-focus) solid currentColor;
-  border-block-end: var(--border-width-focus) solid currentColor;
-  transform: rotate(45deg);
 }
 
-/* Dash for indeterminate. */
-.ads-checkbox__box:indeterminate + .ads-checkbox__mark {
-  display: block;
-  width: calc(var(--size-control-indicator) / 2);
-  height: var(--border-width-focus);
-  background-color: currentColor;
-}
-
-.ads-checkbox__row .ads-field__label {
+.ads-checkbox__label {
+  font-family: var(--type-label-family);
+  font-size: var(--type-label-size);
   cursor: pointer;
 }
 
@@ -81,8 +104,8 @@
   background-color: var(--color-background-surface);
 }
 
-.ads-checkbox[data-state~="checked"] .ads-checkbox__mark,
-.ads-checkbox[data-state~="indeterminate"] .ads-checkbox__mark {
+.ads-checkbox[data-state~="checked"] .ads-checkbox__check,
+.ads-checkbox[data-state~="indeterminate"] .ads-checkbox__dash {
   color: var(--color-text-inverse);
 }
 
@@ -101,20 +124,26 @@
   cursor: not-allowed;
 }
 
-.ads-checkbox[data-state~="disabled"] .ads-checkbox__mark {
-  color: var(--color-text-disabled);
-}
-
+.ads-checkbox[data-state~="disabled"] .ads-checkbox__check,
+.ads-checkbox[data-state~="disabled"] .ads-checkbox__dash,
 .ads-checkbox[data-state~="disabled"] .ads-field__label {
-  color: var(--color-text-disabled);
+  color: color-mix(in srgb, var(--color-text-primary) calc(var(--opacity-disabled) * 100%), transparent);
   cursor: not-allowed;
 }
 
+/* Helper and error text line up with the label, not the hit area. */
+.ads-checkbox > .ads-field__message {
+  padding-inline-start: calc(var(--size-hit-area) + var(--space-component-padding-xs));
+}
+
 @media (prefers-reduced-motion: no-preference) {
-  /* Square box: the native control is restyled so the OS cannot round its corners. */
-.ads-checkbox__box {
+  .ads-checkbox__layer {
+    transition: opacity var(--motion-duration-standard) var(--motion-easing-standard);
+  }
+
+  .ads-checkbox__box {
     transition:
-      background-color var(--motion-duration-fast) ease,
-      border-color var(--motion-duration-fast) ease;
+      background-color var(--motion-duration-standard) var(--motion-easing-standard),
+      border-color var(--motion-duration-standard) var(--motion-easing-standard);
   }
 }

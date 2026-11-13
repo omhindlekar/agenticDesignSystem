@@ -63,6 +63,19 @@ describe('FR-3 parity checker catches mismatches', () => {
     expect(text).toMatch(/tertiary.*not in metadata/);
   });
 
+  it('FR-3: accepts deprecated variant aliases declared in metadata, and only those', () => {
+    const withAliases = { ...meta, deprecatedVariants: { tertiary: 'secondary' } };
+    const ok = checkVariants(withAliases, [{ name: 'variant', type: "'primary' | 'secondary' | 'tertiary'", required: false }]);
+    expect(ok).toEqual([]);
+    const missing = checkVariants(withAliases, [{ name: 'variant', type: "'primary' | 'secondary'", required: false }]);
+    expect(missing.map((i) => i.message).join('\n')).toMatch(/deprecated alias "tertiary".*missing from component/);
+    const badTarget = checkVariants(
+      { ...meta, deprecatedVariants: { tertiary: 'quaternary' } },
+      [{ name: 'variant', type: "'primary' | 'secondary' | 'tertiary'", required: false }],
+    );
+    expect(badTarget.map((i) => i.message).join('\n')).toMatch(/tertiary.*maps to "quaternary"/);
+  });
+
   it('FR-3: flags a state with no CSS selector and a CSS state not in metadata', () => {
     const css = `.w:hover {} .w[data-state~="disabled"] {} .w[data-state~="loading"] {}`;
     const text = checkCssStates(meta, css).map((i) => i.message).join('\n');

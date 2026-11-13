@@ -10,14 +10,63 @@
   white-space: nowrap;
 }
 
+/* ── State layer ────────────────────────────────────────────────────────────
+ * A square overlay in color-state-layer behind the content, shown at the
+ * hover, focus and pressed opacities. Disabled controls never show it.
+ */
+.ads-state-layer {
+  position: relative;
+  isolation: isolate;
+}
+
+.ads-state-layer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-index-state-layer);
+  background-color: var(--color-state-layer);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ads-state-layer[data-tone="danger"]::before {
+  background-color: var(--color-state-layer-danger);
+}
+
+.ads-state-layer:hover:not([aria-disabled]):not(:disabled)::before {
+  opacity: var(--opacity-state-hover);
+}
+
+.ads-state-layer:focus-visible:not([aria-disabled])::before {
+  opacity: var(--opacity-state-focus);
+}
+
+.ads-state-layer:active:not([aria-disabled]):not(:disabled)::before {
+  opacity: var(--opacity-state-pressed);
+}
+
+/* ── Icons ──────────────────────────────────────────────────────────────── */
+.ads-icon {
+  display: inline-block;
+  flex: none;
+  width: 1em;
+  height: 1em;
+}
+
+/* ── Spinner: a spinning square on a neutral track ──────────────────────── */
 .ads-spinner {
   display: inline-block;
   flex: none;
+  box-sizing: border-box;
   width: var(--size-control-indicator);
   height: var(--size-control-indicator);
-  /* Square by design: a spinning square, not a circle. Neutral track, blue indicator. */
   border: var(--border-width-focus) solid var(--color-spinner-track);
   border-top-color: var(--color-interactive-default);
+}
+
+/* Static text that replaces the spinner when motion is reduced. */
+.ads-spinner__text {
+  display: none;
 }
 
 @keyframes ads-spin {
@@ -26,15 +75,15 @@
   }
 }
 
-/* Static text that replaces the spinner when motion is reduced. */
-.ads-spinner__text {
-  display: none;
+@keyframes ads-fade-in {
+  from {
+    opacity: 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .ads-spinner {
     display: none;
-    animation: none;
   }
 
   .ads-spinner__text {
@@ -42,6 +91,7 @@
   }
 }
 
+/* ── Field anatomy shared by Input, Select and Checkbox ─────────────────── */
 .ads-field {
   display: flex;
   flex-direction: column;
@@ -51,10 +101,12 @@
 }
 
 .ads-field__label {
-  font-family: var(--font-family-display);
-  font-size: var(--font-size-label-md);
-  font-weight: var(--font-weight-label);
-  line-height: var(--line-height-body);
+  font-family: var(--type-label-family);
+  font-size: var(--type-label-size);
+  font-weight: var(--type-label-weight);
+  line-height: var(--type-label-line-height);
+  letter-spacing: var(--type-label-letter-spacing);
+  color: var(--color-text-primary);
 }
 
 .ads-field__required {
@@ -62,10 +114,23 @@
 }
 
 .ads-field__message {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-component-padding-xs);
   margin: 0;
-  font-size: var(--font-size-label-sm);
-  line-height: var(--line-height-body);
+  font-family: var(--type-caption-family);
+  font-size: var(--type-caption-size);
+  font-weight: var(--type-caption-weight);
+  line-height: var(--type-caption-line-height);
+  letter-spacing: var(--type-caption-letter-spacing);
   color: var(--color-text-secondary);
+}
+
+/* Optical alignment: the icon sits on the first line of caption text. */
+.ads-field__message .ads-icon {
+  width: var(--size-control-indicator);
+  height: var(--size-control-indicator);
+  margin-block-start: calc(var(--border-width-default) * -1);
 }
 
 .ads-field__message[data-tone="error"] {
@@ -77,7 +142,11 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
+  .ads-state-layer::before {
+    transition: opacity var(--motion-duration-standard) var(--motion-easing-standard);
+  }
+
   .ads-spinner {
-    animation: ads-spin calc(var(--motion-duration-fast) * 6) linear infinite;
+    animation: ads-spin calc(var(--motion-duration-overlay) * 4) linear infinite;
   }
 }

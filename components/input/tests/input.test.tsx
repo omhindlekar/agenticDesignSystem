@@ -20,6 +20,13 @@ describe('Input', () => {
     expect(document.getElementById(describedBy)?.textContent).toBe('Enter a valid email');
   });
 
+  it('FR-1: error text carries a decorative error icon', () => {
+    render(<Input label="Email" errorMessage="Enter a valid email" />);
+    const msg = document.querySelector('.ads-field__message[data-tone="error"]');
+    expect(msg?.querySelector('svg[aria-hidden="true"]')).not.toBeNull();
+    expect(msg?.textContent).toBe('Enter a valid email');
+  });
+
   it('NFR-9: helper text is linked by aria-describedby', () => {
     render(<Input label="Name" helperText="As on your passport" />);
     const id = screen.getByLabelText('Name').getAttribute('aria-describedby') ?? '';

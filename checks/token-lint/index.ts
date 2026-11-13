@@ -174,7 +174,7 @@ export function lintString(content: string, fileName = '<generated>'): LintViola
 const DISPLAY_ROLE = /\.ads-button\b|__label\b|__title\b|__heading\b|\bbadge\b|(?:^|[\s,>+~])(?:th|h[1-6])\b/;
 /** Selectors for text that must use the Saira body font. */
 const BODY_ROLE = /__field\b|__message\b|__body\b|__helper\b/;
-const DISPLAY_FONT = /var\(--font-family-display\)/;
+const DISPLAY_FONT = /var\(--(?:font-family-display|type-(?:display|h[1-4]|button|label|overline)-family)\)/;
 
 /**
  * Headings, buttons, labels, table headers and badges use var(--font-family-display);

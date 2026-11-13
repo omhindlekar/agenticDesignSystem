@@ -64,6 +64,27 @@ describe('Card', () => {
     expect(document.activeElement).toBe(link);
   });
 
+  it('FR-1: renders header (title, subtitle), content and actions slots', () => {
+    const { container } = render(
+      <Card title="Pro plan" subtitle="Billed yearly" actions={<button type="button">Choose</button>}>
+        Unlimited projects
+      </Card>,
+    );
+    expect(screen.getByRole('heading', { name: 'Pro plan' })).toBeTruthy();
+    expect(container.querySelector('.ads-card__subtitle')?.textContent).toBe('Billed yearly');
+    expect(container.querySelector('.ads-card__content')?.textContent).toBe('Unlimited projects');
+    expect(container.querySelector('.ads-card__actions button')).not.toBeNull();
+  });
+
+  it('NFR-9: an interactive card renders no actions slot, so controls are never nested', () => {
+    render(
+      <Card variant="interactive" onClick={() => {}} title="Pro" actions={<button type="button">Choose</button>}>
+        Body
+      </Card>,
+    );
+    expect(screen.getAllByRole('button')).toHaveLength(1);
+  });
+
   it('renders the element given by `as` for static cards', () => {
     const { container } = render(<Card as="section">Body</Card>);
     expect(container.firstElementChild?.tagName).toBe('SECTION');

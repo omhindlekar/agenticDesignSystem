@@ -88,6 +88,17 @@ describe('FR-1 token-lint: display font for headings, buttons and labels (DS-L-0
     expect(lintFontRoles(css, 'ok.css')).toEqual([]);
   });
 
+  it('FR-1: display type-role family tokens count as the display font; body ones do not', () => {
+    expect(lintFontRoles('.ads-button { font-family: var(--type-button-family); }', 'b.css')).toEqual([]);
+    expect(lintFontRoles('.ads-modal__title { font-family: var(--type-h3-family); }', 'm.css')).toEqual([]);
+    expect(lintFontRoles('.ads-button { font-family: var(--type-body1-family); }', 'b.css').map((x) => x.pattern)).toEqual([
+      'display-font-role',
+    ]);
+    expect(lintFontRoles('.ads-input__field { font-family: var(--type-label-family); }', 'i.css').map((x) => x.pattern)).toEqual([
+      'body-font-role',
+    ]);
+  });
+
   it('FR-1: modifier rules for a role may omit font-family', () => {
     const css = '.ads-button { font-family: var(--font-family-display); }\n.ads-button[data-size="sm"] { font-size: var(--font-size-label-sm); }\n';
     expect(lintFontRoles(css, 'b.css')).toEqual([]);

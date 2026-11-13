@@ -91,13 +91,14 @@ describe('FR-3 component metadata: all POC components', () => {
 });
 
 describe('FR-3 component metadata: per-component spot checks', () => {
-  it('FR-3: button has primary, secondary and ghost variants', () => {
-    const result = ComponentMetadataSchema.safeParse(loadMeta('button'));
+  it('FR-3: button has contained, outlined and text variants; the old names are deprecated aliases', () => {
+    const raw = loadMeta('button') as { deprecatedVariants?: Record<string, string> };
+    const result = ComponentMetadataSchema.safeParse(raw);
+    expect(result.success).toBe(true);
     if (result.success) {
-      expect(result.data.variants).toContain('primary');
-      expect(result.data.variants).toContain('secondary');
-      expect(result.data.variants).toContain('ghost');
+      expect(result.data.variants).toEqual(['contained', 'outlined', 'text']);
     }
+    expect(raw.deprecatedVariants).toEqual({ primary: 'contained', secondary: 'outlined', ghost: 'text', danger: 'contained' });
   });
 
   it('FR-3: input has disabled state', () => {

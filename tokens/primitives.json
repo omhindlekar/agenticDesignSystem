@@ -129,6 +129,7 @@
     {"name": "opacity-12", "tier": "primitive", "value": "0.12", "description": "12%"},
     {"name": "opacity-16", "tier": "primitive", "value": "0.16", "description": "16%"},
     {"name": "opacity-38", "tier": "primitive", "value": "0.38", "description": "38%"},
+    {"name": "z-index-behind", "tier": "primitive", "value": "-1", "description": "One layer behind its siblings"},
     {"name": "z-index-overlay", "tier": "primitive", "value": "1000", "description": "Overlay stacking layer"},
     {"name": "font-family-saira", "tier": "primitive", "value": "'Saira', system-ui, -apple-system, 'Segoe UI', sans-serif", "description": "Saira, bundled via @fontsource/saira. Body text"},
     {"name": "font-family-saira-semi-condensed", "tier": "primitive", "value": "'Saira Semi Condensed', 'Saira', system-ui, -apple-system, 'Segoe UI', sans-serif", "description": "Saira SemiCondensed, bundled via @fontsource/saira-semi-condensed. Display text"},

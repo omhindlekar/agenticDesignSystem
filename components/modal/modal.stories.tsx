@@ -12,7 +12,7 @@ const meta = {
     children: 'Your edits will be published to everyone on the team.',
     footer: (
       <>
-        <Button label="Cancel" variant="secondary" />
+        <Button label="Cancel" variant="outlined" />
         <Button label="Save" />
       </>
     ),
@@ -30,8 +30,8 @@ export const Danger: Story = {
     children: 'This permanently deletes the project and its files.',
     footer: (
       <>
-        <Button label="Cancel" variant="secondary" />
-        <Button label="Delete" variant="danger" />
+        <Button label="Cancel" variant="outlined" />
+        <Button label="Delete" tone="danger" />
       </>
     ),
   },

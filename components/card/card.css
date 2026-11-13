@@ -1,37 +1,78 @@
+/* Card: header (title, subtitle), content and actions; elevation 1 plus a 1px border. */
 .ads-card {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-component-gap-md);
   box-sizing: border-box;
   width: 100%;
   margin: 0;
   padding: var(--space-component-padding-md);
   border: var(--border-width-default) solid var(--color-border-default);
   background-color: var(--color-background-raised);
+  box-shadow: var(--elevation-1);
   color: var(--color-text-primary);
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-body);
-  line-height: var(--line-height-body);
+  font-family: var(--type-body2-family);
+  font-size: var(--type-body2-size);
+  font-weight: var(--type-body2-weight);
+  line-height: var(--type-body2-line-height);
+  letter-spacing: var(--type-body2-letter-spacing);
   text-align: start;
   text-decoration: none;
 }
 
 .ads-card[data-padding="sm"] {
-  padding: var(--space-component-padding-sm);
+  padding: var(--space-component-padding-md);
 }
 
 .ads-card[data-padding="lg"] {
   padding: var(--space-component-padding-lg);
 }
 
+.ads-card__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-component-padding-xs);
+}
+
+.ads-card__title {
+  margin: 0;
+  font-family: var(--type-h4-family);
+  font-size: var(--type-h4-size);
+  font-weight: var(--type-h4-weight);
+  line-height: var(--type-h4-line-height);
+  letter-spacing: var(--type-h4-letter-spacing);
+  color: var(--color-text-heading);
+}
+
+.ads-card__subtitle {
+  margin: 0;
+  font-size: var(--type-body2-size);
+  line-height: var(--type-body2-line-height);
+  color: var(--color-text-secondary);
+}
+
+.ads-card__content {
+  display: block;
+}
+
+.ads-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-component-gap-sm);
+}
+
 .ads-card[data-variant="flat"] {
   background-color: var(--color-background-sunken);
+  box-shadow: var(--elevation-0);
 }
 
 .ads-card[data-variant="interactive"] {
   cursor: pointer;
 }
 
+/* Interactive cards lift to elevation 2 on hover. */
 .ads-card[data-variant="interactive"]:not([aria-disabled]):hover {
-  border-color: var(--color-border-strong);
+  box-shadow: var(--elevation-2);
 }
 
 /* Selected: a 2px blue edge, drawn as border plus a 1px outline so the layout does not shift. */
@@ -49,12 +90,20 @@
 .ads-card[data-state~="disabled"] {
   background-color: var(--color-interactive-disabled);
   border-color: var(--color-border-disabled);
-  color: var(--color-text-disabled);
+  box-shadow: var(--elevation-0);
+  color: color-mix(in srgb, var(--color-text-primary) calc(var(--opacity-disabled) * 100%), transparent);
   cursor: not-allowed;
 }
 
+.ads-card[data-state~="disabled"] .ads-card__title,
+.ads-card[data-state~="disabled"] .ads-card__subtitle {
+  color: inherit;
+}
+
 @media (prefers-reduced-motion: no-preference) {
-  .ads-card[data-variant="interactive"] {
-    transition: border-color var(--motion-duration-fast) ease;
+  .ads-card {
+    transition:
+      box-shadow var(--motion-duration-standard) var(--motion-easing-standard),
+      border-color var(--motion-duration-standard) var(--motion-easing-standard);
   }
 }

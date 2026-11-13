@@ -1,91 +1,123 @@
+/* Button: contained / outlined / text, primary or danger tone, 32 / 40 / 48px. */
 .ads-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-component-gap-sm);
-  min-height: var(--size-touch-target-min);
-  min-width: var(--size-touch-target-min);
-  padding: var(--space-component-padding-sm) var(--space-component-padding-md);
+  box-sizing: border-box;
+  min-height: var(--size-control-md);
+  min-width: var(--size-control-md);
+  margin: 0;
+  padding-block: 0;
+  padding-inline: var(--space-component-padding-md);
   border: var(--border-width-default) solid transparent;
-  font-family: var(--font-family-display);
-  font-size: var(--font-size-label-md);
-  font-weight: var(--font-weight-label);
-  line-height: var(--line-height-body);
+  background-color: transparent;
+  color: var(--color-text-link);
+  font-family: var(--type-button-family);
+  font-size: var(--type-button-size);
+  font-weight: var(--type-button-weight);
+  line-height: var(--type-button-line-height);
+  letter-spacing: var(--type-button-letter-spacing);
+  text-transform: none;
+  white-space: nowrap;
   cursor: pointer;
 }
 
 .ads-button[data-size="sm"] {
-  padding: var(--space-component-padding-xs) var(--space-component-padding-sm);
-  font-size: var(--font-size-label-sm);
+  min-height: var(--size-control-sm);
+  min-width: var(--size-control-sm);
+  padding-inline: var(--space-component-padding-md);
 }
 
 .ads-button[data-size="lg"] {
-  padding: var(--space-component-padding-md) var(--space-component-padding-lg);
-  font-size: var(--font-size-body);
+  min-height: var(--size-control-lg);
+  min-width: var(--size-control-lg);
+  padding-inline: var(--space-component-padding-lg);
 }
 
-/* Variants */
-.ads-button[data-variant="primary"] {
+.ads-button__icon {
+  display: inline-flex;
+  font-size: var(--size-control-indicator);
+}
+
+/* ── Contained: solid fill; darker fills on hover and press, no state layer ── */
+.ads-button[data-variant="contained"] {
+  border-color: var(--color-interactive-default);
   background-color: var(--color-interactive-default);
   color: var(--color-text-inverse);
 }
-.ads-button[data-variant="primary"]:not([aria-disabled]):hover {
+.ads-button[data-variant="contained"]::before {
+  display: none;
+}
+.ads-button[data-variant="contained"]:not([aria-disabled]):hover {
+  border-color: var(--color-interactive-hover);
   background-color: var(--color-interactive-hover);
 }
-.ads-button[data-variant="primary"]:not([aria-disabled]):active {
+.ads-button[data-variant="contained"]:not([aria-disabled]):active {
+  border-color: var(--color-interactive-active);
   background-color: var(--color-interactive-active);
 }
 
-.ads-button[data-variant="secondary"] {
-  background-color: var(--color-background-surface);
-  border-color: var(--color-border-strong);
-  color: var(--color-text-primary);
-}
-.ads-button[data-variant="secondary"]:not([aria-disabled]):hover {
-  background-color: var(--color-background-subtle);
-}
-.ads-button[data-variant="secondary"]:not([aria-disabled]):active {
-  border-color: var(--color-border-interactive);
-}
-
-.ads-button[data-variant="ghost"] {
-  background-color: transparent;
-  color: var(--color-text-link);
-}
-.ads-button[data-variant="ghost"]:not([aria-disabled]):hover {
-  background-color: var(--color-background-subtle);
-  color: var(--color-text-link-hover);
-}
-.ads-button[data-variant="ghost"]:not([aria-disabled]):active {
-  background-color: var(--color-interactive-disabled);
-}
-
-.ads-button[data-variant="danger"] {
+.ads-button[data-variant="contained"][data-tone="danger"] {
+  border-color: var(--color-text-danger);
   background-color: var(--color-text-danger);
-  color: var(--color-text-inverse);
 }
-.ads-button[data-variant="danger"]:not([aria-disabled]):hover,
-.ads-button[data-variant="danger"]:not([aria-disabled]):active {
+.ads-button[data-variant="contained"][data-tone="danger"]:not([aria-disabled]):hover,
+.ads-button[data-variant="contained"][data-tone="danger"]:not([aria-disabled]):active {
+  border-color: var(--color-status-danger-text);
   background-color: var(--color-status-danger-text);
 }
 
-/* States */
+/* ── Outlined: 1px border in the tone colour, state layer on interaction ── */
+.ads-button[data-variant="outlined"] {
+  border-color: var(--color-border-interactive);
+  color: var(--color-text-link);
+}
+.ads-button[data-variant="outlined"][data-tone="danger"] {
+  border-color: var(--color-border-danger);
+  color: var(--color-text-danger-action);
+}
+
+/* ── Text: no border or fill, state layer on interaction ──────────────── */
+.ads-button[data-variant="text"] {
+  color: var(--color-text-link);
+}
+.ads-button[data-variant="text"][data-tone="danger"] {
+  color: var(--color-text-danger-action);
+}
+
+/* ── Focus: 2px blue 600 ring with a 2px white gap ────────────────────── */
 .ads-button:focus-visible {
   outline: var(--border-width-focus) solid var(--color-interactive-focus-ring);
   outline-offset: var(--focus-ring-offset);
 }
 
+/* ── Disabled: content at 38%; contained and outlined sit on the disabled fill ── */
 .ads-button[data-state~="disabled"] {
-  background-color: var(--color-interactive-disabled);
-  border-color: var(--color-border-disabled);
-  color: var(--color-text-disabled);
+  color: color-mix(in srgb, var(--color-text-primary) calc(var(--opacity-disabled) * 100%), transparent);
   cursor: not-allowed;
 }
+.ads-button[data-variant="contained"][data-state~="disabled"],
+.ads-button[data-variant="outlined"][data-state~="disabled"] {
+  border-color: var(--color-border-disabled);
+  background-color: var(--color-interactive-disabled);
+}
 
+/* ── Loading: the label stays in the layout (opacity 0) under the progress ── */
 .ads-button[data-state~="loading"] {
   cursor: progress;
 }
-
+.ads-button[data-state~="loading"] > .ads-button__label,
+.ads-button[data-state~="loading"] > .ads-button__icon {
+  opacity: 0;
+}
+.ads-button__progress {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 /* Inside a button the indicator takes the label colour, so it reads on any fill. */
 .ads-button .ads-spinner {
   border-top-color: currentColor;
@@ -94,8 +126,8 @@
 @media (prefers-reduced-motion: no-preference) {
   .ads-button {
     transition:
-      background-color var(--motion-duration-fast) ease,
-      border-color var(--motion-duration-fast) ease,
-      color var(--motion-duration-fast) ease;
+      background-color var(--motion-duration-standard) var(--motion-easing-standard),
+      border-color var(--motion-duration-standard) var(--motion-easing-standard),
+      color var(--motion-duration-standard) var(--motion-easing-standard);
   }
 }
