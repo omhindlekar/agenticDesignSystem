@@ -12,3 +12,5 @@ export { Card } from './card/card';
 export type { CardProps } from './card/card';
 export { Modal } from './modal/modal';
 export type { ModalProps } from './modal/modal';
+export { Icon } from './icon/icon';
+export type { IconProps, IconName } from './icon/icon';

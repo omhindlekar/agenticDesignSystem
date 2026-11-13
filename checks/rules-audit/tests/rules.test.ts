@@ -68,7 +68,7 @@ describe('FR-4 rules.yaml: structure and schema', () => {
   });
 
   it('FR-4: rules cover all POC components in their appliesTo fields', () => {
-    const poc = ['button', 'input', 'select', 'checkbox', 'card', 'modal'];
+    const poc = ['button', 'input', 'select', 'checkbox', 'card', 'modal', 'icon'];
     const covered = new Set(loadRules().flatMap((r) => r.appliesTo));
     for (const c of poc) {
       expect(covered.has(c), `No rule applies to "${c}"`).toBe(true);

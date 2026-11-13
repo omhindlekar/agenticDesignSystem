@@ -147,6 +147,7 @@ rules:
       - checkbox
       - card
       - modal
+      - icon
     example: "Use color-text-primary on color-background-surface (passes 4.5:1)"
     counterExample: "Light grey text on white background"
 
