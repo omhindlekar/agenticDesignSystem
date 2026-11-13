@@ -42,6 +42,28 @@ describe('Card', () => {
     expect(onClick).not.toHaveBeenCalled();
   });
 
+  it('NFR-9: disabled interactive card stays focusable, uses aria-disabled="true" and ignores Enter and Space', async () => {
+    const onClick = vi.fn();
+    render(<Card variant="interactive" onClick={onClick} disabled>Plan</Card>);
+    const btn = screen.getByRole('button');
+    expect(btn.hasAttribute('disabled')).toBe(false);
+    const user = userEvent.setup();
+    await user.tab();
+    expect(document.activeElement).toBe(btn);
+    await user.keyboard('{Enter}');
+    await user.keyboard(' ');
+    expect(onClick).not.toHaveBeenCalled();
+  });
+
+  it('NFR-9: disabled link card stays focusable, uses aria-disabled="true" and has no href to follow', async () => {
+    render(<Card variant="interactive" href="/plans" disabled>Plans</Card>);
+    const link = screen.getByRole('link', { name: 'Plans' });
+    expect(link.getAttribute('aria-disabled')).toBe('true');
+    expect(link.hasAttribute('href')).toBe(false);
+    await userEvent.setup().tab();
+    expect(document.activeElement).toBe(link);
+  });
+
   it('renders the element given by `as` for static cards', () => {
     const { container } = render(<Card as="section">Body</Card>);
     expect(container.firstElementChild?.tagName).toBe('SECTION');

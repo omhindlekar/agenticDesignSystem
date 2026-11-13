@@ -42,6 +42,8 @@ export function Card({
         {...common}
         href={disabled ? undefined : href}
         role={disabled ? 'link' : undefined}
+        // Without href a link leaves the tab order; keep it there, like a disabled Button.
+        tabIndex={disabled ? 0 : undefined}
         aria-disabled={disabled || undefined}
         aria-current={selected ? 'true' : undefined}
       >
