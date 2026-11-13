@@ -5,9 +5,7 @@
   margin: 0;
   padding: var(--space-component-padding-md);
   border: var(--border-width-default) solid var(--color-border-default);
-  border-radius: var(--radius-component-md);
-  background-color: var(--color-background-surface);
-  box-shadow: var(--shadow-component-card);
+  background-color: var(--color-background-raised);
   color: var(--color-text-primary);
   font-family: var(--font-family-body);
   font-size: var(--font-size-body);
@@ -25,20 +23,23 @@
 }
 
 .ads-card[data-variant="flat"] {
-  background-color: var(--color-background-subtle);
-  box-shadow: none;
+  background-color: var(--color-background-sunken);
 }
 
 .ads-card[data-variant="interactive"] {
   cursor: pointer;
-  transition:
-    border-color var(--motion-duration-fast) ease,
-    box-shadow var(--motion-duration-fast) ease;
+  transition: border-color var(--motion-duration-fast) ease;
 }
 
 .ads-card[data-variant="interactive"]:not([aria-disabled]):hover {
   border-color: var(--color-border-strong);
-  box-shadow: var(--shadow-component-focus);
+}
+
+/* Selected: a 2px blue edge, drawn as border plus a 1px outline so the layout does not shift. */
+.ads-card[data-state~="selected"] {
+  border-color: var(--color-border-interactive);
+  outline: var(--border-width-default) solid var(--color-border-interactive);
+  outline-offset: 0;
 }
 
 .ads-card:focus-visible {
@@ -46,14 +47,9 @@
   outline-offset: var(--focus-ring-offset);
 }
 
-.ads-card[data-state~="selected"] {
-  border-color: var(--color-border-interactive);
-  box-shadow: inset 0 0 0 var(--border-width-default) var(--color-border-interactive);
-}
-
 .ads-card[data-state~="disabled"] {
-  background-color: var(--color-background-subtle);
-  box-shadow: none;
+  background-color: var(--color-interactive-disabled);
+  border-color: var(--color-border-disabled);
   color: var(--color-text-disabled);
   cursor: not-allowed;
 }

@@ -30,6 +30,7 @@ export const SuccessVariant: Story = {
 };
 
 export const Default: Story = { parameters: { ads: { state: 'default' } } };
+export const Hover: Story = { parameters: { ads: { state: 'hover' }, pseudo: { hover: true } } };
 export const Focus: Story = { parameters: { ads: { state: 'focus' }, pseudo: { focusVisible: true } } };
 export const Selected: Story = { args: { defaultValue: 'in' }, parameters: { ads: { state: 'selected' } } };
 export const Disabled: Story = { args: { disabled: true }, parameters: { ads: { state: 'disabled' } } };

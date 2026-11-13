@@ -63,27 +63,29 @@ export function Select({
         {label}
         {required ? <span className="ads-field__required" aria-hidden="true"> *</span> : null}
       </label>
-      <select
-        id={id}
-        className="ads-select__field"
-        disabled={disabled}
-        required={required}
-        aria-invalid={resolvedVariant === 'error' || undefined}
-        aria-describedby={describedBy(helperId, errorId)}
-        onChange={handleChange}
-        {...valueProps}
-      >
-        {placeholder !== undefined || current === '' ? (
-          <option value="" disabled>
-            {placeholder ?? ''}
-          </option>
-        ) : null}
-        {options.map((option) => (
-          <option key={option.value} value={option.value} disabled={option.disabled}>
-            {option.label}
-          </option>
-        ))}
-      </select>
+      <span className="ads-select__control">
+        <select
+          id={id}
+          className="ads-select__field"
+          disabled={disabled}
+          required={required}
+          aria-invalid={resolvedVariant === 'error' || undefined}
+          aria-describedby={describedBy(helperId, errorId)}
+          onChange={handleChange}
+          {...valueProps}
+        >
+          {placeholder !== undefined || current === '' ? (
+            <option value="" disabled>
+              {placeholder ?? ''}
+            </option>
+          ) : null}
+          {options.map((option) => (
+            <option key={option.value} value={option.value} disabled={option.disabled}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+      </span>
       {helperText ? (
         <p id={helperId} className="ads-field__message">{helperText}</p>
       ) : null}

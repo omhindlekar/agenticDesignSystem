@@ -1,4 +1,5 @@
 /* Shared helpers used by every component. All values come from semantic tokens. */
+@import './fonts.css';
 
 .ads-visually-hidden {
   position: absolute;
@@ -14,9 +15,9 @@
   flex: none;
   width: var(--size-control-indicator);
   height: var(--size-control-indicator);
-  border: var(--border-width-focus) solid currentColor;
+  /* Square by design: a spinning square, not a circle. */
+  border: var(--border-width-focus) solid var(--color-interactive-default);
   border-right-color: transparent;
-  border-radius: var(--radius-component-pill);
   animation: ads-spin calc(var(--motion-duration-fast) * 6) linear infinite;
 }
 
@@ -41,6 +42,7 @@
 }
 
 .ads-field__label {
+  font-family: var(--font-family-display);
   font-size: var(--font-size-label-md);
   font-weight: var(--font-weight-label);
   line-height: var(--line-height-body);

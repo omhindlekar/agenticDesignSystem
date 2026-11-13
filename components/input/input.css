@@ -1,14 +1,19 @@
 .ads-input__field {
   min-height: var(--size-touch-target-min);
   padding: var(--space-component-padding-sm) var(--space-component-padding-md);
-  border: var(--border-width-default) solid var(--color-border-strong);
-  border-radius: var(--radius-component-sm);
+  border: var(--border-width-default) solid var(--color-border-input);
   background-color: var(--color-background-surface);
   color: var(--color-text-primary);
   font-family: var(--font-family-body);
   font-size: var(--font-size-body);
   line-height: var(--line-height-body);
-  transition: border-color var(--motion-duration-fast) ease;
+  transition:
+    border-color var(--motion-duration-fast) ease,
+    background-color var(--motion-duration-fast) ease;
+}
+
+.ads-input__field:hover {
+  border-color: var(--color-border-input-hover);
 }
 
 .ads-input__field::placeholder {
@@ -19,10 +24,11 @@
   outline: var(--border-width-focus) solid var(--color-interactive-focus-ring);
   outline-offset: var(--focus-ring-offset);
   border-color: var(--color-border-interactive);
+  background-color: var(--color-background-focus-tint);
 }
 
 .ads-input[data-state~="filled"] .ads-input__field {
-  border-color: var(--color-border-strong);
+  color: var(--color-text-primary);
 }
 
 .ads-input[data-state~="error"] .ads-input__field {
@@ -30,17 +36,17 @@
 }
 
 .ads-input[data-state~="success"] .ads-input__field {
-  border-color: var(--color-text-success);
+  border-color: var(--color-border-success);
 }
 
 .ads-input[data-state~="read-only"] .ads-input__field {
-  background-color: var(--color-background-subtle);
+  background-color: var(--color-background-sunken);
   border-color: var(--color-border-default);
 }
 
 .ads-input[data-state~="disabled"] .ads-input__field {
-  background-color: var(--color-background-subtle);
-  border-color: var(--color-border-default);
+  background-color: var(--color-interactive-disabled);
+  border-color: var(--color-border-disabled);
   color: var(--color-text-disabled);
   cursor: not-allowed;
 }
