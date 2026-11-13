@@ -281,3 +281,53 @@ describe('NFR-11 fix-5: Orchestrator maxCallsPerRun enforcement', () => {
     expect(result.error).toMatch(/1/);
   });
 });
+
+describe('FR-8: Orchestrator reports retries, calls, cost and the spec', () => {
+  const input = { taskId: 'task-001', brief: 'A primary button', schemaVersion: SCHEMA_VERSION };
+
+  it('FR-8: pass result includes the validated spec, attempts per agent, call count and cost', async () => {
+    const result = await runOrchestrator(input, makeDeps({
+      composerRunner: makeComposerRunner(mockScreenSpec, 0.01),
+      builderRunner: makeBuilderRunner(validTsx, 0.02),
+    }));
+    expect(result.outcome).toBe('pass');
+    expect(result.spec).toEqual(mockScreenSpec);
+    expect(result.attempts).toEqual({ composer: 1, builder: 1 });
+    expect(result.calls).toBe(2);
+    expect(result.costUsd).toBeCloseTo(0.03);
+  });
+
+  it('FR-8: retries are counted when an agent succeeds on a later attempt', async () => {
+    const composerRunner = vi
+      .fn()
+      .mockResolvedValueOnce({ result: { bad: true }, costUsd: 0.01 })
+      .mockResolvedValueOnce({ result: mockScreenSpec, costUsd: 0.01 });
+    const result = await runOrchestrator(input, makeDeps({ composerRunner }));
+    expect(result.outcome).toBe('pass');
+    expect(result.attempts).toEqual({ composer: 2, builder: 1 });
+    expect(result.calls).toBe(3);
+  });
+
+  it('FR-8: escalation after builder failure still reports the spec and attempts', async () => {
+    const builderRunner = vi.fn().mockResolvedValue({ result: 42, costUsd: 0 });
+    const result = await runOrchestrator(input, makeDeps({ builderRunner }));
+    expect(result.outcome).toBe('escalate');
+    expect(result.spec).toEqual(mockScreenSpec);
+    expect(result.attempts).toEqual({ composer: 1, builder: 3 });
+    expect(result.calls).toBe(4);
+  });
+
+  it('FR-8: escalation at the context step reports zero calls', async () => {
+    const contextRunner = vi.fn().mockRejectedValue(new Error('boom'));
+    const result = await runOrchestrator(input, makeDeps({ contextRunner }));
+    expect(result.outcome).toBe('escalate');
+    expect(result.calls).toBe(0);
+    expect(result.attempts).toEqual({ composer: 0, builder: 0 });
+  });
+
+  it('FR-8: result validates against OrchestratorResultSchema', async () => {
+    const { OrchestratorResultSchema } = await import('../schema.js');
+    const result = await runOrchestrator(input, makeDeps());
+    expect(OrchestratorResultSchema.safeParse(result).success).toBe(true);
+  });
+});

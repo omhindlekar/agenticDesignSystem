@@ -1,0 +1,6 @@
+/* Fixture: references a primitive and an unknown token — semantic-only check must flag both */
+.bad {
+  color: var(--color-blue-600);
+  padding: var(--space-component-padding-md);
+  margin: var(--not-a-token);
+}

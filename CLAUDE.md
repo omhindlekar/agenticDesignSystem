@@ -61,6 +61,9 @@ the cli provider (my subscription). Never require an API key.
 - Lint: `npm run lint`
 - Token lint: `npm run token-lint -- components`
 - Baseline metrics: `npm run baseline-metrics -- .`
-- Storybook: `TODO` (phase 1)
+- Build tokens CSS: `npm run tokens:build` (writes `styles/tokens.css`; commit the result)
+- Storybook: `npm run storybook` (dev server on port 6006), `npm run build-storybook` (static build)
 - Visual regression: `TODO` (phase 2)
 - Golden set: `TODO` (phase 2)
+- Generate a screen: `npm run generate -- "<brief>"` (fake provider by default; `MODEL_PROVIDER=cli` for a real model). Writes `generated/<runId>/screen.tsx` (gitignored)
+- Re-record demo fixtures after a prompt, model, token or metadata change: `npm run fixtures:demo`

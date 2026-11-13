@@ -1,16 +1,18 @@
 {
   "id": "card",
-  "purpose": "Groups related content and actions into a visually distinct surface. Used to present a single subject — such as a product, article, or profile — with consistent padding, elevation and border radius.",
+  "purpose": "Groups related content and actions into a visually distinct surface. Used to present a single subject — such as a product, article, or profile — with consistent padding and a 1px border. Corners are square and there is no shadow.",
   "variants": ["default", "interactive", "flat"],
   "states": ["default", "hover", "focus", "selected", "disabled"],
   "props": [
     { "name": "children", "type": "React.ReactNode", "required": true, "description": "Card content" },
-    { "name": "variant", "type": "'default' | 'interactive' | 'flat'", "required": false, "description": "default has shadow; interactive is clickable; flat has no shadow. Defaults to default" },
+    { "name": "variant", "type": "'default' | 'interactive' | 'flat'", "required": false, "description": "default is a raised surface with a border; interactive is clickable; flat sits on a sunken surface. Defaults to default" },
     { "name": "padding", "type": "'sm' | 'md' | 'lg'", "required": false, "description": "Internal padding. Defaults to md" },
     { "name": "onClick", "type": "() => void", "required": false, "description": "Makes the card interactive when provided — sets role='button' and tabIndex=0" },
     { "name": "href", "type": "string", "required": false, "description": "Renders the card as a link when provided" },
     { "name": "aria-label", "type": "string", "required": false, "description": "Accessible label for interactive cards without a visible heading" },
-    { "name": "as", "type": "React.ElementType", "required": false, "description": "Polymorphic root element. Defaults to div" }
+    { "name": "as", "type": "React.ElementType", "required": false, "description": "Polymorphic root element. Defaults to div" },
+    { "name": "selected", "type": "boolean", "required": false, "description": "Marks an interactive card as the current selection. Sets aria-pressed (button) or aria-current (link)" },
+    { "name": "disabled", "type": "boolean", "required": false, "description": "Prevents interaction on an interactive card and applies disabled styling. Sets aria-disabled" }
   ],
   "whenToUse": [
     "To group a single subject's content — image, title, description and actions — into one container",
@@ -26,17 +28,29 @@
   "antiPatterns": [
     "Nesting a Card inside another Card",
     "Using Card as an interactive element without setting role and keyboard handling",
-    "Hardcoding padding or border-radius — always use the padding prop and radius tokens"
+    "Hardcoding padding, adding a border-radius or adding a box-shadow — use the padding prop; cards are square and flat"
   ],
   "tokensUsed": [
-    "color-background-surface",
+    "border-width-default",
+    "border-width-focus",
+    "color-background-raised",
+    "color-background-sunken",
     "color-border-default",
+    "color-border-disabled",
+    "color-border-interactive",
+    "color-border-strong",
+    "color-interactive-disabled",
     "color-interactive-focus-ring",
-    "shadow-component-card",
-    "radius-component-md",
-    "space-component-padding-sm",
+    "color-text-disabled",
+    "color-text-primary",
+    "focus-ring-offset",
+    "font-family-body",
+    "font-size-body",
+    "line-height-body",
+    "motion-duration-fast",
+    "space-component-padding-lg",
     "space-component-padding-md",
-    "space-component-padding-lg"
+    "space-component-padding-sm"
   ],
   "a11yNotes": [
     "Interactive cards (onClick or href) must be reachable by keyboard with Tab",

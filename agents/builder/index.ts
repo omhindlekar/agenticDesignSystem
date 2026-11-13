@@ -1,7 +1,13 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { createProvider } from '../../packages/provider/src/index.js';
-import { buildBuilderPrompt, parseBuilderResponse, validateBuilderOutput, typeCheckBuilderOutput } from './tools.js';
+import {
+  buildBuilderPrompt,
+  parseBuilderResponse,
+  validateBuilderOutput,
+  typeCheckBuilderOutput,
+  loadComponentApis,
+} from './tools.js';
 import { BuilderOutputSchema } from './schema.js';
 import type { ProviderConfig } from '../../packages/provider/src/types.js';
 import type { BuilderInput, BuilderOutput } from './schema.js';
@@ -9,6 +15,9 @@ import type { BuilderInput, BuilderOutput } from './schema.js';
 interface Config extends ProviderConfig {
   costCapPerRunUsd: number;
 }
+
+/** Response size limit for this agent. Part of the fixture hash, so changing it re-records fixtures. */
+export const BUILDER_MAX_TOKENS = 4096;
 
 function loadConfig(repoRoot: string): Config {
   const raw = JSON.parse(readFileSync(join(repoRoot, 'config', 'defaults.json'), 'utf8')) as Config;
@@ -20,11 +29,21 @@ export async function runBuilder(
   previousError?: string,
   repoRoot = join(new URL(import.meta.url).pathname, '..', '..', '..'),
 ): Promise<BuilderOutput> {
+  return (await runBuilderWithCost(input, previousError, repoRoot)).output;
+}
+
+/** Same as runBuilder, but also returns the model cost of this attempt. */
+export async function runBuilderWithCost(
+  input: BuilderInput,
+  previousError?: string,
+  repoRoot = join(new URL(import.meta.url).pathname, '..', '..', '..'),
+): Promise<{ output: BuilderOutput; costUsd: number }> {
   const config = loadConfig(repoRoot);
   const provider = createProvider(config, repoRoot);
 
-  const prompt = buildBuilderPrompt(input, previousError);
-  const { text } = await provider.complete(prompt, { model: config.model, maxTokens: 4096 });
+  const apis = loadComponentApis(repoRoot, input.contextPack.componentIds.map((c) => c.id));
+  const prompt = buildBuilderPrompt(input, previousError, apis);
+  const { text, costUsd } = await provider.complete(prompt, { model: config.model, maxTokens: BUILDER_MAX_TOKENS });
 
   const tsx = parseBuilderResponse(text);
 
@@ -37,11 +56,11 @@ export async function runBuilder(
     throw new Error(`Builder output failed token lint: ${summary}`);
   }
 
-  // TypeScript type check on the generated TSX
+  // TypeScript type check on the generated TSX, against the real component props
   const typeResult = typeCheckBuilderOutput(tsx, repoRoot);
   if (!typeResult.valid) {
     throw new Error(`Builder output failed type check: ${typeResult.errors.slice(0, 3).join('; ')}`);
   }
 
-  return BuilderOutputSchema.parse({ taskId: input.taskId, tsx });
+  return { output: BuilderOutputSchema.parse({ taskId: input.taskId, tsx }), costUsd };
 }

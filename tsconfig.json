@@ -24,12 +24,13 @@
     "packages/*/src/**/*",
     "packages/*/tests/**/*",
     "checks/**/*",
+    "agents/**/*",
     "config/**/*"
   ],
   "exclude": [
     "node_modules",
     "dist",
     "**/node_modules",
-    "checks/token-lint/fixtures/**"
+    "checks/*/fixtures/**"
   ]
 }

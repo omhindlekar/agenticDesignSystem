@@ -200,6 +200,21 @@ describe('NFR-11: createProvider factory', () => {
     ).toThrow(/unknown provider/i);
   });
 
+  it('NFR-11: MODEL_PROVIDER=cli is an alias for the claude-cli provider', async () => {
+    const { createProvider, ClaudeCliProvider } = await import('../src/index.js');
+    process.env['MODEL_PROVIDER'] = 'cli';
+    const p = createProvider({ model: TEST_MODEL, cache: { enabled: false } }, repoRoot);
+    expect(p).toBeInstanceOf(ClaudeCliProvider);
+  });
+
+  it('NFR-11: resolveProviderName reports the effective provider (env wins, alias normalised)', async () => {
+    const { resolveProviderName } = await import('../src/index.js');
+    process.env['MODEL_PROVIDER'] = 'cli';
+    expect(resolveProviderName({ provider: 'fake', model: TEST_MODEL })).toBe('claude-cli');
+    delete process.env['MODEL_PROVIDER'];
+    expect(resolveProviderName({ model: TEST_MODEL })).toBe('fake');
+  });
+
   // NFR-11 fix-6: createProvider passes pricing from config to ApiProvider
   it('NFR-11: fix-6: createProvider passes pricing config to ApiProvider', async () => {
     const { ApiProvider } = await import('../src/api.js');

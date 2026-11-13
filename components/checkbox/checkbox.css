@@ -1,0 +1,114 @@
+.ads-checkbox__row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-component-gap-sm);
+  min-height: var(--size-touch-target-min);
+}
+
+.ads-checkbox__control {
+  position: relative;
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+}
+
+/* Square box: the native control is restyled so the OS cannot round its corners. */
+.ads-checkbox__box {
+  appearance: none;
+  box-sizing: border-box;
+  width: var(--size-control-indicator);
+  height: var(--size-control-indicator);
+  margin: 0;
+  border: var(--border-width-default) solid var(--color-border-input);
+  background-color: var(--color-background-surface);
+  cursor: pointer;
+  transition:
+    background-color var(--motion-duration-fast) ease,
+    border-color var(--motion-duration-fast) ease;
+}
+
+.ads-checkbox__box:hover:not(:disabled) {
+  border-color: var(--color-border-input-hover);
+}
+
+.ads-checkbox__box:checked,
+.ads-checkbox__box:indeterminate {
+  border-color: var(--color-interactive-default);
+  background-color: var(--color-interactive-default);
+}
+
+.ads-checkbox__box:checked:hover:not(:disabled),
+.ads-checkbox__box:indeterminate:hover:not(:disabled) {
+  border-color: var(--color-interactive-hover);
+  background-color: var(--color-interactive-hover);
+}
+
+.ads-checkbox__box:focus-visible {
+  outline: var(--border-width-focus) solid var(--color-interactive-focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+/* Mark sits over the box and never takes pointer events. Hidden until checked. */
+.ads-checkbox__mark {
+  position: absolute;
+  display: none;
+  box-sizing: border-box;
+  pointer-events: none;
+  color: var(--color-text-inverse);
+}
+
+/* Check: two sides of a rectangle, rotated. */
+.ads-checkbox__box:checked + .ads-checkbox__mark {
+  display: block;
+  width: calc(var(--size-control-indicator) / 3);
+  height: calc(var(--size-control-indicator) / 1.8);
+  margin-block-start: calc(var(--border-width-focus) * -1);
+  border-inline-end: var(--border-width-focus) solid currentColor;
+  border-block-end: var(--border-width-focus) solid currentColor;
+  transform: rotate(45deg);
+}
+
+/* Dash for indeterminate. */
+.ads-checkbox__box:indeterminate + .ads-checkbox__mark {
+  display: block;
+  width: calc(var(--size-control-indicator) / 2);
+  height: var(--border-width-focus);
+  background-color: currentColor;
+}
+
+.ads-checkbox__row .ads-field__label {
+  cursor: pointer;
+}
+
+.ads-checkbox[data-state~="unchecked"] .ads-checkbox__box {
+  background-color: var(--color-background-surface);
+}
+
+.ads-checkbox[data-state~="checked"] .ads-checkbox__mark,
+.ads-checkbox[data-state~="indeterminate"] .ads-checkbox__mark {
+  color: var(--color-text-inverse);
+}
+
+.ads-checkbox[data-state~="error"] .ads-checkbox__box {
+  border-color: var(--color-border-danger);
+}
+
+/* Natively disabled: not focusable, so no ring and no hover response. */
+.ads-checkbox__box:disabled {
+  outline: none;
+}
+
+.ads-checkbox[data-state~="disabled"] .ads-checkbox__box {
+  border-color: var(--color-border-disabled);
+  background-color: var(--color-interactive-disabled);
+  cursor: not-allowed;
+}
+
+.ads-checkbox[data-state~="disabled"] .ads-checkbox__mark {
+  color: var(--color-text-disabled);
+}
+
+.ads-checkbox[data-state~="disabled"] .ads-field__label {
+  color: var(--color-text-disabled);
+  cursor: not-allowed;
+}

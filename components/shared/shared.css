@@ -1,0 +1,78 @@
+/* Shared helpers used by every component. All values come from semantic tokens. */
+@import './fonts.css';
+
+.ads-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.ads-spinner {
+  display: inline-block;
+  flex: none;
+  width: var(--size-control-indicator);
+  height: var(--size-control-indicator);
+  /* Square by design: a spinning square, not a circle. Neutral track, blue indicator. */
+  border: var(--border-width-focus) solid var(--color-spinner-track);
+  border-top-color: var(--color-interactive-default);
+  animation: ads-spin calc(var(--motion-duration-fast) * 6) linear infinite;
+}
+
+@keyframes ads-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+/* Static text that replaces the spinner when motion is reduced. */
+.ads-spinner__text {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ads-spinner {
+    display: none;
+    animation: none;
+  }
+
+  .ads-spinner__text {
+    display: inline;
+  }
+}
+
+.ads-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-component-padding-xs);
+  font-family: var(--font-family-body);
+  color: var(--color-text-primary);
+}
+
+.ads-field__label {
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-label-md);
+  font-weight: var(--font-weight-label);
+  line-height: var(--line-height-body);
+}
+
+.ads-field__required {
+  color: var(--color-text-danger);
+}
+
+.ads-field__message {
+  margin: 0;
+  font-size: var(--font-size-label-sm);
+  line-height: var(--line-height-body);
+  color: var(--color-text-secondary);
+}
+
+.ads-field__message[data-tone="error"] {
+  color: var(--color-text-danger);
+}
+
+.ads-field__message[data-tone="success"] {
+  color: var(--color-text-success);
+}

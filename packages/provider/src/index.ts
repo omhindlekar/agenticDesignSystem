@@ -12,8 +12,16 @@ export { ApiProvider } from './api.js';
 export { ClaudeCliProvider } from './cli.js';
 export type { ModelProvider, CompleteOptions, CompleteResult, ProviderConfig } from './types.js';
 
+const ALIASES: Record<string, string> = { cli: 'claude-cli' };
+
+/** The provider that will actually run: MODEL_PROVIDER env, then config.provider, then fake. */
+export function resolveProviderName(config: ProviderConfig): string {
+  const raw = process.env['MODEL_PROVIDER'] ?? config.provider ?? 'fake';
+  return ALIASES[raw] ?? raw;
+}
+
 export function createProvider(config: ProviderConfig, repoRoot: string): ModelProvider {
-  const name = process.env['MODEL_PROVIDER'] ?? config.provider ?? 'fake';
+  const name = resolveProviderName(config);
 
   let base: ModelProvider;
 
@@ -31,7 +39,7 @@ export function createProvider(config: ProviderConfig, repoRoot: string): ModelP
       break;
     default:
       throw new Error(
-        `Unknown provider: "${name}". Valid values: fake, api, claude-cli. ` +
+        `Unknown provider: "${name}". Valid values: fake, api, claude-cli (alias: cli). ` +
           `Set MODEL_PROVIDER env var or config.provider.`,
       );
   }

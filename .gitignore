@@ -11,7 +11,7 @@ runs/*
 !runs/.gitkeep
 
 # Builder TSX type-check scratch directory
-.ads-typecheck-tmp/
+.ads-typecheck-tmp*/
 
 # Build artifacts
 *.js.map
@@ -28,3 +28,6 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
+
+# Generated screens from `npm run generate`
+generated/
