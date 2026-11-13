@@ -21,9 +21,9 @@ describe('FR-1 Storybook themes', () => {
     expect((preview.decorators as unknown[] | undefined)?.length ?? 0).toBeGreaterThan(0);
   });
 
-  it('FR-1: the density toolbar offers comfortable and every data-density mode', () => {
+  it('FR-1: the density toolbar offers every data-density mode', () => {
     const items = (preview.globalTypes?.density?.toolbar?.items ?? []) as Array<{ value: string }>;
     const modes = loadThemes(root).filter((t) => t.attribute === 'data-density').map((t) => t.value);
-    expect(items.map((i) => i.value).sort()).toEqual(['comfortable', ...modes].sort());
+    expect(items.map((i) => i.value).sort()).toEqual(modes.sort());
   });
 });

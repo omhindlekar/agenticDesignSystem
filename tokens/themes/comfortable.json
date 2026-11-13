@@ -1,0 +1,49 @@
+{
+  "attribute": "data-density",
+  "value": "comfortable",
+  "description": "Comfortable density (the default). Resets the tokens compact changes, so a container can return to comfortable inside a compact page.",
+  "tokens": [
+    {
+      "name": "size-control-sm",
+      "tier": "semantic",
+      "reference": "size-8",
+      "description": "Comfortable (default) value"
+    },
+    {
+      "name": "size-control-md",
+      "tier": "semantic",
+      "reference": "size-10",
+      "description": "Comfortable (default) value"
+    },
+    {
+      "name": "size-control-lg",
+      "tier": "semantic",
+      "reference": "size-12",
+      "description": "Comfortable (default) value"
+    },
+    {
+      "name": "size-hit-area",
+      "tier": "semantic",
+      "reference": "size-10",
+      "description": "Comfortable (default) value"
+    },
+    {
+      "name": "space-component-padding-field",
+      "tier": "semantic",
+      "reference": "space-3",
+      "description": "Comfortable (default) value"
+    },
+    {
+      "name": "space-component-padding-md",
+      "tier": "semantic",
+      "reference": "space-4",
+      "description": "Comfortable (default) value"
+    },
+    {
+      "name": "space-component-gap-md",
+      "tier": "semantic",
+      "reference": "space-4",
+      "description": "Comfortable (default) value"
+    }
+  ]
+}

@@ -66,6 +66,18 @@ describe('FR-2 JSON token export', () => {
     const json = buildTokensJson(root);
     expect(json.base['breakpoint-md']).toBe('900px');
     expect(Object.keys(json.themes).sort()).toEqual(['dark', 'high-contrast']);
-    expect(Object.keys(json.densities)).toEqual(['compact']);
+    expect(Object.keys(json.densities).sort()).toEqual(['comfortable', 'compact']);
+  });
+});
+
+describe('FR-1 density: comfortable reset', () => {
+  it('FR-1: comfortable resets exactly the tokens compact changes, to their base values', () => {
+    const modes = loadThemes(root).filter((t) => t.attribute === 'data-density');
+    const compact = modes.find((t) => t.value === 'compact');
+    const comfortable = modes.find((t) => t.value === 'comfortable');
+    const base = JSON.parse(readFileSync(join(root, 'tokens/semantic.json'), 'utf8')) as { tokens: Array<{ name: string; reference: string }> };
+    const ref = new Map(base.tokens.map((t) => [t.name, t.reference]));
+    expect(comfortable?.tokens.map((t) => t.name).sort()).toEqual(compact?.tokens.map((t) => t.name).sort());
+    for (const t of comfortable?.tokens ?? []) expect(t.reference, t.name).toBe(ref.get(t.name));
   });
 });

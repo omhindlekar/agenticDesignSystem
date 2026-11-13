@@ -4,12 +4,6 @@ import { RAMPS, STEPS, primitive, resolved, semantic } from './tokens';
 import './foundations.css';
 
 const WHITE = primitive('color-white');
-const INK = primitive('color-neutral-900');
-
-/** Label text on a swatch: whichever of white or neutral 900 contrasts more. */
-function inkFor(bg: string): string {
-  return contrastRatio(WHITE, bg) >= contrastRatio(INK, bg) ? WHITE : INK;
-}
 
 function Ramps() {
   return (
@@ -23,7 +17,9 @@ function Ramps() {
             {STEPS.map((step) => {
               const value = primitive(`color-${ramp}-${step}`);
               return (
-                <div key={step} className="fd-swatch" style={{ backgroundColor: value, color: inkFor(value) }}>
+                <div key={step} className="fd-swatch">
+                  {/* Colour block on top; labels sit below on the page surface, so every label reads at AA. */}
+                  <span className="fd-swatch__chip" style={{ backgroundColor: value }} />
                   <span className="fd-swatch__step">{step}</span>
                   <span>{value}</span>
                   <span>{contrastRatio(value, WHITE).toFixed(2)}</span>

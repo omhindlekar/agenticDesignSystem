@@ -200,6 +200,16 @@
   --motion-easing-standard: cubic-bezier(0.2, 0, 0, 1);
 }
 
+[data-density="comfortable"] {
+  --size-control-sm: 2rem;
+  --size-control-md: 2.5rem;
+  --size-control-lg: 3rem;
+  --size-hit-area: 2.5rem;
+  --space-component-padding-field: 12px;
+  --space-component-padding-md: 16px;
+  --space-component-gap-md: 16px;
+}
+
 [data-density="compact"] {
   --size-control-sm: 1.75rem;
   --size-control-md: 2rem;

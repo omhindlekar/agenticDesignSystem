@@ -20,7 +20,7 @@ export default meta;
 
 function DensitySample({ density }: { density: 'comfortable' | 'compact' }) {
   return (
-    <div className="fd-density" {...(density === 'compact' ? { 'data-density': 'compact' } : {})}>
+    <div className="fd-density" data-density={density}>
       <span className="fd-overline">{density}</span>
       <Input label="Project name" defaultValue="Design system" />
       <div className="fd-density__row">
