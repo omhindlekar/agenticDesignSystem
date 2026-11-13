@@ -1,0 +1,48 @@
+// @vitest-environment jsdom
+/**
+ * FR-1: the Foundations section shows Colors, Typography, Spacing, Elevation and
+ * Motion, renders from the token files, and every type role and elevation level
+ * has a matching style rule.
+ */
+import { describe, it, expect } from 'vitest';
+import { readFileSync } from 'node:fs';
+import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { renderToStaticMarkup } from 'react-dom/server';
+import type { ReactElement } from 'react';
+import * as colors from '../colors.stories';
+import * as typography from '../typography.stories';
+import * as spacing from '../spacing.stories';
+import * as elevation from '../elevation.stories';
+import * as motion from '../motion.stories';
+import { TYPE_ROLES, RAMPS, STEPS } from '../tokens';
+
+const dir = join(dirname(fileURLToPath(import.meta.url)), '..');
+type StoryModule = { default: { title: string } } & Record<string, unknown>;
+const pages: Array<[string, StoryModule, string]> = [
+  ['Colors', colors as unknown as StoryModule, 'Colors'],
+  ['Typography', typography as unknown as StoryModule, 'Typography'],
+  ['Spacing', spacing as unknown as StoryModule, 'Spacing'],
+  ['Elevation', elevation as unknown as StoryModule, 'Elevation'],
+  ['Motion', motion as unknown as StoryModule, 'Motion'],
+];
+
+describe('FR-1 Foundations pages', () => {
+  it.each(pages)('FR-1: %s is titled Foundations/%s and renders', (name, mod, story) => {
+    expect(mod.default.title).toBe(`Foundations/${name}`);
+    const render = (mod[story] as { render: () => ReactElement }).render;
+    const html = renderToStaticMarkup(render());
+    expect(html.length).toBeGreaterThan(200);
+  });
+
+  it('FR-1: Colors shows every step of every ramp', () => {
+    const html = renderToStaticMarkup((colors.Colors as { render: () => ReactElement }).render());
+    expect((html.match(/class="fd-swatch"/g) ?? []).length).toBe(RAMPS.length * STEPS.length);
+  });
+
+  it('FR-1: every type role and elevation level has a style rule', () => {
+    const css = readFileSync(join(dir, 'foundations.css'), 'utf8');
+    for (const role of TYPE_ROLES) expect(css).toContain(`.fd-type-sample[data-role="${role}"]`);
+    for (const level of [0, 1, 2, 3, 4]) expect(css).toContain(`.fd-elevation__tile[data-level="${level}"]`);
+  });
+});
