@@ -63,9 +63,12 @@
       },
       "baseline": true,
       "verified": false,
-      "status": "missing",
+      "status": "done",
       "phase": "1.9",
-      "evidence": []
+      "evidence": [
+        "tokens/themes/dark.json",
+        "styles/tokens.css"
+      ]
     },
     {
       "id": "high-contrast-theme",
@@ -80,9 +83,12 @@
       },
       "baseline": true,
       "verified": false,
-      "status": "missing",
+      "status": "done",
       "phase": "1.9",
-      "evidence": [],
+      "evidence": [
+        "tokens/themes/high-contrast.json",
+        "styles/tokens.css"
+      ],
       "note": "M3 contrast levels, Atlassian increased contrast themes, Fluent high contrast theme"
     },
     {
