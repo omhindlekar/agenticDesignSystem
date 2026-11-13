@@ -15,6 +15,8 @@ import * as typography from '../typography.stories';
 import * as spacing from '../spacing.stories';
 import * as elevation from '../elevation.stories';
 import * as motion from '../motion.stories';
+import * as iconography from '../iconography.stories';
+import { ICON_NAMES } from '../../icon/icons.generated';
 import { TYPE_ROLES, RAMPS, STEPS } from '../tokens';
 
 const dir = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -25,6 +27,7 @@ const pages: Array<[string, StoryModule, string]> = [
   ['Spacing', spacing as unknown as StoryModule, 'Spacing'],
   ['Elevation', elevation as unknown as StoryModule, 'Elevation'],
   ['Motion', motion as unknown as StoryModule, 'Motion'],
+  ['Iconography', iconography as unknown as StoryModule, 'Iconography'],
 ];
 
 describe('FR-1 Foundations pages', () => {
@@ -44,5 +47,13 @@ describe('FR-1 Foundations pages', () => {
     const css = readFileSync(join(dir, 'foundations.css'), 'utf8');
     for (const role of TYPE_ROLES) expect(css).toContain(`.fd-type-sample[data-role="${role}"]`);
     for (const level of [0, 1, 2, 3, 4]) expect(css).toContain(`.fd-elevation__tile[data-level="${level}"]`);
+  });
+
+  it('FR-1: Iconography shows every curated icon at 16, 20 and 24px with its name', () => {
+    const html = renderToStaticMarkup((iconography.Iconography as { render: () => ReactElement }).render());
+    for (const name of ICON_NAMES) expect(html).toContain(`>${name}<`);
+    for (const size of ['sm', 'md', 'lg']) {
+      expect((html.match(new RegExp(`data-size="${size}"`, 'g')) ?? []).length).toBeGreaterThanOrEqual(ICON_NAMES.length);
+    }
   });
 });
