@@ -95,7 +95,7 @@ describe('FR-11 contrast: state layers and disabled content', () => {
   it('FR-11: text, control borders and the focus ring used on state layers are checked over every layer', () => {
     const pairs = buildContrastPairs(tokens).filter((p) => p.layer);
     for (const op of ['opacity-state-hover', 'opacity-state-focus', 'opacity-state-pressed']) {
-      for (const fg of ['color-text-link', 'color-text-primary', 'color-border-input-hover', 'color-interactive-focus-ring']) {
+      for (const fg of ['color-text-link', 'color-text-primary', 'color-text-secondary', 'color-border-input-hover', 'color-interactive-focus-ring']) {
         expect(pairs.some((p) => p.fg === fg && p.layer?.opacity === op && p.layer.color === 'color-state-layer'), `${fg} @ ${op}`).toBe(true);
       }
       expect(pairs.some((p) => p.fg === 'color-text-danger-action' && p.layer?.color === 'color-state-layer-danger' && p.layer.opacity === op)).toBe(true);

@@ -163,3 +163,35 @@ describe('FR-1 token-lint: phase 1.7 foundations', () => {
     expect(lintMotionGuard(css, 'a.css')).toEqual([]);
   });
 });
+
+describe('FR-1 token-lint: icons (DS-I-001)', () => {
+  it('FR-1: flags raw <svg> markup in component or generated source', () => {
+    const v = lintString('return <svg viewBox="0 0 24 24"><path d="M0 0h24" /></svg>;').filter((x) => x.pattern === 'raw-svg');
+    expect(v.length).toBe(1);
+    expect(v[0]?.ruleRef).toBe('DS-I-001');
+  });
+
+  it('FR-1: allows raw <svg> only inside components/icon/', async () => {
+    const { mkdtempSync, writeFileSync, mkdirSync } = await import('node:fs');
+    const { tmpdir } = await import('node:os');
+    const dir = mkdtempSync(join(tmpdir(), 'ads-icon-'));
+    mkdirSync(join(dir, 'components', 'icon'), { recursive: true });
+    mkdirSync(join(dir, 'components', 'card'), { recursive: true });
+    writeFileSync(join(dir, 'components', 'icon', 'icon.tsx'), 'export const I = () => <svg />;\n');
+    writeFileSync(join(dir, 'components', 'card', 'card.tsx'), 'export const C = () => <svg />;\n');
+    const v = (await lintDirectory(join(dir, 'components'))).filter((x) => x.pattern === 'raw-svg');
+    expect(v.map((x) => x.file.split('/').slice(-2).join('/'))).toEqual(['card/card.tsx']);
+  });
+
+  it.each([
+    "@import 'material-symbols/outlined.css';",
+    "font-family: 'Material Symbols Sharp';",
+    "import 'material-icons/iconfont/material-icons.css';",
+  ])('FR-1: flags an icon font: %s', (src) => {
+    expect(lintString(src).map((x) => x.pattern)).toContain('icon-font');
+  });
+
+  it('FR-1: the SVG icon package is not an icon font', () => {
+    expect(lintString("import path from '@material-symbols/svg-400/sharp/close.svg';").map((x) => x.pattern)).not.toContain('icon-font');
+  });
+});

@@ -108,6 +108,16 @@ describe('FR-4 rules.yaml: visual direction rules', () => {
   });
 });
 
+describe('FR-4 rules.yaml: icons', () => {
+  it('FR-4: DS-I-001 governs icons, is checked by token-lint and applies to icon and icon-button', () => {
+    const r = loadRules().find((x) => x.id === 'DS-I-001');
+    expect(r?.checkName).toBe('token-lint');
+    expect(r?.statement).toMatch(/Icon/);
+    expect(r?.statement).toMatch(/label/);
+    expect(r?.appliesTo).toEqual(expect.arrayContaining(['icon', 'icon-button']));
+  });
+});
+
 describe('FR-4 rules.yaml: phase 1.7 foundations', () => {
   const rule = (id: string): Rule | undefined => loadRules().find((r) => r.id === id);
   it('FR-4: DS-M-001 requires motion tokens and the reduced-motion guard', () => {

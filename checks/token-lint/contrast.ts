@@ -112,6 +112,8 @@ export function buildContrastPairs(tokens: Map<string, string>): ContrastPair[] 
   const layered: Array<[string, string, ContrastPair['min']]> = [
     ['color-text-link', 'color-state-layer', 4.5],
     ['color-text-primary', 'color-state-layer', 4.5],
+    // Standard IconButton icons are drawn in the secondary colour (non-text, 3:1).
+    ['color-text-secondary', 'color-state-layer', 3],
     // Controls that show a state layer switch their border to the hover token.
     ['color-border-input-hover', 'color-state-layer', 3],
     ['color-interactive-focus-ring', 'color-state-layer', 3],

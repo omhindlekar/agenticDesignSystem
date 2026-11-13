@@ -262,6 +262,28 @@ rules:
     example: "@media (prefers-reduced-motion: no-preference) { .x { transition: color var(--motion-duration-standard) var(--motion-easing-standard); } }"
     counterExample: "transition: all 300ms ease"
 
+  - id: DS-I-001
+    scope: component
+    severity: error
+    statement: >
+      Icons come only from the Icon component and the curated Material
+      Symbols Sharp set (components/icon/icon-list.json): no raw <svg> outside
+      components/icon/ and no icon fonts. Decorative icons have no label and are
+      hidden from assistive tech; an icon-only control is an IconButton with a
+      label that names the action.
+    check: auto
+    checkName: token-lint
+    appliesTo:
+      - icon
+      - icon-button
+      - button
+      - input
+      - select
+      - checkbox
+      - modal
+    example: "<IconButton icon=\"close\" label=\"Close dialog\" />"
+    counterExample: "<button><svg viewBox=\"0 0 24 24\">…</svg></button>"
+
   - id: DS-A-006
     scope: accessibility
     severity: error

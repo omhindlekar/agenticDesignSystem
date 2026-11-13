@@ -35,6 +35,7 @@ export const RULE_REFS = [
   'DS-A-006',
   'DS-T-005',
   'DS-M-001',
+  'DS-I-001',
 ] as const;
 
 const LINT_RULES: LintRule[] = [
@@ -123,6 +124,18 @@ const LINT_RULES: LintRule[] = [
     // A literal percentage inside color-mix(); the amount must come from an opacity token.
     regex: /color-mix\((?:[^()]|\([^()]*\))*?(?<![\w-])\d+(?:\.\d+)?%/g,
     ruleRef: 'DS-T-005',
+  },
+  {
+    pattern: 'raw-svg',
+    // Icons come from <Icon>; raw SVG is allowed only inside components/icon/ (see lintFile).
+    regex: /<svg\b/g,
+    ruleRef: 'DS-I-001',
+  },
+  {
+    pattern: 'icon-font',
+    // Icon fonts would add a third font family; the SVG package (@material-symbols/svg-*) is fine.
+    regex: /(?:@import|import|font-?[Ff]amily\s*:)[^;\n]*['"]?(?:material-symbols(?!\/svg-)|material-icons|Material Symbols|Material Icons)/g,
+    ruleRef: 'DS-I-001',
   },
   {
     pattern: 'hardcoded-border-width',
@@ -359,7 +372,9 @@ export function lintTokenReferences(
 
 export async function lintFile(filePath: string, semanticNames?: Set<string>): Promise<LintViolation[]> {
   const source = await readFile(filePath, 'utf8');
-  const violations = lintString(source, filePath);
+  // The Icon component is the one place allowed to draw raw SVG.
+  const inIconFolder = /(?:^|[\\/])components[\\/]icon[\\/]/.test(filePath);
+  const violations = lintString(source, filePath).filter((v) => !(inIconFolder && v.pattern === 'raw-svg'));
   if (extname(filePath) === '.css') {
     violations.push(...lintFontRoles(source, filePath), ...lintMotionGuard(source, filePath));
   }
