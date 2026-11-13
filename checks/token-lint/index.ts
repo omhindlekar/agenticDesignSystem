@@ -341,6 +341,12 @@ export function loadSemanticTokenNames(repoRoot: string): Set<string> {
   return new Set(raw.tokens.map((t) => t.name));
 }
 
+/**
+ * Variables React Aria sets at runtime on its elements (for example the trigger's
+ * width on a popover). They are not design tokens, so they are allowed by name.
+ */
+export const RUNTIME_VARIABLES = new Set(['trigger-width', 'trigger-anchor-point', 'visual-viewport-height']);
+
 /** Flags every var(--x) whose x is not a semantic token (primitives and unknown names). */
 export function lintTokenReferences(
   content: string,
@@ -355,7 +361,7 @@ export function lintTokenReferences(
     let m: RegExpExecArray | null;
     while ((m = re.exec(line)) !== null) {
       const name = m[1] ?? '';
-      if (!semanticNames.has(name)) {
+      if (!semanticNames.has(name) && !RUNTIME_VARIABLES.has(name)) {
         violations.push({
           file: fileName,
           line: lineIdx + 1,

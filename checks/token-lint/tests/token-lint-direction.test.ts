@@ -12,6 +12,7 @@ import {
   lintMotionGuard,
   lintDirectory,
   loadSemanticTokenNames,
+  lintTokenReferences,
 } from '../index.js';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '../../..');
@@ -193,5 +194,15 @@ describe('FR-1 token-lint: icons (DS-I-001)', () => {
 
   it('FR-1: the SVG icon package is not an icon font', () => {
     expect(lintString("import path from '@material-symbols/svg-600/sharp/close.svg';").map((x) => x.pattern)).not.toContain('icon-font');
+  });
+});
+
+describe('FR-1 token-lint: runtime variables from React Aria', () => {
+  const names = new Set(['color-text-primary']);
+  it('FR-1: allows the runtime variables React Aria sets, such as --trigger-width', () => {
+    expect(lintTokenReferences('min-width: var(--trigger-width);', 'p.css', names)).toEqual([]);
+  });
+  it('FR-1: still flags any other non-semantic variable', () => {
+    expect(lintTokenReferences('width: var(--my-width);', 'p.css', names).map((v) => v.pattern)).toEqual(['non-semantic-token']);
   });
 });
