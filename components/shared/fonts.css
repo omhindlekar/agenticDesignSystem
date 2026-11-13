@@ -1,0 +1,13 @@
+/*
+ * Bundled fonts (no CDN). Saira for body text, inputs and helper text;
+ * Saira SemiCondensed for headings, buttons, labels, table headers and badges.
+ * Families are exposed as --font-family-body and --font-family-display.
+ */
+@import '@fontsource/saira/400.css';
+@import '@fontsource/saira/500.css';
+@import '@fontsource/saira/600.css';
+@import '@fontsource/saira/700.css';
+@import '@fontsource/saira-semi-condensed/400.css';
+@import '@fontsource/saira-semi-condensed/500.css';
+@import '@fontsource/saira-semi-condensed/600.css';
+@import '@fontsource/saira-semi-condensed/700.css';
