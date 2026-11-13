@@ -1,11 +1,12 @@
 {
-  "source": "@material-symbols/svg-400 (Sharp, weight 400). Apache-2.0. Run `npm run icons:build` after editing.",
+  "source": "@material-symbols/svg-600 (Sharp, weight 600). Apache-2.0. Run `npm run icons:build` after editing.",
   "icons": [
     "add",
     "arrow_back",
     "arrow_forward",
     "calendar_today",
     "cancel",
+    "check",
     "check_circle",
     "check_small",
     "close",

@@ -56,7 +56,8 @@ export function IconButton({
       aria-busy={loading || undefined}
       onClick={handleClick}
     >
-      <Icon name={icon} size={size} />
+      {/* 20px icons in sm and md buttons, 24px in lg: optically balanced in the square. */}
+      <Icon name={icon} size={size === 'lg' ? 'lg' : 'md'} />
       {loading ? (
         <span className="ads-icon-button__progress" aria-hidden="true">
           <span className="ads-spinner" />

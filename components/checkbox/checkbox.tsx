@@ -85,7 +85,7 @@ export function Checkbox({
           <span className="ads-checkbox__layer" aria-hidden="true" />
           {/* Both icons render; CSS shows the one matching :checked or :indeterminate. */}
           <span className="ads-checkbox__check">
-            <Icon name="check_small" />
+            <Icon name="check" />
           </span>
           <span className="ads-checkbox__dash">
             <Icon name="remove" />

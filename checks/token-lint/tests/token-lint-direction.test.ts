@@ -192,6 +192,6 @@ describe('FR-1 token-lint: icons (DS-I-001)', () => {
   });
 
   it('FR-1: the SVG icon package is not an icon font', () => {
-    expect(lintString("import path from '@material-symbols/svg-400/sharp/close.svg';").map((x) => x.pattern)).not.toContain('icon-font');
+    expect(lintString("import path from '@material-symbols/svg-600/sharp/close.svg';").map((x) => x.pattern)).not.toContain('icon-font');
   });
 });

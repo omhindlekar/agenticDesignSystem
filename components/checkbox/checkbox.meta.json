@@ -33,7 +33,7 @@
     "Using Checkbox as a navigation element"
   ],
   "spec": {
-    "anatomy": ["20px square box inside a 40px square hit area, SVG check or dash icon, label to the right, helper or error text below aligned with the label"],
+    "anatomy": ["20px square box inside a 40px square hit area, check or remove (dash) icon, label to the right, helper or error text below aligned with the label"],
     "sizes": ["Box `size-control-indicator` (20px) with a `border-width-control` (2px) border; hit area `size-hit-area` (40px)"],
     "typography": ["Label `type-label-size` (SemiCondensed 14px); messages `type-caption-size`"],
     "states": ["Hit area shows `color-state-layer` at `opacity-state-hover`, `opacity-state-focus` and `opacity-state-pressed`; the box border steps to `color-border-input-hover`", "checked and indeterminate: `color-interactive-default` fill with `color-text-inverse` icon", "focus: 2px `color-interactive-focus-ring` ring around the box", "disabled: `color-interactive-disabled` box, content at `opacity-disabled`"],

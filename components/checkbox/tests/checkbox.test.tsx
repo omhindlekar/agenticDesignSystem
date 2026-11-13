@@ -42,9 +42,9 @@ describe('Checkbox', () => {
     expect(onChange).not.toHaveBeenCalled();
   });
 
-  it('FR-1: check and indeterminate marks are the check_small and remove icons', () => {
+  it('FR-1: check and indeterminate marks are the check and remove icons', () => {
     const { container } = render(<Checkbox label="All" />);
     const paths = [...container.querySelectorAll('.ads-checkbox__control path')].map((p) => p.getAttribute('d'));
-    expect(paths).toEqual([ICON_PATHS.check_small, ICON_PATHS.remove]);
+    expect(paths).toEqual([ICON_PATHS.check, ICON_PATHS.remove]);
   });
 });

@@ -59,7 +59,7 @@ describe('IconButton', () => {
   });
 
   it.each([
-    ['sm', 'sm'],
+    ['sm', 'md'],
     ['md', 'md'],
     ['lg', 'lg'],
   ] as const)('FR-1: size %s draws the %s icon', (size, iconSize) => {

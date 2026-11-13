@@ -17,7 +17,7 @@ export const Iconography: StoryObj = {
       <section className="fd-section">
         <h2 className="fd-section__heading">Iconography</h2>
         <p className="fd-note">
-          Material Symbols Sharp, weight 400 (Apache-2.0), drawn as SVG in the surrounding text colour. Sharp corners match
+          Material Symbols Sharp, weight 600 (Apache-2.0), drawn as SVG in the surrounding text colour. Sharp corners match
           the square identity. Sizes 16, 20 and 24px. To add an icon, list it in components/icon/icon-list.json and run
           npm run icons:build.
         </p>

@@ -11,6 +11,9 @@
   border: var(--border-width-default) solid transparent;
   background-color: transparent;
   color: var(--color-text-secondary);
+  /* Native buttons do not inherit fonts; the loading text uses the button role. */
+  font-family: var(--type-button-family);
+  font-size: var(--type-button-size);
   cursor: pointer;
 }
 

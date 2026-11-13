@@ -44,7 +44,7 @@
       "name": "size",
       "type": "'sm' | 'md' | 'lg'",
       "required": false,
-      "description": "Square 32 / 40 / 48px with a 16 / 20 / 24px icon. Defaults to md"
+      "description": "Square 32 / 40 / 48px with a 20 / 20 / 24px icon. Defaults to md"
     },
     {
       "name": "pressed",
@@ -103,7 +103,7 @@
       "Square button with one decorative Icon; while loading a spinner is drawn over the hidden icon"
     ],
     "sizes": [
-      "sm `size-control-sm` (32px) with a `size-icon-sm` icon; md `size-control-md` (40px) with `size-icon-md`; lg `size-control-lg` (48px) with `size-icon-lg`"
+      "sm `size-control-sm` (32px) and md `size-control-md` (40px) with a `size-icon-md` (20px) icon; lg `size-control-lg` (48px) with `size-icon-lg` (24px)"
     ],
     "typography": [
       "No text; the label is the accessible name only"
@@ -153,6 +153,8 @@
     "size-control-lg",
     "size-control-md",
     "size-control-sm",
+    "type-button-family",
+    "type-button-size",
     "z-index-state-layer"
   ],
   "a11yNotes": [
