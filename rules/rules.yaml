@@ -72,6 +72,7 @@ rules:
       - checkbox
       - card
       - modal
+      - icon-button
     example: "border: var(--border-width-default) solid var(--color-border-default)"
     counterExample: "border-radius: 50%"
 
@@ -148,6 +149,7 @@ rules:
       - card
       - modal
       - icon
+      - icon-button
     example: "Use color-text-primary on color-background-surface (passes 4.5:1)"
     counterExample: "Light grey text on white background"
 
@@ -166,6 +168,7 @@ rules:
       - input
       - select
       - checkbox
+      - icon-button
     example: "outline: var(--border-width-focus) solid var(--color-interactive-focus-ring); outline-offset: var(--focus-ring-offset)"
     counterExample: "outline: none"
 
@@ -182,6 +185,7 @@ rules:
     appliesTo:
       - button
       - checkbox
+      - icon-button
     example: "min-height: var(--size-control-md)"
     counterExample: "A 16px icon button with no padding around it"
 
@@ -233,6 +237,7 @@ rules:
       - checkbox
       - card
       - modal
+      - icon-button
     example: "opacity: var(--opacity-state-hover)"
     counterExample: "opacity: 0.08"
 
@@ -253,6 +258,7 @@ rules:
       - checkbox
       - card
       - modal
+      - icon-button
     example: "@media (prefers-reduced-motion: no-preference) { .x { transition: color var(--motion-duration-standard) var(--motion-easing-standard); } }"
     counterExample: "transition: all 300ms ease"
 

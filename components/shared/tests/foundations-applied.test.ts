@@ -146,7 +146,7 @@ describe('FR-3 metadata spec', () => {
     ),
   );
 
-  it.each(['button', 'input', 'select', 'checkbox', 'card', 'modal', 'icon'])('FR-3: %s metadata has a spec naming only real tokens', (id) => {
+  it.each(['button', 'input', 'select', 'checkbox', 'card', 'modal', 'icon', 'icon-button'])('FR-3: %s metadata has a spec naming only real tokens', (id) => {
     const meta = JSON.parse(readFileSync(join(root, 'components', id, `${id}.meta.json`), 'utf8')) as {
       spec?: Record<string, string[]>;
     };

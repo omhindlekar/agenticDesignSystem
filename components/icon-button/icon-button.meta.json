@@ -1,0 +1,165 @@
+{
+  "id": "icon-button",
+  "purpose": "Triggers an action with a single well-known icon, such as close, search or more. The required label names the action for assistive tech.",
+  "variants": [
+    "standard",
+    "outlined",
+    "contained"
+  ],
+  "states": [
+    "default",
+    "hover",
+    "active",
+    "focus",
+    "selected",
+    "disabled",
+    "loading"
+  ],
+  "props": [
+    {
+      "name": "icon",
+      "type": "IconName",
+      "required": true,
+      "description": "Icon to show, from the curated set (see the Icon component for every name)"
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "required": true,
+      "description": "Accessible name of the action, for example \"Close dialog\""
+    },
+    {
+      "name": "variant",
+      "type": "'standard' | 'outlined' | 'contained'",
+      "required": false,
+      "description": "standard is icon only with a state layer; outlined adds a 1px border; contained is filled. Defaults to standard"
+    },
+    {
+      "name": "tone",
+      "type": "'primary' | 'danger'",
+      "required": false,
+      "description": "Colour role. danger is only for destructive actions. Defaults to primary"
+    },
+    {
+      "name": "size",
+      "type": "'sm' | 'md' | 'lg'",
+      "required": false,
+      "description": "Square 32 / 40 / 48px with a 16 / 20 / 24px icon. Defaults to md"
+    },
+    {
+      "name": "pressed",
+      "type": "boolean",
+      "required": false,
+      "description": "Makes it a toggle and sets aria-pressed (for example show or hide password). Leave unset for a plain action"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "description": "Sets aria-disabled, keeps it focusable and blocks activation"
+    },
+    {
+      "name": "loading",
+      "type": "boolean",
+      "required": false,
+      "description": "Shows a spinner over the icon, sets aria-busy and blocks activation"
+    },
+    {
+      "name": "onClick",
+      "type": "() => void",
+      "required": false,
+      "description": "Click handler"
+    },
+    {
+      "name": "type",
+      "type": "'button' | 'submit' | 'reset'",
+      "required": false,
+      "description": "HTML button type. Defaults to button"
+    }
+  ],
+  "whenToUse": [
+    "For a compact, universally understood action: close, search, more options, copy, delete",
+    "In toolbars, table rows and field adornments where a text button would crowd the layout",
+    "As a toggle such as show or hide password, with pressed"
+  ],
+  "whenNotToUse": [
+    "When the action is not obvious from the icon alone — use Button with a text label",
+    "For the main call to action of a screen — use a contained Button",
+    "For navigation to another page — use a link"
+  ],
+  "related": [
+    "button",
+    "icon",
+    "modal",
+    "input"
+  ],
+  "antiPatterns": [
+    "Leaving out the label or repeating the icon name (\"close icon\") instead of the action (\"Close dialog\")",
+    "Using an icon whose meaning is ambiguous without a tooltip or text",
+    "Placing several contained icon buttons side by side"
+  ],
+  "spec": {
+    "anatomy": [
+      "Square button with one decorative Icon; while loading a spinner is drawn over the hidden icon"
+    ],
+    "sizes": [
+      "sm `size-control-sm` (32px) with a `size-icon-sm` icon; md `size-control-md` (40px) with `size-icon-md`; lg `size-control-lg` (48px) with `size-icon-lg`"
+    ],
+    "typography": [
+      "No text; the label is the accessible name only"
+    ],
+    "states": [
+      "standard: icon in `color-text-secondary`, `color-state-layer` at `opacity-state-hover` / `opacity-state-focus` / `opacity-state-pressed`",
+      "outlined: 1px `color-border-interactive`, icon in `color-text-link`",
+      "contained: `color-interactive-default` fill, `color-interactive-hover` and `color-interactive-active`",
+      "selected (pressed toggle): icon in `color-text-link`",
+      "focus: 2px `color-interactive-focus-ring` ring with `focus-ring-offset`",
+      "disabled: icon at `opacity-disabled`"
+    ],
+    "motion": [
+      "Colour changes over `motion-duration-standard` with `motion-easing-standard`; none under reduced motion"
+    ]
+  },
+  "tokensUsed": [
+    "border-width-default",
+    "border-width-focus",
+    "color-border-danger",
+    "color-border-disabled",
+    "color-border-interactive",
+    "color-interactive-active",
+    "color-interactive-default",
+    "color-interactive-disabled",
+    "color-interactive-focus-ring",
+    "color-interactive-hover",
+    "color-spinner-track",
+    "color-state-layer",
+    "color-state-layer-danger",
+    "color-status-danger-text",
+    "color-text-danger",
+    "color-text-danger-action",
+    "color-text-inverse",
+    "color-text-link",
+    "color-text-primary",
+    "color-text-secondary",
+    "focus-ring-offset",
+    "motion-duration-overlay",
+    "motion-duration-standard",
+    "motion-easing-standard",
+    "opacity-disabled",
+    "opacity-state-focus",
+    "opacity-state-hover",
+    "opacity-state-pressed",
+    "size-control-indicator",
+    "size-control-lg",
+    "size-control-md",
+    "size-control-sm",
+    "z-index-state-layer"
+  ],
+  "a11yNotes": [
+    "label is required and becomes aria-label; describe the action, not the icon",
+    "disabled sets aria-disabled and keeps the button in the tab order",
+    "A toggle sets aria-pressed; a plain action never does",
+    "Target size at least 24x24 CSS pixels (WCAG 2.2 SC 2.5.8); the smallest is 32px",
+    "Focus ring must be visible and use color-interactive-focus-ring"
+  ]
+}

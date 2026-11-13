@@ -1,0 +1,116 @@
+/* IconButton: a square button holding one icon; 32 / 40 / 48px like Button. */
+.ads-icon-button {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  box-sizing: border-box;
+  width: var(--size-control-md);
+  height: var(--size-control-md);
+  margin: 0;
+  padding: 0;
+  border: var(--border-width-default) solid transparent;
+  background-color: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}
+
+.ads-icon-button[data-size="sm"] {
+  width: var(--size-control-sm);
+  height: var(--size-control-sm);
+}
+
+.ads-icon-button[data-size="lg"] {
+  width: var(--size-control-lg);
+  height: var(--size-control-lg);
+}
+
+/* ── Standard: icon only, state layer on interaction ──────────────────── */
+.ads-icon-button[data-variant="standard"][data-tone="danger"] {
+  color: var(--color-text-danger-action);
+}
+
+/* ── Outlined: 1px border in the tone colour ──────────────────────────── */
+.ads-icon-button[data-variant="outlined"] {
+  border-color: var(--color-border-interactive);
+  color: var(--color-text-link);
+}
+.ads-icon-button[data-variant="outlined"][data-tone="danger"] {
+  border-color: var(--color-border-danger);
+  color: var(--color-text-danger-action);
+}
+
+/* ── Contained: solid fill, darker on hover and press, no state layer ─── */
+.ads-icon-button[data-variant="contained"] {
+  border-color: var(--color-interactive-default);
+  background-color: var(--color-interactive-default);
+  color: var(--color-text-inverse);
+}
+.ads-icon-button[data-variant="contained"]::before {
+  display: none;
+}
+.ads-icon-button[data-variant="contained"]:not([aria-disabled]):hover {
+  border-color: var(--color-interactive-hover);
+  background-color: var(--color-interactive-hover);
+}
+.ads-icon-button[data-variant="contained"]:not([aria-disabled]):active {
+  border-color: var(--color-interactive-active);
+  background-color: var(--color-interactive-active);
+}
+.ads-icon-button[data-variant="contained"][data-tone="danger"] {
+  border-color: var(--color-text-danger);
+  background-color: var(--color-text-danger);
+}
+.ads-icon-button[data-variant="contained"][data-tone="danger"]:not([aria-disabled]):hover,
+.ads-icon-button[data-variant="contained"][data-tone="danger"]:not([aria-disabled]):active {
+  border-color: var(--color-status-danger-text);
+  background-color: var(--color-status-danger-text);
+}
+
+/* ── Selected (toggle on): the icon takes the interactive colour ──────── */
+.ads-icon-button[data-variant="standard"][data-state~="selected"] {
+  color: var(--color-text-link);
+}
+
+/* ── Focus: 2px blue 600 ring with a 2px white gap ────────────────────── */
+.ads-icon-button:focus-visible {
+  outline: var(--border-width-focus) solid var(--color-interactive-focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+/* ── Disabled: icon at 38%; outlined and contained sit on the disabled fill ── */
+.ads-icon-button[data-state~="disabled"] {
+  color: color-mix(in srgb, var(--color-text-primary) calc(var(--opacity-disabled) * 100%), transparent);
+  cursor: not-allowed;
+}
+.ads-icon-button[data-variant="contained"][data-state~="disabled"],
+.ads-icon-button[data-variant="outlined"][data-state~="disabled"] {
+  border-color: var(--color-border-disabled);
+  background-color: var(--color-interactive-disabled);
+}
+
+/* ── Loading: the icon stays (opacity 0) under the spinner ────────────── */
+.ads-icon-button[data-state~="loading"] {
+  position: relative;
+  cursor: progress;
+}
+.ads-icon-button[data-state~="loading"] > .ads-icon {
+  opacity: 0;
+}
+.ads-icon-button__progress {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+.ads-icon-button .ads-spinner {
+  border-top-color: currentColor;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ads-icon-button {
+    transition:
+      background-color var(--motion-duration-standard) var(--motion-easing-standard),
+      border-color var(--motion-duration-standard) var(--motion-easing-standard),
+      color var(--motion-duration-standard) var(--motion-easing-standard);
+  }
+}
