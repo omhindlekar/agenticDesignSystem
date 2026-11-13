@@ -9,13 +9,13 @@
       {
         "component": "input",
         "props": { "label": "Email", "type": "email", "name": "email", "required": true },
-        "tokenRefs": ["color-border-default", "color-border-interactive", "color-border-danger", "color-text-primary", "font-size-body"],
+        "tokenRefs": ["color-border-default", "color-border-interactive", "color-border-danger", "color-text-primary", "type-body1-size"],
         "states": ["default", "focus", "filled", "error"]
       },
       {
         "component": "input",
         "props": { "label": "Password", "type": "password", "name": "password", "required": true },
-        "tokenRefs": ["color-border-default", "color-border-interactive", "color-border-danger", "color-text-primary", "font-size-body"],
+        "tokenRefs": ["color-border-default", "color-border-interactive", "color-border-danger", "color-text-primary", "type-body1-size"],
         "states": ["default", "focus", "filled", "error"]
       },
       {
@@ -26,7 +26,7 @@
       },
       {
         "component": "button",
-        "props": { "label": "Sign in", "variant": "primary", "type": "submit" },
+        "props": { "label": "Sign in", "variant": "contained", "type": "submit" },
         "tokenRefs": ["color-interactive-default", "color-interactive-hover", "color-interactive-active", "color-interactive-focus-ring", "color-text-inverse"],
         "states": ["default", "hover", "active", "focus", "loading"]
       }

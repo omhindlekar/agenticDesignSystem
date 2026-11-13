@@ -107,3 +107,25 @@ describe('FR-4 rules.yaml: visual direction rules', () => {
     for (const ref of RULE_REFS) expect(ids.has(ref), ref).toBe(true);
   });
 });
+
+describe('FR-4 rules.yaml: phase 1.7 foundations', () => {
+  const rule = (id: string): Rule | undefined => loadRules().find((r) => r.id === id);
+  it('FR-4: DS-M-001 requires motion tokens and the reduced-motion guard', () => {
+    expect(rule('DS-M-001')?.checkName).toBe('token-lint');
+    expect(rule('DS-M-001')?.statement).toMatch(/prefers-reduced-motion/);
+  });
+  it('FR-4: DS-T-005 requires opacity tokens for state layers and disabled content', () => {
+    expect(rule('DS-T-005')?.checkName).toBe('token-lint');
+    expect(rule('DS-T-005')?.statement).toMatch(/opacity-state|opacity-disabled/);
+  });
+  it('FR-4: DS-A-003 cites SC 2.5.8 with a 24px minimum', () => {
+    expect(rule('DS-A-003')?.statement).toMatch(/2\.5\.8/);
+    expect(rule('DS-A-003')?.statement).toMatch(/24/);
+  });
+  it('FR-4: DS-L-002 takes shadows only from elevation tokens', () => {
+    expect(rule('DS-L-002')?.statement).toMatch(/elevation/);
+  });
+  it('FR-4: DS-A-001 states the disabled exemption', () => {
+    expect(rule('DS-A-001')?.statement).toMatch(/disabled/i);
+  });
+});

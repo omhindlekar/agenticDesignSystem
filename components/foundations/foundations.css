@@ -1,0 +1,369 @@
+/* Layout for the Foundations pages. Every value is a semantic token. */
+/* Pages that render no component still need the bundled fonts. */
+@import '../shared/fonts.css';
+
+.fd-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-layout-section);
+  max-width: var(--size-modal-lg);
+  font-family: var(--type-body2-family);
+  font-size: var(--type-body2-size);
+  line-height: var(--type-body2-line-height);
+  color: var(--color-text-primary);
+}
+
+.fd-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-component-gap-md);
+}
+
+.fd-section__heading {
+  margin: 0;
+  font-family: var(--type-h3-family);
+  font-size: var(--type-h3-size);
+  font-weight: var(--type-h3-weight);
+  line-height: var(--type-h3-line-height);
+  color: var(--color-text-heading);
+}
+
+.fd-note {
+  margin: 0;
+  color: var(--color-text-secondary);
+}
+
+.fd-overline {
+  font-family: var(--type-overline-family);
+  font-size: var(--type-overline-size);
+  font-weight: var(--type-overline-weight);
+  line-height: var(--type-overline-line-height);
+  letter-spacing: var(--type-overline-letter-spacing);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.fd-mono {
+  font-family: var(--type-caption-family);
+  font-size: var(--type-caption-size);
+  line-height: var(--type-caption-line-height);
+  letter-spacing: var(--type-caption-letter-spacing);
+  color: var(--color-text-secondary);
+}
+
+/* Colour ramps */
+.fd-ramp {
+  display: grid;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  border: var(--border-width-default) solid var(--color-border-default);
+}
+
+.fd-swatch {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: var(--space-component-padding-xs);
+  min-height: calc(var(--size-control-lg) * 2);
+  padding: var(--space-component-padding-sm);
+  font-family: var(--type-caption-family);
+  font-size: var(--type-caption-size);
+  line-height: var(--type-caption-line-height);
+}
+
+.fd-swatch__step {
+  font-family: var(--type-label-family);
+  font-weight: var(--type-label-weight);
+}
+
+/* Semantic colours */
+.fd-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(calc(var(--size-modal-sm) / 2), 1fr));
+  gap: var(--space-component-gap-sm);
+}
+
+.fd-token {
+  display: flex;
+  align-items: center;
+  gap: var(--space-component-gap-sm);
+  padding: var(--space-component-padding-sm);
+  border: var(--border-width-default) solid var(--color-border-default);
+  background-color: var(--color-background-surface);
+}
+
+.fd-token__chip {
+  flex: none;
+  width: var(--size-control-md);
+  height: var(--size-control-md);
+  border: var(--border-width-default) solid var(--color-border-default);
+}
+
+.fd-token__text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.fd-token__name {
+  font-family: var(--type-label-family);
+  font-size: var(--type-label-size);
+  font-weight: var(--type-label-weight);
+  overflow-wrap: anywhere;
+}
+
+/* Tables */
+.fd-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.fd-table th,
+.fd-table td {
+  padding: var(--space-component-padding-xs) var(--space-component-padding-sm);
+  border-bottom: var(--border-width-default) solid var(--color-border-default);
+  text-align: start;
+  vertical-align: middle;
+}
+
+.fd-table th {
+  font-family: var(--type-overline-family);
+  font-size: var(--type-overline-size);
+  font-weight: var(--type-overline-weight);
+  letter-spacing: var(--type-overline-letter-spacing);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.fd-pass {
+  color: var(--color-text-success);
+  font-family: var(--type-label-family);
+  font-weight: var(--type-label-weight);
+}
+
+.fd-fail {
+  color: var(--color-text-danger);
+  font-family: var(--type-label-family);
+  font-weight: var(--type-label-weight);
+}
+
+/* Typography */
+.fd-type-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--size-modal-sm);
+  align-items: baseline;
+  gap: var(--space-component-gap-md);
+  padding-block: var(--space-component-padding-sm);
+  border-bottom: var(--border-width-default) solid var(--color-border-default);
+}
+
+.fd-type-sample {
+  margin: 0;
+  color: var(--color-text-primary);
+}
+
+/* Spacing */
+.fd-space-row {
+  display: grid;
+  grid-template-columns: var(--size-control-lg) minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-component-gap-md);
+}
+
+.fd-space-bar {
+  height: var(--space-component-padding-md);
+  background-color: var(--color-interactive-default);
+}
+
+.fd-heights {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-component-gap-md);
+}
+
+.fd-height {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--size-modal-sm);
+  max-width: 30%;
+  border: var(--border-width-default) solid var(--color-border-interactive);
+  background-color: var(--color-background-sunken);
+  font-family: var(--type-label-family);
+  font-size: var(--type-label-size);
+}
+
+/* Elevation */
+.fd-elevation {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--size-modal-sm), 1fr));
+  gap: var(--space-layout-section);
+  padding: var(--space-layout-section);
+  background-color: var(--color-background-sunken);
+}
+
+.fd-elevation__tile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-component-padding-xs);
+  min-height: var(--size-control-lg);
+  padding: var(--space-component-padding-md);
+  border: var(--border-width-default) solid var(--color-border-default);
+  background-color: var(--color-background-surface);
+}
+
+/* Motion */
+.fd-motion {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-component-gap-md);
+}
+
+.fd-motion__track {
+  position: relative;
+  height: var(--size-control-lg);
+  border: var(--border-width-default) solid var(--color-border-default);
+  background-color: var(--color-background-sunken);
+}
+
+.fd-motion__dot {
+  position: absolute;
+  inset-block: var(--space-component-padding-sm);
+  inset-inline-start: var(--space-component-padding-sm);
+  width: var(--size-control-sm);
+  background-color: var(--color-interactive-default);
+}
+
+.fd-motion[data-moved="true"] .fd-motion__dot {
+  inset-inline-start: calc(100% - var(--size-control-sm) - var(--space-component-padding-sm));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .fd-motion__dot[data-speed="standard"] {
+    transition: inset-inline-start var(--motion-duration-standard) var(--motion-easing-standard);
+  }
+
+  .fd-motion__dot[data-speed="overlay"] {
+    transition: inset-inline-start var(--motion-duration-overlay) var(--motion-easing-standard);
+  }
+}
+
+/* One rule per type role and elevation level, so pages never build token names at runtime. */
+.fd-type-sample[data-role="display"] {
+  font-family: var(--type-display-family);
+  font-size: var(--type-display-size);
+  font-weight: var(--type-display-weight);
+  line-height: var(--type-display-line-height);
+  letter-spacing: var(--type-display-letter-spacing);
+}
+
+.fd-type-sample[data-role="h1"] {
+  font-family: var(--type-h1-family);
+  font-size: var(--type-h1-size);
+  font-weight: var(--type-h1-weight);
+  line-height: var(--type-h1-line-height);
+  letter-spacing: var(--type-h1-letter-spacing);
+}
+
+.fd-type-sample[data-role="h2"] {
+  font-family: var(--type-h2-family);
+  font-size: var(--type-h2-size);
+  font-weight: var(--type-h2-weight);
+  line-height: var(--type-h2-line-height);
+  letter-spacing: var(--type-h2-letter-spacing);
+}
+
+.fd-type-sample[data-role="h3"] {
+  font-family: var(--type-h3-family);
+  font-size: var(--type-h3-size);
+  font-weight: var(--type-h3-weight);
+  line-height: var(--type-h3-line-height);
+  letter-spacing: var(--type-h3-letter-spacing);
+}
+
+.fd-type-sample[data-role="h4"] {
+  font-family: var(--type-h4-family);
+  font-size: var(--type-h4-size);
+  font-weight: var(--type-h4-weight);
+  line-height: var(--type-h4-line-height);
+  letter-spacing: var(--type-h4-letter-spacing);
+}
+
+.fd-type-sample[data-role="subtitle"] {
+  font-family: var(--type-subtitle-family);
+  font-size: var(--type-subtitle-size);
+  font-weight: var(--type-subtitle-weight);
+  line-height: var(--type-subtitle-line-height);
+  letter-spacing: var(--type-subtitle-letter-spacing);
+}
+
+.fd-type-sample[data-role="body1"] {
+  font-family: var(--type-body1-family);
+  font-size: var(--type-body1-size);
+  font-weight: var(--type-body1-weight);
+  line-height: var(--type-body1-line-height);
+  letter-spacing: var(--type-body1-letter-spacing);
+}
+
+.fd-type-sample[data-role="body2"] {
+  font-family: var(--type-body2-family);
+  font-size: var(--type-body2-size);
+  font-weight: var(--type-body2-weight);
+  line-height: var(--type-body2-line-height);
+  letter-spacing: var(--type-body2-letter-spacing);
+}
+
+.fd-type-sample[data-role="button"] {
+  font-family: var(--type-button-family);
+  font-size: var(--type-button-size);
+  font-weight: var(--type-button-weight);
+  line-height: var(--type-button-line-height);
+  letter-spacing: var(--type-button-letter-spacing);
+}
+
+.fd-type-sample[data-role="label"] {
+  font-family: var(--type-label-family);
+  font-size: var(--type-label-size);
+  font-weight: var(--type-label-weight);
+  line-height: var(--type-label-line-height);
+  letter-spacing: var(--type-label-letter-spacing);
+}
+
+.fd-type-sample[data-role="caption"] {
+  font-family: var(--type-caption-family);
+  font-size: var(--type-caption-size);
+  font-weight: var(--type-caption-weight);
+  line-height: var(--type-caption-line-height);
+  letter-spacing: var(--type-caption-letter-spacing);
+}
+
+.fd-type-sample[data-role="overline"] {
+  font-family: var(--type-overline-family);
+  font-size: var(--type-overline-size);
+  font-weight: var(--type-overline-weight);
+  line-height: var(--type-overline-line-height);
+  letter-spacing: var(--type-overline-letter-spacing);
+}
+
+.fd-type-sample[data-role="overline"] {
+  text-transform: uppercase;
+}
+
+.fd-elevation__tile[data-level="0"] {
+  box-shadow: var(--elevation-0);
+}
+
+.fd-elevation__tile[data-level="1"] {
+  box-shadow: var(--elevation-1);
+}
+
+.fd-elevation__tile[data-level="2"] {
+  box-shadow: var(--elevation-2);
+}
+
+.fd-elevation__tile[data-level="3"] {
+  box-shadow: var(--elevation-3);
+}
+
+.fd-elevation__tile[data-level="4"] {
+  box-shadow: var(--elevation-4);
+}

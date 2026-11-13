@@ -124,7 +124,7 @@ export function Modal({
           <h2 id={titleId} className="ads-modal__title">
             {title}
           </h2>
-          <Button label="Close" variant="ghost" size="sm" onClick={onClose} />
+          <Button label="Close" variant="text" size="sm" onClick={onClose} />
         </header>
         <div className="ads-modal__body">
           {loading ? (

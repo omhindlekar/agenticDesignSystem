@@ -9,6 +9,7 @@ import {
   lintString,
   lintFontRoles,
   lintTokenFiles,
+  lintMotionGuard,
   lintDirectory,
   loadSemanticTokenNames,
 } from '../index.js';
@@ -87,6 +88,17 @@ describe('FR-1 token-lint: display font for headings, buttons and labels (DS-L-0
     expect(lintFontRoles(css, 'ok.css')).toEqual([]);
   });
 
+  it('FR-1: display type-role family tokens count as the display font; body ones do not', () => {
+    expect(lintFontRoles('.ads-button { font-family: var(--type-button-family); }', 'b.css')).toEqual([]);
+    expect(lintFontRoles('.ads-modal__title { font-family: var(--type-h3-family); }', 'm.css')).toEqual([]);
+    expect(lintFontRoles('.ads-button { font-family: var(--type-body1-family); }', 'b.css').map((x) => x.pattern)).toEqual([
+      'display-font-role',
+    ]);
+    expect(lintFontRoles('.ads-input__field { font-family: var(--type-label-family); }', 'i.css').map((x) => x.pattern)).toEqual([
+      'body-font-role',
+    ]);
+  });
+
   it('FR-1: modifier rules for a role may omit font-family', () => {
     const css = '.ads-button { font-family: var(--font-family-display); }\n.ads-button[data-size="sm"] { font-size: var(--font-size-label-sm); }\n';
     expect(lintFontRoles(css, 'b.css')).toEqual([]);
@@ -102,5 +114,52 @@ describe('FR-1 token-lint: components/ is clean', () => {
   it('FR-1: components/ has 0 violations, including radius, hex and font roles', async () => {
     const v = await lintDirectory(join(root, 'components'), undefined, loadSemanticTokenNames(root));
     expect(v.map((x) => `${x.file}:${x.line} [${x.pattern}] ${x.match}`)).toEqual([]);
+  });
+});
+
+describe('FR-1 token-lint: phase 1.7 foundations', () => {
+  it.each([
+    ['letter-spacing: 0.5px;', 'hardcoded-letter-spacing', 'DS-L-001'],
+    ['transition: color 150ms ease;', 'hardcoded-duration', 'DS-M-001'],
+    ['animation: spin 1s linear infinite;', 'hardcoded-duration', 'DS-M-001'],
+    ['opacity: 0.38;', 'hardcoded-opacity', 'DS-T-005'],
+    ['background: color-mix(in srgb, var(--color-text-primary) 38%, transparent);', 'hardcoded-color-mix-percent', 'DS-T-005'],
+  ])('FR-1: flags "%s" as %s citing %s', (css, pattern, ref) => {
+    const v = lintString(css).filter((x) => x.pattern === pattern);
+    expect(v.length, css).toBe(1);
+    expect(v[0]?.ruleRef).toBe(ref);
+  });
+
+  it.each([
+    'letter-spacing: var(--type-body1-letter-spacing);',
+    'transition: color var(--motion-duration-standard) var(--motion-easing-standard);',
+    'opacity: 0;',
+    'opacity: 1;',
+    'opacity: var(--opacity-state-hover);',
+    'color: color-mix(in srgb, currentColor calc(var(--opacity-disabled) * 100%), transparent);',
+    'box-shadow: var(--elevation-2);',
+  ])('FR-1: allows "%s"', (css) => {
+    expect(lintString(css)).toEqual([]);
+  });
+
+  it('FR-1: flags a transition outside a prefers-reduced-motion: no-preference block (DS-M-001)', () => {
+    const css = '.a {\n  transition: color var(--motion-duration-standard) ease;\n}\n';
+    const v = lintFontRoles(css, 'a.css').concat(lintString(css)).map((x) => x.pattern);
+    expect(v).not.toContain('hardcoded-duration');
+    const guard = lintMotionGuard(css, 'a.css');
+    expect(guard.map((x) => [x.pattern, x.ruleRef])).toEqual([['motion-outside-reduced-motion-guard', 'DS-M-001']]);
+  });
+
+  it('FR-1: allows motion inside the no-preference guard, and transition: none anywhere', () => {
+    const css = [
+      '.a { transition: none; }',
+      '@media (prefers-reduced-motion: no-preference) {',
+      '  .a {',
+      '    transition: color var(--motion-duration-standard) var(--motion-easing-standard);',
+      '  }',
+      '  .b { animation: ads-spin calc(var(--motion-duration-standard) * 6) linear infinite; }',
+      '}',
+    ].join('\n');
+    expect(lintMotionGuard(css, 'a.css')).toEqual([]);
   });
 });

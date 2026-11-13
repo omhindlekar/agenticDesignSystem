@@ -1,36 +1,42 @@
+/* Input: label above, 40px field, caption-sized helper and error text below. */
 .ads-input__field {
-  min-height: var(--size-touch-target-min);
-  padding: var(--space-component-padding-sm) var(--space-component-padding-md);
+  box-sizing: border-box;
+  width: 100%;
+  min-height: var(--size-control-md);
+  margin: 0;
+  padding-block: 0;
+  padding-inline: var(--space-component-padding-field);
   border: var(--border-width-default) solid var(--color-border-input);
   background-color: var(--color-background-surface);
   color: var(--color-text-primary);
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-body);
-  line-height: var(--line-height-body);
-  transition:
-    border-color var(--motion-duration-fast) ease,
-    background-color var(--motion-duration-fast) ease;
+  font-family: var(--type-body1-family);
+  font-size: var(--type-body1-size);
+  font-weight: var(--type-body1-weight);
+  line-height: var(--type-body1-line-height);
+  letter-spacing: var(--type-body1-letter-spacing);
+}
+
+.ads-input__field::placeholder {
+  color: var(--color-text-secondary);
+  opacity: 1;
 }
 
 .ads-input__field:hover:not(:disabled) {
   border-color: var(--color-border-input-hover);
 }
 
-.ads-input__field::placeholder {
-  color: var(--color-text-secondary);
-}
-
+/* Focus: the 2px blue 600 ring with a 2px white gap, and a blue border. */
 .ads-input__field:focus-visible {
   outline: var(--border-width-focus) solid var(--color-interactive-focus-ring);
   outline-offset: var(--focus-ring-offset);
   border-color: var(--color-border-interactive);
-  background-color: var(--color-background-focus-tint);
 }
 
 .ads-input[data-state~="filled"] .ads-input__field {
   color: var(--color-text-primary);
 }
 
+/* Error: red border and red message only, no tinted fill. */
 .ads-input[data-state~="error"] .ads-input__field {
   border-color: var(--color-border-danger);
 }
@@ -39,9 +45,10 @@
   border-color: var(--color-border-success);
 }
 
+/* Read-only keeps a 3:1 boundary so the field is still identifiable. */
 .ads-input[data-state~="read-only"] .ads-input__field {
   background-color: var(--color-background-sunken);
-  border-color: var(--color-border-default);
+  border-color: var(--color-border-input);
 }
 
 /* Natively disabled: not focusable, so no ring and no hover response. */
@@ -52,10 +59,16 @@
 .ads-input[data-state~="disabled"] .ads-input__field {
   background-color: var(--color-interactive-disabled);
   border-color: var(--color-border-disabled);
-  color: var(--color-text-disabled);
+  color: color-mix(in srgb, var(--color-text-primary) calc(var(--opacity-disabled) * 100%), transparent);
   cursor: not-allowed;
 }
 
 .ads-input[data-state~="disabled"] .ads-field__label {
-  color: var(--color-text-disabled);
+  color: color-mix(in srgb, var(--color-text-primary) calc(var(--opacity-disabled) * 100%), transparent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ads-input__field {
+    transition: border-color var(--motion-duration-standard) var(--motion-easing-standard);
+  }
 }

@@ -20,7 +20,7 @@ export default function Screen() {
         <Input label="Email" type="email" name="email" required />
         <Input label="Password" type="password" name="password" required />
         <Checkbox label="Remember me" name="remember" />
-        <Button label="Sign in" variant="primary" type="submit" />
+        <Button label="Sign in" variant="contained" type="submit" />
       </form>
     </Card>
   );

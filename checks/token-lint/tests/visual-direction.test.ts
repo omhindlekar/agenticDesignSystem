@@ -85,7 +85,7 @@ describe('FR-1 visual direction: semantic mapping', () => {
   });
 });
 
-describe('FR-1 visual direction: square corners and flat elevation', () => {
+describe('FR-1 visual direction: square corners', () => {
   it('FR-1: every radius primitive is 0', () => {
     for (const [name, value] of primitives()) {
       if (name.startsWith('radius-')) expect(parseFloat(value), name).toBe(0);
@@ -98,11 +98,6 @@ describe('FR-1 visual direction: square corners and flat elevation', () => {
     for (const [name, value] of radii) expect(parseFloat(value), name).toBe(0);
   });
 
-  it('FR-1: every semantic shadow token resolves to none', () => {
-    for (const [name, value] of resolveSemanticTokens(root)) {
-      if (name.startsWith('shadow-')) expect(value, name).toBe('none');
-    }
-  });
 });
 
 describe('FR-1 visual direction: fonts', () => {
@@ -123,5 +118,111 @@ describe('FR-1 visual direction: fonts', () => {
       for (const w of [400, 500, 600, 700]) expect(css).toContain(`@fontsource/${pkg}/${w}.css`);
     }
     expect(css).not.toMatch(/https?:\/\//);
+  });
+});
+
+// ── Phase 1.7 foundations ───────────────────────────────────────────────────
+
+const TYPE_ROLES: Array<[string, string, string, string, string, 'display' | 'body']> = [
+  // role, size, weight, line-height, letter-spacing, family
+  ['display', '3rem', '600', '1.167', '-0.01em', 'display'],
+  ['h1', '2.125rem', '600', '1.235', '0', 'display'],
+  ['h2', '1.5rem', '600', '1.334', '0', 'display'],
+  ['h3', '1.25rem', '600', '1.4', '0.0075em', 'display'],
+  ['h4', '1.125rem', '600', '1.444', '0', 'display'],
+  ['subtitle', '1rem', '500', '1.5', '0.009em', 'body'],
+  ['body1', '1rem', '400', '1.5', '0.009em', 'body'],
+  ['body2', '0.875rem', '400', '1.43', '0.0107em', 'body'],
+  ['button', '0.875rem', '500', '1.75', '0.03em', 'display'],
+  ['label', '0.875rem', '500', '1.43', '0.007em', 'display'],
+  ['caption', '0.75rem', '400', '1.66', '0.033em', 'body'],
+  ['overline', '0.75rem', '600', '2.66', '0.083em', 'display'],
+];
+
+describe('FR-1 foundations: type scale', () => {
+  const sem = resolveSemanticTokens(root);
+  it.each(TYPE_ROLES)('FR-1: type-%s is %s / %s / %s / %s', (role, size, weight, lh, ls, family) => {
+    expect(sem.get(`type-${role}-size`)).toBe(size);
+    expect(sem.get(`type-${role}-weight`)).toBe(weight);
+    expect(sem.get(`type-${role}-line-height`)).toBe(lh);
+    expect(sem.get(`type-${role}-letter-spacing`)).toBe(ls);
+    expect(sem.get(`type-${role}-family`)).toBe(sem.get(`font-family-${family}`));
+  });
+
+  it('FR-1: body 1 is 16px, body 2 is 14px and caption is 12px', () => {
+    expect(sem.get('type-body1-size')).toBe('1rem');
+    expect(sem.get('type-body2-size')).toBe('0.875rem');
+    expect(sem.get('type-caption-size')).toBe('0.75rem');
+  });
+});
+
+describe('FR-1 foundations: spacing and control heights', () => {
+  const sem = resolveSemanticTokens(root);
+  it('FR-1: every space primitive is on the 4px base', () => {
+    for (const [name, value] of primitives()) {
+      if (!/^space-\d+$/.test(name)) continue;
+      expect(parseFloat(value) % 4, `${name} ${value}`).toBe(0);
+    }
+  });
+
+  it.each([
+    ['size-control-sm', '2rem'],
+    ['size-control-md', '2.5rem'],
+    ['size-control-lg', '3rem'],
+    ['size-hit-area', '2.5rem'],
+    ['space-component-padding-field', '12px'],
+    ['border-width-control', '2px'],
+    ['z-index-state-layer', '-1'],
+  ])('FR-1: %s is %s', (name, value) => {
+    expect(sem.get(name)).toBe(value);
+  });
+});
+
+describe('FR-1 foundations: elevation', () => {
+  const sem = resolveSemanticTokens(root);
+  it('FR-1: elevation 0 is none and 1 to 4 are blue 900 tinted shadows that grow', () => {
+    expect(sem.get('elevation-0')).toBe('none');
+    let lastBlur = 0;
+    for (const level of [1, 2, 3, 4]) {
+      const v = sem.get(`elevation-${level}`) ?? '';
+      expect(v, `elevation-${level}`).toMatch(/^(?:0 \d+px \d+px rgba\(10,32,87,0?\.\d+\)(?:, )?)+$/);
+      const blur = Math.max(...[...v.matchAll(/0 \d+px (\d+)px/g)].map((m) => Number(m[1])));
+      expect(blur).toBeGreaterThan(lastBlur);
+      lastBlur = blur;
+    }
+  });
+
+  it.each([
+    ['shadow-component-card', 'elevation-1'],
+    ['shadow-component-focus', 'elevation-2'],
+    ['shadow-component-menu', 'elevation-2'],
+    ['shadow-component-modal', 'elevation-4'],
+  ])('FR-1: %s resolves to %s', (component, level) => {
+    expect(sem.get(component)).toBe(sem.get(level));
+  });
+});
+
+describe('FR-1 foundations: state layers and motion', () => {
+  const sem = resolveSemanticTokens(root);
+  const prim = primitives();
+  it.each([
+    ['opacity-state-hover', '0.08'],
+    ['opacity-state-focus', '0.12'],
+    ['opacity-state-pressed', '0.16'],
+    ['opacity-disabled', '0.38'],
+    ['motion-duration-standard', '150ms'],
+    ['motion-duration-fast', '150ms'],
+    ['motion-duration-overlay', '200ms'],
+  ])('FR-1: %s is %s', (name, value) => {
+    expect(sem.get(name)).toBe(value);
+  });
+
+  it('FR-1: state layer colours come from the brand palette', () => {
+    expect(sem.get('color-state-layer')).toBe(prim.get('color-blue-600'));
+    expect(sem.get('color-state-layer-danger')).toBe(prim.get('color-red-600'));
+  });
+
+  it('FR-1: the standard easing is a cubic-bezier curve', () => {
+    expect(sem.get('motion-easing-standard')).toMatch(/^cubic-bezier\(/);
   });
 });

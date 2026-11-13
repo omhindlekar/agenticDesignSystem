@@ -1,6 +1,7 @@
 import { useId, useState } from 'react';
 import type * as React from 'react';
 import { dataState, describedBy } from '../shared/state';
+import { ErrorIcon } from '../shared/icons';
 import '../shared/shared.css';
 import './input.css';
 
@@ -86,7 +87,10 @@ export function Input({
         <p id={helperId} className="ads-field__message">{helperText}</p>
       ) : null}
       {errorMessage ? (
-        <p id={errorId} className="ads-field__message" data-tone="error">{errorMessage}</p>
+        <p id={errorId} className="ads-field__message" data-tone="error">
+          <ErrorIcon />
+          {errorMessage}
+        </p>
       ) : null}
     </div>
   );

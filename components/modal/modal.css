@@ -1,3 +1,4 @@
+/* Modal: elevation 4 panel over a scrim; both fade in over the overlay duration. */
 .ads-modal {
   position: fixed;
   inset: 0;
@@ -48,6 +49,7 @@
   padding: var(--space-component-padding-lg);
   border: var(--border-width-default) solid var(--color-border-default);
   background-color: var(--color-background-surface);
+  box-shadow: var(--elevation-4);
 }
 
 .ads-modal__panel:focus-visible {
@@ -71,6 +73,7 @@
   max-width: none;
   height: 100%;
   border: none;
+  box-shadow: var(--elevation-0);
 }
 
 .ads-modal__header {
@@ -82,11 +85,12 @@
 
 .ads-modal__title {
   margin: 0;
-  font-family: var(--font-family-display);
+  font-family: var(--type-h3-family);
+  font-size: var(--type-h3-size);
+  font-weight: var(--type-h3-weight);
+  line-height: var(--type-h3-line-height);
+  letter-spacing: var(--type-h3-letter-spacing);
   color: var(--color-text-heading);
-  font-size: var(--font-size-heading-md);
-  font-weight: var(--font-weight-heading);
-  line-height: var(--line-height-heading);
 }
 
 .ads-modal[data-variant="danger"] .ads-modal__title {
@@ -94,8 +98,12 @@
 }
 
 .ads-modal__body {
-  font-size: var(--font-size-body);
-  line-height: var(--line-height-body);
+  font-family: var(--type-body1-family);
+  font-size: var(--type-body1-size);
+  font-weight: var(--type-body1-weight);
+  line-height: var(--type-body1-line-height);
+  letter-spacing: var(--type-body1-letter-spacing);
+  color: var(--color-text-secondary);
 }
 
 .ads-modal__status {
@@ -114,4 +122,21 @@
   display: flex;
   justify-content: flex-end;
   gap: var(--space-component-gap-sm);
+}
+
+@keyframes ads-modal-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(var(--space-component-padding-sm));
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ads-modal[data-state~="open"] .ads-modal__overlay {
+    animation: ads-fade-in var(--motion-duration-overlay) var(--motion-easing-standard);
+  }
+
+  .ads-modal[data-state~="open"] .ads-modal__panel {
+    animation: ads-modal-panel-in var(--motion-duration-overlay) var(--motion-easing-standard);
+  }
 }

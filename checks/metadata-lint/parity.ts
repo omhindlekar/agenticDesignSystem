@@ -30,6 +30,11 @@ export interface MetaLike {
   variants: string[];
   states: string[];
   props: PropInfo[];
+  /**
+   * Old variant names the component still accepts, mapped to the variant they render.
+   * Raw-JSON only: ComponentMetadataSchema strips it, so agents see just `variants`.
+   */
+  deprecatedVariants?: Record<string, string>;
 }
 
 export interface ParityIssue {
@@ -119,12 +124,21 @@ export function checkVariants(meta: MetaLike, props: PropInfo[]): ParityIssue[] 
   const variantProp = props.find((p) => p.name === 'variant');
   if (!variantProp) return []; // covered by the story render check
   const code = new Set(stringLiterals(variantProp.type));
+  const aliases = meta.deprecatedVariants ?? {};
   const issues: ParityIssue[] = [];
   for (const v of meta.variants) {
     if (!code.has(v)) issues.push(issue(meta.id, 'variant', `variant "${v}" is in metadata but missing from component`));
   }
+  for (const [alias, target] of Object.entries(aliases)) {
+    if (!code.has(alias)) issues.push(issue(meta.id, 'variant', `deprecated alias "${alias}" is in metadata but missing from component`));
+    if (!meta.variants.includes(target)) {
+      issues.push(issue(meta.id, 'variant', `deprecated alias "${alias}" maps to "${target}", which is not a variant`));
+    }
+  }
   for (const v of code) {
-    if (!meta.variants.includes(v)) issues.push(issue(meta.id, 'variant', `variant "${v}" is in component but not in metadata`));
+    if (!meta.variants.includes(v) && !(v in aliases)) {
+      issues.push(issue(meta.id, 'variant', `variant "${v}" is in component but not in metadata`));
+    }
   }
   return issues;
 }

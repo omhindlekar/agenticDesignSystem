@@ -1,6 +1,7 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import type * as React from 'react';
 import { dataState, describedBy } from '../shared/state';
+import { CheckIcon, DashIcon, ErrorIcon } from '../shared/icons';
 import '../shared/shared.css';
 import './checkbox.css';
 
@@ -63,7 +64,9 @@ export function Checkbox({
       })}
     >
       <div className="ads-checkbox__row">
-        <span className="ads-checkbox__control">
+        {/* A label wrapping the input makes the 40px square clickable; its only
+            content is decorative, so the visible label still names the control. */}
+        <label className="ads-checkbox__control">
           <input
             ref={ref}
             id={id}
@@ -78,10 +81,13 @@ export function Checkbox({
             onChange={handleChange}
             {...checkedProps}
           />
-          {/* Drawn check or dash. The native mark is hidden so corners stay square. */}
-          <span className="ads-checkbox__mark" aria-hidden="true" />
-        </span>
-        <label className="ads-field__label" htmlFor={id}>
+          {/* Square state layer over the 40px hit area, shown on hover, focus and press. */}
+          <span className="ads-checkbox__layer" aria-hidden="true" />
+          {/* Both icons render; CSS shows the one matching :checked or :indeterminate. */}
+          <CheckIcon className="ads-checkbox__check" />
+          <DashIcon className="ads-checkbox__dash" />
+        </label>
+        <label className="ads-field__label ads-checkbox__label" htmlFor={id}>
           {label}
           {required ? <span className="ads-field__required" aria-hidden="true"> *</span> : null}
         </label>
@@ -90,7 +96,10 @@ export function Checkbox({
         <p id={helperId} className="ads-field__message">{helperText}</p>
       ) : null}
       {errorMessage ? (
-        <p id={errorId} className="ads-field__message" data-tone="error">{errorMessage}</p>
+        <p id={errorId} className="ads-field__message" data-tone="error">
+          <ErrorIcon />
+          {errorMessage}
+        </p>
       ) : null}
     </div>
   );

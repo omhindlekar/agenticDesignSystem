@@ -4,7 +4,10 @@ import '../shared/shared.css';
 import './card.css';
 
 export interface CardProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
+  title?: string;
+  subtitle?: string;
+  actions?: React.ReactNode;
   variant?: 'default' | 'interactive' | 'flat';
   padding?: 'sm' | 'md' | 'lg';
   onClick?: () => void;
@@ -17,6 +20,9 @@ export interface CardProps {
 
 export function Card({
   children,
+  title,
+  subtitle,
+  actions,
   variant = 'default',
   padding = 'md',
   onClick,
@@ -34,6 +40,27 @@ export function Card({
     'aria-label': ariaLabel,
   };
 
+  // Inside a link or button only phrasing content is valid, so slots render as
+  // spans and the title is not a heading. Actions are never rendered there:
+  // controls inside an interactive card would be nested interactive elements.
+  const interactive = href !== undefined || onClick !== undefined;
+  const Slot: React.ElementType = interactive ? 'span' : 'div';
+  const Title: React.ElementType = interactive ? 'span' : 'h3';
+  const Subtitle: React.ElementType = interactive ? 'span' : 'p';
+
+  const slots = (
+    <>
+      {title !== undefined || subtitle !== undefined ? (
+        <Slot className="ads-card__header">
+          {title !== undefined ? <Title className="ads-card__title">{title}</Title> : null}
+          {subtitle !== undefined ? <Subtitle className="ads-card__subtitle">{subtitle}</Subtitle> : null}
+        </Slot>
+      ) : null}
+      {children !== undefined ? <Slot className="ads-card__content">{children}</Slot> : null}
+      {actions !== undefined && !interactive ? <div className="ads-card__actions">{actions}</div> : null}
+    </>
+  );
+
   // Interactive cards render a native link or button so keyboard and
   // screen-reader support come from the platform.
   if (href !== undefined) {
@@ -47,7 +74,7 @@ export function Card({
         aria-disabled={disabled || undefined}
         aria-current={selected ? 'true' : undefined}
       >
-        {children}
+        {slots}
       </a>
     );
   }
@@ -63,11 +90,11 @@ export function Card({
           if (!disabled) onClick();
         }}
       >
-        {children}
+        {slots}
       </button>
     );
   }
 
   const Element: React.ElementType = as ?? 'div';
-  return <Element {...common}>{children}</Element>;
+  return <Element {...common}>{slots}</Element>;
 }
