@@ -1,0 +1,36 @@
+{
+  "taskId": "gen-9d0a3e4b0362",
+  "tree": {
+    "component": "card",
+    "props": { "as": "section", "aria-label": "Sign in", "padding": "lg" },
+    "tokenRefs": ["color-background-surface", "color-border-default", "shadow-component-card", "radius-component-md", "space-component-padding-lg"],
+    "states": ["default"],
+    "children": [
+      {
+        "component": "input",
+        "props": { "label": "Email", "type": "email", "name": "email", "required": true },
+        "tokenRefs": ["color-border-default", "color-border-interactive", "color-border-danger", "color-text-primary", "font-size-body"],
+        "states": ["default", "focus", "filled", "error"]
+      },
+      {
+        "component": "input",
+        "props": { "label": "Password", "type": "password", "name": "password", "required": true },
+        "tokenRefs": ["color-border-default", "color-border-interactive", "color-border-danger", "color-text-primary", "font-size-body"],
+        "states": ["default", "focus", "filled", "error"]
+      },
+      {
+        "component": "checkbox",
+        "props": { "label": "Remember me", "name": "remember" },
+        "tokenRefs": ["color-interactive-default", "color-interactive-focus-ring", "space-component-gap-sm"],
+        "states": ["unchecked", "checked", "focus"]
+      },
+      {
+        "component": "button",
+        "props": { "label": "Sign in", "variant": "primary", "type": "submit" },
+        "tokenRefs": ["color-interactive-default", "color-interactive-hover", "color-interactive-active", "color-interactive-focus-ring", "color-text-inverse"],
+        "states": ["default", "hover", "active", "focus", "loading"]
+      }
+    ]
+  },
+  "statesCovered": ["default", "focus", "filled", "error", "unchecked", "checked", "hover", "active", "loading"]
+}

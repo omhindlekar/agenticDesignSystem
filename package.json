@@ -18,7 +18,9 @@
     "prestorybook": "npm run tokens:build",
     "storybook": "storybook dev -p 6006",
     "prebuild-storybook": "npm run tokens:build",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "generate": "tsx scripts/generate.ts",
+    "fixtures:demo": "tsx scripts/record-fixture.ts evals/fixtures/demo/sign-in.spec.json evals/fixtures/demo/sign-in.screen.tsx \"A sign-in card with email and password inputs, a remember-me checkbox and a primary sign-in button\""
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.8.0",
