@@ -1,0 +1,1363 @@
+{
+  "description": "Industry-baseline scorecard. A capability is baseline when at least 3 of the 5 leaders ship it. Run `npm run parity` for the report.",
+  "verifiedOn": "2026-11-14",
+  "sources": {
+    "material3": "https://developer.android.com/develop/ui/compose/components",
+    "carbon": "https://carbondesignsystem.com/components/overview/components/",
+    "atlassian": "https://atlassian.design/components",
+    "polaris": "https://shopify.dev/docs/api/app-home/polaris-web-components",
+    "fluent2": "https://fluent2.microsoft.design/components/web/react/"
+  },
+  "capabilities": [
+    {
+      "id": "color-palette",
+      "area": "foundations",
+      "name": "Colour palette and semantic colour tokens",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": false,
+      "status": "done",
+      "phase": "1.6",
+      "evidence": [
+        "tokens/primitives.json",
+        "tokens/semantic.json"
+      ]
+    },
+    {
+      "id": "tonal-roles",
+      "area": "foundations",
+      "name": "Tonal colour roles (container and on-container fills)",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": false,
+      "status": "missing",
+      "phase": "1.9",
+      "evidence": [],
+      "note": "M3 colour roles, Carbon layers, Atlassian accent and surface tokens, Polaris fill tokens, Fluent brand ramps"
+    },
+    {
+      "id": "dark-theme",
+      "area": "foundations",
+      "name": "Dark theme",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": false,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": false,
+      "status": "missing",
+      "phase": "1.9",
+      "evidence": []
+    },
+    {
+      "id": "high-contrast-theme",
+      "area": "foundations",
+      "name": "Increased or high contrast theme",
+      "shippedBy": {
+        "material3": true,
+        "carbon": false,
+        "atlassian": true,
+        "polaris": false,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": false,
+      "status": "missing",
+      "phase": "1.9",
+      "evidence": [],
+      "note": "M3 contrast levels, Atlassian increased contrast themes, Fluent high contrast theme"
+    },
+    {
+      "id": "typography-scale",
+      "area": "foundations",
+      "name": "Type scale",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": false,
+      "status": "done",
+      "phase": "1.7",
+      "evidence": [
+        "tokens/semantic.json",
+        "components/foundations/typography.stories.tsx"
+      ]
+    },
+    {
+      "id": "spacing-scale",
+      "area": "foundations",
+      "name": "Spacing scale",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": false,
+      "status": "done",
+      "phase": "1.7",
+      "evidence": [
+        "tokens/primitives.json",
+        "components/foundations/spacing.stories.tsx"
+      ]
+    },
+    {
+      "id": "elevation",
+      "area": "foundations",
+      "name": "Elevation and shadow tokens",
+      "shippedBy": {
+        "material3": true,
+        "carbon": false,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": false,
+      "status": "done",
+      "phase": "1.7",
+      "evidence": [
+        "components/foundations/elevation.stories.tsx"
+      ]
+    },
+    {
+      "id": "motion-tokens",
+      "area": "foundations",
+      "name": "Motion duration and easing tokens",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": false,
+      "status": "done",
+      "phase": "1.7",
+      "evidence": [
+        "components/foundations/motion.stories.tsx"
+      ]
+    },
+    {
+      "id": "motion-enter-exit",
+      "area": "foundations",
+      "name": "Separate enter and exit motion curves",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": false,
+        "polaris": false,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": false,
+      "status": "missing",
+      "phase": "1.9",
+      "evidence": [],
+      "note": "M3 emphasized decelerate and accelerate, Carbon entrance and exit, Fluent decelerate and accelerate curves"
+    },
+    {
+      "id": "iconography",
+      "area": "foundations",
+      "name": "Icon set and icon guidelines",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": false,
+      "status": "done",
+      "phase": "1.8",
+      "evidence": [
+        "components/icon/icon.meta.json",
+        "components/foundations/iconography.stories.tsx"
+      ]
+    },
+    {
+      "id": "layout-grid",
+      "area": "foundations",
+      "name": "Breakpoints and layout grid",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": false,
+      "status": "missing",
+      "phase": "1.9",
+      "evidence": []
+    },
+    {
+      "id": "density",
+      "area": "foundations",
+      "name": "Density or size modes",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": false,
+        "polaris": false,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": false,
+      "status": "missing",
+      "phase": "1.9",
+      "evidence": [],
+      "note": "M3 density, Carbon component sizes, Fluent size props"
+    },
+    {
+      "id": "tokens-as-code",
+      "area": "foundations",
+      "name": "Design tokens published for code (CSS and JSON)",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": false,
+      "status": "partial",
+      "phase": "1.9",
+      "evidence": [
+        "styles/tokens.css"
+      ],
+      "note": "CSS exists; JSON export comes with the layout step"
+    },
+    {
+      "id": "button",
+      "area": "actions",
+      "name": "Button",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": true,
+      "status": "done",
+      "phase": "1.7",
+      "evidence": [
+        "components/button/button.meta.json"
+      ],
+      "theirNames": {
+        "material3": "Buttons",
+        "carbon": "Button",
+        "atlassian": "Button",
+        "polaris": "Button",
+        "fluent2": "Button"
+      }
+    },
+    {
+      "id": "icon-button",
+      "area": "actions",
+      "name": "Icon-only button",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": true,
+      "status": "done",
+      "phase": "1.8",
+      "evidence": [
+        "components/icon-button/icon-button.meta.json"
+      ],
+      "note": "Carbon, Atlassian, Polaris and Fluent document icon-only buttons inside Button"
+    },
+    {
+      "id": "link",
+      "area": "actions",
+      "name": "Link",
+      "shippedBy": {
+        "material3": false,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": true,
+      "status": "missing",
+      "phase": "1.12",
+      "evidence": []
+    },
+    {
+      "id": "button-group",
+      "area": "actions",
+      "name": "Button group or segmented control",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": false,
+        "polaris": true,
+        "fluent2": false
+      },
+      "baseline": true,
+      "verified": true,
+      "status": "missing",
+      "phase": "1.10",
+      "evidence": [],
+      "theirNames": {
+        "material3": "Segmented button",
+        "carbon": "Content switcher",
+        "polaris": "Button group"
+      }
+    },
+    {
+      "id": "text-field",
+      "area": "inputs",
+      "name": "Text field",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": true,
+      "status": "done",
+      "phase": "1.7",
+      "evidence": [
+        "components/input/input.meta.json"
+      ]
+    },
+    {
+      "id": "textarea",
+      "area": "inputs",
+      "name": "Multi-line text area",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": true,
+      "status": "missing",
+      "phase": "1.10",
+      "evidence": [],
+      "note": "M3 and Carbon cover it inside text fields"
+    },
+    {
+      "id": "select",
+      "area": "inputs",
+      "name": "Select with a styled option list",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": true,
+      "status": "partial",
+      "phase": "1.10",
+      "evidence": [
+        "components/select/select.meta.json"
+      ],
+      "note": "Ours uses the browser's native option list"
+    },
+    {
+      "id": "combobox",
+      "area": "inputs",
+      "name": "Combobox or autocomplete",
+      "shippedBy": {
+        "material3": false,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": false,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": true,
+      "status": "missing",
+      "phase": "1.10",
+      "evidence": [],
+      "theirNames": {
+        "carbon": "Dropdown / Multiselect",
+        "atlassian": "Select",
+        "fluent2": "Combobox"
+      }
+    },
+    {
+      "id": "checkbox",
+      "area": "inputs",
+      "name": "Checkbox",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": true,
+      "status": "done",
+      "phase": "1.7",
+      "evidence": [
+        "components/checkbox/checkbox.meta.json"
+      ]
+    },
+    {
+      "id": "radio",
+      "area": "inputs",
+      "name": "Radio group",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": true,
+      "status": "missing",
+      "phase": "1.10",
+      "evidence": [],
+      "theirNames": {
+        "polaris": "Choice list",
+        "fluent2": "Radio group"
+      }
+    },
+    {
+      "id": "switch",
+      "area": "inputs",
+      "name": "Switch or toggle",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": true,
+      "status": "missing",
+      "phase": "1.10",
+      "evidence": [],
+      "theirNames": {
+        "carbon": "Toggle",
+        "atlassian": "Toggle"
+      }
+    },
+    {
+      "id": "slider",
+      "area": "inputs",
+      "name": "Slider",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": false,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": true,
+      "status": "missing",
+      "phase": "1.10",
+      "evidence": [],
+      "theirNames": {
+        "atlassian": "Range"
+      }
+    },
+    {
+      "id": "search",
+      "area": "inputs",
+      "name": "Search field",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": false,
+        "polaris": true,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": true,
+      "status": "partial",
+      "phase": "1.10",
+      "evidence": [
+        "components/input/input.meta.json"
+      ],
+      "note": "Input with startIcon search; no dedicated search field"
+    },
+    {
+      "id": "number-input",
+      "area": "inputs",
+      "name": "Number input or spin button",
+      "shippedBy": {
+        "material3": false,
+        "carbon": true,
+        "atlassian": false,
+        "polaris": true,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": true,
+      "status": "missing",
+      "phase": "1.10",
+      "evidence": []
+    },
+    {
+      "id": "date-picker",
+      "area": "inputs",
+      "name": "Date picker",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": false
+      },
+      "baseline": true,
+      "verified": true,
+      "status": "missing",
+      "phase": "1.10",
+      "evidence": []
+    },
+    {
+      "id": "form-field",
+      "area": "inputs",
+      "name": "Form field wrapper (label, helper, error)",
+      "shippedBy": {
+        "material3": false,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": false,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": true,
+      "status": "partial",
+      "phase": "1.10",
+      "evidence": [
+        "components/shared/shared.css"
+      ],
+      "note": "Field anatomy is built into each control; no standalone Field"
+    },
+    {
+      "id": "progress-bar",
+      "area": "feedback",
+      "name": "Progress bar",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": true,
+      "status": "missing",
+      "phase": "1.11",
+      "evidence": []
+    },
+    {
+      "id": "spinner",
+      "area": "feedback",
+      "name": "Spinner or loading indicator",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": true,
+      "status": "partial",
+      "phase": "1.11",
+      "evidence": [
+        "components/shared/shared.css"
+      ],
+      "note": "Shared CSS only; not a component"
+    },
+    {
+      "id": "banner",
+      "area": "feedback",
+      "name": "Banner or inline alert",
+      "shippedBy": {
+        "material3": false,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": true,
+      "status": "missing",
+      "phase": "1.11",
+      "evidence": [],
+      "theirNames": {
+        "carbon": "Notification",
+        "atlassian": "Banner / Section message",
+        "polaris": "Banner",
+        "fluent2": "Message bar"
+      }
+    },
+    {
+      "id": "toast",
+      "area": "feedback",
+      "name": "Toast or snackbar",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": false,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": true,
+      "status": "missing",
+      "phase": "1.11",
+      "evidence": [],
+      "theirNames": {
+        "material3": "Snackbar",
+        "carbon": "Notification",
+        "atlassian": "Flag",
+        "fluent2": "Toast"
+      }
+    },
+    {
+      "id": "badge",
+      "area": "feedback",
+      "name": "Badge",
+      "shippedBy": {
+        "material3": true,
+        "carbon": false,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": true,
+      "status": "missing",
+      "phase": "1.12",
+      "evidence": []
+    },
+    {
+      "id": "modal",
+      "area": "overlays",
+      "name": "Modal dialog",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": true,
+      "status": "done",
+      "phase": "1.7",
+      "evidence": [
+        "components/modal/modal.meta.json"
+      ]
+    },
+    {
+      "id": "overlay-exit-motion",
+      "area": "overlays",
+      "name": "Overlays animate out as well as in",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": false,
+        "polaris": false,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": false,
+      "status": "missing",
+      "phase": "1.11",
+      "evidence": []
+    },
+    {
+      "id": "tooltip",
+      "area": "overlays",
+      "name": "Tooltip",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": true,
+      "status": "missing",
+      "phase": "1.11",
+      "evidence": []
+    },
+    {
+      "id": "popover",
+      "area": "overlays",
+      "name": "Popover",
+      "shippedBy": {
+        "material3": false,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": true,
+      "status": "missing",
+      "phase": "1.11",
+      "evidence": [],
+      "theirNames": {
+        "atlassian": "Popup / Inline dialog"
+      }
+    },
+    {
+      "id": "menu",
+      "area": "overlays",
+      "name": "Menu and menu button",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": true,
+      "status": "missing",
+      "phase": "1.11",
+      "evidence": [],
+      "theirNames": {
+        "carbon": "Menu / Menu buttons",
+        "atlassian": "Dropdown menu"
+      }
+    },
+    {
+      "id": "drawer",
+      "area": "overlays",
+      "name": "Drawer or side sheet",
+      "shippedBy": {
+        "material3": true,
+        "carbon": false,
+        "atlassian": true,
+        "polaris": false,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": true,
+      "status": "missing",
+      "phase": "1.11",
+      "evidence": [],
+      "theirNames": {
+        "material3": "Navigation drawer / Bottom sheets"
+      }
+    },
+    {
+      "id": "tabs",
+      "area": "navigation",
+      "name": "Tabs",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": false,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": true,
+      "status": "missing",
+      "phase": "1.12",
+      "evidence": [],
+      "theirNames": {
+        "fluent2": "Tablist"
+      }
+    },
+    {
+      "id": "breadcrumbs",
+      "area": "navigation",
+      "name": "Breadcrumbs",
+      "shippedBy": {
+        "material3": false,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": false,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": true,
+      "status": "missing",
+      "phase": "1.12",
+      "evidence": []
+    },
+    {
+      "id": "side-nav",
+      "area": "navigation",
+      "name": "Side navigation",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": false,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": true,
+      "status": "missing",
+      "phase": "1.12",
+      "evidence": [],
+      "theirNames": {
+        "material3": "Navigation drawer / rail",
+        "carbon": "UI shell left panel",
+        "atlassian": "Side navigation",
+        "fluent2": "Nav"
+      }
+    },
+    {
+      "id": "app-header",
+      "area": "navigation",
+      "name": "App header or top bar",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": false
+      },
+      "baseline": true,
+      "verified": true,
+      "status": "missing",
+      "phase": "1.12",
+      "evidence": [],
+      "theirNames": {
+        "material3": "App bars",
+        "carbon": "UI shell header",
+        "atlassian": "Atlassian navigation / Page header",
+        "polaris": "Page"
+      }
+    },
+    {
+      "id": "card",
+      "area": "data-display",
+      "name": "Card or tile",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": true,
+      "status": "done",
+      "phase": "1.7",
+      "evidence": [
+        "components/card/card.meta.json"
+      ],
+      "theirNames": {
+        "carbon": "Tile",
+        "atlassian": "Tile",
+        "polaris": "Section"
+      }
+    },
+    {
+      "id": "table",
+      "area": "data-display",
+      "name": "Data table",
+      "shippedBy": {
+        "material3": false,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": false
+      },
+      "baseline": true,
+      "verified": true,
+      "status": "missing",
+      "phase": "1.12",
+      "evidence": []
+    },
+    {
+      "id": "list",
+      "area": "data-display",
+      "name": "List",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": false,
+        "polaris": true,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": true,
+      "status": "missing",
+      "phase": "1.12",
+      "evidence": []
+    },
+    {
+      "id": "tag",
+      "area": "data-display",
+      "name": "Tag or chip",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": true,
+      "status": "missing",
+      "phase": "1.12",
+      "evidence": [],
+      "theirNames": {
+        "material3": "Chips",
+        "polaris": "Chip"
+      }
+    },
+    {
+      "id": "avatar",
+      "area": "data-display",
+      "name": "Avatar",
+      "shippedBy": {
+        "material3": false,
+        "carbon": false,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": true,
+      "status": "missing",
+      "phase": "1.12",
+      "evidence": []
+    },
+    {
+      "id": "divider",
+      "area": "data-display",
+      "name": "Divider",
+      "shippedBy": {
+        "material3": true,
+        "carbon": false,
+        "atlassian": false,
+        "polaris": true,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": true,
+      "status": "missing",
+      "phase": "1.12",
+      "evidence": []
+    },
+    {
+      "id": "tree",
+      "area": "data-display",
+      "name": "Tree view",
+      "shippedBy": {
+        "material3": false,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": false,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": true,
+      "status": "missing",
+      "phase": "1.12",
+      "evidence": [],
+      "theirNames": {
+        "atlassian": "Table tree"
+      }
+    },
+    {
+      "id": "image",
+      "area": "data-display",
+      "name": "Image",
+      "shippedBy": {
+        "material3": false,
+        "carbon": false,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": true,
+      "status": "missing",
+      "phase": "1.12",
+      "evidence": []
+    },
+    {
+      "id": "icon",
+      "area": "data-display",
+      "name": "Icon component",
+      "shippedBy": {
+        "material3": false,
+        "carbon": false,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": true,
+      "status": "done",
+      "phase": "1.8",
+      "evidence": [
+        "components/icon/icon.meta.json"
+      ]
+    },
+    {
+      "id": "text",
+      "area": "data-display",
+      "name": "Text and heading components",
+      "shippedBy": {
+        "material3": false,
+        "carbon": false,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": true,
+      "status": "missing",
+      "phase": "1.12",
+      "evidence": []
+    },
+    {
+      "id": "skeleton",
+      "area": "feedback",
+      "name": "Skeleton loader",
+      "shippedBy": {
+        "material3": false,
+        "carbon": false,
+        "atlassian": true,
+        "polaris": false,
+        "fluent2": true
+      },
+      "baseline": false,
+      "verified": true,
+      "status": "missing",
+      "phase": "1.11",
+      "evidence": []
+    },
+    {
+      "id": "accordion",
+      "area": "data-display",
+      "name": "Accordion",
+      "shippedBy": {
+        "material3": false,
+        "carbon": true,
+        "atlassian": false,
+        "polaris": false,
+        "fluent2": true
+      },
+      "baseline": false,
+      "verified": true,
+      "status": "missing",
+      "phase": "later",
+      "evidence": []
+    },
+    {
+      "id": "pagination",
+      "area": "navigation",
+      "name": "Pagination",
+      "shippedBy": {
+        "material3": false,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": false,
+        "fluent2": false
+      },
+      "baseline": false,
+      "verified": true,
+      "status": "missing",
+      "phase": "later",
+      "evidence": []
+    },
+    {
+      "id": "empty-state",
+      "area": "feedback",
+      "name": "Empty state",
+      "shippedBy": {
+        "material3": false,
+        "carbon": false,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": false
+      },
+      "baseline": false,
+      "verified": true,
+      "status": "missing",
+      "phase": "later",
+      "evidence": []
+    },
+    {
+      "id": "time-picker",
+      "area": "inputs",
+      "name": "Time picker",
+      "shippedBy": {
+        "material3": true,
+        "carbon": false,
+        "atlassian": true,
+        "polaris": false,
+        "fluent2": false
+      },
+      "baseline": false,
+      "verified": true,
+      "status": "missing",
+      "phase": "later",
+      "evidence": []
+    },
+    {
+      "id": "file-upload",
+      "area": "inputs",
+      "name": "File upload or drop zone",
+      "shippedBy": {
+        "material3": false,
+        "carbon": true,
+        "atlassian": false,
+        "polaris": true,
+        "fluent2": false
+      },
+      "baseline": false,
+      "verified": true,
+      "status": "missing",
+      "phase": "later",
+      "evidence": []
+    },
+    {
+      "id": "carousel",
+      "area": "data-display",
+      "name": "Carousel",
+      "shippedBy": {
+        "material3": true,
+        "carbon": false,
+        "atlassian": false,
+        "polaris": false,
+        "fluent2": true
+      },
+      "baseline": false,
+      "verified": true,
+      "status": "missing",
+      "phase": "later",
+      "evidence": []
+    },
+    {
+      "id": "fab",
+      "area": "actions",
+      "name": "Floating action button",
+      "shippedBy": {
+        "material3": true,
+        "carbon": false,
+        "atlassian": false,
+        "polaris": false,
+        "fluent2": false
+      },
+      "baseline": false,
+      "verified": true,
+      "status": "missing",
+      "phase": "later",
+      "evidence": []
+    },
+    {
+      "id": "wcag-aa",
+      "area": "quality",
+      "name": "WCAG 2.x AA conformance target",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": false,
+      "status": "done",
+      "phase": "1.7",
+      "evidence": [
+        "rules/rules.yaml",
+        "checks/token-lint/contrast.ts"
+      ]
+    },
+    {
+      "id": "keyboard-apg",
+      "area": "quality",
+      "name": "Keyboard behaviour per WAI-ARIA Authoring Practices for every component",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": false,
+      "status": "partial",
+      "phase": "1.13",
+      "evidence": [
+        "components/button/tests/button.test.tsx"
+      ],
+      "note": "Tested for the current components; must hold for every new one"
+    },
+    {
+      "id": "forced-colors",
+      "area": "quality",
+      "name": "Windows high contrast (forced colors) support",
+      "shippedBy": {
+        "material3": false,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": false,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": false,
+      "status": "missing",
+      "phase": "1.13",
+      "evidence": []
+    },
+    {
+      "id": "rtl",
+      "area": "quality",
+      "name": "Right-to-left layout support",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": false,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": false,
+      "status": "partial",
+      "phase": "1.13",
+      "evidence": [],
+      "note": "Logical CSS properties are used; no RTL test yet"
+    },
+    {
+      "id": "reduced-motion",
+      "area": "quality",
+      "name": "Respects prefers-reduced-motion",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": false,
+      "status": "done",
+      "phase": "1.7",
+      "evidence": [
+        "rules/rules.yaml"
+      ]
+    },
+    {
+      "id": "automated-a11y",
+      "area": "quality",
+      "name": "Automated accessibility tests (axe) on components",
+      "shippedBy": {
+        "material3": false,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": false,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": false,
+      "status": "missing",
+      "phase": "1.13",
+      "evidence": []
+    },
+    {
+      "id": "usage-docs",
+      "area": "docs-tooling",
+      "name": "Usage guidance with do and don't examples",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": false,
+      "status": "partial",
+      "phase": "1.13",
+      "evidence": [
+        "components/button/button.meta.json"
+      ],
+      "note": "In metadata; not yet rendered as docs pages"
+    },
+    {
+      "id": "figma-kit",
+      "area": "docs-tooling",
+      "name": "Figma library in sync with code",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": false,
+      "status": "missing",
+      "phase": "1.13",
+      "evidence": [],
+      "note": "PRD FR-2"
+    },
+    {
+      "id": "component-catalogue",
+      "area": "docs-tooling",
+      "name": "Live component catalogue",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": true
+      },
+      "baseline": true,
+      "verified": false,
+      "status": "done",
+      "phase": "1.5",
+      "evidence": [
+        ".storybook/main.ts"
+      ]
+    }
+  ]
+}
