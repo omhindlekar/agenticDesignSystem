@@ -1,0 +1,135 @@
+{
+  "id": "segmented-control",
+  "purpose": "Switches between a few views or options with connected toggle buttons. Single mode picks one; multiple mode toggles several.",
+  "variants": [
+    "single",
+    "multiple"
+  ],
+  "states": [
+    "default",
+    "hover",
+    "active",
+    "focus",
+    "disabled"
+  ],
+  "props": [
+    {
+      "name": "label",
+      "type": "string",
+      "required": true,
+      "description": "Accessible name of the group"
+    },
+    {
+      "name": "options",
+      "type": "Array<{ value: string; label: string; icon?: IconName; disabled?: boolean }>",
+      "required": true,
+      "description": "Segments, each with an optional icon"
+    },
+    {
+      "name": "selectionMode",
+      "type": "'single' | 'multiple'",
+      "required": false,
+      "description": "single keeps exactly one selected; multiple toggles independently. Defaults to single"
+    },
+    {
+      "name": "value",
+      "type": "string[]",
+      "required": false,
+      "description": "Controlled selection"
+    },
+    {
+      "name": "defaultValue",
+      "type": "string[]",
+      "required": false,
+      "description": "Initial selection when uncontrolled"
+    },
+    {
+      "name": "size",
+      "type": "'sm' | 'md'",
+      "required": false,
+      "description": "32 or 40px tall. Defaults to md"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "description": "Disables every segment"
+    },
+    {
+      "name": "onChange",
+      "type": "(value: string[]) => void",
+      "required": false,
+      "description": "Called with the selected values"
+    }
+  ],
+  "whenToUse": [
+    "To switch between two to five views of the same content (day, week, month)",
+    "For a compact set of formatting toggles (multiple mode)"
+  ],
+  "whenNotToUse": [
+    "For navigation between pages — use tabs or links",
+    "For more than five options — use Select"
+  ],
+  "related": [
+    "radio-group",
+    "button",
+    "icon-button"
+  ],
+  "antiPatterns": [
+    "Mixing actions and selections in one control",
+    "Segments with very different label lengths"
+  ],
+  "spec": {
+    "anatomy": [
+      "A bordered row of connected segments, each with optional icon and label"
+    ],
+    "sizes": [
+      "md `size-control-md` (40px), sm `size-control-sm` (32px); segment padding `space-component-padding-md`"
+    ],
+    "typography": [
+      "`type-button-size` in SemiCondensed"
+    ],
+    "states": [
+      "Selected: `color-container-primary` with `color-on-container-primary`; hover and press `color-state-layer`; focus ring `color-interactive-focus-ring`; disabled at `opacity-disabled`"
+    ],
+    "motion": [
+      "Fill and layer over `motion-duration-standard`; none under reduced motion"
+    ]
+  },
+  "tokensUsed": [
+    "border-width-default",
+    "border-width-focus",
+    "color-background-surface",
+    "color-border-disabled",
+    "color-border-interactive",
+    "color-container-primary",
+    "color-interactive-disabled",
+    "color-interactive-focus-ring",
+    "color-on-container-primary",
+    "color-state-layer",
+    "color-text-link",
+    "color-text-primary",
+    "focus-ring-offset",
+    "motion-duration-standard",
+    "motion-easing-standard",
+    "opacity-disabled",
+    "opacity-state-hover",
+    "opacity-state-pressed",
+    "size-control-md",
+    "size-control-sm",
+    "space-component-gap-sm",
+    "space-component-padding-md",
+    "type-button-family",
+    "type-button-letter-spacing",
+    "type-button-line-height",
+    "type-button-size",
+    "type-button-weight",
+    "z-index-focus",
+    "z-index-state-layer"
+  ],
+  "a11yNotes": [
+    "Single mode is a radiogroup of radios; multiple mode is a group of toggle buttons with aria-pressed",
+    "Arrow keys move between segments",
+    "Named by its label"
+  ]
+}
