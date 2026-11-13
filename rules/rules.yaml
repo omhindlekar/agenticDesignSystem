@@ -55,6 +55,26 @@ rules:
     example: "borderRadius: var(--radius-component-md)"
     counterExample: "borderRadius: 8px"
 
+  - id: DS-T-004
+    scope: token
+    severity: error
+    statement: >
+      Corners are square. Every radius token resolves to 0, and component
+      source must not set a border-radius other than 0 or a radius token,
+      including on focus rings, checkboxes, inputs, cards and modals.
+      Structure comes from 1px borders and spacing.
+    check: auto
+    checkName: token-lint
+    appliesTo:
+      - button
+      - input
+      - select
+      - checkbox
+      - card
+      - modal
+    example: "border: var(--border-width-default) solid var(--color-border-default)"
+    counterExample: "border-radius: 50%"
+
   # ── Layout rules ─────────────────────────────────────────────────────────────
   - id: DS-L-001
     scope: layout
@@ -78,15 +98,35 @@ rules:
     scope: layout
     severity: warning
     statement: >
-      Elevation (box-shadow) must reference a semantic shadow token.
+      Elevation comes from 1px borders, not shadows. box-shadow may only be
+      none or a semantic shadow token (all of which resolve to none).
       Hardcoded box-shadow values are forbidden.
     check: auto
     checkName: token-lint
     appliesTo:
       - card
       - modal
-    example: "boxShadow: var(--shadow-component-card)"
+    example: "border: var(--border-width-default) solid var(--color-border-default)"
     counterExample: "boxShadow: '0 1px 3px rgba(0,0,0,0.1)'"
+
+  - id: DS-L-003
+    scope: layout
+    severity: error
+    statement: >
+      Headings, buttons, labels, table headers and badges use
+      font-family-display (Saira SemiCondensed). Body text, inputs and helper
+      text use font-family-body (Saira).
+    check: auto
+    checkName: token-lint
+    appliesTo:
+      - button
+      - input
+      - select
+      - checkbox
+      - card
+      - modal
+    example: ".ads-button { font-family: var(--font-family-display) }"
+    counterExample: ".ads-modal__title { font-family: var(--font-family-body) }"
 
   # ── Accessibility rules ───────────────────────────────────────────────────────
   - id: DS-A-001
@@ -112,7 +152,9 @@ rules:
     severity: error
     statement: >
       Every interactive element must display a visible focus ring when reached
-      by keyboard. The focus ring must use the color-interactive-focus-ring token.
+      by keyboard. The focus ring must use the color-interactive-focus-ring token
+      (blue 600), 2px wide with a 2px offset so a white gap separates it from the
+      control. Light blue may tint a focused field's background but is never the ring.
     check: auto
     checkName: a11y
     appliesTo:
@@ -120,7 +162,7 @@ rules:
       - input
       - select
       - checkbox
-    example: "outline: 2px solid var(--color-interactive-focus-ring)"
+    example: "outline: var(--border-width-focus) solid var(--color-interactive-focus-ring); outline-offset: var(--focus-ring-offset)"
     counterExample: "outline: none"
 
   - id: DS-A-003
@@ -167,6 +209,25 @@ rules:
     counterExample: "div with no ARIA attributes that covers the page"
 
   # ── Component-usage rules ─────────────────────────────────────────────────────
+  - id: DS-A-006
+    scope: accessibility
+    severity: error
+    statement: >
+      Lime is never used as text on white. Success text uses lime 700 or darker
+      (color-text-success), and text on a lime fill uses blue 900
+      (color-text-on-success on color-status-success-fill). Token lint checks
+      every semantic text, border and focus-ring pair against its surface.
+    check: auto
+    checkName: token-lint
+    appliesTo:
+      - input
+      - select
+      - checkbox
+      - card
+      - modal
+    example: "color: var(--color-text-success)"
+    counterExample: "Lime 500 (#84CC16) text on a white page (1.98:1)"
+
   - id: DS-C-001
     scope: component
     severity: error

@@ -87,3 +87,23 @@ describe('FR-4 rules.yaml: structure and schema', () => {
     expect(rules.some((r) => r.severity === 'warning')).toBe(true);
   });
 });
+
+describe('FR-4 rules.yaml: visual direction rules', () => {
+  it.each([
+    ['DS-T-004', 'token-lint', /radius/i],
+    ['DS-A-006', 'token-lint', /lime/i],
+    ['DS-L-003', 'token-lint', /font-family-display/],
+  ])('FR-4: %s exists, is an auto %s check and states its intent', (id, checkName, statement) => {
+    const rule = loadRules().find((r) => r.id === id);
+    expect(rule, `${id} missing`).toBeDefined();
+    expect(rule?.check).toBe('auto');
+    expect(rule?.checkName).toBe(checkName);
+    expect(rule?.statement).toMatch(statement);
+  });
+
+  it('FR-4: every ruleRef emitted by token lint is a rule in rules.yaml', async () => {
+    const { RULE_REFS } = await import('../../token-lint/index.js');
+    const ids = new Set(loadRules().map((r) => r.id));
+    for (const ref of RULE_REFS) expect(ids.has(ref), ref).toBe(true);
+  });
+});
