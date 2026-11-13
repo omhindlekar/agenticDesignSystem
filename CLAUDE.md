@@ -19,7 +19,7 @@ the cli provider (my subscription). Never require an API key.
 ## Decisions
 
 - Source of truth for tokens is this repo (`tokens/`). Tokens are pushed one way to Figma. Never read tokens back from Figma.
-- POC components: Button, Input, Select, Checkbox, Card, Modal.
+- POC components: Button, Input, Select, Checkbox, Card, Modal, plus Icon and IconButton (added in phase 1.8).
 - Stack: React and TypeScript, Storybook as the component catalogue, Playwright snapshots for visual regression, axe-core for accessibility, Zod for schemas.
 - No existing screens to baseline against. Golden-set briefs are new; baselines come from the first approved components.
 - Cost cap per run is configuration with a low default. Record the cost of every run.
