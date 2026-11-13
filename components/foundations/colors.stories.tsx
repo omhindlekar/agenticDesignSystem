@@ -60,6 +60,30 @@ function SemanticColors() {
   );
 }
 
+const ROLES = ['primary', 'info', 'success', 'warning', 'danger', 'neutral'] as const;
+
+function TonalRoles() {
+  return (
+    <section className="fd-section">
+      <h2 className="fd-section__heading">Tonal roles</h2>
+      <p className="fd-note">Tinted fills for selected rows, banners and chips. Each fill has its own text colour.</p>
+      <div className="fd-grid">
+        {ROLES.map((role) => {
+          const ratio = contrastRatio(resolved.get(`color-on-container-${role}`) ?? '', resolved.get(`color-container-${role}`) ?? '');
+          return (
+            <div key={role} className="fd-tonal" data-role={role}>
+              <span className="fd-token__name">{role}</span>
+              <span className="fd-mono-inherit">
+                color-container-{role} · {ratio.toFixed(2)}:1
+              </span>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
 function ContrastTable() {
   const texts = ['color-text-primary', 'color-text-heading', 'color-text-secondary', 'color-text-link', 'color-text-danger', 'color-text-success', 'color-text-warning', 'color-text-info'];
   const surfaces = ['color-background-page', 'color-background-raised', 'color-background-sunken'];
@@ -112,6 +136,7 @@ export const Colors: StoryObj = {
     <div className="fd-page">
       <Ramps />
       <SemanticColors />
+      <TonalRoles />
       <ContrastTable />
     </div>
   ),

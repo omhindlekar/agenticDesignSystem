@@ -229,3 +229,19 @@ describe('FR-1 foundations: state layers and motion', () => {
     expect(sem.get('motion-easing-standard')).toMatch(/^cubic-bezier\(/);
   });
 });
+
+describe('FR-1 foundations: tonal colour roles', () => {
+  const sem = resolveSemanticTokens(root);
+  const prim = primitives();
+  it.each([
+    ['primary', 'color-blue-50', 'color-blue-900'],
+    ['info', 'color-light-blue-50', 'color-light-blue-900'],
+    ['success', 'color-lime-100', 'color-blue-900'],
+    ['warning', 'color-amber-100', 'color-amber-900'],
+    ['danger', 'color-red-50', 'color-red-800'],
+    ['neutral', 'color-neutral-100', 'color-neutral-900'],
+  ])('FR-1: %s container is %s with %s text', (role, fill, text) => {
+    expect(sem.get(`color-container-${role}`)).toBe(prim.get(fill));
+    expect(sem.get(`color-on-container-${role}`)).toBe(prim.get(text));
+  });
+});

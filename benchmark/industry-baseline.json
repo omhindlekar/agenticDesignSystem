@@ -42,9 +42,12 @@
       },
       "baseline": true,
       "verified": false,
-      "status": "missing",
+      "status": "done",
       "phase": "1.9",
-      "evidence": [],
+      "evidence": [
+        "tokens/semantic.json",
+        "components/foundations/colors.stories.tsx"
+      ],
       "note": "M3 colour roles, Carbon layers, Atlassian accent and surface tokens, Polaris fill tokens, Fluent brand ramps"
     },
     {

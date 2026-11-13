@@ -396,3 +396,48 @@
   align-items: center;
   gap: var(--space-component-padding-xs);
 }
+
+/* Tonal roles: one rule per role so pages never build token names at runtime. */
+.fd-tonal {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-component-padding-xs);
+  padding: var(--space-component-padding-md);
+}
+
+.fd-mono-inherit {
+  font-family: var(--type-caption-family);
+  font-size: var(--type-caption-size);
+  line-height: var(--type-caption-line-height);
+  letter-spacing: var(--type-caption-letter-spacing);
+}
+
+.fd-tonal[data-role="primary"] {
+  background-color: var(--color-container-primary);
+  color: var(--color-on-container-primary);
+}
+
+.fd-tonal[data-role="info"] {
+  background-color: var(--color-container-info);
+  color: var(--color-on-container-info);
+}
+
+.fd-tonal[data-role="success"] {
+  background-color: var(--color-container-success);
+  color: var(--color-on-container-success);
+}
+
+.fd-tonal[data-role="warning"] {
+  background-color: var(--color-container-warning);
+  color: var(--color-on-container-warning);
+}
+
+.fd-tonal[data-role="danger"] {
+  background-color: var(--color-container-danger);
+  color: var(--color-on-container-danger);
+}
+
+.fd-tonal[data-role="neutral"] {
+  background-color: var(--color-container-neutral);
+  color: var(--color-on-container-neutral);
+}

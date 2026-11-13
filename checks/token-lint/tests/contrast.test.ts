@@ -118,3 +118,23 @@ describe('FR-11 contrast: state layers and disabled content', () => {
     expect(checkContrast(tokens)).toEqual([]);
   });
 });
+
+describe('FR-11 contrast: tonal containers', () => {
+  it('FR-11: every container is checked against its on-container text at 4.5:1', () => {
+    const tokens = resolveSemanticTokens(root);
+    const pairs = buildContrastPairs(tokens);
+    const containers = [...tokens.keys()].filter((n) => n.startsWith('color-container-'));
+    expect(containers.length).toBeGreaterThan(0);
+    for (const c of containers) {
+      const on = c.replace('color-container-', 'color-on-container-');
+      expect(pairs.some((p) => p.fg === on && p.bg === c && p.min === 4.5), `${on} on ${c}`).toBe(true);
+    }
+  });
+
+  it('FR-11: lime containers cite DS-A-006', () => {
+    const tokens = new Map(resolveSemanticTokens(root));
+    tokens.set('color-on-container-success', '#84cc16');
+    const v = checkContrast(tokens).find((x) => x.fg === 'color-on-container-success');
+    expect(v?.ruleRef).toBe('DS-A-006');
+  });
+});

@@ -44,6 +44,18 @@
   --color-status-warning-text: #703c13;
   --color-status-info-bg: #eff8ff;
   --color-status-info-text: #1b4d70;
+  --color-container-primary: #f0f6ff;
+  --color-on-container-primary: #0a2057;
+  --color-container-info: #eff8ff;
+  --color-on-container-info: #0e3857;
+  --color-container-success: #dbf5c5;
+  --color-on-container-success: #0a2057;
+  --color-container-warning: #feeabd;
+  --color-on-container-warning: #512910;
+  --color-container-danger: #fff2f0;
+  --color-on-container-danger: #7c1d1d;
+  --color-container-neutral: #eaedf0;
+  --color-on-container-neutral: #1b1f27;
   --color-state-layer: #285bb0;
   --color-state-layer-danger: #c22826;
   --space-component-padding-xs: 4px;

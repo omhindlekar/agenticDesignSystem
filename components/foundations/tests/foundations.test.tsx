@@ -56,4 +56,13 @@ describe('FR-1 Foundations pages', () => {
       expect((html.match(new RegExp(`data-size="${size}"`, 'g')) ?? []).length).toBeGreaterThanOrEqual(ICON_NAMES.length);
     }
   });
+
+  it('FR-1: Colors shows every tonal role with its contrast ratio', () => {
+    const html = renderToStaticMarkup((colors.Colors as { render: () => ReactElement }).render());
+    for (const role of ['primary', 'info', 'success', 'warning', 'danger', 'neutral']) {
+      expect(html).toContain(`data-role="${role}"`);
+    }
+    const css = readFileSync(join(dir, 'foundations.css'), 'utf8');
+    expect(css).toContain('.fd-tonal[data-role="success"]');
+  });
 });

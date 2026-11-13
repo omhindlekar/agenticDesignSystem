@@ -82,6 +82,7 @@ export function buildContrastPairs(tokens: Map<string, string>): ContrastPair[] 
   const names = [...tokens.keys()];
 
   for (const text of names.filter((n) => n.startsWith('color-text-') && !TEXT_ON_FILL_ONLY.has(n))) {
+    // color-on-container-* tokens are checked against their own container below.
     for (const s of SURFACES) add(text, s, 4.5);
   }
 
@@ -107,6 +108,12 @@ export function buildContrastPairs(tokens: Map<string, string>): ContrastPair[] 
     add('color-text-inverse', fill, 4.5);
   }
   add('color-text-on-success', 'color-status-success-fill', 4.5, 'DS-A-006');
+
+  // Tonal containers: each fill with its own on-container text.
+  for (const c of names.filter((n) => n.startsWith('color-container-'))) {
+    const on = c.replace('color-container-', 'color-on-container-');
+    add(on, c, 4.5, c.endsWith('-success') ? 'DS-A-006' : 'DS-A-001');
+  }
 
   // State layers (hover, focus, pressed) tint the surface under text and borders.
   const layered: Array<[string, string, ContrastPair['min']]> = [
