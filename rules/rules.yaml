@@ -445,3 +445,22 @@ rules:
       - modal
     example: "A multi-step form in one modal with step indicators"
     counterExample: "A confirmation modal opened from inside another modal"
+
+  - id: DS-C-006
+    scope: component
+    severity: error
+    statement: >
+      Choose from lists and pick dates with the design system's Select,
+      Combobox and DatePicker. Native <select> and <input type="date">, and
+      hand-rolled role="combobox" widgets, are not used: they do not follow the
+      design system's look, and hand-rolled ones rarely meet the WAI-ARIA
+      keyboard patterns. Use Select for short lists, Combobox for long or
+      searchable ones.
+    check: auto
+    checkName: token-lint
+    appliesTo:
+      - select
+      - combobox
+      - date-picker
+    example: "<Combobox label=\"Country\" options={countries} />"
+    counterExample: "<select name=\"country\">…</select>"

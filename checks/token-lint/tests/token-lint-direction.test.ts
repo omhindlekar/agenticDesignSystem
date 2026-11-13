@@ -206,3 +206,20 @@ describe('FR-1 token-lint: runtime variables from React Aria', () => {
     expect(lintTokenReferences('width: var(--my-width);', 'p.css', names).map((v) => v.pattern)).toEqual(['non-semantic-token']);
   });
 });
+
+describe('FR-1 token-lint: native pickers (DS-C-006)', () => {
+  it.each([
+    '<select name="country"><option>UK</option></select>',
+    '<input type="date" />',
+    "<input type='date' />",
+    '<div role="combobox" aria-expanded="false" />',
+  ])('FR-1: flags %s', (src) => {
+    const v = lintString(src).filter((x) => x.pattern === 'native-picker');
+    expect(v.length).toBe(1);
+    expect(v[0]?.ruleRef).toBe('DS-C-006');
+  });
+
+  it('FR-1: the design-system pickers are fine', () => {
+    expect(lintString('<Select label="Country" options={o} /><DatePicker label="Start" />').map((x) => x.pattern)).not.toContain('native-picker');
+  });
+});

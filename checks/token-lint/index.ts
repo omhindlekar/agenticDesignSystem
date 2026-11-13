@@ -36,6 +36,7 @@ export const RULE_REFS = [
   'DS-T-005',
   'DS-M-001',
   'DS-I-001',
+  'DS-C-006',
 ] as const;
 
 const LINT_RULES: LintRule[] = [
@@ -130,6 +131,12 @@ const LINT_RULES: LintRule[] = [
     // Icons come from <Icon>; raw SVG is allowed only inside components/icon/ (see lintFile).
     regex: /<svg\b/g,
     ruleRef: 'DS-I-001',
+  },
+  {
+    pattern: 'native-picker',
+    // Native selects and date inputs, and hand-rolled comboboxes, bypass the accessible pickers.
+    regex: /<select\b|<input\b[^>]*\btype=["']date["']|\brole=["']combobox["']/g,
+    ruleRef: 'DS-C-006',
   },
   {
     pattern: 'icon-font',

@@ -139,3 +139,12 @@ describe('FR-4 rules.yaml: phase 1.7 foundations', () => {
     expect(rule('DS-A-001')?.statement).toMatch(/disabled/i);
   });
 });
+
+describe('FR-4 rules.yaml: pickers', () => {
+  it('FR-4: DS-C-006 points native and hand-rolled pickers to Select, Combobox and DatePicker', () => {
+    const r = loadRules().find((x) => x.id === 'DS-C-006');
+    expect(r?.checkName).toBe('token-lint');
+    for (const name of ['Select', 'Combobox', 'DatePicker']) expect(r?.statement).toContain(name);
+    expect(r?.appliesTo).toEqual(expect.arrayContaining(['select', 'combobox', 'date-picker']));
+  });
+});
