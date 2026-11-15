@@ -42,3 +42,12 @@
   background-color: var(--color-container-warning);
   color: var(--color-on-container-warning);
 }
+
+/* Windows High Contrast: fills and shadows are dropped, so states use system colours. */
+@media (forced-colors: active) {
+  .ads-avatar {
+    /* Always forced, even inside a highlighted row, so its tone colours never show. */
+    forced-color-adjust: auto;
+    border: var(--border-width-default) solid CanvasText;
+  }
+}

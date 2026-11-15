@@ -104,3 +104,24 @@
     transition: opacity var(--motion-duration-standard) var(--motion-easing-standard);
   }
 }
+
+/* Windows High Contrast: fills and shadows are dropped, so states use system colours. */
+@media (forced-colors: active) {
+  .ads-slider__rail {
+    background-color: Canvas;
+    outline: var(--border-width-default) solid CanvasText;
+  }
+
+  .ads-slider__fill {
+    background-color: Highlight;
+  }
+
+  .ads-slider__thumb {
+    background-color: Highlight;
+    border-color: Canvas;
+  }
+
+  .ads-slider[data-state~="disabled"] :is(.ads-slider__fill, .ads-slider__thumb) {
+    background-color: GrayText;
+  }
+}

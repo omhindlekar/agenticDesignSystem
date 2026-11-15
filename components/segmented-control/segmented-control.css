@@ -85,3 +85,24 @@
       opacity var(--motion-duration-standard) var(--motion-easing-standard);
   }
 }
+
+/* Windows High Contrast: fills and shadows are dropped, so states use system colours. */
+@media (forced-colors: active) {
+  .ads-segmented__item[data-selected] {
+    forced-color-adjust: none;
+    background-color: Highlight;
+    color: HighlightText;
+  }
+
+  /* Inside the highlight, text and marks take HighlightText on no backplate. */
+  .ads-segmented__item[data-selected] *:not(.ads-badge, .ads-avatar) {
+    forced-color-adjust: none;
+    border-color: currentcolor;
+    background-color: transparent;
+    color: inherit;
+  }
+
+  .ads-segmented__item[data-disabled] {
+    color: GrayText;
+  }
+}

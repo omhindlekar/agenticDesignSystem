@@ -37,6 +37,8 @@ export const RULE_REFS = [
   'DS-M-001',
   'DS-I-001',
   'DS-C-006',
+  'DS-A-007',
+  'DS-L-004',
 ] as const;
 
 const LINT_RULES: LintRule[] = [
@@ -292,6 +294,89 @@ export function lintMotionGuard(css: string, fileName = '<generated>'): LintViol
   return violations;
 }
 
+// ── Forced colours (DS-A-007) ─────────────────────────────────────────────────
+
+/** CSS system colours (CSS Color 4). Only these mean anything when colours are forced. */
+const SYSTEM_COLORS =
+  'AccentColor|AccentColorText|ActiveText|ButtonBorder|ButtonFace|ButtonText|Canvas|CanvasText|Field|FieldText|GrayText|Highlight|HighlightText|LinkText|Mark|MarkText|SelectedItem|SelectedItemText|VisitedText';
+const SYSTEM_COLOR = new RegExp(`(?<![\\w-])(?:${SYSTEM_COLORS})(?![\\w-])`);
+const FORCED_COLORS = /@media\s*\(\s*forced-colors\s*:\s*active\s*\)\s*\{/g;
+const COLOR_DECL = /\b(color|background-color|background|border(?:-(?:block|inline|top|right|bottom|left)(?:-(?:start|end))?)?(?:-color)?|outline(?:-color)?|fill|stroke|text-decoration-color|caret-color)\s*:\s*([^;}]+)/g;
+
+function blockRanges(css: string, opener: RegExp): Array<[number, number]> {
+  const ranges: Array<[number, number]> = [];
+  const re = new RegExp(opener.source, 'g');
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(css)) !== null) {
+    let depth = 1;
+    let i = m.index + m[0].length;
+    while (i < css.length && depth > 0) {
+      if (css[i] === '{') depth++;
+      else if (css[i] === '}') depth--;
+      i++;
+    }
+    ranges.push([m.index, i]);
+  }
+  return ranges;
+}
+
+/**
+ * Inside `@media (forced-colors: active)` colours are system colours only, since tokens
+ * resolve to colours the browser overrides. Outside it, system colours are not used:
+ * they would ignore the themes.
+ */
+export function lintForcedColors(css: string, fileName = '<generated>'): LintViolation[] {
+  const ranges = blockRanges(css, FORCED_COLORS);
+  const violations: LintViolation[] = [];
+  const re = new RegExp(COLOR_DECL.source, 'g');
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(css)) !== null) {
+    const value = (m[2] ?? '').trim();
+    const at = m.index;
+    const inside = ranges.some(([a, b]) => at > a && at < b);
+    const line = css.slice(0, at).split('\n').length;
+    const push = (pattern: string): void => {
+      violations.push({ file: fileName, line, column: 1, pattern, match: m![0].trim(), ruleId: 'FR-1', ruleRef: 'DS-A-007' });
+    };
+    if (inside && /var\(--color-/.test(value)) push('token-colour-in-forced-colors');
+    if (!inside && SYSTEM_COLOR.test(value)) push('system-colour-outside-forced-colors');
+  }
+  return violations;
+}
+
+// ── Logical properties for right-to-left (DS-L-004) ───────────────────────────
+
+const PHYSICAL =
+  /(?<![\w-])(?:(?:margin|padding|border|inset)-(?:left|right)(?:-(?:width|color|style))?|left|right|float|clear)\s*:|text-align\s*:\s*(?:left|right)\b|border-(?:top|bottom)-(?:left|right)-radius\s*:/g;
+
+/**
+ * Layout uses logical properties (inline-start, inline-end) so it mirrors in right-to-left
+ * languages. A horizontal translate must be paired with a [dir="rtl"] rule in the same file.
+ */
+export function lintLogicalProperties(css: string, fileName = '<generated>'): LintViolation[] {
+  const violations: LintViolation[] = [];
+  const clean = css.replace(/\/\*[\s\S]*?\*\//g, (c) => c.replace(/[^\n]/g, ' '));
+  const re = new RegExp(PHYSICAL.source, 'g');
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(clean)) !== null) {
+    const line = clean.slice(0, m.index).split('\n').length;
+    violations.push({ file: fileName, line, column: 1, pattern: 'physical-property', match: m[0], ruleId: 'FR-1', ruleRef: 'DS-L-004' });
+  }
+  if (/translateX\(/.test(clean) && !/\[dir=["']?rtl["']?\]/.test(clean)) {
+    const at = clean.search(/translateX\(/);
+    violations.push({
+      file: fileName,
+      line: clean.slice(0, at).split('\n').length,
+      column: 1,
+      pattern: 'translate-without-rtl',
+      match: 'translateX(…) with no [dir="rtl"] rule in the file',
+      ruleId: 'FR-1',
+      ruleRef: 'DS-L-004',
+    });
+  }
+  return violations;
+}
+
 // ── Token files: square corners (DS-T-004) ────────────────────────────────────
 
 interface RawToken {
@@ -389,7 +474,12 @@ export async function lintFile(filePath: string, semanticNames?: Set<string>): P
   const inIconFolder = /(?:^|[\\/])components[\\/]icon[\\/]/.test(filePath);
   const violations = lintString(source, filePath).filter((v) => !(inIconFolder && v.pattern === 'raw-svg'));
   if (extname(filePath) === '.css') {
-    violations.push(...lintFontRoles(source, filePath), ...lintMotionGuard(source, filePath));
+    violations.push(
+      ...lintFontRoles(source, filePath),
+      ...lintMotionGuard(source, filePath),
+      ...lintForcedColors(source, filePath),
+      ...lintLogicalProperties(source, filePath),
+    );
   }
   if (semanticNames) violations.push(...lintTokenReferences(source, filePath, semanticNames));
   return violations;

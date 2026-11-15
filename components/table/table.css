@@ -140,3 +140,31 @@
   outline: var(--border-width-focus) solid var(--color-interactive-focus-ring);
   outline-offset: var(--focus-ring-offset);
 }
+
+/* Windows High Contrast: fills and shadows are dropped, so states use system colours. */
+@media (forced-colors: active) {
+  .ads-table__row[data-selected] .ads-table__cell {
+    forced-color-adjust: none;
+    background-color: Highlight;
+    color: HighlightText;
+  }
+
+  /* Inside the highlight, text and marks take HighlightText on no backplate. */
+  .ads-table__row[data-selected] .ads-table__cell *:not(.ads-badge, .ads-avatar) {
+    forced-color-adjust: none;
+    border-color: currentcolor;
+    background-color: transparent;
+    color: inherit;
+  }
+
+  .ads-table__check:is([data-selected], [data-indeterminate]) .ads-table__box {
+    border-color: Highlight;
+    background-color: Highlight;
+    color: HighlightText;
+  }
+
+  .ads-table__row[data-selected] .ads-table__box {
+    border-color: HighlightText;
+    color: HighlightText;
+  }
+}

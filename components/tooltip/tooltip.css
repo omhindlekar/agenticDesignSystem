@@ -32,3 +32,10 @@
     animation: ads-tooltip-out var(--motion-duration-exit) var(--motion-easing-exit);
   }
 }
+
+/* Windows High Contrast: fills and shadows are dropped, so states use system colours. */
+@media (forced-colors: active) {
+  .ads-tooltip {
+    border: var(--border-width-default) solid CanvasText;
+  }
+}

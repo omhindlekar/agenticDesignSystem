@@ -107,3 +107,11 @@
       border-color var(--motion-duration-standard) var(--motion-easing-standard);
   }
 }
+
+/* Windows High Contrast: fills and shadows are dropped, so states use system colours. */
+@media (forced-colors: active) {
+  .ads-card[data-state~="selected"] {
+    border-color: Highlight;
+    outline-color: Highlight;
+  }
+}

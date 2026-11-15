@@ -144,3 +144,11 @@
     animation: ads-spin calc(var(--motion-duration-overlay) * 4) linear infinite;
   }
 }
+
+/* Windows High Contrast: fills and shadows are dropped, so states use system colours. */
+@media (forced-colors: active) {
+  :is(.ads-button, .ads-icon-button)[aria-disabled="true"] {
+    color: GrayText;
+    border-color: GrayText;
+  }
+}

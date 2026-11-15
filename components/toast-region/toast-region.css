@@ -112,3 +112,11 @@
     animation: ads-toast-in var(--motion-duration-overlay) var(--motion-easing-enter);
   }
 }
+
+/* Windows High Contrast: fills and shadows are dropped, so states use system colours. */
+@media (forced-colors: active) {
+  .ads-toast {
+    border: var(--border-width-default) solid CanvasText;
+    border-inline-start-width: var(--border-width-focus);
+  }
+}

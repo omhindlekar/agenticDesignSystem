@@ -67,3 +67,10 @@
 .ads-banner__dismiss .ads-icon-button {
   color: inherit;
 }
+
+/* Windows High Contrast: fills and shadows are dropped, so states use system colours. */
+@media (forced-colors: active) {
+  .ads-banner {
+    border: var(--border-width-default) solid CanvasText;
+  }
+}

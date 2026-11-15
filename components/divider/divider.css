@@ -24,3 +24,10 @@
 .ads-divider[data-variant="vertical"][data-inset] {
   margin-block: var(--space-component-padding-sm);
 }
+
+/* Windows High Contrast: fills and shadows are dropped, so states use system colours. */
+@media (forced-colors: active) {
+  .ads-divider {
+    background-color: CanvasText;
+  }
+}

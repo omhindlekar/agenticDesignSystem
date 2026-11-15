@@ -75,6 +75,7 @@
     ]
   },
   "tokensUsed": [
+    "border-width-default",
     "color-border-danger",
     "color-border-input",
     "color-border-success",
