@@ -1,0 +1,78 @@
+{
+  "id": "avatar-group",
+  "purpose": "Overlapping avatars for the people in a project or conversation, with +n for the rest.",
+  "variants": [
+    "sm",
+    "md",
+    "lg"
+  ],
+  "states": [
+    "default"
+  ],
+  "props": [
+    {
+      "name": "label",
+      "type": "string",
+      "required": true,
+      "description": "Accessible name of the group, for example Project members"
+    },
+    {
+      "name": "people",
+      "type": "Array<{ name: string; src?: string }>",
+      "required": true,
+      "description": "People"
+    },
+    {
+      "name": "max",
+      "type": "number",
+      "required": false,
+      "description": "Avatars shown before +n. Defaults to 4"
+    },
+    {
+      "name": "size",
+      "type": "'sm' | 'md' | 'lg'",
+      "required": false,
+      "description": "Avatar size. Defaults to md"
+    }
+  ],
+  "whenToUse": [
+    "To show who is involved without listing everyone"
+  ],
+  "whenNotToUse": [
+    "When each person needs an action — use List"
+  ],
+  "related": [
+    "avatar"
+  ],
+  "antiPatterns": [
+    "Showing more than about six avatars"
+  ],
+  "spec": {
+    "anatomy": [
+      "Avatars overlapping by a quarter, each with a 2px surface edge, and a +n square"
+    ],
+    "sizes": [
+      "Overlap a quarter of `size-avatar-md`; edge `border-width-focus`"
+    ],
+    "typography": [
+      "As Avatar"
+    ],
+    "states": [
+      "+n on `color-interactive-disabled` with `color-text-primary`"
+    ],
+    "motion": [
+      "None"
+    ]
+  },
+  "tokensUsed": [
+    "border-width-focus",
+    "color-background-surface",
+    "color-interactive-disabled",
+    "color-text-primary",
+    "elevation-0",
+    "size-avatar-md"
+  ],
+  "a11yNotes": [
+    "A group named by the label; each avatar is named; +n is named, for example 2 more"
+  ]
+}

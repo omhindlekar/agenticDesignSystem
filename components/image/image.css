@@ -1,0 +1,42 @@
+/* Image: square-cornered frame at a fixed ratio; a sunken tile when it cannot load. */
+.ads-image {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  background-color: var(--color-background-sunken);
+}
+
+.ads-image[data-variant="1:1"] {
+  aspect-ratio: 1;
+}
+
+.ads-image[data-variant="4:3"] {
+  aspect-ratio: 4 / 3;
+}
+
+.ads-image[data-variant="16:9"] {
+  aspect-ratio: 16 / 9;
+}
+
+.ads-image__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ads-image[data-fit="contain"] .ads-image__img {
+  object-fit: contain;
+}
+
+.ads-image[data-state~="error"] {
+  min-height: var(--size-control-lg);
+}
+
+.ads-image__fallback {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--color-text-secondary);
+}

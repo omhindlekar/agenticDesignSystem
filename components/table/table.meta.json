@@ -1,0 +1,146 @@
+{
+  "id": "table",
+  "purpose": "Shows rows of records in columns so they can be compared, sorted and chosen, with keyboard navigation cell by cell.",
+  "variants": [
+    "none",
+    "single",
+    "multiple"
+  ],
+  "states": [
+    "default"
+  ],
+  "props": [
+    {
+      "name": "label",
+      "type": "string",
+      "required": true,
+      "description": "Accessible name of the table"
+    },
+    {
+      "name": "columns",
+      "type": "Array<{ id: string; label: string; sortable?: boolean; align?: 'start' | 'end' }>",
+      "required": true,
+      "description": "Columns; the first is the row header"
+    },
+    {
+      "name": "rows",
+      "type": "Array<{ id: string; cells: Record<string, React.ReactNode> }>",
+      "required": true,
+      "description": "Rows, with a cell per column id"
+    },
+    {
+      "name": "sortColumn",
+      "type": "string",
+      "required": false,
+      "description": "Column currently sorted"
+    },
+    {
+      "name": "sortDirection",
+      "type": "'ascending' | 'descending'",
+      "required": false,
+      "description": "Sort direction. Defaults to ascending"
+    },
+    {
+      "name": "onSortChange",
+      "type": "(column: string, direction: 'ascending' | 'descending') => void",
+      "required": false,
+      "description": "Called when a sortable header is pressed"
+    },
+    {
+      "name": "selectionMode",
+      "type": "'none' | 'single' | 'multiple'",
+      "required": false,
+      "description": "Row selection; multiple adds a selection column. Defaults to none"
+    },
+    {
+      "name": "selectedKeys",
+      "type": "string[]",
+      "required": false,
+      "description": "Selected row ids"
+    },
+    {
+      "name": "onSelectionChange",
+      "type": "(keys: string[]) => void",
+      "required": false,
+      "description": "Called with the selected row ids"
+    },
+    {
+      "name": "emptyState",
+      "type": "string",
+      "required": false,
+      "description": "Shown when there are no rows. Defaults to No results"
+    }
+  ],
+  "whenToUse": [
+    "To compare records across several attributes",
+    "When users sort, scan or act on many rows"
+  ],
+  "whenNotToUse": [
+    "For a simple list of items — use List",
+    "For layout — use the grid tokens"
+  ],
+  "related": [
+    "list",
+    "pagination"
+  ],
+  "antiPatterns": [
+    "Tables with a single column",
+    "Putting interactive controls in every cell"
+  ],
+  "spec": {
+    "anatomy": [
+      "A bordered grid with a sticky sunken header row, 1px row dividers, optional selection column, sort chevrons and an empty state"
+    ],
+    "sizes": [
+      "Rows and header `size-control-md` (density-aware); cell padding `space-component-padding-md`"
+    ],
+    "typography": [
+      "Headers `type-overline-size`; cells `type-body2-size`"
+    ],
+    "states": [
+      "Header `color-background-sunken` with a `color-border-input` rule; row hover `color-state-layer`; selected `color-container-primary`; focus ring `color-interactive-focus-ring`"
+    ],
+    "motion": [
+      "None"
+    ]
+  },
+  "tokensUsed": [
+    "border-width-control",
+    "border-width-default",
+    "border-width-focus",
+    "color-background-sunken",
+    "color-background-surface",
+    "color-border-default",
+    "color-border-input",
+    "color-container-primary",
+    "color-interactive-default",
+    "color-interactive-focus-ring",
+    "color-on-container-primary",
+    "color-state-layer",
+    "color-text-inverse",
+    "color-text-link",
+    "color-text-primary",
+    "color-text-secondary",
+    "focus-ring-offset",
+    "opacity-state-hover",
+    "size-control-indicator",
+    "size-control-md",
+    "size-hit-area",
+    "space-component-padding-md",
+    "space-component-padding-sm",
+    "space-component-padding-xs",
+    "space-layout-section",
+    "type-body2-family",
+    "type-body2-line-height",
+    "type-body2-size",
+    "type-overline-family",
+    "type-overline-letter-spacing",
+    "type-overline-size",
+    "type-overline-weight"
+  ],
+  "a11yNotes": [
+    "role grid named by the label; column headers report aria-sort",
+    "Arrow keys move cell by cell; Space selects rows",
+    "The first column is the row header"
+  ]
+}

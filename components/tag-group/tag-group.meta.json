@@ -1,0 +1,135 @@
+{
+  "id": "tag-group",
+  "purpose": "Short keywords that label or categorise content, used as static labels, selectable filters or removable choices.",
+  "variants": [
+    "static",
+    "selectable",
+    "removable"
+  ],
+  "states": [
+    "default"
+  ],
+  "props": [
+    {
+      "name": "label",
+      "type": "string",
+      "required": true,
+      "description": "Accessible name of the group"
+    },
+    {
+      "name": "tags",
+      "type": "Array<{ id: string; label: string; tone?: 'neutral' | 'primary' | 'info' | 'success' | 'warning' | 'danger' }>",
+      "required": true,
+      "description": "Tags"
+    },
+    {
+      "name": "selectionMode",
+      "type": "'none' | 'single' | 'multiple'",
+      "required": false,
+      "description": "Makes tags selectable as filters. Defaults to none"
+    },
+    {
+      "name": "selectedKeys",
+      "type": "string[]",
+      "required": false,
+      "description": "Selected tag ids"
+    },
+    {
+      "name": "onSelectionChange",
+      "type": "(keys: string[]) => void",
+      "required": false,
+      "description": "Called with the selected ids"
+    },
+    {
+      "name": "onRemove",
+      "type": "(ids: string[]) => void",
+      "required": false,
+      "description": "Makes tags removable; called with removed ids"
+    },
+    {
+      "name": "showLabel",
+      "type": "boolean",
+      "required": false,
+      "description": "Shows the label visually. Defaults to false (label for assistive tech only)"
+    }
+  ],
+  "whenToUse": [
+    "To show keywords or categories",
+    "As quick filters above a list"
+  ],
+  "whenNotToUse": [
+    "For a single status — use Badge",
+    "For actions — use Button"
+  ],
+  "related": [
+    "badge",
+    "segmented-control"
+  ],
+  "antiPatterns": [
+    "Long sentences in tags",
+    "Mixing removable and selectable behaviour in one group"
+  ],
+  "spec": {
+    "anatomy": [
+      "Square chips with a 1px border on a tonal container; a check when selected; a close control when removable"
+    ],
+    "sizes": [
+      "`size-control-sm` tall; padding `space-component-padding-sm`; gap `space-component-gap-sm`"
+    ],
+    "typography": [
+      "`type-label-size` in SemiCondensed"
+    ],
+    "states": [
+      "`color-container-*` with `color-on-container-*`; selected `color-container-primary` with a `color-border-interactive` border; hover `color-state-layer`; focus ring `color-interactive-focus-ring`"
+    ],
+    "motion": [
+      "None"
+    ]
+  },
+  "tokensUsed": [
+    "border-width-default",
+    "border-width-focus",
+    "color-border-input",
+    "color-border-interactive",
+    "color-container-danger",
+    "color-container-info",
+    "color-container-neutral",
+    "color-container-primary",
+    "color-container-success",
+    "color-container-warning",
+    "color-interactive-focus-ring",
+    "color-on-container-danger",
+    "color-on-container-info",
+    "color-on-container-neutral",
+    "color-on-container-primary",
+    "color-on-container-success",
+    "color-on-container-warning",
+    "color-state-layer",
+    "color-text-danger",
+    "color-text-primary",
+    "color-text-secondary",
+    "color-text-success",
+    "focus-ring-offset",
+    "font-family-body",
+    "opacity-state-hover",
+    "size-control-sm",
+    "space-component-gap-sm",
+    "space-component-padding-sm",
+    "space-component-padding-xs",
+    "type-caption-family",
+    "type-caption-letter-spacing",
+    "type-caption-line-height",
+    "type-caption-size",
+    "type-caption-weight",
+    "type-label-family",
+    "type-label-letter-spacing",
+    "type-label-line-height",
+    "type-label-size",
+    "type-label-weight",
+    "z-index-state-layer"
+  ],
+  "a11yNotes": [
+    "A grid of tags named by the label; arrows move between tags",
+    "Backspace and Delete remove the focused tag; the remove control is named Remove plus the tag"
+  ]
+}

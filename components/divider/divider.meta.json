@@ -1,0 +1,65 @@
+{
+  "id": "divider",
+  "purpose": "A 1px line that separates groups of content, horizontally or vertically.",
+  "variants": [
+    "horizontal",
+    "vertical"
+  ],
+  "states": [
+    "default"
+  ],
+  "props": [
+    {
+      "name": "orientation",
+      "type": "'horizontal' | 'vertical'",
+      "required": false,
+      "description": "Defaults to horizontal"
+    },
+    {
+      "name": "inset",
+      "type": "boolean",
+      "required": false,
+      "description": "Indents it from the edges"
+    }
+  ],
+  "whenToUse": [
+    "Between groups of content that spacing alone does not separate"
+  ],
+  "whenNotToUse": [
+    "Between every item in a list — List already has dividers",
+    "As decoration"
+  ],
+  "related": [
+    "list",
+    "card"
+  ],
+  "antiPatterns": [
+    "Stacking several dividers"
+  ],
+  "spec": {
+    "anatomy": [
+      "A 1px line"
+    ],
+    "sizes": [
+      "`border-width-default`; inset `space-component-padding-md`"
+    ],
+    "typography": [
+      "None"
+    ],
+    "states": [
+      "`color-border-default`"
+    ],
+    "motion": [
+      "None"
+    ]
+  },
+  "tokensUsed": [
+    "border-width-default",
+    "color-border-default",
+    "space-component-padding-md",
+    "space-component-padding-sm"
+  ],
+  "a11yNotes": [
+    "role separator with aria-orientation"
+  ]
+}

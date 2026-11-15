@@ -1,0 +1,144 @@
+{
+  "id": "text",
+  "purpose": "Text in any role of the type scale, such as body, caption or overline, without writing CSS.",
+  "variants": [
+    "display",
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "subtitle",
+    "body1",
+    "body2",
+    "label",
+    "caption",
+    "overline"
+  ],
+  "states": [
+    "default"
+  ],
+  "props": [
+    {
+      "name": "variant",
+      "type": "'display' | 'h1' | 'h2' | 'h3' | 'h4' | 'subtitle' | 'body1' | 'body2' | 'label' | 'caption' | 'overline'",
+      "required": false,
+      "description": "Type role. Defaults to body1"
+    },
+    {
+      "name": "as",
+      "type": "'p' | 'span' | 'div' | 'strong' | 'em' | 'small'",
+      "required": false,
+      "description": "Element to render. Defaults to p"
+    },
+    {
+      "name": "tone",
+      "type": "'primary' | 'secondary' | 'heading'",
+      "required": false,
+      "description": "Text colour role. Defaults to primary"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": true,
+      "description": "The text"
+    }
+  ],
+  "whenToUse": [
+    "For paragraphs, captions and overlines in page content"
+  ],
+  "whenNotToUse": [
+    "For headings — use Heading, which sets the semantic level",
+    "For labels of form fields — the fields include them"
+  ],
+  "related": [
+    "heading"
+  ],
+  "antiPatterns": [
+    "Using a heading role on a paragraph to make it look like a heading"
+  ],
+  "spec": {
+    "anatomy": [
+      "Text in one type role"
+    ],
+    "sizes": [
+      "From the role's `type-body1-size` and the others"
+    ],
+    "typography": [
+      "Every role's family, size, weight, line height and letter spacing"
+    ],
+    "states": [
+      "`color-text-primary`, `color-text-secondary` or `color-text-heading`"
+    ],
+    "motion": [
+      "None"
+    ]
+  },
+  "tokensUsed": [
+    "color-text-heading",
+    "color-text-primary",
+    "color-text-secondary",
+    "type-body1-family",
+    "type-body1-letter-spacing",
+    "type-body1-line-height",
+    "type-body1-size",
+    "type-body1-weight",
+    "type-body2-family",
+    "type-body2-letter-spacing",
+    "type-body2-line-height",
+    "type-body2-size",
+    "type-body2-weight",
+    "type-button-family",
+    "type-button-letter-spacing",
+    "type-button-line-height",
+    "type-button-size",
+    "type-button-weight",
+    "type-caption-family",
+    "type-caption-letter-spacing",
+    "type-caption-line-height",
+    "type-caption-size",
+    "type-caption-weight",
+    "type-display-family",
+    "type-display-letter-spacing",
+    "type-display-line-height",
+    "type-display-size",
+    "type-display-weight",
+    "type-h1-family",
+    "type-h1-letter-spacing",
+    "type-h1-line-height",
+    "type-h1-size",
+    "type-h1-weight",
+    "type-h2-family",
+    "type-h2-letter-spacing",
+    "type-h2-line-height",
+    "type-h2-size",
+    "type-h2-weight",
+    "type-h3-family",
+    "type-h3-letter-spacing",
+    "type-h3-line-height",
+    "type-h3-size",
+    "type-h3-weight",
+    "type-h4-family",
+    "type-h4-letter-spacing",
+    "type-h4-line-height",
+    "type-h4-size",
+    "type-h4-weight",
+    "type-label-family",
+    "type-label-letter-spacing",
+    "type-label-line-height",
+    "type-label-size",
+    "type-label-weight",
+    "type-overline-family",
+    "type-overline-letter-spacing",
+    "type-overline-line-height",
+    "type-overline-size",
+    "type-overline-weight",
+    "type-subtitle-family",
+    "type-subtitle-letter-spacing",
+    "type-subtitle-line-height",
+    "type-subtitle-size",
+    "type-subtitle-weight"
+  ],
+  "a11yNotes": [
+    "Renders a non-heading element; use Heading for document structure"
+  ]
+}

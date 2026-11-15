@@ -1,0 +1,97 @@
+{
+  "id": "tree",
+  "purpose": "Hierarchical items such as folders and files that expand and collapse.",
+  "variants": [
+    "none",
+    "single"
+  ],
+  "states": [
+    "default"
+  ],
+  "props": [
+    {
+      "name": "label",
+      "type": "string",
+      "required": true,
+      "description": "Accessible name of the tree"
+    },
+    {
+      "name": "items",
+      "type": "TreeNode[]",
+      "required": true,
+      "description": "Nodes ({ id, label, icon?, children? })"
+    },
+    {
+      "name": "defaultExpandedKeys",
+      "type": "string[]",
+      "required": false,
+      "description": "Ids expanded at first"
+    },
+    {
+      "name": "selectionMode",
+      "type": "'none' | 'single'",
+      "required": false,
+      "description": "Makes one node selectable. Defaults to none"
+    },
+    {
+      "name": "onAction",
+      "type": "(id: string) => void",
+      "required": false,
+      "description": "Called with the id when a node is activated"
+    }
+  ],
+  "whenToUse": [
+    "For nested structures such as file systems or categories"
+  ],
+  "whenNotToUse": [
+    "For flat items — use List",
+    "For site navigation — use SideNav"
+  ],
+  "related": [
+    "list",
+    "side-nav"
+  ],
+  "antiPatterns": [
+    "Very deep trees without search"
+  ],
+  "spec": {
+    "anatomy": [
+      "Rows indented per level with a chevron, optional icon and label"
+    ],
+    "sizes": [
+      "Rows `size-control-md`; indent `size-icon-md` per level"
+    ],
+    "typography": [
+      "`type-body2-size`"
+    ],
+    "states": [
+      "Hover `color-state-layer`; selected `color-container-primary`; focus ring `color-interactive-focus-ring`"
+    ],
+    "motion": [
+      "Chevron rotates over `motion-duration-standard`; none under reduced motion"
+    ]
+  },
+  "tokensUsed": [
+    "border-width-focus",
+    "color-container-primary",
+    "color-interactive-focus-ring",
+    "color-on-container-primary",
+    "color-state-layer",
+    "color-text-primary",
+    "color-text-secondary",
+    "motion-duration-standard",
+    "motion-easing-standard",
+    "opacity-state-hover",
+    "size-control-md",
+    "size-icon-md",
+    "space-component-padding-sm",
+    "space-component-padding-xs",
+    "type-body2-family",
+    "type-body2-size",
+    "z-index-state-layer"
+  ],
+  "a11yNotes": [
+    "role treegrid named by the label; parent rows report aria-expanded",
+    "Arrow Right expands, Left collapses, Up and Down move, Enter activates"
+  ]
+}

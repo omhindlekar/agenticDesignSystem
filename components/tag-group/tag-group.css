@@ -1,0 +1,99 @@
+/* Tags: square chips on the tonal containers; selected tags take the primary container and a check. */
+.ads-tag-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-component-padding-xs);
+}
+
+.ads-tag-group__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-component-gap-sm);
+  outline: none;
+}
+
+.ads-tag {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-component-padding-xs);
+  min-height: var(--size-control-sm);
+  padding-inline: var(--space-component-padding-sm);
+  border: var(--border-width-default) solid var(--color-border-input);
+  background-color: var(--color-container-neutral);
+  color: var(--color-on-container-neutral);
+  font-family: var(--type-label-family);
+  font-size: var(--type-label-size);
+  font-weight: var(--type-label-weight);
+  outline: none;
+  isolation: isolate;
+}
+
+.ads-tag[data-tone="primary"] {
+  background-color: var(--color-container-primary);
+  color: var(--color-on-container-primary);
+}
+.ads-tag[data-tone="info"] {
+  background-color: var(--color-container-info);
+  color: var(--color-on-container-info);
+}
+.ads-tag[data-tone="success"] {
+  background-color: var(--color-container-success);
+  color: var(--color-on-container-success);
+}
+.ads-tag[data-tone="warning"] {
+  background-color: var(--color-container-warning);
+  color: var(--color-on-container-warning);
+}
+.ads-tag[data-tone="danger"] {
+  background-color: var(--color-container-danger);
+  color: var(--color-on-container-danger);
+}
+
+.ads-tag[data-selection-mode] {
+  cursor: pointer;
+}
+
+.ads-tag::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-index-state-layer);
+  background-color: var(--color-state-layer);
+  opacity: 0;
+}
+
+.ads-tag[data-selection-mode]:is([data-hovered], :hover)::before {
+  opacity: var(--opacity-state-hover);
+}
+
+.ads-tag:is([data-focus-visible], :focus-visible) {
+  outline: var(--border-width-focus) solid var(--color-interactive-focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.ads-tag[data-selected] {
+  border-color: var(--color-border-interactive);
+  background-color: var(--color-container-primary);
+  color: var(--color-on-container-primary);
+}
+
+.ads-tag__remove {
+  display: inline-grid;
+  place-items: center;
+  margin: 0;
+  margin-inline-end: calc(var(--space-component-padding-xs) * -1);
+  padding: calc(var(--space-component-padding-xs) / 2);
+  border: none;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.ads-tag__remove:is([data-hovered], :hover) {
+  background-color: color-mix(in srgb, currentColor calc(var(--opacity-state-hover) * 100%), transparent);
+}
+
+.ads-tag__remove:is([data-focus-visible], :focus-visible) {
+  outline: var(--border-width-focus) solid var(--color-interactive-focus-ring);
+}

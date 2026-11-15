@@ -14,7 +14,7 @@ import {
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, '../../..');
-const POC_COMPONENTS = ['button', 'input', 'select', 'checkbox', 'card', 'modal', 'icon', 'icon-button', 'textarea', 'search-field', 'field', 'radio-group', 'switch', 'segmented-control', 'slider', 'number-field', 'combobox', 'date-picker', 'spinner', 'progress-bar', 'banner', 'toast-region', 'badge', 'tooltip', 'popover', 'menu', 'drawer', 'link', 'tabs', 'breadcrumbs', 'side-nav', 'app-header'] as const;
+const POC_COMPONENTS = ['button', 'input', 'select', 'checkbox', 'card', 'modal', 'icon', 'icon-button', 'textarea', 'search-field', 'field', 'radio-group', 'switch', 'segmented-control', 'slider', 'number-field', 'combobox', 'date-picker', 'spinner', 'progress-bar', 'banner', 'toast-region', 'badge', 'tooltip', 'popover', 'menu', 'drawer', 'link', 'tabs', 'breadcrumbs', 'side-nav', 'app-header', 'table', 'list', 'tag-group', 'avatar', 'avatar-group', 'divider', 'tree', 'image', 'text', 'heading'] as const;
 
 describe('FR-3 component ↔ metadata parity (real components)', () => {
   for (const name of POC_COMPONENTS) {
@@ -29,6 +29,10 @@ describe('FR-3 parity: root detection', () => {
   it('FR-3: skips the hidden <template> React Aria renders before the root', () => {
     const root = parseRootAttributes('<template><div class="x"></div></template><div data-variant="error" data-state="filled error"></div>');
     expect(root).toEqual({ variant: 'error', states: ['filled', 'error'] });
+  });
+  it('FR-3: skips the image preload link React 19 hoists before the root', () => {
+    const root = parseRootAttributes('<link rel="preload" as="image" href="a.png"/><span data-variant="16:9" data-state="default"><img src="a.png"/></span>');
+    expect(root).toEqual({ variant: '16:9', states: ['default'] });
   });
 });
 
