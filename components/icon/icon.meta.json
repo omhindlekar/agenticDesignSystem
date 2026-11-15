@@ -13,7 +13,7 @@
       "name": "name",
       "type": "IconName",
       "required": true,
-      "description": "Icon to draw. One of: add, arrow_back, arrow_forward, calendar_today, cancel, check, check_circle, check_small, close, content_copy, delete, download, edit, filter_list, help, info, keyboard_arrow_down, keyboard_arrow_right, keyboard_arrow_up, lock, mail, menu, more_horiz, more_vert, open_in_new, person, remove, report, search, settings, upload, visibility, visibility_off, warning."
+      "description": "Icon to draw. One of: add, arrow_back, arrow_forward, calendar_today, cancel, check, check_circle, check_small, close, content_copy, delete, download, edit, filter_list, help, info, keyboard_arrow_down, keyboard_arrow_left, keyboard_arrow_right, keyboard_arrow_up, lock, mail, menu, more_horiz, more_vert, open_in_new, person, remove, report, search, settings, upload, visibility, visibility_off, warning."
     },
     {
       "name": "size",

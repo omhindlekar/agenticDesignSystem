@@ -1,0 +1,125 @@
+/* Switch: square track and thumb in a 40px-tall hit area; the thumb slides on. */
+.ads-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-component-padding-xs);
+  min-height: var(--size-hit-area);
+  cursor: pointer;
+}
+
+.ads-switch__control {
+  position: relative;
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  height: var(--size-hit-area);
+  padding-inline: var(--space-component-padding-sm);
+  isolation: isolate;
+}
+
+.ads-switch__layer {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-index-state-layer);
+  background-color: var(--color-state-layer);
+  opacity: 0;
+}
+
+.ads-switch:is([data-hovered], :hover):not([data-disabled]) .ads-switch__layer {
+  opacity: var(--opacity-state-hover);
+}
+
+.ads-switch:is([data-pressed], :active):not([data-disabled]) .ads-switch__layer {
+  opacity: var(--opacity-state-pressed);
+}
+
+.ads-switch__track {
+  position: relative;
+  box-sizing: border-box;
+  width: calc(var(--size-control-indicator) * 2);
+  height: var(--size-control-indicator);
+  border: var(--border-width-control) solid var(--color-border-input);
+  background-color: var(--color-background-surface);
+}
+
+.ads-switch__thumb {
+  position: absolute;
+  inset-block: var(--border-width-control);
+  inset-inline-start: var(--border-width-control);
+  width: calc(var(--size-control-indicator) - var(--border-width-control) * 4);
+  background-color: var(--color-border-input-hover);
+}
+
+.ads-switch[data-state~="checked"] .ads-switch__track {
+  border-color: var(--color-interactive-default);
+  background-color: var(--color-interactive-default);
+}
+
+.ads-switch[data-state~="checked"] .ads-switch__thumb {
+  background-color: var(--color-text-inverse);
+  transform: translateX(var(--size-control-indicator));
+}
+
+.ads-switch[data-state~="checked"]:is([data-hovered], :hover):not([data-disabled]) .ads-switch__track {
+  border-color: var(--color-interactive-hover);
+  background-color: var(--color-interactive-hover);
+}
+
+.ads-switch[data-state~="unchecked"]:is([data-hovered], :hover):not([data-disabled]) .ads-switch__track {
+  border-color: var(--color-border-input-hover);
+}
+
+.ads-switch:is([data-focus-visible], :has(:focus-visible)) .ads-switch__track {
+  outline: var(--border-width-focus) solid var(--color-interactive-focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.ads-switch:is([data-focus-visible], :has(:focus-visible)) .ads-switch__layer {
+  opacity: var(--opacity-state-focus);
+}
+
+.ads-switch__label {
+  font-family: var(--type-label-family);
+  font-size: var(--type-label-size);
+  font-weight: var(--type-label-weight);
+  line-height: var(--type-label-line-height);
+  letter-spacing: var(--type-label-letter-spacing);
+  color: var(--color-text-primary);
+}
+
+.ads-switch[data-state~="disabled"] {
+  cursor: not-allowed;
+}
+
+.ads-switch[data-state~="disabled"] .ads-switch__track {
+  border-color: var(--color-border-disabled);
+  background-color: var(--color-interactive-disabled);
+}
+
+.ads-switch[data-state~="disabled"] .ads-switch__thumb,
+.ads-switch[data-state~="disabled"] .ads-switch__label {
+  color: color-mix(in srgb, var(--color-text-primary) calc(var(--opacity-disabled) * 100%), transparent);
+  background-color: color-mix(in srgb, var(--color-text-primary) calc(var(--opacity-disabled) * 100%), transparent);
+}
+
+.ads-switch[data-state~="disabled"] .ads-switch__label {
+  background-color: transparent;
+}
+
+[dir="rtl"] .ads-switch[data-state~="checked"] .ads-switch__thumb {
+  transform: translateX(calc(var(--size-control-indicator) * -1));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ads-switch__thumb {
+    transition: transform var(--motion-duration-standard) var(--motion-easing-standard);
+  }
+
+  .ads-switch__track,
+  .ads-switch__layer {
+    transition:
+      background-color var(--motion-duration-standard) var(--motion-easing-standard),
+      border-color var(--motion-duration-standard) var(--motion-easing-standard),
+      opacity var(--motion-duration-standard) var(--motion-easing-standard);
+  }
+}

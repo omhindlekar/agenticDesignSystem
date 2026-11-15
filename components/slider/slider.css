@@ -1,0 +1,106 @@
+/* Slider: 4px track, filled in the interactive colour, with square 20px thumbs in 40px hit areas. */
+.ads-slider__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-component-gap-sm);
+}
+
+.ads-slider__output {
+  font-family: var(--type-label-family);
+  font-size: var(--type-label-size);
+  font-weight: var(--type-label-weight);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-primary);
+}
+
+.ads-slider__track {
+  position: relative;
+  height: var(--size-hit-area);
+  margin-inline: calc(var(--size-control-indicator) / 2);
+}
+
+.ads-slider__rail,
+.ads-slider__fill {
+  position: absolute;
+  inset-block-start: 50%;
+  height: var(--space-component-padding-xs);
+  transform: translateY(-50%);
+}
+
+.ads-slider__rail {
+  inset-inline: 0;
+  background-color: var(--color-border-input);
+}
+
+.ads-slider__fill {
+  background-color: var(--color-interactive-default);
+}
+
+.ads-slider__thumb {
+  inset-block-start: 50%;
+  box-sizing: border-box;
+  width: var(--size-control-indicator);
+  height: var(--size-control-indicator);
+  border: var(--border-width-control) solid var(--color-background-surface);
+  background-color: var(--color-interactive-default);
+  outline: var(--border-width-default) solid var(--color-interactive-default);
+  isolation: isolate;
+  cursor: grab;
+}
+
+/* 40px square state layer around the thumb. */
+.ads-slider__thumb::before {
+  content: '';
+  position: absolute;
+  inset: calc((var(--size-hit-area) - var(--size-control-indicator)) / -2);
+  z-index: var(--z-index-state-layer);
+  background-color: var(--color-state-layer);
+  opacity: 0;
+}
+
+.ads-slider__thumb:is([data-hovered], :hover):not([data-disabled])::before {
+  opacity: var(--opacity-state-hover);
+}
+
+.ads-slider__thumb:is([data-dragging], :active):not([data-disabled])::before {
+  opacity: var(--opacity-state-pressed);
+}
+
+.ads-slider__thumb:is([data-dragging], :active) {
+  cursor: grabbing;
+}
+
+.ads-slider__thumb:is([data-focus-visible], :has(:focus-visible)) {
+  outline: var(--border-width-focus) solid var(--color-interactive-focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.ads-slider__thumb:is([data-focus-visible], :has(:focus-visible))::before {
+  opacity: var(--opacity-state-focus);
+}
+
+.ads-slider[data-state~="disabled"] .ads-slider__fill,
+.ads-slider[data-state~="disabled"] .ads-slider__thumb {
+  background-color: var(--color-border-disabled);
+  outline-color: var(--color-border-disabled);
+}
+
+.ads-slider[data-state~="disabled"] .ads-slider__rail {
+  background-color: var(--color-interactive-disabled);
+}
+
+.ads-slider[data-state~="disabled"] .ads-field__label,
+.ads-slider[data-state~="disabled"] .ads-slider__output {
+  color: color-mix(in srgb, var(--color-text-primary) calc(var(--opacity-disabled) * 100%), transparent);
+}
+
+.ads-slider[data-state~="disabled"] .ads-slider__thumb {
+  cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ads-slider__thumb::before {
+    transition: opacity var(--motion-duration-standard) var(--motion-easing-standard);
+  }
+}

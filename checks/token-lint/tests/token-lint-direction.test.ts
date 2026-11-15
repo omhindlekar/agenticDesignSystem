@@ -12,6 +12,7 @@ import {
   lintMotionGuard,
   lintDirectory,
   loadSemanticTokenNames,
+  lintTokenReferences,
 } from '../index.js';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '../../..');
@@ -193,5 +194,32 @@ describe('FR-1 token-lint: icons (DS-I-001)', () => {
 
   it('FR-1: the SVG icon package is not an icon font', () => {
     expect(lintString("import path from '@material-symbols/svg-600/sharp/close.svg';").map((x) => x.pattern)).not.toContain('icon-font');
+  });
+});
+
+describe('FR-1 token-lint: runtime variables from React Aria', () => {
+  const names = new Set(['color-text-primary']);
+  it('FR-1: allows the runtime variables React Aria sets, such as --trigger-width', () => {
+    expect(lintTokenReferences('min-width: var(--trigger-width);', 'p.css', names)).toEqual([]);
+  });
+  it('FR-1: still flags any other non-semantic variable', () => {
+    expect(lintTokenReferences('width: var(--my-width);', 'p.css', names).map((v) => v.pattern)).toEqual(['non-semantic-token']);
+  });
+});
+
+describe('FR-1 token-lint: native pickers (DS-C-006)', () => {
+  it.each([
+    '<select name="country"><option>UK</option></select>',
+    '<input type="date" />',
+    "<input type='date' />",
+    '<div role="combobox" aria-expanded="false" />',
+  ])('FR-1: flags %s', (src) => {
+    const v = lintString(src).filter((x) => x.pattern === 'native-picker');
+    expect(v.length).toBe(1);
+    expect(v[0]?.ruleRef).toBe('DS-C-006');
+  });
+
+  it('FR-1: the design-system pickers are fine', () => {
+    expect(lintString('<Select label="Country" options={o} /><DatePicker label="Start" />').map((x) => x.pattern)).not.toContain('native-picker');
   });
 });

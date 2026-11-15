@@ -1,0 +1,104 @@
+{
+  "id": "field",
+  "purpose": "Gives a custom control the standard label, helper and error layout, and links them to it with the right ARIA attributes.",
+  "variants": [
+    "default",
+    "error"
+  ],
+  "states": [
+    "default",
+    "disabled",
+    "error"
+  ],
+  "props": [
+    {
+      "name": "label",
+      "type": "string",
+      "required": true,
+      "description": "Visible label, associated with the control"
+    },
+    {
+      "name": "helperText",
+      "type": "string",
+      "required": false,
+      "description": "Guidance below the control"
+    },
+    {
+      "name": "errorMessage",
+      "type": "string",
+      "required": false,
+      "description": "Error below the control; sets aria-invalid"
+    },
+    {
+      "name": "required",
+      "type": "boolean",
+      "required": false,
+      "description": "Sets aria-required and shows the asterisk"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "description": "Disables the control and dims the label"
+    },
+    {
+      "name": "children",
+      "type": "(control: FieldControlProps) => React.ReactNode",
+      "required": true,
+      "description": "Render prop that receives id, aria-describedby, aria-invalid, aria-required and disabled; spread them onto the control"
+    }
+  ],
+  "whenToUse": [
+    "To wrap a control the design system does not provide, such as a colour picker or a third-party widget"
+  ],
+  "whenNotToUse": [
+    "Around Input, Select, Textarea and the other fields — they already include the layout"
+  ],
+  "related": [
+    "input",
+    "textarea"
+  ],
+  "antiPatterns": [
+    "Forgetting to spread the control props, which breaks the label and error links"
+  ],
+  "spec": {
+    "anatomy": [
+      "Label above, the custom control, helper text, error text with the report icon"
+    ],
+    "sizes": [
+      "Gaps `space-component-padding-xs`; the control sets its own size"
+    ],
+    "typography": [
+      "Label `type-label-size`; helper and error `type-caption-size`"
+    ],
+    "states": [
+      "error: `color-text-danger` message; disabled: label at `opacity-disabled`"
+    ],
+    "motion": [
+      "None"
+    ]
+  },
+  "tokensUsed": [
+    "border-width-default",
+    "color-text-danger",
+    "color-text-primary",
+    "color-text-secondary",
+    "color-text-success",
+    "font-family-body",
+    "opacity-disabled",
+    "space-component-padding-xs",
+    "type-caption-family",
+    "type-caption-letter-spacing",
+    "type-caption-line-height",
+    "type-caption-size",
+    "type-caption-weight",
+    "type-label-family",
+    "type-label-letter-spacing",
+    "type-label-line-height",
+    "type-label-size",
+    "type-label-weight"
+  ],
+  "a11yNotes": [
+    "The render prop supplies the label id link, aria-describedby, aria-invalid and aria-required"
+  ]
+}

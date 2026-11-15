@@ -1,0 +1,143 @@
+/* RadioGroup: square 20px radios with a square mark, each in a 40px hit area. */
+.ads-radio-group__options {
+  display: flex;
+  flex-direction: column;
+}
+
+.ads-radio-group[data-orientation="horizontal"] .ads-radio-group__options {
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-gap: var(--space-component-gap-md);
+}
+
+.ads-radio {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-component-padding-xs);
+  min-height: var(--size-hit-area);
+  cursor: pointer;
+}
+
+.ads-radio__control {
+  position: relative;
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: var(--size-hit-area);
+  height: var(--size-hit-area);
+  isolation: isolate;
+}
+
+.ads-radio__layer {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-index-state-layer);
+  background-color: var(--color-state-layer);
+  opacity: 0;
+}
+
+.ads-radio:is([data-hovered], :hover):not([data-disabled]) .ads-radio__layer {
+  opacity: var(--opacity-state-hover);
+}
+
+.ads-radio:is([data-pressed], :active):not([data-disabled]) .ads-radio__layer {
+  opacity: var(--opacity-state-pressed);
+}
+
+.ads-radio__box {
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  width: var(--size-control-indicator);
+  height: var(--size-control-indicator);
+  border: var(--border-width-control) solid var(--color-border-input);
+  background-color: var(--color-background-surface);
+}
+
+/* Selected: blue frame with a square mark; radius stays 0, so the mark is a square, not a dot. */
+.ads-radio__dot {
+  width: calc(var(--size-control-indicator) / 2);
+  height: calc(var(--size-control-indicator) / 2);
+  background-color: var(--color-interactive-default);
+  transform: scale(0);
+}
+
+.ads-radio[data-selected] .ads-radio__box {
+  border-color: var(--color-interactive-default);
+}
+
+.ads-radio[data-selected] .ads-radio__dot {
+  transform: scale(1);
+}
+
+.ads-radio:is([data-hovered], :hover):not([data-disabled]) .ads-radio__box {
+  border-color: var(--color-border-input-hover);
+}
+
+.ads-radio[data-selected]:is([data-hovered], :hover):not([data-disabled]) .ads-radio__box {
+  border-color: var(--color-interactive-hover);
+}
+
+.ads-radio:is([data-focus-visible], :has(:focus-visible)) .ads-radio__box {
+  outline: var(--border-width-focus) solid var(--color-interactive-focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.ads-radio:is([data-focus-visible], :has(:focus-visible)) .ads-radio__layer {
+  opacity: var(--opacity-state-focus);
+}
+
+.ads-radio__text {
+  display: flex;
+  flex-direction: column;
+  padding-block: calc((var(--size-hit-area) - var(--type-label-size) * var(--type-label-line-height)) / 2);
+}
+
+.ads-radio__label {
+  font-family: var(--type-label-family);
+  font-size: var(--type-label-size);
+  font-weight: var(--type-label-weight);
+  line-height: var(--type-label-line-height);
+  letter-spacing: var(--type-label-letter-spacing);
+  color: var(--color-text-primary);
+}
+
+.ads-radio__description {
+  font-family: var(--type-caption-family);
+  font-size: var(--type-caption-size);
+  line-height: var(--type-caption-line-height);
+  color: var(--color-text-secondary);
+}
+
+.ads-radio-group[data-state~="error"] .ads-radio:not([data-selected]) .ads-radio__box {
+  border-color: var(--color-border-danger);
+}
+
+.ads-radio[data-disabled] {
+  cursor: not-allowed;
+}
+
+.ads-radio[data-disabled] .ads-radio__box {
+  border-color: var(--color-border-disabled);
+  background-color: var(--color-interactive-disabled);
+}
+
+.ads-radio[data-disabled] .ads-radio__dot {
+  background-color: color-mix(in srgb, var(--color-text-primary) calc(var(--opacity-disabled) * 100%), transparent);
+}
+
+.ads-radio[data-disabled] .ads-radio__label,
+.ads-radio[data-disabled] .ads-radio__description,
+.ads-radio-group[data-state~="disabled"] .ads-field__label {
+  color: color-mix(in srgb, var(--color-text-primary) calc(var(--opacity-disabled) * 100%), transparent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ads-radio__layer {
+    transition: opacity var(--motion-duration-standard) var(--motion-easing-standard);
+  }
+
+  .ads-radio__dot {
+    transition: transform var(--motion-duration-standard) var(--motion-easing-enter);
+  }
+}

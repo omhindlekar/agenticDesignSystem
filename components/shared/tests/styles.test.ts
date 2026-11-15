@@ -9,6 +9,23 @@ import { fileURLToPath } from 'node:url';
 import { resolveSemanticTokens } from '../../../scripts/build-tokens.js';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '../../..');
+
+/** Splits a selector list on top-level commas, so :is(a, b) stays whole. */
+const splitSelectors = (list: string): string[] => {
+  const out: string[] = [];
+  let depth = 0;
+  let cur = '';
+  for (const ch of list) {
+    if (ch === '(') depth++;
+    if (ch === ')') depth--;
+    if (ch === ',' && depth === 0) {
+      out.push(cur.trim());
+      cur = '';
+    } else cur += ch;
+  }
+  if (cur.trim()) out.push(cur.trim());
+  return out;
+};
 const css = (id: string): string => readFileSync(join(root, 'components', id, `${id}.css`), 'utf8');
 const rules = (src: string): Array<{ selector: string; body: string }> =>
   [...src.matchAll(/([^{}]+)\{([^{}]*)\}/g)].map((m) => ({
@@ -37,14 +54,14 @@ describe('FR-1 disabled controls', () => {
 
   it.each(COMPONENTS)('FR-1: every %s hover rule excludes disabled controls', (id) => {
     for (const r of rules(css(id)).filter((x) => /:hover/.test(x.selector))) {
-      for (const sel of r.selector.split(',')) {
-        expect(sel, `${id}: ${sel.trim()}`).toMatch(/:not\(\[aria-disabled\]\)|:not\(:disabled\)/);
+      for (const sel of splitSelectors(r.selector)) {
+        expect(sel, `${id}: ${sel.trim()}`).toMatch(/:not\(\[aria-disabled\]\)|:not\(:disabled\)|:not\(\[data-disabled\]\)/);
       }
     }
   });
 
   it.each(Object.entries(NATIVE))('FR-1: %s shows no focus ring when natively disabled', (id, field) => {
-    const r = rules(css(id)).find((x) => x.selector.split(',').some((s) => s.trim() === `${field}:disabled`));
+    const r = rules(css(id)).find((x) => splitSelectors(x.selector).some((s) => s === `${field}:disabled`));
     expect(r?.body, `${field}:disabled rule`).toMatch(/outline:\s*none/);
   });
 
