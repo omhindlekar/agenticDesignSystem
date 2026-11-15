@@ -16,7 +16,7 @@ export const ErrorVariant: Story = {
   parameters: { ads: { variant: 'error' } },
 };
 export const Currency: Story = {
-  args: { label: 'Budget', defaultValue: 1200, step: 100, maxValue: 10000, formatOptions: { style: 'currency', currency: 'GBP' }, helperText: 'Monthly' },
+  args: { label: 'Budget', defaultValue: 1200, step: 100, minValue: 0, maxValue: 10000, formatOptions: { style: 'currency', currency: 'GBP' }, helperText: 'Monthly' },
   parameters: { ads: { variant: 'default' } },
 };
 

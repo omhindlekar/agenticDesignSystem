@@ -48,7 +48,7 @@
       "name": "step",
       "type": "number",
       "required": false,
-      "description": "Step for arrow keys and buttons. Defaults to 1"
+      "description": "Step for arrow keys and buttons. Defaults to 1. Values snap to minValue + n × step, so set minValue to a multiple of step"
     },
     {
       "name": "formatOptions",
@@ -107,7 +107,8 @@
   ],
   "antiPatterns": [
     "Using it for phone numbers or IDs",
-    "Removing the step buttons when the value is usually small"
+    "Removing the step buttons when the value is usually small",
+    "A minValue that is not a multiple of step (min 1, step 100 snaps 1200 to 1201)"
   ],
   "spec": {
     "anatomy": [

@@ -1,6 +1,6 @@
 {
   "id": "field",
-  "purpose": "Gives a custom control the design system's label, helper and error layout, and links them to it with the right ARIA attributes.",
+  "purpose": "Gives a custom control the standard label, helper and error layout, and links them to it with the right ARIA attributes.",
   "variants": [
     "default",
     "error"

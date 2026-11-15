@@ -35,4 +35,10 @@ describe('FR-1 shared popover', () => {
     expect(css).toMatch(/\[data-focused\][^{]*\{[^}]*var\(--opacity-state-focus\)/);
     expect(css).toMatch(/\[data-selected\][^{]*\{[^}]*var\(--color-text-link\)/);
   });
+
+  it('FR-1: the list box, not the popover, caps the height at about eight options and scrolls', () => {
+    expect(rule('.ads-listbox')).toMatch(/max-height:\s*calc\(var\(--size-control-md\) \* 8\)/);
+    expect(rule('.ads-listbox')).toMatch(/overflow:\s*auto/);
+    expect(rule('.ads-popover')).not.toMatch(/max-height/);
+  });
 });
