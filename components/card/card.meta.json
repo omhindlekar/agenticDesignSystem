@@ -79,7 +79,7 @@
   "a11yNotes": [
     "Interactive cards (onClick or href) must be reachable by keyboard with Tab",
     "Interactive cards must have a visible focus ring using color-interactive-focus-ring",
-    "Provide aria-label when the card has no visible heading or the heading alone is ambiguous",
+    "Provide aria-label only when the card has no visible heading or the heading alone is ambiguous; it must contain the visible title, words in the same order (WCAG 2.5.3 Label in Name)",
     "Do not place interactive elements inside a card that is itself interactive — this creates nested interactive regions"
   ]
 }

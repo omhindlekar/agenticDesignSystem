@@ -104,7 +104,7 @@
     "type-overline-weight"
   ],
   "a11yNotes": [
-    "Counts carry an aria-label with the full number and its meaning",
+    "Counts read as the full number and its meaning (visually hidden text); the capped digits are hidden from assistive tech",
     "Dots are role img with a label, so meaning is not colour alone",
     "Not interactive and not focusable"
   ]
