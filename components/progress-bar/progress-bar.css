@@ -1,0 +1,59 @@
+/* ProgressBar: 4px square track, filled in the interactive colour. */
+.ads-progress {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-component-padding-xs);
+}
+
+.ads-progress__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-component-gap-sm);
+}
+
+.ads-progress__value {
+  font-family: var(--type-label-family);
+  font-size: var(--type-label-size);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-secondary);
+}
+
+.ads-progress__track {
+  position: relative;
+  height: var(--space-component-padding-xs);
+  overflow: hidden;
+  background-color: var(--color-border-default);
+}
+
+.ads-progress__fill {
+  height: 100%;
+  background-color: var(--color-interactive-default);
+}
+
+/* Indeterminate without motion: a full, lighter fill shows activity without movement. */
+.ads-progress[data-variant="indeterminate"] .ads-progress__fill {
+  width: 100%;
+  background-color: var(--color-container-primary);
+}
+
+@keyframes ads-progress-sweep {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(300%);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ads-progress__fill {
+    transition: width var(--motion-duration-standard) var(--motion-easing-standard);
+  }
+
+  .ads-progress[data-variant="indeterminate"] .ads-progress__fill {
+    width: 33%;
+    background-color: var(--color-interactive-default);
+    animation: ads-progress-sweep calc(var(--motion-duration-overlay) * 7) var(--motion-easing-standard) infinite;
+  }
+}

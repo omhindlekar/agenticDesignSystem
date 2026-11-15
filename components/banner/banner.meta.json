@@ -1,0 +1,116 @@
+{
+  "id": "banner",
+  "purpose": "An inline message about a page or section, such as a warning, an error or a confirmation, with an optional action and dismiss.",
+  "variants": [
+    "info",
+    "success",
+    "warning",
+    "danger"
+  ],
+  "states": [
+    "default"
+  ],
+  "props": [
+    {
+      "name": "tone",
+      "type": "'info' | 'success' | 'warning' | 'danger'",
+      "required": false,
+      "description": "Meaning and colour. Defaults to info"
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "required": false,
+      "description": "Short headline"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Body text"
+    },
+    {
+      "name": "actions",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Buttons, for example Retry or Undo"
+    },
+    {
+      "name": "onDismiss",
+      "type": "() => void",
+      "required": false,
+      "description": "Shows a Dismiss IconButton and is called when it is pressed"
+    },
+    {
+      "name": "dismissLabel",
+      "type": "string",
+      "required": false,
+      "description": "Name of the dismiss control. Defaults to Dismiss"
+    }
+  ],
+  "whenToUse": [
+    "For a message that applies to the page or a section and should stay until resolved",
+    "For form-level errors summarised at the top"
+  ],
+  "whenNotToUse": [
+    "For brief confirmations — use toast()",
+    "For a message about one field — use that field's errorMessage"
+  ],
+  "related": [
+    "toast-region",
+    "modal"
+  ],
+  "antiPatterns": [
+    "Stacking several banners",
+    "Using danger tone for non-errors"
+  ],
+  "spec": {
+    "anatomy": [
+      "Tonal container with a 4px accent edge on the start side, status icon, title, body, actions and an optional dismiss IconButton"
+    ],
+    "sizes": [
+      "Padding `space-component-padding-md`; accent edge `space-component-padding-xs`"
+    ],
+    "typography": [
+      "Title `type-label-size` at `font-weight-heading`; body `type-body2-size`"
+    ],
+    "states": [
+      "Fill `color-container-info` / `color-container-success` / `color-container-warning` / `color-container-danger` with the matching on-container text"
+    ],
+    "motion": [
+      "None"
+    ]
+  },
+  "tokensUsed": [
+    "border-width-default",
+    "color-border-danger",
+    "color-border-interactive",
+    "color-border-success",
+    "color-container-danger",
+    "color-container-info",
+    "color-container-success",
+    "color-container-warning",
+    "color-on-container-danger",
+    "color-on-container-info",
+    "color-on-container-success",
+    "color-on-container-warning",
+    "color-text-info",
+    "color-text-warning",
+    "font-weight-heading",
+    "space-component-gap-sm",
+    "space-component-padding-md",
+    "space-component-padding-xs",
+    "type-body2-family",
+    "type-body2-letter-spacing",
+    "type-body2-line-height",
+    "type-body2-size",
+    "type-label-family",
+    "type-label-line-height",
+    "type-label-size"
+  ],
+  "a11yNotes": [
+    "Danger and warning use role alert, so they are announced at once; info and success use role status",
+    "The icon is decorative; the title carries the meaning",
+    "Text is checked against its container at 4.5:1 in every theme"
+  ]
+}

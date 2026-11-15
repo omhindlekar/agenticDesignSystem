@@ -14,7 +14,7 @@ import {
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, '../../..');
-const POC_COMPONENTS = ['button', 'input', 'select', 'checkbox', 'card', 'modal', 'icon', 'icon-button', 'textarea', 'search-field', 'field', 'radio-group', 'switch', 'segmented-control', 'slider', 'number-field', 'combobox', 'date-picker'] as const;
+const POC_COMPONENTS = ['button', 'input', 'select', 'checkbox', 'card', 'modal', 'icon', 'icon-button', 'textarea', 'search-field', 'field', 'radio-group', 'switch', 'segmented-control', 'slider', 'number-field', 'combobox', 'date-picker', 'spinner', 'progress-bar', 'banner', 'toast-region', 'badge'] as const;
 
 describe('FR-3 component ↔ metadata parity (real components)', () => {
   for (const name of POC_COMPONENTS) {

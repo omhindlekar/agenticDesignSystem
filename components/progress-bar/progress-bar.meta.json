@@ -1,0 +1,117 @@
+{
+  "id": "progress-bar",
+  "purpose": "Shows how far a task has got, such as an upload, or that work is ongoing when the amount is unknown.",
+  "variants": [
+    "determinate",
+    "indeterminate"
+  ],
+  "states": [
+    "default"
+  ],
+  "props": [
+    {
+      "name": "label",
+      "type": "string",
+      "required": true,
+      "description": "What is in progress"
+    },
+    {
+      "name": "value",
+      "type": "number",
+      "required": false,
+      "description": "Current value. Defaults to 0"
+    },
+    {
+      "name": "minValue",
+      "type": "number",
+      "required": false,
+      "description": "Defaults to 0"
+    },
+    {
+      "name": "maxValue",
+      "type": "number",
+      "required": false,
+      "description": "Defaults to 100"
+    },
+    {
+      "name": "indeterminate",
+      "type": "boolean",
+      "required": false,
+      "description": "Unknown amount; shows ongoing activity"
+    },
+    {
+      "name": "formatOptions",
+      "type": "Intl.NumberFormatOptions",
+      "required": false,
+      "description": "Value formatting. Defaults to percent"
+    },
+    {
+      "name": "showValue",
+      "type": "boolean",
+      "required": false,
+      "description": "Shows the formatted value. Defaults to true"
+    }
+  ],
+  "whenToUse": [
+    "For uploads, imports and other measurable work",
+    "When the user benefits from knowing how much is left"
+  ],
+  "whenNotToUse": [
+    "For waits under a second — show nothing",
+    "For unknown short waits in a small area — use Spinner"
+  ],
+  "related": [
+    "spinner"
+  ],
+  "antiPatterns": [
+    "Progress that jumps backwards",
+    "An indeterminate bar for work that can be measured"
+  ],
+  "spec": {
+    "anatomy": [
+      "Label with the value, and a 4px square track with a fill"
+    ],
+    "sizes": [
+      "Track `space-component-padding-xs` tall"
+    ],
+    "typography": [
+      "Label `type-label-size`; value in tabular figures"
+    ],
+    "states": [
+      "Rail `color-border-default`, fill `color-interactive-default`; indeterminate without motion fills with `color-container-primary`"
+    ],
+    "motion": [
+      "Fill width over `motion-duration-standard`; indeterminate sweep only without reduced motion"
+    ]
+  },
+  "tokensUsed": [
+    "border-width-default",
+    "color-border-default",
+    "color-container-primary",
+    "color-interactive-default",
+    "color-text-danger",
+    "color-text-primary",
+    "color-text-secondary",
+    "color-text-success",
+    "font-family-body",
+    "motion-duration-overlay",
+    "motion-duration-standard",
+    "motion-easing-standard",
+    "space-component-gap-sm",
+    "space-component-padding-xs",
+    "type-caption-family",
+    "type-caption-letter-spacing",
+    "type-caption-line-height",
+    "type-caption-size",
+    "type-caption-weight",
+    "type-label-family",
+    "type-label-letter-spacing",
+    "type-label-line-height",
+    "type-label-size",
+    "type-label-weight"
+  ],
+  "a11yNotes": [
+    "role progressbar named by the label, with aria-valuenow and a value text",
+    "Indeterminate bars omit aria-valuenow"
+  ]
+}

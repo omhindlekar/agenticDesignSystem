@@ -83,6 +83,11 @@ rules:
       - number-field
       - combobox
       - date-picker
+      - spinner
+      - progress-bar
+      - banner
+      - toast-region
+      - badge
     example: "border: var(--border-width-default) solid var(--color-border-default)"
     counterExample: "border-radius: 50%"
 
@@ -147,6 +152,11 @@ rules:
       - number-field
       - combobox
       - date-picker
+      - spinner
+      - progress-bar
+      - banner
+      - toast-region
+      - badge
     example: ".ads-button { font-family: var(--font-family-display) }"
     counterExample: ".ads-modal__title { font-family: var(--font-family-body) }"
 
@@ -180,6 +190,11 @@ rules:
       - number-field
       - combobox
       - date-picker
+      - spinner
+      - progress-bar
+      - banner
+      - toast-region
+      - badge
     example: "Use color-text-primary on color-background-surface (passes 4.5:1)"
     counterExample: "Light grey text on white background"
 
@@ -209,6 +224,8 @@ rules:
       - number-field
       - combobox
       - date-picker
+      - banner
+      - toast-region
     example: "outline: var(--border-width-focus) solid var(--color-interactive-focus-ring); outline-offset: var(--focus-ring-offset)"
     counterExample: "outline: none"
 
@@ -333,6 +350,11 @@ rules:
       - number-field
       - combobox
       - date-picker
+      - spinner
+      - progress-bar
+      - banner
+      - toast-region
+      - badge
     example: "@media (prefers-reduced-motion: no-preference) { .x { transition: color var(--motion-duration-standard) var(--motion-easing-standard); } }"
     counterExample: "transition: all 300ms ease"
 
@@ -360,6 +382,8 @@ rules:
       - number-field
       - combobox
       - date-picker
+      - banner
+      - toast-region
     example: "<IconButton icon=\"close\" label=\"Close dialog\" />"
     counterExample: "<button><svg viewBox=\"0 0 24 24\">…</svg></button>"
 

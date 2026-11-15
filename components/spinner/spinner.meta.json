@@ -1,0 +1,75 @@
+{
+  "id": "spinner",
+  "purpose": "Shows that something is loading when the time it takes is unknown, as a small square spinning on a track.",
+  "variants": [
+    "sm",
+    "md",
+    "lg"
+  ],
+  "states": [
+    "default"
+  ],
+  "props": [
+    {
+      "name": "size",
+      "type": "'sm' | 'md' | 'lg'",
+      "required": false,
+      "description": "16, 20 or 24px. Defaults to md"
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "required": false,
+      "description": "What is loading, announced as a status. Defaults to Loading"
+    }
+  ],
+  "whenToUse": [
+    "For short waits of unknown length inside a region, such as loading a list"
+  ],
+  "whenNotToUse": [
+    "For long or measurable work — use ProgressBar",
+    "Inside a button — Button has its own loading state"
+  ],
+  "related": [
+    "progress-bar",
+    "button"
+  ],
+  "antiPatterns": [
+    "Several spinners on one screen at once",
+    "A spinner with no label"
+  ],
+  "spec": {
+    "anatomy": [
+      "A square on a neutral track, rotating; a visually hidden label; under reduced motion the label shows as text instead"
+    ],
+    "sizes": [
+      "sm `size-icon-sm`, md `size-control-indicator`, lg `size-icon-lg`"
+    ],
+    "typography": [
+      "Reduced-motion label `type-body2-size`"
+    ],
+    "states": [
+      "Track `color-spinner-track`, indicator `color-interactive-default`"
+    ],
+    "motion": [
+      "Rotates only without reduced motion"
+    ]
+  },
+  "tokensUsed": [
+    "border-width-focus",
+    "color-interactive-default",
+    "color-spinner-track",
+    "color-text-secondary",
+    "motion-duration-overlay",
+    "size-control-indicator",
+    "size-icon-lg",
+    "size-icon-sm",
+    "space-component-gap-sm",
+    "type-body2-family",
+    "type-body2-size"
+  ],
+  "a11yNotes": [
+    "role status with the label, so screen readers announce it",
+    "No motion under prefers-reduced-motion; the label shows instead"
+  ]
+}
