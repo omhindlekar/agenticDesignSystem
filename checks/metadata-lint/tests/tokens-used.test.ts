@@ -8,7 +8,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '../../..');
-const COMPONENTS = ['button', 'input', 'select', 'checkbox', 'card', 'modal'];
+const COMPONENTS = ['button', 'input', 'select', 'checkbox', 'card', 'modal', 'icon', 'icon-button'];
 
 const varsIn = (css: string): Set<string> => new Set([...css.matchAll(/var\(--([a-z0-9-]+)/g)].map((m) => m[1] ?? ''));
 

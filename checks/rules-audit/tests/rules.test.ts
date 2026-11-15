@@ -68,7 +68,7 @@ describe('FR-4 rules.yaml: structure and schema', () => {
   });
 
   it('FR-4: rules cover all POC components in their appliesTo fields', () => {
-    const poc = ['button', 'input', 'select', 'checkbox', 'card', 'modal'];
+    const poc = ['button', 'input', 'select', 'checkbox', 'card', 'modal', 'icon', 'icon-button'];
     const covered = new Set(loadRules().flatMap((r) => r.appliesTo));
     for (const c of poc) {
       expect(covered.has(c), `No rule applies to "${c}"`).toBe(true);
@@ -105,6 +105,16 @@ describe('FR-4 rules.yaml: visual direction rules', () => {
     const { RULE_REFS } = await import('../../token-lint/index.js');
     const ids = new Set(loadRules().map((r) => r.id));
     for (const ref of RULE_REFS) expect(ids.has(ref), ref).toBe(true);
+  });
+});
+
+describe('FR-4 rules.yaml: icons', () => {
+  it('FR-4: DS-I-001 governs icons, is checked by token-lint and applies to icon and icon-button', () => {
+    const r = loadRules().find((x) => x.id === 'DS-I-001');
+    expect(r?.checkName).toBe('token-lint');
+    expect(r?.statement).toMatch(/Icon/);
+    expect(r?.statement).toMatch(/label/);
+    expect(r?.appliesTo).toEqual(expect.arrayContaining(['icon', 'icon-button']));
   });
 });
 

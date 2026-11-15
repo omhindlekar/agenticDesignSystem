@@ -1,0 +1,80 @@
+{
+  "id": "icon",
+  "purpose": "Shows one icon from the curated Material Symbols Sharp set, drawn in the surrounding text colour. Decorative by default; give it a label when the icon alone carries meaning.",
+  "variants": [
+    "decorative",
+    "labelled"
+  ],
+  "states": [
+    "default"
+  ],
+  "props": [
+    {
+      "name": "name",
+      "type": "IconName",
+      "required": true,
+      "description": "Icon to draw. One of: add, arrow_back, arrow_forward, calendar_today, cancel, check, check_circle, check_small, close, content_copy, delete, download, edit, filter_list, help, info, keyboard_arrow_down, keyboard_arrow_right, keyboard_arrow_up, lock, mail, menu, more_horiz, more_vert, open_in_new, person, remove, report, search, settings, upload, visibility, visibility_off, warning."
+    },
+    {
+      "name": "size",
+      "type": "'sm' | 'md' | 'lg'",
+      "required": false,
+      "description": "16 / 20 / 24px. Defaults to md"
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "required": false,
+      "description": "Accessible name. Set it only when the icon carries meaning on its own; otherwise the icon is hidden from assistive tech"
+    }
+  ],
+  "whenToUse": [
+    "Beside a text label to help recognition (leading icon in a Button, start icon in an Input)",
+    "For status next to a message (report, warning, info, check_circle)",
+    "Inside an IconButton for a well-known action such as close, search or more"
+  ],
+  "whenNotToUse": [
+    "As the only content of a clickable element — use IconButton, which requires a label",
+    "For decoration that adds no meaning — leave it out",
+    "With an icon outside the curated set — add it to components/icon/icon-list.json and run npm run icons:build"
+  ],
+  "related": [
+    "icon-button",
+    "button",
+    "input"
+  ],
+  "antiPatterns": [
+    "Pasting raw <svg> markup into a component instead of using Icon",
+    "Using an icon font",
+    "Giving a decorative icon a label, so screen readers announce it twice",
+    "Colouring an icon with a hardcoded value instead of the text colour"
+  ],
+  "spec": {
+    "anatomy": [
+      "A square SVG box with one path from Material Symbols Sharp (weight 600), viewBox 0 -960 960 960"
+    ],
+    "sizes": [
+      "sm `size-icon-sm` (16px), md `size-icon-md` (20px, default), lg `size-icon-lg` (24px)"
+    ],
+    "typography": [
+      "Not text; pairs with 16px icons beside `type-caption-size` and `type-label-size` text, 20px beside `type-body1-size` text"
+    ],
+    "states": [
+      "Colour is currentColor, so it follows the text colour and every state of its parent control"
+    ],
+    "motion": [
+      "None of its own; inherits its parent's colour transition"
+    ]
+  },
+  "tokensUsed": [
+    "size-icon-lg",
+    "size-icon-md",
+    "size-icon-sm"
+  ],
+  "a11yNotes": [
+    "Decorative by default: aria-hidden and not focusable",
+    "With label: role img and aria-label",
+    "Never the only content of a control — IconButton supplies the accessible name",
+    "Icons drawn at 3:1 or better against their background when they carry meaning (WCAG 1.4.11)"
+  ]
+}

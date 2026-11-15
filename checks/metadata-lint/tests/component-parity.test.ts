@@ -14,7 +14,7 @@ import {
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, '../../..');
-const POC_COMPONENTS = ['button', 'input', 'select', 'checkbox', 'card', 'modal'] as const;
+const POC_COMPONENTS = ['button', 'input', 'select', 'checkbox', 'card', 'modal', 'icon', 'icon-button'] as const;
 
 describe('FR-3 component ↔ metadata parity (real components)', () => {
   for (const name of POC_COMPONENTS) {

@@ -1,0 +1,22 @@
+/* Icon: square box at the icon size tokens, drawn in the surrounding text colour. */
+.ads-icon[data-size] {
+  display: inline-block;
+  flex: none;
+  vertical-align: middle;
+  fill: currentColor;
+}
+
+.ads-icon[data-size="sm"] {
+  width: var(--size-icon-sm);
+  height: var(--size-icon-sm);
+}
+
+.ads-icon[data-size="md"] {
+  width: var(--size-icon-md);
+  height: var(--size-icon-md);
+}
+
+.ads-icon[data-size="lg"] {
+  width: var(--size-icon-lg);
+  height: var(--size-icon-lg);
+}

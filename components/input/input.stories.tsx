@@ -34,3 +34,17 @@ export const ReadOnly: Story = {
   args: { readOnly: true, defaultValue: 'om@example.com' },
   parameters: { ads: { state: 'read-only' } },
 };
+
+// Icon slots and actions
+export const WithStartIcon: Story = {
+  args: { label: 'Search', type: 'search', placeholder: 'Search projects', startIcon: 'search' },
+  parameters: { ads: { variant: 'default' } },
+};
+export const Clearable: Story = {
+  args: { label: 'Project name', defaultValue: 'Design system', clearable: true },
+  parameters: { ads: { state: 'filled' } },
+};
+export const Password: Story = {
+  args: { label: 'Password', type: 'password', defaultValue: 'correct horse', placeholder: '' },
+  parameters: { ads: { state: 'filled' } },
+};

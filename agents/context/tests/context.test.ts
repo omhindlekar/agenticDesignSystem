@@ -99,8 +99,10 @@ describe('FR-5 Context agent: 30% rule-text threshold (NFR-6)', () => {
 });
 
 describe('FR-5 Context agent: data store loading', () => {
-  it('FR-5: loadDataStore loads all 6 POC components', () => {
-    expect(store.components.length).toBe(6);
+  it('FR-5: loadDataStore loads every component that has metadata', async () => {
+    const { readdirSync, existsSync } = await import('node:fs');
+    const ids = readdirSync(join(root, 'components')).filter((d) => existsSync(join(root, 'components', d, `${d}.meta.json`)));
+    expect(store.components.map((c) => c.id).sort()).toEqual(ids.sort());
   });
 
   it('FR-5: loadDataStore loads at least 15 rules', () => {

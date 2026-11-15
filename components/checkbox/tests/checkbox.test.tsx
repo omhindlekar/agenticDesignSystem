@@ -3,6 +3,7 @@ import { describe, it, expect, vi, afterEach } from 'vitest';
 import { render, screen, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Checkbox } from '../checkbox';
+import { ICON_PATHS } from '../../icon/icons.generated';
 
 afterEach(cleanup);
 
@@ -39,5 +40,11 @@ describe('Checkbox', () => {
     render(<Checkbox label="X" disabled onChange={onChange} />);
     await userEvent.setup().click(screen.getByRole('checkbox'));
     expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it('FR-1: check and indeterminate marks are the check and remove icons', () => {
+    const { container } = render(<Checkbox label="All" />);
+    const paths = [...container.querySelectorAll('.ads-checkbox__control path')].map((p) => p.getAttribute('d'));
+    expect(paths).toEqual([ICON_PATHS.check, ICON_PATHS.remove]);
   });
 });

@@ -1,6 +1,6 @@
 import { useEffect, useId, useLayoutEffect, useRef } from 'react';
 import type * as React from 'react';
-import { Button } from '../button/button';
+import { IconButton } from '../icon-button/icon-button';
 import { dataState } from '../shared/state';
 import '../shared/shared.css';
 import './modal.css';
@@ -124,7 +124,7 @@ export function Modal({
           <h2 id={titleId} className="ads-modal__title">
             {title}
           </h2>
-          <Button label="Close" variant="text" size="sm" onClick={onClose} />
+          <IconButton icon="close" label="Close" size="sm" onClick={onClose} />
         </header>
         <div className="ads-modal__body">
           {loading ? (

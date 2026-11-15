@@ -9,10 +9,21 @@
  * (color-border-default, color-border-disabled).
  */
 
+/** Minimum ratios: text, and non-text UI (borders, focus rings, icons). */
+export interface ContrastLevels {
+  text: number;
+  ui: number;
+}
+
+/** WCAG 2.2 AA: 4.5:1 text (SC 1.4.3), 3:1 UI (SC 1.4.11). */
+export const AA: ContrastLevels = { text: 4.5, ui: 3 };
+/** High-contrast theme: 7:1 text (AAA, SC 1.4.6) and 4.5:1 for boundaries. */
+export const HIGH_CONTRAST: ContrastLevels = { text: 7, ui: 4.5 };
+
 export interface ContrastPair {
   fg: string;
   bg: string;
-  min: 4.5 | 3;
+  min: number;
   ruleRef: 'DS-A-001' | 'DS-A-006';
   /** A state layer composited over `bg` before measuring (hover, focus, pressed). */
   layer?: { color: string; opacity: string };
@@ -74,15 +85,16 @@ const EXEMPT_BORDERS = new Set(['color-border-default', 'color-border-disabled']
 
 const ruleFor = (name: string): ContrastPair['ruleRef'] => (name.includes('success') ? 'DS-A-006' : 'DS-A-001');
 
-export function buildContrastPairs(tokens: Map<string, string>): ContrastPair[] {
+export function buildContrastPairs(tokens: Map<string, string>, levels: ContrastLevels = AA): ContrastPair[] {
   const pairs: ContrastPair[] = [];
-  const add = (fg: string, bg: string, min: ContrastPair['min'], rule = ruleFor(fg)): void => {
-    if (tokens.has(fg) && tokens.has(bg)) pairs.push({ fg, bg, min, ruleRef: rule });
+  const add = (fg: string, bg: string, kind: 'text' | 'ui', rule = ruleFor(fg)): void => {
+    if (tokens.has(fg) && tokens.has(bg)) pairs.push({ fg, bg, min: levels[kind], ruleRef: rule });
   };
   const names = [...tokens.keys()];
 
   for (const text of names.filter((n) => n.startsWith('color-text-') && !TEXT_ON_FILL_ONLY.has(n))) {
-    for (const s of SURFACES) add(text, s, 4.5);
+    // color-on-container-* tokens are checked against their own container below.
+    for (const s of SURFACES) add(text, s, 'text');
   }
 
   const boundaries = [
@@ -90,39 +102,47 @@ export function buildContrastPairs(tokens: Map<string, string>): ContrastPair[] 
     'color-interactive-focus-ring',
     'color-interactive-default',
   ];
-  for (const b of boundaries) for (const s of SURFACES) add(b, s, 3);
+  for (const b of boundaries) for (const s of SURFACES) add(b, s, 'ui');
 
   // Status messages: text on its own tinted background.
   for (const tone of ['success', 'danger', 'warning', 'info']) {
-    add(`color-status-${tone}-text`, `color-status-${tone}-bg`, 4.5);
+    add(`color-status-${tone}-text`, `color-status-${tone}-bg`, 'text');
   }
 
   // Focused fields get a light blue tint behind the value.
-  add('color-text-primary', 'color-background-focus-tint', 4.5);
-  add('color-text-secondary', 'color-background-focus-tint', 4.5);
-  add('color-border-interactive', 'color-background-focus-tint', 3);
+  add('color-text-primary', 'color-background-focus-tint', 'text');
+  add('color-text-secondary', 'color-background-focus-tint', 'text');
+  add('color-border-interactive', 'color-background-focus-tint', 'ui');
 
   // Filled controls.
   for (const fill of ['color-interactive-default', 'color-interactive-hover', 'color-interactive-active', 'color-text-danger', 'color-status-danger-text']) {
-    add('color-text-inverse', fill, 4.5);
+    add('color-text-inverse', fill, 'text');
   }
-  add('color-text-on-success', 'color-status-success-fill', 4.5, 'DS-A-006');
+  add('color-text-on-success', 'color-status-success-fill', 'text', 'DS-A-006');
+
+  // Tonal containers: each fill with its own on-container text.
+  for (const c of names.filter((n) => n.startsWith('color-container-'))) {
+    const on = c.replace('color-container-', 'color-on-container-');
+    add(on, c, 'text', c.endsWith('-success') ? 'DS-A-006' : 'DS-A-001');
+  }
 
   // State layers (hover, focus, pressed) tint the surface under text and borders.
-  const layered: Array<[string, string, ContrastPair['min']]> = [
-    ['color-text-link', 'color-state-layer', 4.5],
-    ['color-text-primary', 'color-state-layer', 4.5],
+  const layered: Array<[string, string, 'text' | 'ui']> = [
+    ['color-text-link', 'color-state-layer', 'text'],
+    ['color-text-primary', 'color-state-layer', 'text'],
+    // Standard IconButton icons are drawn in the secondary colour (non-text, 3:1).
+    ['color-text-secondary', 'color-state-layer', 'ui'],
     // Controls that show a state layer switch their border to the hover token.
-    ['color-border-input-hover', 'color-state-layer', 3],
-    ['color-interactive-focus-ring', 'color-state-layer', 3],
+    ['color-border-input-hover', 'color-state-layer', 'ui'],
+    ['color-interactive-focus-ring', 'color-state-layer', 'ui'],
     // Danger-tone actions use the darker danger-action text, not field error text.
-    ['color-text-danger-action', 'color-state-layer-danger', 4.5],
+    ['color-text-danger-action', 'color-state-layer-danger', 'text'],
   ];
   for (const opacity of ['opacity-state-hover', 'opacity-state-focus', 'opacity-state-pressed']) {
-    for (const [fg, color, min] of layered) {
+    for (const [fg, color, kind] of layered) {
       for (const s of SURFACES) {
         if (tokens.has(fg) && tokens.has(s) && tokens.has(color) && tokens.has(opacity)) {
-          pairs.push({ fg, bg: s, min, ruleRef: ruleFor(fg), layer: { color, opacity } });
+          pairs.push({ fg, bg: s, min: levels[kind], ruleRef: ruleFor(fg), layer: { color, opacity } });
         }
       }
     }
@@ -162,9 +182,9 @@ export function exemptPairs(tokens: Map<string, string>): ExemptPair[] {
   return out;
 }
 
-export function checkContrast(tokens: Map<string, string>): ContrastViolation[] {
+export function checkContrast(tokens: Map<string, string>, levels: ContrastLevels = AA): ContrastViolation[] {
   const out: ContrastViolation[] = [];
-  for (const pair of buildContrastPairs(tokens)) {
+  for (const pair of buildContrastPairs(tokens, levels)) {
     const fgValue = tokens.get(pair.fg) ?? '';
     const bgValue = backgroundOf(tokens, pair);
     // A colour the check cannot read is a failure, not a silent pass.

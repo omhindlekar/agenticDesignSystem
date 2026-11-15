@@ -7,19 +7,28 @@ A multi-agent design system, built as a proof of concept (POC) to show one desig
 ## Current scope
 
 Work in this order, one phase at a time, and stop at each phase's exit criteria:
-1. Phase 1.5: real components, Storybook, the `generate` command
-2. Phase 2b: QA agent, four checks, golden set
-3. Phase 3: Maintainer and Docs agents, drift detection, versioning
-4. Phase 4: insight reports, variations, second theme, telemetry
+1. Phase 1.5: real components, Storybook, the `generate` command (done; 1.6 to 1.8 were design passes)
+2. Industry-baseline parity, before any QA or agent work. Target: 100% of the capabilities
+   shipped by at least 3 of Material 3, Carbon, Atlassian, Polaris and Fluent 2, while keeping
+   our identity (square corners, Saira, our palette) and our components. Tracked in
+   `benchmark/industry-baseline.json`; each phase ends when its area reaches 100%.
+   - 1.9: scorecard and foundations (tonal roles, dark and high-contrast themes, motion, layout, density)
+   - 1.10: inputs and selection
+   - 1.11: feedback and overlays
+   - 1.12: navigation, layout and data display
+   - 1.13: quality bar and docs (keyboard per WAI-ARIA practices, forced colours, RTL, axe, usage docs)
+3. Phase 2b: QA agent, four checks, golden set
+4. Phase 3: Maintainer and Docs agents, drift detection, versioning
+5. Phase 4: insight reports, variations, telemetry (the second theme moves into 1.9)
 
-Current phase: 1.5. Do not start a later phase unless I name it.
+Current phase: 1.9. Do not start a later phase unless I name it.
 Model calls go through packages/provider. Default provider is fake; real runs use
 the cli provider (my subscription). Never require an API key.
 
 ## Decisions
 
 - Source of truth for tokens is this repo (`tokens/`). Tokens are pushed one way to Figma. Never read tokens back from Figma.
-- POC components: Button, Input, Select, Checkbox, Card, Modal.
+- POC components: Button, Input, Select, Checkbox, Card, Modal, plus Icon and IconButton (added in phase 1.8).
 - Stack: React and TypeScript, Storybook as the component catalogue, Playwright snapshots for visual regression, axe-core for accessibility, Zod for schemas.
 - No existing screens to baseline against. Golden-set briefs are new; baselines come from the first approved components.
 - Cost cap per run is configuration with a low default. Record the cost of every run.
@@ -65,5 +74,7 @@ the cli provider (my subscription). Never require an API key.
 - Storybook: `npm run storybook` (dev server on port 6006), `npm run build-storybook` (static build)
 - Visual regression: `TODO` (phase 2)
 - Golden set: `TODO` (phase 2)
+- Industry-baseline parity report: `npm run parity`
+- Build the icon set: `npm run icons:build` (after editing `components/icon/icon-list.json`)
 - Generate a screen: `npm run generate -- "<brief>"` (fake provider by default; `MODEL_PROVIDER=cli` for a real model). Writes `generated/<runId>/screen.tsx` (gitignored)
 - Re-record demo fixtures after a prompt, model, token or metadata change: `npm run fixtures:demo`

@@ -95,7 +95,7 @@ describe('FR-11 contrast: state layers and disabled content', () => {
   it('FR-11: text, control borders and the focus ring used on state layers are checked over every layer', () => {
     const pairs = buildContrastPairs(tokens).filter((p) => p.layer);
     for (const op of ['opacity-state-hover', 'opacity-state-focus', 'opacity-state-pressed']) {
-      for (const fg of ['color-text-link', 'color-text-primary', 'color-border-input-hover', 'color-interactive-focus-ring']) {
+      for (const fg of ['color-text-link', 'color-text-primary', 'color-text-secondary', 'color-border-input-hover', 'color-interactive-focus-ring']) {
         expect(pairs.some((p) => p.fg === fg && p.layer?.opacity === op && p.layer.color === 'color-state-layer'), `${fg} @ ${op}`).toBe(true);
       }
       expect(pairs.some((p) => p.fg === 'color-text-danger-action' && p.layer?.color === 'color-state-layer-danger' && p.layer.opacity === op)).toBe(true);
@@ -116,5 +116,25 @@ describe('FR-11 contrast: state layers and disabled content', () => {
       expect(e.ratio).toBeGreaterThan(1);
     }
     expect(checkContrast(tokens)).toEqual([]);
+  });
+});
+
+describe('FR-11 contrast: tonal containers', () => {
+  it('FR-11: every container is checked against its on-container text at 4.5:1', () => {
+    const tokens = resolveSemanticTokens(root);
+    const pairs = buildContrastPairs(tokens);
+    const containers = [...tokens.keys()].filter((n) => n.startsWith('color-container-'));
+    expect(containers.length).toBeGreaterThan(0);
+    for (const c of containers) {
+      const on = c.replace('color-container-', 'color-on-container-');
+      expect(pairs.some((p) => p.fg === on && p.bg === c && p.min === 4.5), `${on} on ${c}`).toBe(true);
+    }
+  });
+
+  it('FR-11: lime containers cite DS-A-006', () => {
+    const tokens = new Map(resolveSemanticTokens(root));
+    tokens.set('color-on-container-success', '#84cc16');
+    const v = checkContrast(tokens).find((x) => x.fg === 'color-on-container-success');
+    expect(v?.ruleRef).toBe('DS-A-006');
   });
 });
