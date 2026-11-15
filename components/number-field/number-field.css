@@ -1,0 +1,65 @@
+/* NumberField: a 40px field with decrement and increment icon buttons at the end. */
+.ads-number-field__group {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  min-height: var(--size-control-md);
+  padding-inline-end: var(--space-component-padding-xs);
+  border: var(--border-width-default) solid var(--color-border-input);
+  background-color: var(--color-background-surface);
+}
+
+.ads-number-field__input {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  padding-block: 0;
+  padding-inline: var(--space-component-padding-field);
+  border: none;
+  background: transparent;
+  color: var(--color-text-primary);
+  font-family: var(--type-body1-family);
+  font-size: var(--type-body1-size);
+  line-height: var(--type-body1-line-height);
+  letter-spacing: var(--type-body1-letter-spacing);
+  font-variant-numeric: tabular-nums;
+  outline: none;
+}
+
+.ads-number-field__group:is([data-hovered], :hover):not([data-disabled]) {
+  border-color: var(--color-border-input-hover);
+}
+
+.ads-number-field__group:is([data-focus-within], :focus-within) {
+  border-color: var(--color-border-interactive);
+}
+
+.ads-number-field__group:is([data-focus-visible], :has(.ads-number-field__input:focus-visible)) {
+  outline: var(--border-width-focus) solid var(--color-interactive-focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.ads-number-field[data-state~="filled"] .ads-number-field__input {
+  color: var(--color-text-primary);
+}
+
+.ads-number-field[data-state~="error"] .ads-number-field__group {
+  border-color: var(--color-border-danger);
+}
+
+.ads-number-field[data-state~="disabled"] .ads-number-field__group {
+  border-color: var(--color-border-disabled);
+  background-color: var(--color-interactive-disabled);
+}
+
+.ads-number-field[data-state~="disabled"] .ads-number-field__input,
+.ads-number-field[data-state~="disabled"] .ads-field__label {
+  color: color-mix(in srgb, var(--color-text-primary) calc(var(--opacity-disabled) * 100%), transparent);
+  cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ads-number-field__group {
+    transition: border-color var(--motion-duration-standard) var(--motion-easing-standard);
+  }
+}

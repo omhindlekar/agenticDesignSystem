@@ -1,0 +1,9 @@
+/* Field: the shared label / helper / error layout around a custom control. */
+.ads-form-field[data-state~="error"] .ads-field__label {
+  color: var(--color-text-primary);
+}
+
+.ads-form-field[data-state~="disabled"] .ads-field__label {
+  color: color-mix(in srgb, var(--color-text-primary) calc(var(--opacity-disabled) * 100%), transparent);
+  cursor: not-allowed;
+}

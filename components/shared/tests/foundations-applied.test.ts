@@ -8,6 +8,23 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '../../..');
+
+/** Splits a selector list on top-level commas, so :is(a, b) stays whole. */
+const splitSelectors = (list: string): string[] => {
+  const out: string[] = [];
+  let depth = 0;
+  let cur = '';
+  for (const ch of list) {
+    if (ch === '(') depth++;
+    if (ch === ')') depth--;
+    if (ch === ',' && depth === 0) {
+      out.push(cur.trim());
+      cur = '';
+    } else cur += ch;
+  }
+  if (cur.trim()) out.push(cur.trim());
+  return out;
+};
 const css = (id: string): string => readFileSync(join(root, 'components', id, `${id}.css`), 'utf8');
 const rules = (src: string): Array<{ selector: string; body: string }> =>
   [...src.matchAll(/([^{}]+)\{([^{}]*)\}/g)].map((m) => ({
@@ -15,7 +32,7 @@ const rules = (src: string): Array<{ selector: string; body: string }> =>
     body: m[2] ?? '',
   }));
 const rule = (id: string, selector: string): string => {
-  const found = rules(css(id)).filter((r) => r.selector.split(',').some((s) => s.trim() === selector));
+  const found = rules(css(id)).filter((r) => splitSelectors(r.selector).some((s) => s === selector));
   expect(found.length, `${id}: ${selector}`).toBeGreaterThan(0);
   return found.map((r) => r.body).join('\n');
 };
@@ -66,8 +83,11 @@ describe('FR-1 fields apply the foundations', () => {
     expect(body).not.toMatch(/background/);
   });
 
-  it.each(['input', 'select'])('FR-1: %s focus is the 2px blue 600 ring with no tint', (id) => {
-    const body = rule(id, `.ads-${id}__field:focus-visible`);
+  it.each([
+    ['input', '.ads-input__field:focus-visible'],
+    ['select', '.ads-select__field:is([data-focus-visible], :focus-visible)'],
+  ])('FR-1: %s focus is the 2px blue 600 ring with no tint', (id, selector) => {
+    const body = rule(id, selector);
     expect(body).toMatch(/outline:\s*var\(--border-width-focus\) solid var\(--color-interactive-focus-ring\)/);
     expect(body).toMatch(decl('outline-offset', 'focus-ring-offset'));
     expect(body).not.toMatch(/background/);
@@ -146,7 +166,7 @@ describe('FR-3 metadata spec', () => {
     ),
   );
 
-  it.each(['button', 'input', 'select', 'checkbox', 'card', 'modal', 'icon', 'icon-button'])('FR-3: %s metadata has a spec naming only real tokens', (id) => {
+  it.each(['button', 'input', 'select', 'checkbox', 'card', 'modal', 'icon', 'icon-button', 'textarea', 'search-field', 'field', 'radio-group', 'switch', 'segmented-control', 'slider', 'number-field', 'combobox', 'date-picker'])('FR-3: %s metadata has a spec naming only real tokens', (id) => {
     const meta = JSON.parse(readFileSync(join(root, 'components', id, `${id}.meta.json`), 'utf8')) as {
       spec?: Record<string, string[]>;
     };
