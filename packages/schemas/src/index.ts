@@ -10,3 +10,4 @@ export * from './pipeline.js';
 export * from './golden-brief.js';
 export * from './permissions.js';
 export * from './run-record.js';
+export * from './handoff-registry.js';

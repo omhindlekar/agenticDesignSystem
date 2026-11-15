@@ -64,7 +64,7 @@ describe('npm run generate (fake provider)', () => {
     const d = dirs('log');
     const res = await runGenerate(DEMO_BRIEF, { repoRoot, ...d, print: () => {} });
     const entries = await new RunLogWriter(d.runsDir).read(res.result.runId);
-    expect(entries.map((e) => e.agent)).toEqual(['context', 'composer', 'builder']);
+    expect(entries.map((e) => e.agent)).toEqual(['context', 'composer', 'builder', 'qa']);
     expect(entries.every((e) => e.outcome === 'pass')).toBe(true);
   }, E2E_TIMEOUT);
 

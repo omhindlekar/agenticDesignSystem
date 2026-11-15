@@ -47,7 +47,9 @@ describe('FR-4 rules.yaml: structure and schema', () => {
   });
 
   it('FR-4: every checkName on an auto rule is a known check', () => {
-    const knownChecks = new Set(['token-lint', 'a11y', 'visual', 'rules-audit']);
+    // Checks the QA agent runs (checks/registry.json), plus 'qa' for rules the agent itself enforces.
+    const registry = JSON.parse(readFileSync(join(root, 'checks', 'registry.json'), 'utf8')) as { checks: Array<{ name: string }> };
+    const knownChecks = new Set([...registry.checks.map((c) => c.name), 'qa']);
     const rules = loadRules();
     for (const rule of rules.filter((r) => r.check === 'auto')) {
       expect(
@@ -152,13 +154,13 @@ describe('FR-4 rules.yaml: pickers', () => {
 describe('FR-4 rules.yaml: overlays and navigation', () => {
   it('FR-4: DS-C-007 keeps essential and interactive content out of tooltips and points to Popover', () => {
     const r = loadRules().find((x) => x.id === 'DS-C-007');
-    expect(r?.check).toBe('manual');
+    expect(r?.checkName).toBe('rules-audit');
     expect(r?.statement).toContain('Popover');
     expect(r?.appliesTo).toEqual(expect.arrayContaining(['tooltip', 'popover']));
   });
   it('FR-4: DS-C-008 sends navigation to Link, Tabs, Breadcrumbs or SideNav, not Menu or Button', () => {
     const r = loadRules().find((x) => x.id === 'DS-C-008');
-    expect(r?.check).toBe('manual');
+    expect(r?.checkName).toBe('rules-audit');
     for (const name of ['Link', 'Tabs', 'Breadcrumbs', 'SideNav']) expect(r?.statement).toContain(name);
     expect(r?.appliesTo).toEqual(expect.arrayContaining(['link', 'tabs', 'breadcrumbs', 'side-nav', 'menu', 'button']));
   });

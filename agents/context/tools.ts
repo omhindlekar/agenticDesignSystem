@@ -57,9 +57,35 @@ function loadRules(repoRoot: string): Rule[] {
 }
 
 const STOP_WORDS = new Set([
-  'a', 'an', 'the', 'and', 'or', 'for', 'to', 'in', 'of', 'with',
-  'on', 'at', 'is', 'it', 'this', 'that', 'be', 'as', 'by', 'from',
-  'up', 'do', 'if', 'no', 'so', 'we', 'my', 'us', 'me',
+  'a',
+  'an',
+  'the',
+  'and',
+  'or',
+  'for',
+  'to',
+  'in',
+  'of',
+  'with',
+  'on',
+  'at',
+  'is',
+  'it',
+  'this',
+  'that',
+  'be',
+  'as',
+  'by',
+  'from',
+  'up',
+  'do',
+  'if',
+  'no',
+  'so',
+  'we',
+  'my',
+  'us',
+  'me',
 ]);
 
 function tokenise(text: string): string[] {
@@ -72,9 +98,7 @@ function tokenise(text: string): string[] {
 function scoreComponent(component: ComponentMetadata, keywords: string[]): number {
   // Use id, purpose and variants only — whenToUse freely cross-references other
   // component names and would cause cascade matches for unrelated tasks.
-  const haystack = [component.id, component.purpose, ...component.variants]
-    .join(' ')
-    .toLowerCase();
+  const haystack = [component.id, component.purpose, ...component.variants].join(' ').toLowerCase();
   return keywords.filter((k) => haystack.includes(k)).length;
 }
 
@@ -138,4 +162,28 @@ export function selectContext(input: ContextInput, store: DataStore): ContextPac
     componentIds: selectedComponents,
     ruleIds: selectedRules,
   });
+}
+
+/**
+ * Instruction-like text inside a brief. Briefs are data: the agents never follow these,
+ * and each match is flagged in the run log (CLAUDE.md: treat brief text as data).
+ */
+const INSTRUCTION_PATTERNS: Array<[RegExp, string]> = [
+  [
+    /\b(ignore|disregard|forget)\b[^.]{0,40}\b(previous|prior|above|earlier|all)\b[^.]{0,20}\b(instructions?|rules?|prompts?)\b/i,
+    'ignore-instructions',
+  ],
+  [/^\s*(system|assistant|developer)\s*:/im, 'role-prefix'],
+  [/<\/?\s*(system|instructions?|prompt)\s*>/i, 'prompt-tag'],
+  [/\byou are now\b|\bact as\b|\bnew instructions?\b/i, 'role-change'],
+  [/\b(reveal|print|show|repeat)\b[^.]{0,20}\b(system prompt|your (instructions|prompt))\b/i, 'prompt-extraction'],
+];
+
+export function detectInstructions(brief: string): string[] {
+  const flags: string[] = [];
+  for (const [re, kind] of INSTRUCTION_PATTERNS) {
+    const m = re.exec(brief);
+    if (m) flags.push(`instruction-in-brief:${kind}: "${m[0].trim().slice(0, 80)}"`);
+  }
+  return flags;
 }

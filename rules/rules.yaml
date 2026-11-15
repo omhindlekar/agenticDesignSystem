@@ -609,6 +609,172 @@ rules:
     example: "@media (forced-colors: active) { .ads-tree__item[data-selected] { background-color: Highlight; color: HighlightText; } }"
     counterExample: "A selected row shown only by background-color: var(--color-container-primary)"
 
+  - id: DS-A-008
+    scope: accessibility
+    severity: error
+    statement: >
+      Generated screens meet WCAG 2.2 AA as automated checks can measure it:
+      axe finds no violations, every control is reachable with Tab in reading
+      order, and keyboard focus is never trapped. Failures cite the success
+      criterion.
+    check: auto
+    checkName: a11y
+    appliesTo:
+      - button
+      - app-header
+      - avatar-group
+      - avatar
+      - badge
+      - banner
+      - breadcrumbs
+      - card
+      - checkbox
+      - combobox
+      - date-picker
+      - divider
+      - drawer
+      - field
+      - heading
+      - icon-button
+      - icon
+      - image
+      - input
+      - link
+      - list
+      - menu
+      - modal
+      - number-field
+      - popover
+      - progress-bar
+      - radio-group
+      - search-field
+      - segmented-control
+      - select
+      - side-nav
+      - slider
+      - spinner
+      - switch
+      - table
+      - tabs
+      - tag-group
+      - text
+      - textarea
+      - toast-region
+      - tooltip
+      - tree
+    example: "Controls in DOM order with no positive tabindex"
+    counterExample: "tabIndex={3} to move a button earlier in the focus order"
+
+  - id: DS-V-001
+    scope: visual
+    severity: error
+    statement: >
+      A generated golden-set screen matches its approved baseline in
+      evals/baselines/ within the configured pixel threshold. Baselines change
+      only through a pull request the design system owner approves.
+    check: auto
+    checkName: visual
+    appliesTo:
+      - button
+      - app-header
+      - avatar-group
+      - avatar
+      - badge
+      - banner
+      - breadcrumbs
+      - card
+      - checkbox
+      - combobox
+      - date-picker
+      - divider
+      - drawer
+      - field
+      - heading
+      - icon-button
+      - icon
+      - image
+      - input
+      - link
+      - list
+      - menu
+      - modal
+      - number-field
+      - popover
+      - progress-bar
+      - radio-group
+      - search-field
+      - segmented-control
+      - select
+      - side-nav
+      - slider
+      - spinner
+      - switch
+      - table
+      - tabs
+      - tag-group
+      - text
+      - textarea
+      - toast-region
+      - tooltip
+      - tree
+    example: "npm run baselines:approve -- sign-in, committed in a reviewed PR"
+    counterExample: "An agent overwriting evals/baselines/sign-in.png to make a run pass"
+
+  - id: DS-Q-001
+    scope: governance
+    severity: error
+    statement: >
+      A screen passes QA only when every registered check ran. A check that
+      cannot run (a render error, a missing tool) fails the screen rather than
+      being skipped silently.
+    check: auto
+    checkName: qa
+    appliesTo:
+      - button
+      - app-header
+      - avatar-group
+      - avatar
+      - badge
+      - banner
+      - breadcrumbs
+      - card
+      - checkbox
+      - combobox
+      - date-picker
+      - divider
+      - drawer
+      - field
+      - heading
+      - icon-button
+      - icon
+      - image
+      - input
+      - link
+      - list
+      - menu
+      - modal
+      - number-field
+      - popover
+      - progress-bar
+      - radio-group
+      - search-field
+      - segmented-control
+      - select
+      - side-nav
+      - slider
+      - spinner
+      - switch
+      - table
+      - tabs
+      - tag-group
+      - text
+      - textarea
+      - toast-region
+      - tooltip
+      - tree
+    example: "QA report: a11y fail — the screen did not render"
+    counterExample: "A report that passes because the accessibility check crashed"
+
   - id: DS-C-001
     scope: component
     severity: error
@@ -628,7 +794,8 @@ rules:
       Destructive actions (delete, remove, overwrite) must use the danger
       variant and must be confirmed by the user before execution, typically
       inside a Modal.
-    check: manual
+    check: auto
+    checkName: rules-audit
     appliesTo:
       - button
       - modal
@@ -641,7 +808,8 @@ rules:
     statement: >
       Select should only be used when there are four or more options.
       For two or three options, use a radio group instead.
-    check: manual
+    check: auto
+    checkName: rules-audit
     appliesTo:
       - select
     example: "Country select with 200 options"
@@ -653,7 +821,8 @@ rules:
     statement: >
       A Card must not be nested inside another Card. Use layout spacing
       tokens to separate items instead.
-    check: manual
+    check: auto
+    checkName: rules-audit
     appliesTo:
       - card
     example: "A grid of Card components side by side"
@@ -666,7 +835,8 @@ rules:
       Modal dialogs should not be stacked. Opening a second modal on top of an
       existing one is not permitted. Use a single modal with multi-step content
       instead.
-    check: manual
+    check: auto
+    checkName: rules-audit
     appliesTo:
       - modal
     example: "A multi-step form in one modal with step indicators"
@@ -691,6 +861,61 @@ rules:
     example: "<Combobox label=\"Country\" options={countries} />"
     counterExample: "<select name=\"country\">…</select>"
 
+  - id: DS-C-009
+    scope: component
+    severity: error
+    statement: >
+      Screens are built only from design-system components, each used with the
+      props its metadata lists. Anything else is invented UI the system cannot
+      check, document or keep consistent.
+    check: auto
+    checkName: rules-audit
+    appliesTo:
+      - button
+      - app-header
+      - avatar-group
+      - avatar
+      - badge
+      - banner
+      - breadcrumbs
+      - card
+      - checkbox
+      - combobox
+      - date-picker
+      - divider
+      - drawer
+      - field
+      - heading
+      - icon-button
+      - icon
+      - image
+      - input
+      - link
+      - list
+      - menu
+      - modal
+      - number-field
+      - popover
+      - progress-bar
+      - radio-group
+      - search-field
+      - segmented-control
+      - select
+      - side-nav
+      - slider
+      - spinner
+      - switch
+      - table
+      - tabs
+      - tag-group
+      - text
+      - textarea
+      - toast-region
+      - tooltip
+      - tree
+    example: "<Select label=\"Country\" options={countries} />"
+    counterExample: "<Select label=\"Country\" choices={countries} />  (no choices prop)"
+
   - id: DS-C-007
     scope: component
     severity: error
@@ -699,7 +924,8 @@ rules:
       They never hold essential information or interactive content such as
       links or buttons: a tooltip cannot be reached by touch, and its content
       cannot be focused. Use Popover for content people need to read or act on.
-    check: manual
+    check: auto
+    checkName: rules-audit
     appliesTo:
       - tooltip
       - popover
@@ -714,7 +940,8 @@ rules:
       Menu and Button are for actions, not navigation: a menu of pages hides
       where people are, and a button that changes the URL breaks the browser's
       back button and the link context menu.
-    check: manual
+    check: auto
+    checkName: rules-audit
     appliesTo:
       - link
       - tabs

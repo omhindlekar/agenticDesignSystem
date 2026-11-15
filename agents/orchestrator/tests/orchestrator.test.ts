@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { runOrchestrator } from '../tools.js';
-import type { AgentStepResult, OrchestratorDeps } from '../tools.js';
+import type { AgentRunner, AgentStepResult, OrchestratorDeps } from '../tools.js';
 import type { ContextPack } from '../../../packages/schemas/src/context-pack.js';
 import type { ScreenSpec } from '../../../packages/schemas/src/screen-spec.js';
 import type { RunLogEntry } from '../../../packages/schemas/src/run-log-entry.js';
@@ -52,11 +52,25 @@ function makeLogWriter() {
   };
 }
 
+/** QA passes unless a test says otherwise; QA is deterministic and makes no model calls. */
+function makeQaRunner(): AgentRunner {
+  return vi.fn().mockImplementation(async ({ taskId }: { taskId: string }) => ({
+    result: {
+      taskId,
+      overallStatus: 'pass',
+      checks: [{ checkName: 'token-lint', status: 'pass', failingRuleIds: [] }],
+      findings: [],
+    },
+    costUsd: 0,
+  }));
+}
+
 function makeDeps(overrides: Partial<OrchestratorDeps> = {}): OrchestratorDeps {
   return {
     contextRunner: makeContextRunner(),
     composerRunner: makeComposerRunner(),
     builderRunner: makeBuilderRunner(),
+    agents: { qa: makeQaRunner() },
     config: { retryLimit: 2, costCapPerRunUsd: 1.0 },
     ...overrides,
   };
@@ -286,13 +300,16 @@ describe('FR-8: Orchestrator reports retries, calls, cost and the spec', () => {
   const input = { taskId: 'task-001', brief: 'A primary button', schemaVersion: SCHEMA_VERSION };
 
   it('FR-8: pass result includes the validated spec, attempts per agent, call count and cost', async () => {
-    const result = await runOrchestrator(input, makeDeps({
-      composerRunner: makeComposerRunner(mockScreenSpec, 0.01),
-      builderRunner: makeBuilderRunner(validTsx, 0.02),
-    }));
+    const result = await runOrchestrator(
+      input,
+      makeDeps({
+        composerRunner: makeComposerRunner(mockScreenSpec, 0.01),
+        builderRunner: makeBuilderRunner(validTsx, 0.02),
+      }),
+    );
     expect(result.outcome).toBe('pass');
     expect(result.spec).toEqual(mockScreenSpec);
-    expect(result.attempts).toEqual({ composer: 1, builder: 1 });
+    expect(result.attempts).toEqual({ composer: 1, builder: 1, qa: 1 });
     expect(result.calls).toBe(2);
     expect(result.costUsd).toBeCloseTo(0.03);
   });
@@ -304,7 +321,7 @@ describe('FR-8: Orchestrator reports retries, calls, cost and the spec', () => {
       .mockResolvedValueOnce({ result: mockScreenSpec, costUsd: 0.01 });
     const result = await runOrchestrator(input, makeDeps({ composerRunner }));
     expect(result.outcome).toBe('pass');
-    expect(result.attempts).toEqual({ composer: 2, builder: 1 });
+    expect(result.attempts).toEqual({ composer: 2, builder: 1, qa: 1 });
     expect(result.calls).toBe(3);
   });
 
@@ -313,7 +330,7 @@ describe('FR-8: Orchestrator reports retries, calls, cost and the spec', () => {
     const result = await runOrchestrator(input, makeDeps({ builderRunner }));
     expect(result.outcome).toBe('escalate');
     expect(result.spec).toEqual(mockScreenSpec);
-    expect(result.attempts).toEqual({ composer: 1, builder: 3 });
+    expect(result.attempts).toEqual({ composer: 1, builder: 3, qa: 0 });
     expect(result.calls).toBe(4);
   });
 
@@ -322,7 +339,7 @@ describe('FR-8: Orchestrator reports retries, calls, cost and the spec', () => {
     const result = await runOrchestrator(input, makeDeps({ contextRunner }));
     expect(result.outcome).toBe('escalate');
     expect(result.calls).toBe(0);
-    expect(result.attempts).toEqual({ composer: 0, builder: 0 });
+    expect(result.attempts).toEqual({ composer: 0, builder: 0, qa: 0 });
   });
 
   it('FR-8: result validates against OrchestratorResultSchema', async () => {

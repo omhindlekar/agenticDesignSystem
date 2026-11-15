@@ -1,0 +1,8 @@
+{
+  "checks": [
+    { "name": "token-lint", "module": "checks/token-lint/qa.ts" },
+    { "name": "rules-audit", "module": "checks/rules-audit/audit.ts" },
+    { "name": "a11y", "module": "checks/a11y/qa.ts" },
+    { "name": "visual", "module": "checks/visual/qa.ts" }
+  ]
+}

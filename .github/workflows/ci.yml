@@ -53,7 +53,8 @@ jobs:
 
   test:
     name: Test
-    runs-on: ubuntu-latest
+    # The QA agent renders screens in Chromium; Playwright 1.56.1 needs ubuntu-24.04.
+    runs-on: ubuntu-24.04
     needs: install
     steps:
       - uses: actions/checkout@v4
@@ -62,6 +63,7 @@ jobs:
           node-version: "22"
           cache: "npm"
       - run: npm ci
+      - run: npx playwright install --with-deps chromium
       - run: npm test
 
   token-lint:
@@ -121,7 +123,8 @@ jobs:
 
   generate:
     name: Generate demo screen (fake provider)
-    runs-on: ubuntu-latest
+    # The QA agent renders screens in Chromium; Playwright 1.56.1 needs ubuntu-24.04.
+    runs-on: ubuntu-24.04
     needs: install
     steps:
       - uses: actions/checkout@v4
@@ -130,4 +133,5 @@ jobs:
           node-version: "22"
           cache: "npm"
       - run: npm ci
+      - run: npx playwright install --with-deps chromium
       - run: npm run generate -- "A sign-in card with email and password inputs, a remember-me checkbox and a primary sign-in button"

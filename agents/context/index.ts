@@ -8,5 +8,5 @@ export function runContextAgent(rawInput: unknown, store: DataStore): ContextPac
   return selectContext(input, store);
 }
 
-export { loadDataStore } from './tools.js';
+export { loadDataStore, detectInstructions } from './tools.js';
 export type { DataStore } from './tools.js';
