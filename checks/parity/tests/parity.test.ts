@@ -73,7 +73,7 @@ describe('Parity scorecard: report', () => {
 
 describe('Parity scorecard: phase gates', () => {
   // Each finished parity phase adds its area here, so it cannot slip back below 100%.
-  const GATED_AREAS = ['foundations', 'inputs', 'feedback', 'overlays', 'navigation', 'data-display', 'actions'];
+  const GATED_AREAS = ['foundations', 'inputs', 'feedback', 'overlays', 'navigation', 'data-display', 'actions', 'quality', 'docs-tooling'];
 
   it.each(GATED_AREAS)('%s is at 100% of the industry baseline', (area) => {
     const report = parityReport(loadScorecard(root));
