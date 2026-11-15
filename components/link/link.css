@@ -1,0 +1,35 @@
+/* Link: interactive colour; inline links always underlined; standalone underline on hover. */
+.ads-link {
+  display: inline-flex;
+  align-items: baseline;
+  gap: calc(var(--space-component-padding-xs) / 2);
+  color: var(--color-text-link);
+  text-decoration: underline;
+  text-decoration-thickness: var(--border-width-default);
+  text-underline-offset: calc(var(--border-width-focus) * 1.5);
+  cursor: pointer;
+}
+
+.ads-link .ads-icon {
+  align-self: center;
+}
+
+.ads-link[data-variant="standalone"] {
+  font-family: var(--type-label-family);
+  font-weight: var(--type-label-weight);
+  text-decoration: none;
+}
+
+.ads-link:is([data-hovered], :hover) {
+  color: var(--color-text-link-hover);
+  text-decoration-thickness: var(--border-width-focus);
+}
+
+.ads-link[data-variant="standalone"]:is([data-hovered], :hover) {
+  text-decoration: underline;
+}
+
+.ads-link:is([data-focus-visible], :focus-visible) {
+  outline: var(--border-width-focus) solid var(--color-interactive-focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}

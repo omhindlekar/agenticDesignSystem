@@ -1,0 +1,80 @@
+/* AppHeader: a 56px-tall bar with a 1px bottom border; nav links carry a 2px current indicator. */
+.ads-app-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-component-gap-md);
+  box-sizing: border-box;
+  min-height: calc(var(--size-control-lg) + var(--space-component-padding-sm));
+  padding-inline: var(--layout-margin-md);
+  border-block-end: var(--border-width-default) solid var(--color-border-default);
+  background-color: var(--color-background-surface);
+  color: var(--color-text-primary);
+}
+
+.ads-app-header__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-component-gap-sm);
+}
+
+.ads-app-header__title {
+  font-family: var(--type-h4-family);
+  font-size: var(--type-h4-size);
+  font-weight: var(--type-h4-weight);
+  line-height: var(--type-h4-line-height);
+  color: var(--color-text-heading);
+}
+
+.ads-app-header__nav {
+  display: flex;
+  align-self: stretch;
+  gap: var(--space-component-padding-xs);
+}
+
+.ads-app-header__link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding-inline: var(--space-component-padding-sm);
+  color: var(--color-text-secondary);
+  font-family: var(--type-button-family);
+  font-size: var(--type-button-size);
+  font-weight: var(--type-button-weight);
+  text-decoration: none;
+}
+
+.ads-app-header__link:is([data-hovered], :hover) {
+  color: var(--color-text-primary);
+}
+
+.ads-app-header__link:focus-visible {
+  outline: var(--border-width-focus) solid var(--color-interactive-focus-ring);
+  outline-offset: calc(var(--border-width-focus) * -1);
+}
+
+.ads-app-header__link[aria-current="page"] {
+  color: var(--color-text-link);
+}
+
+.ads-app-header__link[aria-current="page"]::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0;
+  height: var(--border-width-focus);
+  background-color: var(--color-interactive-default);
+}
+
+.ads-app-header__spacer {
+  flex: 1;
+}
+
+.ads-app-header__search {
+  min-width: calc(var(--size-modal-sm) * 0.75);
+}
+
+.ads-app-header__actions {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-component-padding-xs);
+}

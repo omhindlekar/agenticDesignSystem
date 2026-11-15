@@ -1,0 +1,105 @@
+{
+  "id": "side-nav",
+  "purpose": "The app's main navigation down the side of the screen: links to sections, collapsible groups and a compact rail mode.",
+  "variants": [
+    "expanded",
+    "rail"
+  ],
+  "states": [
+    "default"
+  ],
+  "props": [
+    {
+      "name": "label",
+      "type": "string",
+      "required": true,
+      "description": "Accessible name of the navigation landmark"
+    },
+    {
+      "name": "items",
+      "type": "SideNavEntry[]",
+      "required": true,
+      "description": "Links ({ id, label, href, icon? }) and groups ({ type: 'group', id, label, icon?, items })"
+    },
+    {
+      "name": "currentId",
+      "type": "string",
+      "required": false,
+      "description": "Id of the current page; its link gets aria-current and its group opens"
+    },
+    {
+      "name": "collapsed",
+      "type": "boolean",
+      "required": false,
+      "description": "Rail mode: icons only, labels kept for assistive tech"
+    }
+  ],
+  "whenToUse": [
+    "For an app with several top-level sections",
+    "When the navigation should stay visible beside the content"
+  ],
+  "whenNotToUse": [
+    "For a few sections — use the AppHeader navigation",
+    "For actions — use Menu"
+  ],
+  "related": [
+    "app-header",
+    "tabs",
+    "breadcrumbs"
+  ],
+  "antiPatterns": [
+    "More than one level of groups",
+    "Actions mixed into navigation links"
+  ],
+  "spec": {
+    "anatomy": [
+      "A bordered column of links (icon and label); groups are disclosure buttons with a chevron; the current link has the primary container and a 2px edge"
+    ],
+    "sizes": [
+      "Width `size-drawer-sm`; links `size-control-md` tall; rail width `size-control-lg` plus padding"
+    ],
+    "typography": [
+      "`type-label-size` in SemiCondensed"
+    ],
+    "states": [
+      "Hover and press `color-state-layer`; current `color-container-primary` with `color-on-container-primary` and a `color-interactive-default` edge; focus ring `color-interactive-focus-ring`"
+    ],
+    "motion": [
+      "Layer and chevron over `motion-duration-standard`; none under reduced motion"
+    ]
+  },
+  "tokensUsed": [
+    "border-width-default",
+    "border-width-focus",
+    "color-background-surface",
+    "color-border-default",
+    "color-container-primary",
+    "color-interactive-default",
+    "color-interactive-focus-ring",
+    "color-on-container-primary",
+    "color-state-layer",
+    "color-text-primary",
+    "color-text-secondary",
+    "motion-duration-standard",
+    "motion-easing-standard",
+    "opacity-state-hover",
+    "opacity-state-pressed",
+    "size-control-lg",
+    "size-control-md",
+    "size-drawer-sm",
+    "size-icon-md",
+    "space-component-gap-md",
+    "space-component-padding-md",
+    "space-component-padding-sm",
+    "type-label-family",
+    "type-label-size",
+    "type-label-weight",
+    "z-index-state-layer"
+  ],
+  "a11yNotes": [
+    "A navigation landmark of links, not a menu (WAI-ARIA navigation pattern)",
+    "The current page has aria-current page",
+    "Groups are disclosure buttons with aria-expanded",
+    "Rail mode keeps each link's text for assistive tech"
+  ]
+}

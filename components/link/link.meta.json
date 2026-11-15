@@ -1,0 +1,89 @@
+{
+  "id": "link",
+  "purpose": "Navigates to another page or resource. Inline links sit in running text; standalone links stand on their own, for example in lists.",
+  "variants": [
+    "inline",
+    "standalone"
+  ],
+  "states": [
+    "default",
+    "hover",
+    "focus"
+  ],
+  "props": [
+    {
+      "name": "href",
+      "type": "string",
+      "required": true,
+      "description": "Destination URL"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": true,
+      "description": "Link text that says where it goes"
+    },
+    {
+      "name": "variant",
+      "type": "'inline' | 'standalone'",
+      "required": false,
+      "description": "Inline is always underlined; standalone underlines on hover. Defaults to inline"
+    },
+    {
+      "name": "external",
+      "type": "boolean",
+      "required": false,
+      "description": "Opens in a new tab with an icon and the text (opens in a new tab)"
+    }
+  ],
+  "whenToUse": [
+    "To go to another page or resource",
+    "Inside text to point to related content"
+  ],
+  "whenNotToUse": [
+    "To perform an action on this page — use Button",
+    "For tabs, breadcrumbs or the side navigation — use those components"
+  ],
+  "related": [
+    "tabs",
+    "breadcrumbs",
+    "side-nav"
+  ],
+  "antiPatterns": [
+    "Link text such as 'click here' that does not say where it goes",
+    "Styling a link as a button"
+  ],
+  "spec": {
+    "anatomy": [
+      "Text in the link colour, underlined inline; external links end with an open_in_new icon"
+    ],
+    "sizes": [
+      "Inherits the surrounding text size; icon `size-icon-sm`"
+    ],
+    "typography": [
+      "Inline inherits the text; standalone `type-label-family` at `type-label-weight`"
+    ],
+    "states": [
+      "`color-text-link`, `color-text-link-hover` on hover with a thicker underline; focus ring `color-interactive-focus-ring`"
+    ],
+    "motion": [
+      "None"
+    ]
+  },
+  "tokensUsed": [
+    "border-width-default",
+    "border-width-focus",
+    "color-interactive-focus-ring",
+    "color-text-link",
+    "color-text-link-hover",
+    "focus-ring-offset",
+    "space-component-padding-xs",
+    "type-label-family",
+    "type-label-weight"
+  ],
+  "a11yNotes": [
+    "A native link; Enter follows it",
+    "Inline links are underlined so they are not identified by colour alone (WCAG 1.4.1)",
+    "External links announce that they open a new tab"
+  ]
+}

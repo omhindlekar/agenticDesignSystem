@@ -1,0 +1,113 @@
+{
+  "id": "app-header",
+  "purpose": "The bar across the top of the app with the product name, main navigation, search and account actions.",
+  "variants": [
+    "wide",
+    "compact"
+  ],
+  "states": [
+    "default"
+  ],
+  "props": [
+    {
+      "name": "title",
+      "type": "string",
+      "required": true,
+      "description": "Product or app name"
+    },
+    {
+      "name": "logo",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Logo before the title"
+    },
+    {
+      "name": "nav",
+      "type": "Array<{ label: string; href: string; current?: boolean }>",
+      "required": false,
+      "description": "Primary navigation links; below breakpoint-md they move into a menu"
+    },
+    {
+      "name": "search",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "A SearchField"
+    },
+    {
+      "name": "actions",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "IconButtons and an Avatar at the end"
+    },
+    {
+      "name": "layout",
+      "type": "'auto' | 'wide' | 'compact'",
+      "required": false,
+      "description": "auto follows the viewport (compact below breakpoint-md); wide or compact forces one. Defaults to auto"
+    }
+  ],
+  "whenToUse": [
+    "Once at the top of every page of an app"
+  ],
+  "whenNotToUse": [
+    "Inside a page section — use a heading",
+    "For more than six top-level sections — use SideNav"
+  ],
+  "related": [
+    "side-nav",
+    "search-field",
+    "avatar"
+  ],
+  "antiPatterns": [
+    "Several headers on one page",
+    "Hiding search behind an icon when it is the main task"
+  ],
+  "spec": {
+    "anatomy": [
+      "A bordered bar: optional menu button (compact), logo and title, primary navigation, spacer, search, actions"
+    ],
+    "sizes": [
+      "`size-control-lg` plus `space-component-padding-sm` tall; side padding `layout-margin-md`"
+    ],
+    "typography": [
+      "Title `type-h4-size` in `color-text-heading`; nav `type-button-size`"
+    ],
+    "states": [
+      "Nav links `color-text-secondary`, current `color-text-link` with a `color-interactive-default` indicator; focus ring `color-interactive-focus-ring`"
+    ],
+    "motion": [
+      "None"
+    ]
+  },
+  "tokensUsed": [
+    "border-width-default",
+    "border-width-focus",
+    "color-background-surface",
+    "color-border-default",
+    "color-interactive-default",
+    "color-interactive-focus-ring",
+    "color-text-heading",
+    "color-text-link",
+    "color-text-primary",
+    "color-text-secondary",
+    "layout-margin-md",
+    "size-control-lg",
+    "size-modal-sm",
+    "space-component-gap-md",
+    "space-component-gap-sm",
+    "space-component-padding-sm",
+    "space-component-padding-xs",
+    "type-button-family",
+    "type-button-size",
+    "type-button-weight",
+    "type-h4-family",
+    "type-h4-line-height",
+    "type-h4-size",
+    "type-h4-weight"
+  ],
+  "a11yNotes": [
+    "A banner landmark; the navigation is a landmark named Primary",
+    "The current page has aria-current page",
+    "Below breakpoint-md the navigation is a menu behind a Navigation IconButton"
+  ]
+}
