@@ -1,0 +1,21 @@
+{
+  "id": "project-dashboard",
+  "screenType": "dashboard",
+  "brief": "A project dashboard with a heading, a progress bar showing release progress, three cards with key numbers, and tabs for overview, activity and settings",
+  "expectedComponents": [
+    "heading",
+    "progress-bar",
+    "card",
+    "tabs"
+  ],
+  "forbiddenComponents": [
+    "modal",
+    "drawer"
+  ],
+  "forbiddenPatterns": [
+    "No nested cards"
+  ],
+  "passCriteria": [
+    "Every QA check passes"
+  ]
+}

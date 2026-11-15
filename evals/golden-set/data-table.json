@@ -1,0 +1,19 @@
+{
+  "id": "data-table",
+  "screenType": "data display",
+  "brief": "A projects table with name, owner, status and updated columns, sortable by name, with a search field above it to filter the rows",
+  "expectedComponents": [
+    "table",
+    "search-field"
+  ],
+  "forbiddenComponents": [
+    "list",
+    "card"
+  ],
+  "forbiddenPatterns": [
+    "Sortable headers report aria-sort"
+  ],
+  "passCriteria": [
+    "Every QA check passes"
+  ]
+}

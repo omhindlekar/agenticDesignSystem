@@ -1,0 +1,22 @@
+{
+  "id": "file-details",
+  "screenType": "detail",
+  "brief": "A file details card with the file name as a heading, a badge for its status, a divider, and a list of details such as size, owner and last modified",
+  "expectedComponents": [
+    "card",
+    "heading",
+    "badge",
+    "divider",
+    "list"
+  ],
+  "forbiddenComponents": [
+    "table",
+    "modal"
+  ],
+  "forbiddenPatterns": [
+    "No nested cards"
+  ],
+  "passCriteria": [
+    "Every QA check passes"
+  ]
+}

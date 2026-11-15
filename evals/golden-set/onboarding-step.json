@@ -1,0 +1,21 @@
+{
+  "id": "onboarding-step",
+  "screenType": "onboarding",
+  "brief": "Step two of an onboarding flow: a heading, a progress bar showing step two of four, a radio group to choose a team size, and back and continue buttons",
+  "expectedComponents": [
+    "heading",
+    "progress-bar",
+    "radio-group",
+    "button"
+  ],
+  "forbiddenComponents": [
+    "select",
+    "modal"
+  ],
+  "forbiddenPatterns": [
+    "One contained button"
+  ],
+  "passCriteria": [
+    "Every QA check passes"
+  ]
+}

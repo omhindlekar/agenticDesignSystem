@@ -1,0 +1,20 @@
+{
+  "id": "activity-feed",
+  "screenType": "feed",
+  "brief": "An activity feed for a project: a heading, then a list of recent events, each with the person's avatar, what they did, and when",
+  "expectedComponents": [
+    "heading",
+    "list",
+    "avatar"
+  ],
+  "forbiddenComponents": [
+    "table",
+    "modal"
+  ],
+  "forbiddenPatterns": [
+    "Avatars are named by the person"
+  ],
+  "passCriteria": [
+    "Every QA check passes"
+  ]
+}

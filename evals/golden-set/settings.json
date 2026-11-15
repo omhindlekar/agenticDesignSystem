@@ -1,0 +1,20 @@
+{
+  "id": "settings",
+  "screenType": "settings",
+  "brief": "An account settings page with a heading, a switch for email notifications, a switch for weekly digests, and a save changes button",
+  "expectedComponents": [
+    "heading",
+    "switch",
+    "button"
+  ],
+  "forbiddenComponents": [
+    "checkbox",
+    "modal"
+  ],
+  "forbiddenPatterns": [
+    "Switches label the setting, not the off state"
+  ],
+  "passCriteria": [
+    "Every QA check passes"
+  ]
+}

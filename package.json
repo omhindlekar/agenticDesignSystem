@@ -18,6 +18,8 @@
     "icons:build": "tsx scripts/build-icons.ts",
     "a11y": "tsx scripts/a11y.ts",
     "figma:sync": "tsx scripts/figma-sync.ts",
+    "golden": "tsx scripts/golden.ts",
+    "golden:record": "tsx scripts/golden.ts --record",
     "parity": "tsx checks/parity/index.ts",
     "prestorybook": "npm run tokens:build",
     "storybook": "storybook dev -p 6006",

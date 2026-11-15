@@ -1,0 +1,21 @@
+{
+  "id": "profile",
+  "screenType": "profile",
+  "brief": "A profile page with a large avatar, the person's name as a heading, a short bio text, and an edit profile button",
+  "expectedComponents": [
+    "avatar",
+    "heading",
+    "text",
+    "button"
+  ],
+  "forbiddenComponents": [
+    "image",
+    "modal"
+  ],
+  "forbiddenPatterns": [
+    "Avatar is named by the person"
+  ],
+  "passCriteria": [
+    "Every QA check passes"
+  ]
+}

@@ -95,11 +95,27 @@ function tokenise(text: string): string[] {
     .filter((w) => w.length >= 3 && !STOP_WORDS.has(w));
 }
 
-function scoreComponent(component: ComponentMetadata, keywords: string[]): number {
-  // Use id, purpose and variants only — whenToUse freely cross-references other
-  // component names and would cause cascade matches for unrelated tasks.
-  const haystack = [component.id, component.purpose, ...component.variants].join(' ').toLowerCase();
-  return keywords.filter((k) => haystack.includes(k)).length;
+/** Singular stem: buttons → button, checkboxes → checkbox, entries → entry. */
+export function stem(word: string): string {
+  if (word.length <= 3) return word;
+  if (word.endsWith('ies')) return `${word.slice(0, -3)}y`;
+  if (/(x|ch|sh|ss)es$/.test(word)) return word.slice(0, -2);
+  if (word.endsWith('s') && !word.endsWith('ss')) return word.slice(0, -1);
+  return word;
+}
+
+/**
+ * A component is selected when every word of its id is named in the task (singular or
+ * plural, or as the start of a longer word: "navigation" names side-nav). Matching whole
+ * id words, not any word of the purpose, keeps the pack to the components the brief asks
+ * for, so rule text stays under 30% (FR-5, NFR-6).
+ */
+function matchesComponent(component: ComponentMetadata, keywords: string[]): boolean {
+  const stems = keywords.map(stem);
+  return component.id.split('-').every((part) => {
+    const p = stem(part);
+    return stems.some((k) => k === p || (p.length >= 3 && k.length - p.length >= 4 && k.startsWith(p)));
+  });
 }
 
 export function selectContext(input: ContextInput, store: DataStore): ContextPack {
@@ -116,11 +132,10 @@ export function selectContext(input: ContextInput, store: DataStore): ContextPac
 
   // 1. Select relevant components
   const selectedComponents = store.components
-    .map((c) => ({ component: c, score: scoreComponent(c, keywords) }))
-    .filter(({ score }) => score > 0)
-    .map(({ component, score }) => ({
+    .filter((c) => matchesComponent(c, keywords))
+    .map((component) => ({
       id: component.id,
-      reason: `Task contains keyword(s) matching component purpose or usage (score ${score})`,
+      reason: `The task names it: ${component.id.split('-').join(' ')}`,
     }));
 
   const selectedComponentIds = new Set(selectedComponents.map((c) => c.id));

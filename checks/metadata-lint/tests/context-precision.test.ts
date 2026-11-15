@@ -9,15 +9,17 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, '../../..');
 
 /**
- * The Context agent matches brief keywords against each component's id, purpose and
- * variants. A new component whose purpose contains an incidental word ("button",
- * "primary", "sign") would be pulled into unrelated briefs. These cases pin the
- * selection, so metadata wording is fixed in metadata, never in the agent.
+ * The Context agent selects a component when the brief names every word of its id
+ * (phase 2b; before, any word of its purpose counted, which pulled in 15–27 components
+ * per brief and most of the rule text). These cases pin the selection.
  */
 describe('FR-3 metadata keeps context selection precise', () => {
   const cases: Array<[string, string[]]> = [
-    [DEMO_BRIEF, ['button', 'card', 'checkbox', 'icon-button', 'input']],
-    ['create a primary button', ['button', 'icon-button']],
+    [DEMO_BRIEF, ['button', 'card', 'checkbox', 'input']],
+    ['create a primary button', ['button']],
+    ['An app shell with an app header and a side navigation', ['app-header', 'side-nav']],
+    ['A data table with sortable columns', ['table']],
+    ['Three pricing cards with buttons', ['button', 'card']],
   ];
   it.each(cases)('FR-3: "%s" selects exactly the expected components', async (task, expected) => {
     const store = await loadDataStore(root);

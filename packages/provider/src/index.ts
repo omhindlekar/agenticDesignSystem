@@ -44,7 +44,9 @@ export function createProvider(config: ProviderConfig, repoRoot: string): ModelP
       );
   }
 
-  if (config.cache?.enabled !== false) {
+  // The fake provider is never cached: its fixtures are the record, and a cache hit could
+  // hide a missing fixture locally that CI would then fail on.
+  if (config.cache?.enabled !== false && name !== 'fake') {
     const cacheDir = join(repoRoot, 'runs', '.provider-cache');
     mkdirSync(cacheDir, { recursive: true });
     return new CachingProvider(base, cacheDir);

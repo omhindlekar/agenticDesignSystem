@@ -1,0 +1,20 @@
+{
+  "id": "team-members",
+  "screenType": "team",
+  "brief": "A team members page with an avatar group showing who is on the team, a table of members with name, role and status columns, and an invite member button",
+  "expectedComponents": [
+    "avatar-group",
+    "table",
+    "button"
+  ],
+  "forbiddenComponents": [
+    "list",
+    "modal"
+  ],
+  "forbiddenPatterns": [
+    "One contained button"
+  ],
+  "passCriteria": [
+    "Every QA check passes"
+  ]
+}

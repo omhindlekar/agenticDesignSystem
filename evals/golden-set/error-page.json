@@ -1,0 +1,20 @@
+{
+  "id": "error-page",
+  "screenType": "error",
+  "brief": "A page not found error screen with a heading, a short text explaining the page does not exist, and a link back to the home page",
+  "expectedComponents": [
+    "heading",
+    "text",
+    "link"
+  ],
+  "forbiddenComponents": [
+    "modal",
+    "banner"
+  ],
+  "forbiddenPatterns": [
+    "Navigation uses a link"
+  ],
+  "passCriteria": [
+    "Every QA check passes"
+  ]
+}
