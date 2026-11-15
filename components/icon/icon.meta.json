@@ -75,6 +75,7 @@
     "Decorative by default: aria-hidden and not focusable",
     "With label: role img and aria-label",
     "Never the only content of a control — IconButton supplies the accessible name",
-    "Icons drawn at 3:1 or better against their background when they carry meaning (WCAG 1.4.11)"
+    "Icons drawn at 3:1 or better against their background when they carry meaning (WCAG 1.4.11)",
+    "Directional icons (arrows, chevrons, filter_list) mirror in right-to-left layouts; the list is mirrorInRtl in icon-list.json"
   ]
 }

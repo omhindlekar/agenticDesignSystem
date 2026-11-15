@@ -76,8 +76,10 @@
   transform: rotate(90deg);
 }
 
-[dir="rtl"] .ads-tree__chevron .ads-icon {
-  transform: scaleX(-1);
+/* In right to left the chevron points left (Icon mirrors it), so expanding turns it the other way. */
+[dir="rtl"] .ads-tree__item[data-expanded] > .ads-tree__row .ads-tree__chevron,
+[dir="rtl"] .ads-tree__item[data-expanded] .ads-tree__chevron {
+  transform: rotate(-90deg);
 }
 
 .ads-tree__row .ads-icon {

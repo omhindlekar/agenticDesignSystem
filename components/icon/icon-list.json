@@ -36,5 +36,13 @@
     "visibility",
     "visibility_off",
     "warning"
-  ]
+  ],
+  "mirrorInRtl": [
+    "arrow_back",
+    "arrow_forward",
+    "filter_list",
+    "keyboard_arrow_left",
+    "keyboard_arrow_right"
+  ],
+  "mirrorNote": "Directional icons flip in right-to-left layouts (Material guidance): arrows, chevrons and lists aligned to one side. Checks, clocks, media and brand shapes never flip."
 }

@@ -20,3 +20,11 @@
   width: var(--size-icon-lg);
   height: var(--size-icon-lg);
 }
+
+/*
+ * Right to left: directional icons flip. The individual scale property composes with any
+ * transform a component applies (for example a rotating chevron).
+ */
+[dir="rtl"] .ads-icon[data-mirror="rtl"] {
+  scale: -1 1;
+}

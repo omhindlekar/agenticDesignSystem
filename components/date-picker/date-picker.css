@@ -98,10 +98,6 @@
   color: var(--color-text-heading);
 }
 
-[dir="rtl"] .ads-calendar__nav .ads-icon {
-  transform: scaleX(-1);
-}
-
 .ads-calendar__grid {
   border-collapse: collapse;
 }
