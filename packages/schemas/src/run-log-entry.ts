@@ -13,6 +13,8 @@ export const RunLogEntrySchema = z.object({
   outcome: RunOutcomeSchema,
   timestamp: z.string().datetime(),
   costUsd: z.number().min(0).optional(),
+  /** Things the agent noticed and treated as data, such as instructions inside a brief. */
+  flags: z.array(z.string()).optional(),
 });
 
 export type RunLogEntry = z.infer<typeof RunLogEntrySchema>;
