@@ -1,0 +1,117 @@
+{
+  "id": "menu",
+  "purpose": "A list of actions or options opened from a trigger, such as row actions or a sort order. Without a trigger it shows its own labelled trigger.",
+  "variants": [
+    "none",
+    "single",
+    "multiple"
+  ],
+  "states": [
+    "default"
+  ],
+  "props": [
+    {
+      "name": "label",
+      "type": "string",
+      "required": true,
+      "description": "Accessible name of the menu, and the default trigger's text"
+    },
+    {
+      "name": "items",
+      "type": "MenuEntry[]",
+      "required": true,
+      "description": "Items ({ id, label, icon?, description?, shortcut?, danger?, disabled?, children? for a submenu }), sections ({ type: 'section', title, items }) and separators ({ type: 'separator' })"
+    },
+    {
+      "name": "trigger",
+      "type": "React.ReactElement",
+      "required": false,
+      "description": "A Button or IconButton that opens it. Defaults to an outlined Button with a chevron"
+    },
+    {
+      "name": "selectionMode",
+      "type": "'none' | 'single' | 'multiple'",
+      "required": false,
+      "description": "Action menu, or a menu of choices with check marks. Defaults to none"
+    },
+    {
+      "name": "selectedKeys",
+      "type": "string[]",
+      "required": false,
+      "description": "Selected item ids when choosing"
+    },
+    {
+      "name": "onSelectionChange",
+      "type": "(keys: string[]) => void",
+      "required": false,
+      "description": "Called with the selected ids"
+    },
+    {
+      "name": "onAction",
+      "type": "(id: string) => void",
+      "required": false,
+      "description": "Called with the id of the item activated"
+    }
+  ],
+  "whenToUse": [
+    "For actions on an item or a page: edit, duplicate, delete",
+    "For a short set of choices such as sort order"
+  ],
+  "whenNotToUse": [
+    "For navigation between pages — use Link, Tabs or SideNav",
+    "For choosing a form value — use Select"
+  ],
+  "related": [
+    "button",
+    "icon-button",
+    "select"
+  ],
+  "antiPatterns": [
+    "More than one level of submenu",
+    "Hiding the only way to do a common task in a menu"
+  ],
+  "spec": {
+    "anatomy": [
+      "The shared list box popover with items (icon or check, label, description, shortcut, submenu chevron), section headers and separators"
+    ],
+    "sizes": [
+      "Items `size-control-md` tall; minimum width 60% of `size-modal-sm`"
+    ],
+    "typography": [
+      "Items `type-body1-size`; descriptions and shortcuts `type-caption-size`; section headers `type-overline-size`"
+    ],
+    "states": [
+      "Hover and focus `color-state-layer`; danger items `color-text-danger-action` with `color-state-layer-danger`; separators `color-border-default`"
+    ],
+    "motion": [
+      "Enters with `motion-easing-enter`, exits with `motion-easing-exit`; none under reduced motion"
+    ]
+  },
+  "tokensUsed": [
+    "border-width-default",
+    "color-border-default",
+    "color-state-layer-danger",
+    "color-text-danger-action",
+    "color-text-link",
+    "color-text-primary",
+    "color-text-secondary",
+    "size-icon-md",
+    "size-modal-sm",
+    "space-component-padding-field",
+    "space-component-padding-sm",
+    "space-component-padding-xs",
+    "type-body1-weight",
+    "type-caption-family",
+    "type-caption-line-height",
+    "type-caption-size",
+    "type-overline-family",
+    "type-overline-letter-spacing",
+    "type-overline-size",
+    "type-overline-weight"
+  ],
+  "a11yNotes": [
+    "role menu with menuitem, menuitemradio or menuitemcheckbox; sections are named groups",
+    "Enter or Space on the trigger opens it on the first item; arrows, Home, End and typeahead move; Escape closes and returns focus",
+    "Submenus open with Arrow Right and close with Arrow Left"
+  ]
+}

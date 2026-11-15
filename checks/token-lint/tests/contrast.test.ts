@@ -138,3 +138,10 @@ describe('FR-11 contrast: tonal containers', () => {
     expect(v?.ruleRef).toBe('DS-A-006');
   });
 });
+
+describe('FR-11 contrast: tooltip', () => {
+  it('FR-11: tooltip text is checked against the tooltip surface', () => {
+    const pairs = buildContrastPairs(resolveSemanticTokens(root));
+    expect(pairs.some((p) => p.fg === 'color-tooltip-text' && p.bg === 'color-tooltip-bg' && p.min === 4.5)).toBe(true);
+  });
+});

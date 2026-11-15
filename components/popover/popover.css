@@ -1,0 +1,29 @@
+/* Popover: the shared elevation-2 popover with a heading and body. */
+.ads-popover-panel {
+  min-width: calc(var(--size-modal-sm) * 0.75);
+  max-width: var(--size-modal-sm);
+}
+
+.ads-popover-panel__dialog {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-component-gap-sm);
+  padding: var(--space-component-padding-md);
+  outline: none;
+}
+
+.ads-popover-panel__title {
+  margin: 0;
+  font-family: var(--type-h4-family);
+  font-size: var(--type-h4-size);
+  font-weight: var(--type-h4-weight);
+  line-height: var(--type-h4-line-height);
+  color: var(--color-text-heading);
+}
+
+.ads-popover-panel__body {
+  font-family: var(--type-body2-family);
+  font-size: var(--type-body2-size);
+  line-height: var(--type-body2-line-height);
+  color: var(--color-text-primary);
+}

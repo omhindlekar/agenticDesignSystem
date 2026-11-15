@@ -119,6 +119,7 @@ export function buildContrastPairs(tokens: Map<string, string>, levels: Contrast
     add('color-text-inverse', fill, 'text');
   }
   add('color-text-on-success', 'color-status-success-fill', 'text', 'DS-A-006');
+  add('color-tooltip-text', 'color-tooltip-bg', 'text');
 
   // Tonal containers: each fill with its own on-container text.
   for (const c of names.filter((n) => n.startsWith('color-container-'))) {

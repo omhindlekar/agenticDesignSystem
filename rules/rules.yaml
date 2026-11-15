@@ -88,6 +88,10 @@ rules:
       - banner
       - toast-region
       - badge
+      - tooltip
+      - popover
+      - menu
+      - drawer
     example: "border: var(--border-width-default) solid var(--color-border-default)"
     counterExample: "border-radius: 50%"
 
@@ -157,6 +161,10 @@ rules:
       - banner
       - toast-region
       - badge
+      - tooltip
+      - popover
+      - menu
+      - drawer
     example: ".ads-button { font-family: var(--font-family-display) }"
     counterExample: ".ads-modal__title { font-family: var(--font-family-body) }"
 
@@ -195,6 +203,10 @@ rules:
       - banner
       - toast-region
       - badge
+      - tooltip
+      - popover
+      - menu
+      - drawer
     example: "Use color-text-primary on color-background-surface (passes 4.5:1)"
     counterExample: "Light grey text on white background"
 
@@ -226,6 +238,10 @@ rules:
       - date-picker
       - banner
       - toast-region
+      - tooltip
+      - popover
+      - menu
+      - drawer
     example: "outline: var(--border-width-focus) solid var(--color-interactive-focus-ring); outline-offset: var(--focus-ring-offset)"
     counterExample: "outline: none"
 
@@ -355,6 +371,10 @@ rules:
       - banner
       - toast-region
       - badge
+      - tooltip
+      - popover
+      - menu
+      - drawer
     example: "@media (prefers-reduced-motion: no-preference) { .x { transition: color var(--motion-duration-standard) var(--motion-easing-standard); } }"
     counterExample: "transition: all 300ms ease"
 
@@ -384,6 +404,8 @@ rules:
       - date-picker
       - banner
       - toast-region
+      - menu
+      - drawer
     example: "<IconButton icon=\"close\" label=\"Close dialog\" />"
     counterExample: "<button><svg viewBox=\"0 0 24 24\">…</svg></button>"
 

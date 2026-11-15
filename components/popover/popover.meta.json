@@ -1,0 +1,92 @@
+{
+  "id": "popover",
+  "purpose": "Rich, interactive content anchored to a trigger, such as a share panel, a small form or details on demand.",
+  "variants": [
+    "top",
+    "bottom",
+    "start",
+    "end"
+  ],
+  "states": [
+    "default"
+  ],
+  "props": [
+    {
+      "name": "title",
+      "type": "string",
+      "required": true,
+      "description": "Heading of the popover; also its accessible name"
+    },
+    {
+      "name": "trigger",
+      "type": "React.ReactElement",
+      "required": true,
+      "description": "A Button or IconButton that opens it"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": true,
+      "description": "Content"
+    },
+    {
+      "name": "placement",
+      "type": "'top' | 'bottom' | 'start' | 'end'",
+      "required": false,
+      "description": "Preferred side; flips when there is no room. Defaults to bottom"
+    }
+  ],
+  "whenToUse": [
+    "For a short task or extra detail that should stay next to its trigger",
+    "When the content is interactive"
+  ],
+  "whenNotToUse": [
+    "For a list of actions — use Menu",
+    "For a long or blocking task — use Modal or Drawer",
+    "For a hint of a few words — use Tooltip"
+  ],
+  "related": [
+    "tooltip",
+    "menu",
+    "modal"
+  ],
+  "antiPatterns": [
+    "Nesting popovers",
+    "Putting a whole form with many fields in a popover"
+  ],
+  "spec": {
+    "anatomy": [
+      "The shared elevation-2 popover with a heading and body"
+    ],
+    "sizes": [
+      "Width between three quarters of `size-modal-sm` and `size-modal-sm`; padding `space-component-padding-md`"
+    ],
+    "typography": [
+      "Title `type-h4-size` in `color-text-heading`; body `type-body2-size`"
+    ],
+    "states": [
+      "`shadow-component-menu` on `color-background-surface` with a 1px `color-border-default`"
+    ],
+    "motion": [
+      "Enters with `motion-easing-enter`, exits with `motion-easing-exit`; none under reduced motion"
+    ]
+  },
+  "tokensUsed": [
+    "color-text-heading",
+    "color-text-primary",
+    "size-modal-sm",
+    "space-component-gap-sm",
+    "space-component-padding-md",
+    "type-body2-family",
+    "type-body2-line-height",
+    "type-body2-size",
+    "type-h4-family",
+    "type-h4-line-height",
+    "type-h4-size",
+    "type-h4-weight"
+  ],
+  "a11yNotes": [
+    "A dialog named by its title; focus moves into it",
+    "Escape or a click outside closes it and focus returns to the trigger"
+  ]
+}

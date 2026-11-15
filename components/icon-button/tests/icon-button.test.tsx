@@ -49,11 +49,12 @@ describe('IconButton', () => {
     expect(screen.getByRole('button', { name: 'Close' }).hasAttribute('aria-pressed')).toBe(false);
   });
 
-  it('NFR-9: loading sets aria-busy and blocks activation', async () => {
+  it('NFR-9: loading is aria-disabled, keeps its name, shows a Loading progress bar and blocks activation', async () => {
     const onClick = vi.fn();
     render(<IconButton icon="download" label="Download" loading onClick={onClick} />);
-    const btn = screen.getByRole('button', { name: 'Download' });
-    expect(btn.getAttribute('aria-busy')).toBe('true');
+    const btn = screen.getByRole('button', { name: /Download/ });
+    expect(btn.getAttribute('aria-disabled')).toBe('true');
+    expect(screen.getByRole('progressbar', { name: 'Loading' })).toBeTruthy();
     await userEvent.setup().click(btn);
     expect(onClick).not.toHaveBeenCalled();
   });

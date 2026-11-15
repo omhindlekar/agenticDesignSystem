@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { useRef, useState } from 'react';
-import { render, screen, cleanup } from '@testing-library/react';
+import { render, screen, cleanup, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Modal } from '../modal';
 
@@ -105,5 +105,24 @@ describe('Modal', () => {
     expect(close.classList.contains('ads-icon-button')).toBe(true);
     expect(close.textContent).toBe('');
     expect(close.querySelector('svg')).not.toBeNull();
+  });
+});
+
+describe('Modal exit motion', () => {
+  it('FR-1: closing keeps it shown for the exit duration, marked data-exiting, then closes', async () => {
+    vi.useFakeTimers();
+    document.documentElement.style.setProperty('--motion-duration-overlay-exit', '150ms');
+    const { rerender } = render(<Modal isOpen onClose={() => {}} title="T">Body</Modal>);
+    rerender(<Modal isOpen={false} onClose={() => {}} title="T">Body</Modal>);
+    const dialog = document.querySelector('dialog.ads-modal');
+    expect(dialog?.hasAttribute('data-exiting')).toBe(true);
+    expect(dialog?.getAttribute('data-state')).toContain('open');
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(160);
+    });
+    expect(dialog?.hasAttribute('data-exiting')).toBe(false);
+    expect(dialog?.getAttribute('data-state')).toContain('closed');
+    document.documentElement.style.removeProperty('--motion-duration-overlay-exit');
+    vi.useRealTimers();
   });
 });

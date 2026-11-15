@@ -131,12 +131,27 @@
   }
 }
 
+@keyframes ads-modal-panel-out {
+  to {
+    opacity: 0;
+    transform: translateY(var(--space-component-padding-sm));
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
-  .ads-modal[data-state~="open"] .ads-modal__overlay {
+  .ads-modal[data-exiting] .ads-modal__overlay {
+    animation: ads-fade-in var(--motion-duration-overlay-exit) var(--motion-easing-exit) reverse forwards;
+  }
+
+  .ads-modal[data-exiting] .ads-modal__panel {
+    animation: ads-modal-panel-out var(--motion-duration-overlay-exit) var(--motion-easing-exit) forwards;
+  }
+
+  .ads-modal[data-state~="open"]:not([data-exiting]) .ads-modal__overlay {
     animation: ads-fade-in var(--motion-duration-overlay) var(--motion-easing-standard);
   }
 
-  .ads-modal[data-state~="open"] .ads-modal__panel {
+  .ads-modal[data-state~="open"]:not([data-exiting]) .ads-modal__panel {
     animation: ads-modal-panel-in var(--motion-duration-overlay) var(--motion-easing-standard);
   }
 }

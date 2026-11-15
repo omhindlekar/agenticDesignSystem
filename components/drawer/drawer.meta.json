@@ -1,0 +1,121 @@
+{
+  "id": "drawer",
+  "purpose": "A panel that slides in from the side over the page, for filters, details or a secondary task, without leaving the page.",
+  "variants": [
+    "start",
+    "end"
+  ],
+  "states": [
+    "default"
+  ],
+  "props": [
+    {
+      "name": "isOpen",
+      "type": "boolean",
+      "required": true,
+      "description": "Whether it is open"
+    },
+    {
+      "name": "onClose",
+      "type": "() => void",
+      "required": true,
+      "description": "Called on Escape, the Close button or a click on the scrim"
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "required": true,
+      "description": "Heading and accessible name"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": true,
+      "description": "Body"
+    },
+    {
+      "name": "footer",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Actions at the bottom"
+    },
+    {
+      "name": "side",
+      "type": "'start' | 'end'",
+      "required": false,
+      "description": "Edge it slides from (follows reading direction). Defaults to end"
+    },
+    {
+      "name": "size",
+      "type": "'sm' | 'md' | 'lg'",
+      "required": false,
+      "description": "320, 384 or 512px wide. Defaults to md"
+    }
+  ],
+  "whenToUse": [
+    "For filters, settings or details beside a list",
+    "For a secondary task that should keep the page visible behind it"
+  ],
+  "whenNotToUse": [
+    "For a short confirmation — use Modal",
+    "For primary navigation — use SideNav"
+  ],
+  "related": [
+    "modal",
+    "side-nav"
+  ],
+  "antiPatterns": [
+    "Opening a drawer from a drawer",
+    "Long multi-step flows in a drawer"
+  ],
+  "spec": {
+    "anatomy": [
+      "A scrim and a full-height square panel with a header (title, Close IconButton), scrolling body and optional footer"
+    ],
+    "sizes": [
+      "`size-drawer-sm`, `size-drawer-md`, `size-drawer-lg`; padding `space-component-padding-lg`"
+    ],
+    "typography": [
+      "Title `type-h3-size` in `color-text-heading`; body `type-body1-size`"
+    ],
+    "states": [
+      "`color-background-surface` panel at `elevation-4` with a 1px `color-border-default` edge; scrim `color-background-overlay` at `opacity-overlay`"
+    ],
+    "motion": [
+      "Slides in with `motion-easing-enter` over `motion-duration-overlay` and out with `motion-easing-exit` over `motion-duration-overlay-exit`, from the matching edge in RTL; none under reduced motion"
+    ]
+  },
+  "tokensUsed": [
+    "border-width-default",
+    "color-background-overlay",
+    "color-background-surface",
+    "color-border-default",
+    "color-text-heading",
+    "color-text-primary",
+    "elevation-4",
+    "motion-duration-overlay",
+    "motion-duration-overlay-exit",
+    "motion-easing-enter",
+    "motion-easing-exit",
+    "opacity-overlay",
+    "size-drawer-lg",
+    "size-drawer-md",
+    "size-drawer-sm",
+    "space-component-gap-md",
+    "space-component-gap-sm",
+    "space-component-padding-lg",
+    "space-component-padding-md",
+    "type-body1-family",
+    "type-body1-line-height",
+    "type-body1-size",
+    "type-h3-family",
+    "type-h3-line-height",
+    "type-h3-size",
+    "type-h3-weight",
+    "z-index-modal"
+  ],
+  "a11yNotes": [
+    "A modal dialog named by its title; focus is trapped inside and returns to the trigger",
+    "Escape, the Close button and the scrim close it"
+  ]
+}

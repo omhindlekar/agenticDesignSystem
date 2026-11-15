@@ -1,0 +1,76 @@
+/* Menu: the shared list box with icons, descriptions, shortcuts, sections and separators. */
+.ads-menu {
+  min-width: calc(var(--size-modal-sm) * 0.6);
+}
+
+.ads-menu__icon,
+.ads-menu__check {
+  display: inline-flex;
+  flex: none;
+  width: var(--size-icon-md);
+  color: var(--color-text-secondary);
+}
+
+.ads-menu__check {
+  color: var(--color-text-link);
+}
+
+.ads-menu__text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  padding-block: var(--space-component-padding-xs);
+}
+
+.ads-menu__description {
+  font-family: var(--type-caption-family);
+  font-size: var(--type-caption-size);
+  line-height: var(--type-caption-line-height);
+  color: var(--color-text-secondary);
+}
+
+.ads-menu__shortcut {
+  font-family: var(--type-caption-family);
+  font-size: var(--type-caption-size);
+  color: var(--color-text-secondary);
+}
+
+.ads-menu__submenu {
+  display: inline-flex;
+  color: var(--color-text-secondary);
+}
+
+.ads-menu__item[data-tone="danger"] {
+  color: var(--color-text-danger-action);
+}
+
+.ads-menu__item[data-tone="danger"]::before {
+  background-color: var(--color-state-layer-danger);
+}
+
+.ads-menu__item[data-tone="danger"] .ads-menu__icon {
+  color: inherit;
+}
+
+/* Selected items are marked by the check, not by colour. */
+.ads-menu .ads-listbox__item[data-selected] {
+  color: var(--color-text-primary);
+  font-weight: var(--type-body1-weight);
+}
+
+.ads-menu__separator {
+  height: var(--border-width-default);
+  margin-block: var(--space-component-padding-xs);
+  background-color: var(--color-border-default);
+}
+
+.ads-menu__header {
+  padding: var(--space-component-padding-sm) var(--space-component-padding-field) var(--space-component-padding-xs);
+  font-family: var(--type-overline-family);
+  font-size: var(--type-overline-size);
+  font-weight: var(--type-overline-weight);
+  letter-spacing: var(--type-overline-letter-spacing);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}

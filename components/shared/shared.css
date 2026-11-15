@@ -1,6 +1,10 @@
 /* Shared helpers used by every component. All values come from semantic tokens. */
 @import './fonts.css';
 
+.ads-overlay-root {
+  display: contents;
+}
+
 .ads-visually-hidden {
   position: absolute;
   width: 1px;

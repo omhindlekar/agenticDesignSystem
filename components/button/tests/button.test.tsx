@@ -72,11 +72,13 @@ describe('Button', () => {
     expect(onSubmit).not.toHaveBeenCalled();
   });
 
-  it('NFR-9: loading sets aria-busy, keeps the label and blocks clicks', async () => {
+  it('NFR-9: loading stays focusable, is aria-disabled, shows a Loading progress bar, keeps the label and blocks clicks', async () => {
     const onClick = vi.fn();
     render(<Button label="Save" loading onClick={onClick} />);
     const btn = screen.getByRole('button', { name: /Save/ });
-    expect(btn.getAttribute('aria-busy')).toBe('true');
+    expect(btn.getAttribute('aria-disabled')).toBe('true');
+    expect(btn.hasAttribute('disabled')).toBe(false);
+    expect(screen.getByRole('progressbar', { name: 'Loading' })).toBeTruthy();
     await userEvent.setup().click(btn);
     expect(onClick).not.toHaveBeenCalled();
   });

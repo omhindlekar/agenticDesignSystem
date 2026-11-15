@@ -1,19 +1,77 @@
 {
   "id": "modal",
   "purpose": "Displays content that requires user attention or action in a layer above the page. Blocks interaction with the page behind it until the user responds or dismisses the modal.",
-  "variants": ["default", "danger", "fullscreen"],
-  "states": ["open", "closed", "loading"],
+  "variants": [
+    "default",
+    "danger",
+    "fullscreen"
+  ],
+  "states": [
+    "open",
+    "closed",
+    "loading"
+  ],
   "props": [
-    { "name": "isOpen", "type": "boolean", "required": true, "description": "Controls whether the modal is visible" },
-    { "name": "onClose", "type": "() => void", "required": true, "description": "Called when the user dismisses the modal" },
-    { "name": "title", "type": "string", "required": true, "description": "Modal heading, used as the accessible dialog name" },
-    { "name": "children", "type": "React.ReactNode", "required": true, "description": "Modal body content" },
-    { "name": "variant", "type": "'default' | 'danger' | 'fullscreen'", "required": false, "description": "Visual variant. danger uses warning colours for destructive actions. Defaults to default" },
-    { "name": "size", "type": "'sm' | 'md' | 'lg' | 'fullscreen'", "required": false, "description": "Modal width. Defaults to md" },
-    { "name": "footer", "type": "React.ReactNode", "required": false, "description": "Action buttons rendered in the modal footer" },
-    { "name": "closeOnOverlayClick", "type": "boolean", "required": false, "description": "Dismisses the modal when the overlay is clicked. Defaults to true" },
-    { "name": "initialFocusRef", "type": "React.RefObject<HTMLElement | null>", "required": false, "description": "Element that receives focus when the modal opens. Defaults to the first focusable element" },
-    { "name": "loading", "type": "boolean", "required": false, "description": "Shows a loading status in the body and sets aria-busy on the dialog" }
+    {
+      "name": "isOpen",
+      "type": "boolean",
+      "required": true,
+      "description": "Controls whether the modal is visible"
+    },
+    {
+      "name": "onClose",
+      "type": "() => void",
+      "required": true,
+      "description": "Called when the user dismisses the modal"
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "required": true,
+      "description": "Modal heading, used as the accessible dialog name"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": true,
+      "description": "Modal body content"
+    },
+    {
+      "name": "variant",
+      "type": "'default' | 'danger' | 'fullscreen'",
+      "required": false,
+      "description": "Visual variant. danger uses warning colours for destructive actions. Defaults to default"
+    },
+    {
+      "name": "size",
+      "type": "'sm' | 'md' | 'lg' | 'fullscreen'",
+      "required": false,
+      "description": "Modal width. Defaults to md"
+    },
+    {
+      "name": "footer",
+      "type": "React.ReactNode",
+      "required": false,
+      "description": "Action buttons rendered in the modal footer"
+    },
+    {
+      "name": "closeOnOverlayClick",
+      "type": "boolean",
+      "required": false,
+      "description": "Dismisses the modal when the overlay is clicked. Defaults to true"
+    },
+    {
+      "name": "initialFocusRef",
+      "type": "React.RefObject<HTMLElement | null>",
+      "required": false,
+      "description": "Element that receives focus when the modal opens. Defaults to the first focusable element"
+    },
+    {
+      "name": "loading",
+      "type": "boolean",
+      "required": false,
+      "description": "Shows a loading status in the body and sets aria-busy on the dialog"
+    }
   ],
   "whenToUse": [
     "To confirm a destructive action before it executes",
@@ -25,18 +83,33 @@
     "As a notification or toast — use an alert or toast component instead",
     "When the user does not need to take action — use an inline message or tooltip"
   ],
-  "related": ["button", "icon-button", "card"],
+  "related": [
+    "button",
+    "icon-button",
+    "card"
+  ],
   "antiPatterns": [
     "Opening a modal from inside another modal — stack modals never more than one deep",
     "Omitting a title — every modal needs a visible heading for screen readers",
     "Blocking the user without offering a way to dismiss"
   ],
   "spec": {
-    "anatomy": ["Scrim, panel with header (title, close IconButton), body and footer actions"],
-    "sizes": ["Panel padding `space-component-padding-lg` (24px); widths `size-modal-sm`, `size-modal-md`, `size-modal-lg`; footer gap `space-component-gap-sm` (8px)"],
-    "typography": ["Title `type-h3-size` (SemiCondensed 20px, `color-text-heading`); body `type-body1-size` in `color-text-secondary`"],
-    "states": ["Panel at `elevation-4` with a 1px `color-border-default`; scrim `color-background-overlay` at `opacity-overlay`", "danger: title in `color-text-danger`, role alertdialog"],
-    "motion": ["Scrim and panel fade in over `motion-duration-overlay` with `motion-easing-standard`; none under reduced motion"]
+    "anatomy": [
+      "Scrim, panel with header (title, close IconButton), body and footer actions"
+    ],
+    "sizes": [
+      "Panel padding `space-component-padding-lg` (24px); widths `size-modal-sm`, `size-modal-md`, `size-modal-lg`; footer gap `space-component-gap-sm` (8px)"
+    ],
+    "typography": [
+      "Title `type-h3-size` (SemiCondensed 20px, `color-text-heading`); body `type-body1-size` in `color-text-secondary`"
+    ],
+    "states": [
+      "Panel at `elevation-4` with a 1px `color-border-default`; scrim `color-background-overlay` at `opacity-overlay`",
+      "danger: title in `color-text-danger`, role alertdialog"
+    ],
+    "motion": [
+      "Scrim and panel enter with `motion-easing-enter` over `motion-duration-overlay` and leave with `motion-easing-exit` over `motion-duration-overlay-exit`; no motion under reduced motion"
+    ]
   },
   "tokensUsed": [
     "border-width-default",
@@ -56,6 +129,8 @@
     "focus-ring-offset",
     "font-family-body",
     "motion-duration-overlay",
+    "motion-duration-overlay-exit",
+    "motion-easing-exit",
     "motion-easing-standard",
     "opacity-overlay",
     "size-control-indicator",
