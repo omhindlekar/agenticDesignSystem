@@ -14,14 +14,13 @@ Work in this order, one phase at a time, and stop at each phase's exit criteria:
    `benchmark/industry-baseline.json`; each phase ends when its area reaches 100%.
    - 1.9: scorecard and foundations (tonal roles, dark and high-contrast themes, motion, layout, density)
    - 1.10: inputs and selection
-   - 1.11: feedback and overlays
-   - 1.12: navigation, layout and data display
+   - 1.11–1.12 (batched): feedback, overlays, navigation, layout and data display
    - 1.13: quality bar and docs (keyboard per WAI-ARIA practices, forced colours, RTL, axe, usage docs)
 3. Phase 2b: QA agent, four checks, golden set
 4. Phase 3: Maintainer and Docs agents, drift detection, versioning
 5. Phase 4: insight reports, variations, telemetry (the second theme moves into 1.9)
 
-Current phase: 1.9. Do not start a later phase unless I name it.
+Current phase: 1.11–1.12 (batched). Do not start a later phase unless I name it.
 Model calls go through packages/provider. Default provider is fake; real runs use
 the cli provider (my subscription). Never require an API key.
 

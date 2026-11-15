@@ -588,3 +588,37 @@ rules:
       - date-picker
     example: "<Combobox label=\"Country\" options={countries} />"
     counterExample: "<select name=\"country\">…</select>"
+
+  - id: DS-C-007
+    scope: component
+    severity: error
+    statement: >
+      Tooltips hold only a short, supplementary description of their trigger.
+      They never hold essential information or interactive content such as
+      links or buttons: a tooltip cannot be reached by touch, and its content
+      cannot be focused. Use Popover for content people need to read or act on.
+    check: manual
+    appliesTo:
+      - tooltip
+      - popover
+    example: "<Tooltip content=\"Copy link\"><IconButton icon=\"content_copy\" label=\"Copy link\" /></Tooltip>"
+    counterExample: "A tooltip containing a Learn more link"
+
+  - id: DS-C-008
+    scope: component
+    severity: error
+    statement: >
+      Move between pages and views with Link, Tabs, Breadcrumbs or SideNav.
+      Menu and Button are for actions, not navigation: a menu of pages hides
+      where people are, and a button that changes the URL breaks the browser's
+      back button and the link context menu.
+    check: manual
+    appliesTo:
+      - link
+      - tabs
+      - breadcrumbs
+      - side-nav
+      - menu
+      - button
+    example: "<SideNav label=\"Main\" items={pages} currentId=\"settings\" />"
+    counterExample: "A Menu whose items each change the page"

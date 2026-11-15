@@ -148,3 +148,18 @@ describe('FR-4 rules.yaml: pickers', () => {
     expect(r?.appliesTo).toEqual(expect.arrayContaining(['select', 'combobox', 'date-picker']));
   });
 });
+
+describe('FR-4 rules.yaml: overlays and navigation', () => {
+  it('FR-4: DS-C-007 keeps essential and interactive content out of tooltips and points to Popover', () => {
+    const r = loadRules().find((x) => x.id === 'DS-C-007');
+    expect(r?.check).toBe('manual');
+    expect(r?.statement).toContain('Popover');
+    expect(r?.appliesTo).toEqual(expect.arrayContaining(['tooltip', 'popover']));
+  });
+  it('FR-4: DS-C-008 sends navigation to Link, Tabs, Breadcrumbs or SideNav, not Menu or Button', () => {
+    const r = loadRules().find((x) => x.id === 'DS-C-008');
+    expect(r?.check).toBe('manual');
+    for (const name of ['Link', 'Tabs', 'Breadcrumbs', 'SideNav']) expect(r?.statement).toContain(name);
+    expect(r?.appliesTo).toEqual(expect.arrayContaining(['link', 'tabs', 'breadcrumbs', 'side-nav', 'menu', 'button']));
+  });
+});
