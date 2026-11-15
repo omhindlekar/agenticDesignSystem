@@ -51,7 +51,7 @@
   opacity: var(--opacity-state-pressed);
 }
 
-.ads-list__item--interactive:is([data-focus-visible], :focus-visible) {
+.ads-list__item--interactive[data-focus-visible] {
   outline: var(--border-width-focus) solid var(--color-interactive-focus-ring);
   outline-offset: calc(var(--border-width-focus) * -1);
 }

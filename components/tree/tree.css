@@ -30,7 +30,7 @@
   opacity: var(--opacity-state-hover);
 }
 
-.ads-tree__item:is([data-focus-visible], :focus-visible) {
+.ads-tree__item[data-focus-visible] {
   outline: var(--border-width-focus) solid var(--color-interactive-focus-ring);
   outline-offset: calc(var(--border-width-focus) * -1);
 }

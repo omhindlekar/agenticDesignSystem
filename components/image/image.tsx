@@ -22,7 +22,7 @@ export function Image({ src, alt, ratio = 'auto', fit = 'cover' }: ImageProps) {
     <span className="ads-image" data-variant={ratio} data-fit={fit} data-state={failed ? 'error' : 'default'}>
       {failed ? (
         <span className="ads-image__fallback" {...(alt ? { role: 'img', 'aria-label': alt } : { 'aria-hidden': true })}>
-          <Icon name="report" />
+          <Icon name="report" size="lg" />
         </span>
       ) : (
         <img className="ads-image__img" src={src} alt={alt} onError={() => setLoadFailed(true)} />

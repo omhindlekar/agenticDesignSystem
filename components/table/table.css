@@ -83,9 +83,9 @@
   color: var(--color-on-container-primary);
 }
 
-.ads-table__row:is([data-focus-visible], :focus-visible),
-.ads-table__cell:is([data-focus-visible], :focus-visible),
-.ads-table__column:is([data-focus-visible], :focus-visible) {
+.ads-table__row[data-focus-visible],
+.ads-table__cell[data-focus-visible],
+.ads-table__column[data-focus-visible] {
   outline: var(--border-width-focus) solid var(--color-interactive-focus-ring);
   outline-offset: calc(var(--border-width-focus) * -1);
 }

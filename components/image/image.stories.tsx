@@ -8,10 +8,12 @@ function paintSample(): string {
   // Outside a browser (the parity check) there may be no document or canvas to paint on.
   if (!doc) return 'sample.png';
   const canvas = doc.createElement('canvas');
-  canvas.width = 160;
-  canvas.height = 90;
+  // Painted at 8x so it stays sharp when scaled up to the frame.
+  canvas.width = 1280;
+  canvas.height = 720;
   const ctx = canvas.getContext('2d');
   if (!ctx) return 'sample.png';
+  ctx.scale(8, 8);
   const blocks: Array<[string, number, number, number, number]> = [
     ['color-blue-700', 0, 0, 160, 90],
     ['color-blue-900', 0, 54, 160, 36],

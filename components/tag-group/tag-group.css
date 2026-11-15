@@ -67,7 +67,7 @@
   opacity: var(--opacity-state-hover);
 }
 
-.ads-tag:is([data-focus-visible], :focus-visible) {
+.ads-tag[data-focus-visible] {
   outline: var(--border-width-focus) solid var(--color-interactive-focus-ring);
   outline-offset: var(--focus-ring-offset);
 }
@@ -94,6 +94,6 @@
   background-color: color-mix(in srgb, currentColor calc(var(--opacity-state-hover) * 100%), transparent);
 }
 
-.ads-tag__remove:is([data-focus-visible], :focus-visible) {
+.ads-tag__remove[data-focus-visible] {
   outline: var(--border-width-focus) solid var(--color-interactive-focus-ring);
 }

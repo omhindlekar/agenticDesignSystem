@@ -63,8 +63,12 @@
   opacity: var(--opacity-state-pressed);
 }
 
-/* Keyboard focus also gets the ring, inset so it is not clipped by the popover. */
-.ads-listbox__item:is([data-focus-visible], :focus-visible) {
+/*
+ * Keyboard focus also gets the ring, inset so it is not clipped by the popover. Only React
+ * Aria's data-focus-visible counts: opening a popover with the mouse moves focus by script,
+ * which Chromium matches as :focus-visible.
+ */
+.ads-listbox__item[data-focus-visible] {
   outline: var(--border-width-focus) solid var(--color-interactive-focus-ring);
   outline-offset: calc(var(--border-width-focus) * -1);
 }

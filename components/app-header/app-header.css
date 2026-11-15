@@ -13,6 +13,7 @@
 
 .ads-app-header__brand {
   display: inline-flex;
+  flex-shrink: 0;
   align-items: center;
   gap: var(--space-component-gap-sm);
 }
@@ -23,6 +24,8 @@
   font-weight: var(--type-h4-weight);
   line-height: var(--type-h4-line-height);
   color: var(--color-text-heading);
+  /* The product name never wraps; the nav and search give way first. */
+  white-space: nowrap;
 }
 
 .ads-app-header__nav {
