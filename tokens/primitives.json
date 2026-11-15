@@ -125,6 +125,7 @@
     {"name": "size-10", "tier": "primitive", "value": "2.5rem", "description": "40px"},
     {"name": "size-11", "tier": "primitive", "value": "2.75rem", "description": "44px equivalent; WCAG 2.2 target size"},
     {"name": "size-12", "tier": "primitive", "value": "3rem", "description": "48px"},
+    {"name": "size-80", "tier": "primitive", "value": "20rem", "description": "320px"},
     {"name": "size-96", "tier": "primitive", "value": "24rem", "description": "384px equivalent"},
     {"name": "size-128", "tier": "primitive", "value": "32rem", "description": "512px equivalent"},
     {"name": "size-192", "tier": "primitive", "value": "48rem", "description": "768px equivalent"},

@@ -1,0 +1,97 @@
+{
+  "id": "toast-region",
+  "purpose": "Shows brief notifications in a corner of the screen. Place one ToastRegion at the app root and call toast({ title, description, tone, action }) to show a message.",
+  "variants": [
+    "bottom-end",
+    "top-end"
+  ],
+  "states": [
+    "default"
+  ],
+  "props": [
+    {
+      "name": "placement",
+      "type": "'bottom-end' | 'top-end'",
+      "required": false,
+      "description": "Corner the toasts stack in. Defaults to bottom-end"
+    }
+  ],
+  "whenToUse": [
+    "For short confirmations after an action: saved, copied, sent",
+    "For an undoable action, with an Undo action"
+  ],
+  "whenNotToUse": [
+    "For errors the user must act on — use Banner or Modal",
+    "For information that must stay visible — use Banner"
+  ],
+  "related": [
+    "banner"
+  ],
+  "antiPatterns": [
+    "More than one ToastRegion in an app",
+    "Essential information that disappears before it can be read"
+  ],
+  "spec": {
+    "anatomy": [
+      "A fixed region in a corner; each toast is a square card with a tone edge, icon, title, optional description, optional action and a Close IconButton"
+    ],
+    "sizes": [
+      "Toast width `size-modal-sm`; offset `layout-margin-md`; elevation `elevation-4`"
+    ],
+    "typography": [
+      "Title `type-label-size`; description `type-body2-size`"
+    ],
+    "states": [
+      "Tone edge and icon in `color-text-info`, `color-text-success`, `color-text-warning` or `color-text-danger`"
+    ],
+    "motion": [
+      "Enters with `motion-easing-enter` over `motion-duration-overlay`; none under reduced motion"
+    ]
+  },
+  "tokensUsed": [
+    "border-width-default",
+    "border-width-focus",
+    "color-background-surface",
+    "color-border-danger",
+    "color-border-default",
+    "color-border-success",
+    "color-interactive-focus-ring",
+    "color-state-layer",
+    "color-state-layer-danger",
+    "color-text-danger",
+    "color-text-info",
+    "color-text-primary",
+    "color-text-secondary",
+    "color-text-success",
+    "color-text-warning",
+    "elevation-4",
+    "focus-ring-offset",
+    "font-weight-heading",
+    "layout-margin-md",
+    "motion-duration-overlay",
+    "motion-duration-standard",
+    "motion-easing-enter",
+    "motion-easing-standard",
+    "opacity-state-focus",
+    "opacity-state-hover",
+    "opacity-state-pressed",
+    "size-modal-sm",
+    "space-component-gap-sm",
+    "space-component-padding-md",
+    "space-component-padding-sm",
+    "space-component-padding-xs",
+    "type-body2-family",
+    "type-body2-line-height",
+    "type-body2-size",
+    "type-label-family",
+    "type-label-line-height",
+    "type-label-size",
+    "z-index-modal",
+    "z-index-state-layer"
+  ],
+  "a11yNotes": [
+    "The region is a landmark; F6 moves focus to it",
+    "Toasts time out after 6 seconds, paused while hovered or focused; toasts with an action never time out (WCAG 2.2.1)",
+    "Each toast is announced; Close is always available"
+  ]
+}

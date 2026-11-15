@@ -1,0 +1,76 @@
+{
+  "id": "breadcrumbs",
+  "purpose": "Shows where the current page sits in the site hierarchy and links back up it.",
+  "variants": [
+    "full",
+    "collapsed"
+  ],
+  "states": [
+    "default"
+  ],
+  "props": [
+    {
+      "name": "items",
+      "type": "Array<{ label: string; href?: string }>",
+      "required": true,
+      "description": "Trail from the top level to the current page (last item)"
+    },
+    {
+      "name": "maxItems",
+      "type": "number",
+      "required": false,
+      "description": "Collapses longer trails to the first and last items with a Show full path button. Defaults to 4"
+    }
+  ],
+  "whenToUse": [
+    "On pages two or more levels deep",
+    "When users need to move up the hierarchy"
+  ],
+  "whenNotToUse": [
+    "On the top-level page",
+    "As the only navigation"
+  ],
+  "related": [
+    "link",
+    "side-nav"
+  ],
+  "antiPatterns": [
+    "Linking the current page",
+    "Using breadcrumbs for steps in a process"
+  ],
+  "spec": {
+    "anatomy": [
+      "Label-sized links separated by chevrons; the current page as plain text; a … button when collapsed"
+    ],
+    "sizes": [
+      "Separator padding `space-component-padding-xs`; chevron `size-icon-sm`"
+    ],
+    "typography": [
+      "`type-label-size` in SemiCondensed"
+    ],
+    "states": [
+      "Links `color-text-link`; current page `color-text-primary`; separators `color-text-secondary`"
+    ],
+    "motion": [
+      "None"
+    ]
+  },
+  "tokensUsed": [
+    "border-width-focus",
+    "color-interactive-focus-ring",
+    "color-text-link",
+    "color-text-primary",
+    "color-text-secondary",
+    "focus-ring-offset",
+    "space-component-padding-xs",
+    "type-label-family",
+    "type-label-line-height",
+    "type-label-size",
+    "type-label-weight"
+  ],
+  "a11yNotes": [
+    "A navigation landmark named Breadcrumbs",
+    "The current page has aria-current page and is not a link",
+    "The collapse button is named Show full path"
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "id": "avatar",
+  "purpose": "A person's photo, or their initials on a tonal square when there is no photo.",
+  "variants": [
+    "sm",
+    "md",
+    "lg"
+  ],
+  "states": [
+    "default"
+  ],
+  "props": [
+    {
+      "name": "name",
+      "type": "string",
+      "required": true,
+      "description": "The person's name; the accessible name and the source of the initials"
+    },
+    {
+      "name": "src",
+      "type": "string",
+      "required": false,
+      "description": "Photo URL; falls back to initials if it fails"
+    },
+    {
+      "name": "size",
+      "type": "'sm' | 'md' | 'lg'",
+      "required": false,
+      "description": "24, 32 or 40px. Defaults to md"
+    }
+  ],
+  "whenToUse": [
+    "Next to a person's name, in lists, comments and the app header"
+  ],
+  "whenNotToUse": [
+    "For organisations or projects — use Image",
+    "For decoration — leave it out"
+  ],
+  "related": [
+    "avatar-group",
+    "app-header"
+  ],
+  "antiPatterns": [
+    "Initials that do not match the name shown beside it"
+  ],
+  "spec": {
+    "anatomy": [
+      "A square photo, or initials on a tonal container chosen from the name"
+    ],
+    "sizes": [
+      "`size-avatar-sm`, `size-avatar-md`, `size-avatar-lg`"
+    ],
+    "typography": [
+      "Initials `type-caption-size` (lg `type-label-size`) in SemiCondensed at `font-weight-heading`"
+    ],
+    "states": [
+      "`color-container-*` with `color-on-container-*`, picked deterministically from the name"
+    ],
+    "motion": [
+      "None"
+    ]
+  },
+  "tokensUsed": [
+    "color-container-info",
+    "color-container-neutral",
+    "color-container-primary",
+    "color-container-success",
+    "color-container-warning",
+    "color-on-container-info",
+    "color-on-container-neutral",
+    "color-on-container-primary",
+    "color-on-container-success",
+    "color-on-container-warning",
+    "font-weight-heading",
+    "size-avatar-lg",
+    "size-avatar-md",
+    "size-avatar-sm",
+    "type-caption-size",
+    "type-label-family",
+    "type-label-line-height",
+    "type-label-size"
+  ],
+  "a11yNotes": [
+    "An image named by the person: the photo's alt, or role img with aria-label for initials",
+    "The same name always gets the same colour; meaning never depends on it"
+  ]
+}

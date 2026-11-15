@@ -84,7 +84,7 @@
   "a11yNotes": [
     "Must have a visible text label or an aria-label when icon-only",
     "disabled prop must set aria-disabled and prevent focus, not remove from tab order",
-    "loading state must set aria-busy='true' and announce to screen readers",
+    "loading uses React Aria's pending state: stays focusable, aria-disabled, blocks activation and form submission, and announces a Loading progress bar to screen readers",
     "Target size at least 24x24 CSS pixels (WCAG 2.2 SC 2.5.8); the smallest button is 32px tall",
     "Focus ring must be visible and use color-interactive-focus-ring"
   ]

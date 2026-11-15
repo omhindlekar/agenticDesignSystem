@@ -1,0 +1,19 @@
+/* Spinner: the shared square spinner at three sizes, with a status label. */
+.ads-spinner-status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-component-gap-sm);
+  color: var(--color-text-secondary);
+  font-family: var(--type-body2-family);
+  font-size: var(--type-body2-size);
+}
+
+.ads-spinner-status[data-variant="sm"] .ads-spinner {
+  width: var(--size-icon-sm);
+  height: var(--size-icon-sm);
+}
+
+.ads-spinner-status[data-variant="lg"] .ads-spinner {
+  width: var(--size-icon-lg);
+  height: var(--size-icon-lg);
+}

@@ -1,0 +1,81 @@
+{
+  "id": "image",
+  "purpose": "An image in a fixed aspect ratio, with a fallback tile if it fails to load.",
+  "variants": [
+    "1:1",
+    "4:3",
+    "16:9",
+    "auto"
+  ],
+  "states": [
+    "default",
+    "error"
+  ],
+  "props": [
+    {
+      "name": "src",
+      "type": "string",
+      "required": true,
+      "description": "Image URL"
+    },
+    {
+      "name": "alt",
+      "type": "string",
+      "required": true,
+      "description": "Describes the image; an empty string marks it decorative"
+    },
+    {
+      "name": "ratio",
+      "type": "'1:1' | '4:3' | '16:9' | 'auto'",
+      "required": false,
+      "description": "Aspect ratio. Defaults to auto"
+    },
+    {
+      "name": "fit",
+      "type": "'cover' | 'contain'",
+      "required": false,
+      "description": "How it fills the frame. Defaults to cover"
+    }
+  ],
+  "whenToUse": [
+    "For photos and illustrations in content"
+  ],
+  "whenNotToUse": [
+    "For icons — use Icon",
+    "For a person — use Avatar"
+  ],
+  "related": [
+    "avatar",
+    "icon"
+  ],
+  "antiPatterns": [
+    "Text inside images",
+    "Missing or meaningless alt text"
+  ],
+  "spec": {
+    "anatomy": [
+      "A square-cornered frame at a fixed ratio; a sunken tile with an icon when the image fails"
+    ],
+    "sizes": [
+      "Ratio frames; fallback at least `size-control-lg` tall"
+    ],
+    "typography": [
+      "None"
+    ],
+    "states": [
+      "Frame `color-background-sunken`; fallback icon `color-text-secondary`"
+    ],
+    "motion": [
+      "None"
+    ]
+  },
+  "tokensUsed": [
+    "color-background-sunken",
+    "color-text-secondary",
+    "size-control-lg"
+  ],
+  "a11yNotes": [
+    "alt is required; an empty alt hides decorative images from assistive tech",
+    "The fallback keeps the alt text as its name"
+  ]
+}

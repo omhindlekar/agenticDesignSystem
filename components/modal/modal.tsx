@@ -1,4 +1,4 @@
-import { useEffect, useId, useLayoutEffect, useRef } from 'react';
+import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
 import type * as React from 'react';
 import { IconButton } from '../icon-button/icon-button';
 import { dataState } from '../shared/state';
@@ -25,6 +25,18 @@ function focusableIn(root: HTMLElement): HTMLElement[] {
   return Array.from(root.querySelectorAll<HTMLElement>(FOCUSABLE));
 }
 
+/**
+ * How long the close animation runs: the --motion-duration-overlay-exit token, or 0 under
+ * prefers-reduced-motion or when the token is not available (for example in tests).
+ */
+function exitDurationMs(): number {
+  if (typeof window === 'undefined') return 0;
+  if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return 0;
+  const raw = getComputedStyle(document.documentElement).getPropertyValue('--motion-duration-overlay-exit').trim();
+  const ms = raw.endsWith('ms') ? parseFloat(raw) : raw.endsWith('s') ? parseFloat(raw) * 1000 : 0;
+  return Number.isFinite(ms) ? ms : 0;
+}
+
 // useLayoutEffect warns during server rendering; fall back to useEffect there.
 const useIsoLayoutEffect = typeof document === 'undefined' ? useEffect : useLayoutEffect;
 
@@ -41,6 +53,24 @@ export function Modal({
   loading = false,
 }: ModalProps) {
   const titleId = useId();
+  // Stays true for the exit animation after isOpen turns false, so the modal can animate out.
+  const [exiting, setExiting] = useState(false);
+  const wasOpen = useRef(isOpen);
+  useEffect(() => {
+    if (wasOpen.current && !isOpen) {
+      const ms = exitDurationMs();
+      if (ms > 0) {
+        setExiting(true);
+        const timer = setTimeout(() => setExiting(false), ms);
+        wasOpen.current = isOpen;
+        return () => clearTimeout(timer);
+      }
+    }
+    if (isOpen) setExiting(false);
+    wasOpen.current = isOpen;
+    return undefined;
+  }, [isOpen]);
+  const shown = isOpen || exiting;
   const dialogRef = useRef<HTMLDialogElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const returnFocusRef = useRef<HTMLElement | null>(null);
@@ -48,7 +78,7 @@ export function Modal({
   // Open and close the native dialog, move focus in, and return it on close.
   useIsoLayoutEffect(() => {
     const dialog = dialogRef.current;
-    if (!dialog || !isOpen) return;
+    if (!dialog || !shown) return;
 
     returnFocusRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     if (!dialog.open) {
@@ -66,7 +96,7 @@ export function Modal({
       else dialog.removeAttribute('open');
       returnFocusRef.current?.focus();
     };
-  }, [isOpen, initialFocusRef]);
+  }, [shown, initialFocusRef]);
 
   function handleKeyDown(event: React.KeyboardEvent<HTMLDialogElement>) {
     if (event.key === 'Escape') {
@@ -102,10 +132,11 @@ export function Modal({
       aria-modal="true"
       aria-labelledby={titleId}
       aria-busy={loading || undefined}
-      hidden={!isOpen}
+      hidden={!shown}
       data-variant={variant}
       data-size={layout}
-      data-state={dataState({ open: isOpen, closed: !isOpen, loading: isOpen && loading })}
+      data-state={dataState({ open: shown, closed: !shown, loading: shown && loading })}
+      data-exiting={exiting || undefined}
       onKeyDown={handleKeyDown}
       // The browser's own Escape handling is replaced by handleKeyDown so
       // onClose stays the single source of truth for closing.

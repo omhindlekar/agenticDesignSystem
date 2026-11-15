@@ -68,7 +68,7 @@ describe('FR-4 rules.yaml: structure and schema', () => {
   });
 
   it('FR-4: rules cover all POC components in their appliesTo fields', () => {
-    const poc = ['button', 'input', 'select', 'checkbox', 'card', 'modal', 'icon', 'icon-button', 'textarea', 'search-field', 'field', 'radio-group', 'switch', 'segmented-control', 'slider', 'number-field', 'combobox', 'date-picker'];
+    const poc = ['button', 'input', 'select', 'checkbox', 'card', 'modal', 'icon', 'icon-button', 'textarea', 'search-field', 'field', 'radio-group', 'switch', 'segmented-control', 'slider', 'number-field', 'combobox', 'date-picker', 'spinner', 'progress-bar', 'banner', 'toast-region', 'badge', 'tooltip', 'popover', 'menu', 'drawer', 'link', 'tabs', 'breadcrumbs', 'side-nav', 'app-header', 'table', 'list', 'tag-group', 'avatar', 'avatar-group', 'divider', 'tree', 'image', 'text', 'heading'];
     const covered = new Set(loadRules().flatMap((r) => r.appliesTo));
     for (const c of poc) {
       expect(covered.has(c), `No rule applies to "${c}"`).toBe(true);
@@ -146,5 +146,20 @@ describe('FR-4 rules.yaml: pickers', () => {
     expect(r?.checkName).toBe('token-lint');
     for (const name of ['Select', 'Combobox', 'DatePicker']) expect(r?.statement).toContain(name);
     expect(r?.appliesTo).toEqual(expect.arrayContaining(['select', 'combobox', 'date-picker']));
+  });
+});
+
+describe('FR-4 rules.yaml: overlays and navigation', () => {
+  it('FR-4: DS-C-007 keeps essential and interactive content out of tooltips and points to Popover', () => {
+    const r = loadRules().find((x) => x.id === 'DS-C-007');
+    expect(r?.check).toBe('manual');
+    expect(r?.statement).toContain('Popover');
+    expect(r?.appliesTo).toEqual(expect.arrayContaining(['tooltip', 'popover']));
+  });
+  it('FR-4: DS-C-008 sends navigation to Link, Tabs, Breadcrumbs or SideNav, not Menu or Button', () => {
+    const r = loadRules().find((x) => x.id === 'DS-C-008');
+    expect(r?.check).toBe('manual');
+    for (const name of ['Link', 'Tabs', 'Breadcrumbs', 'SideNav']) expect(r?.statement).toContain(name);
+    expect(r?.appliesTo).toEqual(expect.arrayContaining(['link', 'tabs', 'breadcrumbs', 'side-nav', 'menu', 'button']));
   });
 });

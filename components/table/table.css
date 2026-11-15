@@ -1,0 +1,142 @@
+/* Table: square, 1px row dividers, sticky header, field-height rows that follow density. */
+.ads-table {
+  overflow: auto;
+  border: var(--border-width-default) solid var(--color-border-default);
+}
+
+.ads-table__grid {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--type-body2-family);
+  font-size: var(--type-body2-size);
+  line-height: var(--type-body2-line-height);
+  color: var(--color-text-primary);
+}
+
+.ads-table__column {
+  position: sticky;
+  inset-block-start: 0;
+  height: var(--size-control-md);
+  padding-inline: var(--space-component-padding-md);
+  border-block-end: var(--border-width-default) solid var(--color-border-input);
+  background-color: var(--color-background-sunken);
+  font-family: var(--type-overline-family);
+  font-size: var(--type-overline-size);
+  font-weight: var(--type-overline-weight);
+  letter-spacing: var(--type-overline-letter-spacing);
+  text-align: start;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  outline: none;
+}
+
+.ads-table__column[data-align="end"],
+.ads-table__cell[data-align="end"] {
+  text-align: end;
+}
+
+.ads-table__column[data-allows-sorting] {
+  cursor: pointer;
+}
+
+.ads-table__column[data-allows-sorting]:is([data-hovered], :hover) {
+  color: var(--color-text-primary);
+}
+
+.ads-table__column-label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-component-padding-xs);
+}
+
+.ads-table__sort {
+  display: inline-flex;
+  visibility: hidden;
+}
+
+.ads-table__sort[data-active] {
+  visibility: visible;
+  color: var(--color-text-link);
+}
+
+.ads-table__column[data-allows-sorting]:is([data-hovered], :hover) .ads-table__sort {
+  visibility: visible;
+}
+
+.ads-table__row {
+  outline: none;
+}
+
+.ads-table__cell {
+  height: var(--size-control-md);
+  padding-inline: var(--space-component-padding-md);
+  border-block-end: var(--border-width-default) solid var(--color-border-default);
+  outline: none;
+}
+
+.ads-table__row:is([data-hovered], :hover) .ads-table__cell {
+  background-color: color-mix(in srgb, var(--color-state-layer) calc(var(--opacity-state-hover) * 100%), var(--color-background-surface));
+}
+
+.ads-table__row[data-selected] .ads-table__cell {
+  background-color: var(--color-container-primary);
+  color: var(--color-on-container-primary);
+}
+
+.ads-table__row[data-focus-visible],
+.ads-table__cell[data-focus-visible],
+.ads-table__column[data-focus-visible] {
+  outline: var(--border-width-focus) solid var(--color-interactive-focus-ring);
+  outline-offset: calc(var(--border-width-focus) * -1);
+}
+
+.ads-table__column--select,
+.ads-table__cell--select {
+  width: var(--size-hit-area);
+  padding-inline: var(--space-component-padding-sm);
+}
+
+.ads-table__empty {
+  padding: var(--space-layout-section);
+  text-align: center;
+  color: var(--color-text-secondary);
+}
+
+/* Selection checkbox: the design system's square box. */
+.ads-table__check {
+  display: inline-grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.ads-table__box {
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  width: var(--size-control-indicator);
+  height: var(--size-control-indicator);
+  border: var(--border-width-control) solid var(--color-border-input);
+  background-color: var(--color-background-surface);
+  color: var(--color-text-inverse);
+}
+
+.ads-table__check-icon,
+.ads-table__dash-icon {
+  display: none;
+}
+
+.ads-table__check[data-selected] .ads-table__box,
+.ads-table__check[data-indeterminate] .ads-table__box {
+  border-color: var(--color-interactive-default);
+  background-color: var(--color-interactive-default);
+}
+
+.ads-table__check[data-selected]:not([data-indeterminate]) .ads-table__check-icon,
+.ads-table__check[data-indeterminate] .ads-table__dash-icon {
+  display: inline-flex;
+}
+
+.ads-table__check:is([data-focus-visible], :has(:focus-visible)) .ads-table__box {
+  outline: var(--border-width-focus) solid var(--color-interactive-focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}

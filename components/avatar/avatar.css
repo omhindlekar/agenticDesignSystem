@@ -1,0 +1,44 @@
+/* Avatar: a square photo or initials on a tonal container (radius 0). */
+.ads-avatar {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  box-sizing: border-box;
+  width: var(--size-avatar-md);
+  height: var(--size-avatar-md);
+  object-fit: cover;
+  background-color: var(--color-container-neutral);
+  color: var(--color-on-container-neutral);
+  font-family: var(--type-label-family);
+  font-size: var(--type-caption-size);
+  font-weight: var(--font-weight-heading);
+  line-height: var(--type-label-line-height);
+}
+
+.ads-avatar[data-variant="sm"] {
+  width: var(--size-avatar-sm);
+  height: var(--size-avatar-sm);
+}
+
+.ads-avatar[data-variant="lg"] {
+  width: var(--size-avatar-lg);
+  height: var(--size-avatar-lg);
+  font-size: var(--type-label-size);
+}
+
+.ads-avatar[data-tone="primary"] {
+  background-color: var(--color-container-primary);
+  color: var(--color-on-container-primary);
+}
+.ads-avatar[data-tone="info"] {
+  background-color: var(--color-container-info);
+  color: var(--color-on-container-info);
+}
+.ads-avatar[data-tone="success"] {
+  background-color: var(--color-container-success);
+  color: var(--color-on-container-success);
+}
+.ads-avatar[data-tone="warning"] {
+  background-color: var(--color-container-warning);
+  color: var(--color-on-container-warning);
+}

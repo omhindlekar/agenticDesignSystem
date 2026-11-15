@@ -62,7 +62,7 @@
       "name": "loading",
       "type": "boolean",
       "required": false,
-      "description": "Shows a spinner over the icon, sets aria-busy and blocks activation"
+      "description": "Shows a spinner over the icon, keeps focus, blocks activation and announces a Loading progress bar"
     },
     {
       "name": "onClick",

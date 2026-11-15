@@ -330,9 +330,12 @@
       },
       "baseline": true,
       "verified": true,
-      "status": "missing",
+      "status": "done",
       "phase": "1.12",
-      "evidence": []
+      "evidence": [
+        "components/link/link.tsx",
+        "components/link/link.meta.json"
+      ]
     },
     {
       "id": "button-group",
@@ -616,9 +619,12 @@
       },
       "baseline": true,
       "verified": true,
-      "status": "missing",
+      "status": "done",
       "phase": "1.11",
-      "evidence": []
+      "evidence": [
+        "components/progress-bar/progress-bar.tsx",
+        "components/progress-bar/progress-bar.meta.json"
+      ]
     },
     {
       "id": "spinner",
@@ -633,10 +639,11 @@
       },
       "baseline": true,
       "verified": true,
-      "status": "partial",
+      "status": "done",
       "phase": "1.11",
       "evidence": [
-        "components/shared/shared.css"
+        "components/spinner/spinner.tsx",
+        "components/spinner/spinner.meta.json"
       ],
       "note": "Shared CSS only; not a component"
     },
@@ -653,9 +660,12 @@
       },
       "baseline": true,
       "verified": true,
-      "status": "missing",
+      "status": "done",
       "phase": "1.11",
-      "evidence": [],
+      "evidence": [
+        "components/banner/banner.tsx",
+        "components/banner/banner.meta.json"
+      ],
       "theirNames": {
         "carbon": "Notification",
         "atlassian": "Banner / Section message",
@@ -676,9 +686,12 @@
       },
       "baseline": true,
       "verified": true,
-      "status": "missing",
+      "status": "done",
       "phase": "1.11",
-      "evidence": [],
+      "evidence": [
+        "components/toast-region/toast-region.tsx",
+        "components/toast-region/toast-region.meta.json"
+      ],
       "theirNames": {
         "material3": "Snackbar",
         "carbon": "Notification",
@@ -699,9 +712,12 @@
       },
       "baseline": true,
       "verified": true,
-      "status": "missing",
+      "status": "done",
       "phase": "1.12",
-      "evidence": []
+      "evidence": [
+        "components/badge/badge.tsx",
+        "components/badge/badge.meta.json"
+      ]
     },
     {
       "id": "modal",
@@ -735,10 +751,12 @@
       },
       "baseline": true,
       "verified": false,
-      "status": "partial",
+      "status": "done",
       "phase": "1.11",
       "evidence": [
-        "components/shared/popover.css"
+        "components/shared/popover.css",
+        "components/modal/modal.tsx",
+        "components/drawer/drawer.css"
       ],
       "note": "Popovers (Select, Combobox, DatePicker) animate out; Modal does not yet (1.11)"
     },
@@ -755,9 +773,12 @@
       },
       "baseline": true,
       "verified": true,
-      "status": "missing",
+      "status": "done",
       "phase": "1.11",
-      "evidence": []
+      "evidence": [
+        "components/tooltip/tooltip.tsx",
+        "components/tooltip/tooltip.meta.json"
+      ]
     },
     {
       "id": "popover",
@@ -772,9 +793,12 @@
       },
       "baseline": true,
       "verified": true,
-      "status": "missing",
+      "status": "done",
       "phase": "1.11",
-      "evidence": [],
+      "evidence": [
+        "components/popover/popover.tsx",
+        "components/popover/popover.meta.json"
+      ],
       "theirNames": {
         "atlassian": "Popup / Inline dialog"
       }
@@ -792,9 +816,12 @@
       },
       "baseline": true,
       "verified": true,
-      "status": "missing",
+      "status": "done",
       "phase": "1.11",
-      "evidence": [],
+      "evidence": [
+        "components/menu/menu.tsx",
+        "components/menu/menu.meta.json"
+      ],
       "theirNames": {
         "carbon": "Menu / Menu buttons",
         "atlassian": "Dropdown menu"
@@ -813,9 +840,12 @@
       },
       "baseline": true,
       "verified": true,
-      "status": "missing",
+      "status": "done",
       "phase": "1.11",
-      "evidence": [],
+      "evidence": [
+        "components/drawer/drawer.tsx",
+        "components/drawer/drawer.meta.json"
+      ],
       "theirNames": {
         "material3": "Navigation drawer / Bottom sheets"
       }
@@ -833,9 +863,12 @@
       },
       "baseline": true,
       "verified": true,
-      "status": "missing",
+      "status": "done",
       "phase": "1.12",
-      "evidence": [],
+      "evidence": [
+        "components/tabs/tabs.tsx",
+        "components/tabs/tabs.meta.json"
+      ],
       "theirNames": {
         "fluent2": "Tablist"
       }
@@ -853,9 +886,12 @@
       },
       "baseline": true,
       "verified": true,
-      "status": "missing",
+      "status": "done",
       "phase": "1.12",
-      "evidence": []
+      "evidence": [
+        "components/breadcrumbs/breadcrumbs.tsx",
+        "components/breadcrumbs/breadcrumbs.meta.json"
+      ]
     },
     {
       "id": "side-nav",
@@ -870,9 +906,12 @@
       },
       "baseline": true,
       "verified": true,
-      "status": "missing",
+      "status": "done",
       "phase": "1.12",
-      "evidence": [],
+      "evidence": [
+        "components/side-nav/side-nav.tsx",
+        "components/side-nav/side-nav.meta.json"
+      ],
       "theirNames": {
         "material3": "Navigation drawer / rail",
         "carbon": "UI shell left panel",
@@ -893,9 +932,12 @@
       },
       "baseline": true,
       "verified": true,
-      "status": "missing",
+      "status": "done",
       "phase": "1.12",
-      "evidence": [],
+      "evidence": [
+        "components/app-header/app-header.tsx",
+        "components/app-header/app-header.meta.json"
+      ],
       "theirNames": {
         "material3": "App bars",
         "carbon": "UI shell header",
@@ -940,9 +982,12 @@
       },
       "baseline": true,
       "verified": true,
-      "status": "missing",
+      "status": "done",
       "phase": "1.12",
-      "evidence": []
+      "evidence": [
+        "components/table/table.tsx",
+        "components/table/table.meta.json"
+      ]
     },
     {
       "id": "list",
@@ -957,9 +1002,12 @@
       },
       "baseline": true,
       "verified": true,
-      "status": "missing",
+      "status": "done",
       "phase": "1.12",
-      "evidence": []
+      "evidence": [
+        "components/list/list.tsx",
+        "components/list/list.meta.json"
+      ]
     },
     {
       "id": "tag",
@@ -974,9 +1022,12 @@
       },
       "baseline": true,
       "verified": true,
-      "status": "missing",
+      "status": "done",
       "phase": "1.12",
-      "evidence": [],
+      "evidence": [
+        "components/tag-group/tag-group.tsx",
+        "components/tag-group/tag-group.meta.json"
+      ],
       "theirNames": {
         "material3": "Chips",
         "polaris": "Chip"
@@ -995,9 +1046,13 @@
       },
       "baseline": true,
       "verified": true,
-      "status": "missing",
+      "status": "done",
       "phase": "1.12",
-      "evidence": []
+      "evidence": [
+        "components/avatar/avatar.tsx",
+        "components/avatar/avatar.meta.json",
+        "components/avatar-group/avatar-group.tsx"
+      ]
     },
     {
       "id": "divider",
@@ -1012,9 +1067,12 @@
       },
       "baseline": true,
       "verified": true,
-      "status": "missing",
+      "status": "done",
       "phase": "1.12",
-      "evidence": []
+      "evidence": [
+        "components/divider/divider.tsx",
+        "components/divider/divider.meta.json"
+      ]
     },
     {
       "id": "tree",
@@ -1029,9 +1087,12 @@
       },
       "baseline": true,
       "verified": true,
-      "status": "missing",
+      "status": "done",
       "phase": "1.12",
-      "evidence": [],
+      "evidence": [
+        "components/tree/tree.tsx",
+        "components/tree/tree.meta.json"
+      ],
       "theirNames": {
         "atlassian": "Table tree"
       }
@@ -1049,9 +1110,12 @@
       },
       "baseline": true,
       "verified": true,
-      "status": "missing",
+      "status": "done",
       "phase": "1.12",
-      "evidence": []
+      "evidence": [
+        "components/image/image.tsx",
+        "components/image/image.meta.json"
+      ]
     },
     {
       "id": "icon",
@@ -1085,9 +1149,13 @@
       },
       "baseline": true,
       "verified": true,
-      "status": "missing",
+      "status": "done",
       "phase": "1.12",
-      "evidence": []
+      "evidence": [
+        "components/text/text.tsx",
+        "components/text/text.meta.json",
+        "components/heading/heading.tsx"
+      ]
     },
     {
       "id": "skeleton",

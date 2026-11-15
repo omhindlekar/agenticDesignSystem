@@ -83,6 +83,30 @@ rules:
       - number-field
       - combobox
       - date-picker
+      - spinner
+      - progress-bar
+      - banner
+      - toast-region
+      - badge
+      - tooltip
+      - popover
+      - menu
+      - drawer
+      - link
+      - tabs
+      - breadcrumbs
+      - side-nav
+      - app-header
+      - table
+      - list
+      - tag-group
+      - avatar
+      - avatar-group
+      - divider
+      - tree
+      - image
+      - text
+      - heading
     example: "border: var(--border-width-default) solid var(--color-border-default)"
     counterExample: "border-radius: 50%"
 
@@ -147,6 +171,30 @@ rules:
       - number-field
       - combobox
       - date-picker
+      - spinner
+      - progress-bar
+      - banner
+      - toast-region
+      - badge
+      - tooltip
+      - popover
+      - menu
+      - drawer
+      - link
+      - tabs
+      - breadcrumbs
+      - side-nav
+      - app-header
+      - table
+      - list
+      - tag-group
+      - avatar
+      - avatar-group
+      - divider
+      - tree
+      - image
+      - text
+      - heading
     example: ".ads-button { font-family: var(--font-family-display) }"
     counterExample: ".ads-modal__title { font-family: var(--font-family-body) }"
 
@@ -180,6 +228,30 @@ rules:
       - number-field
       - combobox
       - date-picker
+      - spinner
+      - progress-bar
+      - banner
+      - toast-region
+      - badge
+      - tooltip
+      - popover
+      - menu
+      - drawer
+      - link
+      - tabs
+      - breadcrumbs
+      - side-nav
+      - app-header
+      - table
+      - list
+      - tag-group
+      - avatar
+      - avatar-group
+      - divider
+      - tree
+      - image
+      - text
+      - heading
     example: "Use color-text-primary on color-background-surface (passes 4.5:1)"
     counterExample: "Light grey text on white background"
 
@@ -209,6 +281,21 @@ rules:
       - number-field
       - combobox
       - date-picker
+      - banner
+      - toast-region
+      - tooltip
+      - popover
+      - menu
+      - drawer
+      - link
+      - tabs
+      - breadcrumbs
+      - side-nav
+      - app-header
+      - table
+      - list
+      - tag-group
+      - tree
     example: "outline: var(--border-width-focus) solid var(--color-interactive-focus-ring); outline-offset: var(--focus-ring-offset)"
     counterExample: "outline: none"
 
@@ -333,6 +420,30 @@ rules:
       - number-field
       - combobox
       - date-picker
+      - spinner
+      - progress-bar
+      - banner
+      - toast-region
+      - badge
+      - tooltip
+      - popover
+      - menu
+      - drawer
+      - link
+      - tabs
+      - breadcrumbs
+      - side-nav
+      - app-header
+      - table
+      - list
+      - tag-group
+      - avatar
+      - avatar-group
+      - divider
+      - tree
+      - image
+      - text
+      - heading
     example: "@media (prefers-reduced-motion: no-preference) { .x { transition: color var(--motion-duration-standard) var(--motion-easing-standard); } }"
     counterExample: "transition: all 300ms ease"
 
@@ -360,6 +471,19 @@ rules:
       - number-field
       - combobox
       - date-picker
+      - banner
+      - toast-region
+      - menu
+      - drawer
+      - link
+      - breadcrumbs
+      - side-nav
+      - app-header
+      - tabs
+      - table
+      - list
+      - tag-group
+      - tree
     example: "<IconButton icon=\"close\" label=\"Close dialog\" />"
     counterExample: "<button><svg viewBox=\"0 0 24 24\">…</svg></button>"
 
@@ -464,3 +588,37 @@ rules:
       - date-picker
     example: "<Combobox label=\"Country\" options={countries} />"
     counterExample: "<select name=\"country\">…</select>"
+
+  - id: DS-C-007
+    scope: component
+    severity: error
+    statement: >
+      Tooltips hold only a short, supplementary description of their trigger.
+      They never hold essential information or interactive content such as
+      links or buttons: a tooltip cannot be reached by touch, and its content
+      cannot be focused. Use Popover for content people need to read or act on.
+    check: manual
+    appliesTo:
+      - tooltip
+      - popover
+    example: "<Tooltip content=\"Copy link\"><IconButton icon=\"content_copy\" label=\"Copy link\" /></Tooltip>"
+    counterExample: "A tooltip containing a Learn more link"
+
+  - id: DS-C-008
+    scope: component
+    severity: error
+    statement: >
+      Move between pages and views with Link, Tabs, Breadcrumbs or SideNav.
+      Menu and Button are for actions, not navigation: a menu of pages hides
+      where people are, and a button that changes the URL breaks the browser's
+      back button and the link context menu.
+    check: manual
+    appliesTo:
+      - link
+      - tabs
+      - breadcrumbs
+      - side-nav
+      - menu
+      - button
+    example: "<SideNav label=\"Main\" items={pages} currentId=\"settings\" />"
+    counterExample: "A Menu whose items each change the page"

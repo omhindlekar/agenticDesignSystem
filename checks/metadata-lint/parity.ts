@@ -209,8 +209,12 @@ export function checkStories(meta: MetaLike, stories: StoryCoverage[]): ParityIs
 
 /** data-variant and data-state of the first (root) element in rendered markup. */
 export function parseRootAttributes(markup: string): RootAttributes {
-  // React Aria's collection builder renders hidden <template> elements before the root.
-  const rootMarkup = markup.replace(/^(?:\s*<template\b[^>]*>[\s\S]*?<\/template>)+/, '');
+  // React Aria's collection builder renders hidden <template> elements before the root,
+  // and React 19 hoists a <link rel="preload"> ahead of any <img>.
+  const rootMarkup = markup.replace(
+    /^(?:\s*(?:<template\b[^>]*>[\s\S]*?<\/template>|<link\b[^>]*\brel="preload"[^>]*\/?>))+/,
+    '',
+  );
   const tag = /^\s*<[a-zA-Z][^>]*>/.exec(rootMarkup)?.[0] ?? '';
   const variant = /\sdata-variant="([^"]*)"/.exec(tag)?.[1];
   const state = /\sdata-state="([^"]*)"/.exec(tag)?.[1] ?? '';

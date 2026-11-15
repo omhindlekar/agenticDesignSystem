@@ -57,6 +57,8 @@
   --color-on-container-danger: #7c1d1d;
   --color-container-neutral: #eaedf0;
   --color-on-container-neutral: #1b1f27;
+  --color-tooltip-bg: #1b1f27;
+  --color-tooltip-text: #f5f7f9;
   --color-state-layer: #285bb0;
   --color-state-layer-danger: #c22826;
   --space-component-padding-xs: 4px;
@@ -116,6 +118,12 @@
   --size-control-md: 2.5rem;
   --size-control-lg: 3rem;
   --size-hit-area: 2.5rem;
+  --size-avatar-sm: 1.5rem;
+  --size-avatar-md: 2rem;
+  --size-avatar-lg: 2.5rem;
+  --size-drawer-sm: 20rem;
+  --size-drawer-md: 24rem;
+  --size-drawer-lg: 32rem;
   --size-modal-sm: 24rem;
   --size-modal-md: 32rem;
   --size-modal-lg: 48rem;
@@ -278,6 +286,8 @@
   --color-on-container-neutral: #f5f7f9;
   --color-state-layer: #8aa8da;
   --color-state-layer-danger: #e8948c;
+  --color-tooltip-bg: #f5f7f9;
+  --color-tooltip-text: #1b1f27;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -338,6 +348,8 @@
     --color-on-container-neutral: #f5f7f9;
     --color-state-layer: #8aa8da;
     --color-state-layer-danger: #e8948c;
+    --color-tooltip-bg: #f5f7f9;
+    --color-tooltip-text: #1b1f27;
   }
 }
 

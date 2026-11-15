@@ -1,0 +1,94 @@
+/* List: rows with 1px dividers; interactive rows get state layers and a selected container. */
+.ads-list-root {
+  display: contents;
+}
+
+.ads-list {
+  margin: 0;
+  padding: 0;
+  border-block: var(--border-width-default) solid var(--color-border-default);
+  list-style: none;
+  outline: none;
+}
+
+.ads-list__item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-component-gap-md);
+  min-height: var(--size-control-lg);
+  padding: var(--space-component-padding-sm) var(--space-component-padding-md);
+  font-family: var(--type-body2-family);
+  font-size: var(--type-body2-size);
+  line-height: var(--type-body2-line-height);
+  color: var(--color-text-primary);
+  outline: none;
+  isolation: isolate;
+}
+
+.ads-list__item + .ads-list__item {
+  border-block-start: var(--border-width-default) solid var(--color-border-default);
+}
+
+.ads-list__item--interactive {
+  cursor: pointer;
+}
+
+.ads-list__item--interactive::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-index-state-layer);
+  background-color: var(--color-state-layer);
+  opacity: 0;
+}
+
+.ads-list__item--interactive:is([data-hovered], :hover)::before {
+  opacity: var(--opacity-state-hover);
+}
+
+.ads-list__item--interactive:is([data-pressed], :active)::before {
+  opacity: var(--opacity-state-pressed);
+}
+
+.ads-list__item--interactive[data-focus-visible] {
+  outline: var(--border-width-focus) solid var(--color-interactive-focus-ring);
+  outline-offset: calc(var(--border-width-focus) * -1);
+}
+
+.ads-list__item--interactive[data-selected] {
+  background-color: var(--color-container-primary);
+  color: var(--color-on-container-primary);
+}
+
+.ads-list__icon {
+  display: inline-flex;
+  color: var(--color-text-secondary);
+}
+
+.ads-list__text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.ads-list__title {
+  font-family: var(--type-label-family);
+  font-size: var(--type-label-size);
+  font-weight: var(--type-label-weight);
+}
+
+.ads-list__description,
+.ads-list__meta {
+  font-family: var(--type-caption-family);
+  font-size: var(--type-caption-size);
+  line-height: var(--type-caption-line-height);
+  color: var(--color-text-secondary);
+}
+
+.ads-list__item--interactive[data-selected] .ads-list__description,
+.ads-list__item--interactive[data-selected] .ads-list__meta,
+.ads-list__item--interactive[data-selected] .ads-list__icon {
+  color: inherit;
+}

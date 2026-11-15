@@ -1,0 +1,47 @@
+/* Breadcrumbs: label-sized links separated by chevrons; the current page is plain text. */
+.ads-breadcrumbs__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--type-label-family);
+  font-size: var(--type-label-size);
+  line-height: var(--type-label-line-height);
+}
+
+.ads-breadcrumbs__item {
+  display: inline-flex;
+  align-items: center;
+}
+
+.ads-breadcrumbs__separator {
+  display: inline-flex;
+  padding-inline: var(--space-component-padding-xs);
+  color: var(--color-text-secondary);
+}
+
+.ads-breadcrumbs__current {
+  color: var(--color-text-primary);
+  font-weight: var(--type-label-weight);
+}
+
+.ads-breadcrumbs__more {
+  margin: 0;
+  padding: 0 var(--space-component-padding-xs);
+  border: none;
+  background: transparent;
+  color: var(--color-text-link);
+  font: inherit;
+  cursor: pointer;
+}
+
+.ads-breadcrumbs__more:is([data-hovered], :hover) {
+  text-decoration: underline;
+}
+
+.ads-breadcrumbs__more:focus-visible {
+  outline: var(--border-width-focus) solid var(--color-interactive-focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}

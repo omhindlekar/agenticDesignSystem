@@ -1,0 +1,92 @@
+{
+  "id": "tooltip",
+  "purpose": "A short text label that appears on hover and keyboard focus to name or explain an icon-only control or truncated text.",
+  "variants": [
+    "top",
+    "bottom",
+    "start",
+    "end"
+  ],
+  "states": [
+    "default"
+  ],
+  "props": [
+    {
+      "name": "content",
+      "type": "string",
+      "required": true,
+      "description": "The tooltip text: a few words, never essential instructions"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactElement",
+      "required": true,
+      "description": "The trigger: a Button, IconButton or Link"
+    },
+    {
+      "name": "placement",
+      "type": "'top' | 'bottom' | 'start' | 'end'",
+      "required": false,
+      "description": "Preferred side; flips when there is no room. Defaults to top"
+    },
+    {
+      "name": "delay",
+      "type": "number",
+      "required": false,
+      "description": "Hover delay in ms before showing. Defaults to 600"
+    }
+  ],
+  "whenToUse": [
+    "To name an IconButton visually",
+    "To show the full text of something truncated"
+  ],
+  "whenNotToUse": [
+    "For essential information or instructions — put them in the page",
+    "For interactive content — use Popover"
+  ],
+  "related": [
+    "popover",
+    "icon-button"
+  ],
+  "antiPatterns": [
+    "Tooltips on non-focusable elements",
+    "Links or buttons inside a tooltip"
+  ],
+  "spec": {
+    "anatomy": [
+      "A square inverse-surface label beside its trigger, no arrow"
+    ],
+    "sizes": [
+      "Padding `space-component-padding-xs` by `space-component-padding-sm`; offset 8px"
+    ],
+    "typography": [
+      "`type-caption-size`"
+    ],
+    "states": [
+      "`color-tooltip-bg` with `color-tooltip-text` (inverse in each theme)"
+    ],
+    "motion": [
+      "Fades in with `motion-easing-enter` over `motion-duration-standard`, out with `motion-easing-exit` over `motion-duration-exit`; none under reduced motion"
+    ]
+  },
+  "tokensUsed": [
+    "color-tooltip-bg",
+    "color-tooltip-text",
+    "motion-duration-exit",
+    "motion-duration-standard",
+    "motion-easing-enter",
+    "motion-easing-exit",
+    "size-modal-sm",
+    "space-component-padding-sm",
+    "space-component-padding-xs",
+    "type-caption-family",
+    "type-caption-letter-spacing",
+    "type-caption-line-height",
+    "type-caption-size"
+  ],
+  "a11yNotes": [
+    "Shows on hover after a delay and immediately on keyboard focus; the trigger is aria-describedby the tooltip",
+    "Escape hides it; it stays visible while the pointer moves onto it (WCAG 1.4.13)",
+    "Never the only accessible name of a control: IconButton keeps its label"
+  ]
+}

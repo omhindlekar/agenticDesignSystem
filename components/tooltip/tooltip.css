@@ -1,0 +1,34 @@
+/* Tooltip: a square inverse-surface label; caption type; enters and leaves with the motion set. */
+.ads-tooltip {
+  box-sizing: border-box;
+  max-width: calc(var(--size-modal-sm) * 0.75);
+  padding: var(--space-component-padding-xs) var(--space-component-padding-sm);
+  background-color: var(--color-tooltip-bg);
+  color: var(--color-tooltip-text);
+  font-family: var(--type-caption-family);
+  font-size: var(--type-caption-size);
+  line-height: var(--type-caption-line-height);
+  letter-spacing: var(--type-caption-letter-spacing);
+}
+
+@keyframes ads-tooltip-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes ads-tooltip-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ads-tooltip[data-entering] {
+    animation: ads-tooltip-in var(--motion-duration-standard) var(--motion-easing-enter);
+  }
+
+  .ads-tooltip[data-exiting] {
+    animation: ads-tooltip-out var(--motion-duration-exit) var(--motion-easing-exit);
+  }
+}

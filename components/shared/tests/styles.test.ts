@@ -110,7 +110,7 @@ describe('FR-11 spinner', () => {
     expect(media).toMatch(/\.ads-spinner\s*\{[^}]*display:\s*none/);
     expect(media).toMatch(/\.ads-spinner__text\s*\{[^}]*display:\s*inline/);
     const button = readFileSync(join(root, 'components', 'button', 'button.tsx'), 'utf8');
-    expect(button).toMatch(/className="ads-spinner__text"[^>]*>Loading</);
+    expect(button).toMatch(/className="ads-spinner__text"[^>]*>\s*Loading\s*</);
     const modal = readFileSync(join(root, 'components', 'modal', 'modal.tsx'), 'utf8');
     // The modal already shows a visible "Loading" next to its spinner.
     expect(modal).toMatch(/className="ads-spinner"[^>]*\/>\s*<span>Loading<\/span>/);

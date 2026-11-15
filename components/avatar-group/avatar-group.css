@@ -1,0 +1,18 @@
+/* AvatarGroup: avatars overlap by a quarter, each with a 2px surface edge. */
+.ads-avatar-group {
+  display: inline-flex;
+}
+
+.ads-avatar-group > .ads-avatar {
+  box-shadow: var(--elevation-0);
+  outline: var(--border-width-focus) solid var(--color-background-surface);
+}
+
+.ads-avatar-group > .ads-avatar + .ads-avatar {
+  margin-inline-start: calc(var(--size-avatar-md) / -4);
+}
+
+.ads-avatar-group__more {
+  background-color: var(--color-interactive-disabled);
+  color: var(--color-text-primary);
+}

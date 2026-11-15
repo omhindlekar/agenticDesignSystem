@@ -157,7 +157,7 @@
   outline-offset: calc(var(--border-width-default) * -1);
 }
 
-.ads-calendar__cell:is([data-focus-visible], :focus-visible) {
+.ads-calendar__cell[data-focus-visible] {
   outline: var(--border-width-focus) solid var(--color-interactive-focus-ring);
   outline-offset: calc(var(--border-width-focus) * -1);
 }

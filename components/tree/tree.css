@@ -1,0 +1,91 @@
+/* Tree: field-height rows indented per level, a chevron that rotates when expanded. */
+.ads-tree-root {
+  display: contents;
+}
+
+.ads-tree {
+  outline: none;
+  font-family: var(--type-body2-family);
+  font-size: var(--type-body2-size);
+  color: var(--color-text-primary);
+}
+
+.ads-tree__item {
+  position: relative;
+  outline: none;
+  cursor: default;
+  isolation: isolate;
+}
+
+.ads-tree__item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-index-state-layer);
+  background-color: var(--color-state-layer);
+  opacity: 0;
+}
+
+.ads-tree__item:is([data-hovered], :hover)::before {
+  opacity: var(--opacity-state-hover);
+}
+
+.ads-tree__item[data-focus-visible] {
+  outline: var(--border-width-focus) solid var(--color-interactive-focus-ring);
+  outline-offset: calc(var(--border-width-focus) * -1);
+}
+
+.ads-tree__item[data-selected] {
+  background-color: var(--color-container-primary);
+  color: var(--color-on-container-primary);
+}
+
+.ads-tree__row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-component-padding-xs);
+  min-height: var(--size-control-md);
+  padding-inline: var(--space-component-padding-sm);
+}
+
+.ads-tree__indent {
+  display: inline-flex;
+}
+
+.ads-tree__step {
+  width: var(--size-icon-md);
+}
+
+.ads-tree__chevron,
+.ads-tree__chevron-space {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: var(--size-icon-md);
+  height: var(--size-icon-md);
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}
+
+.ads-tree__item[data-expanded] > .ads-tree__row .ads-tree__chevron,
+.ads-tree__item[data-expanded] .ads-tree__chevron {
+  transform: rotate(90deg);
+}
+
+[dir="rtl"] .ads-tree__chevron .ads-icon {
+  transform: scaleX(-1);
+}
+
+.ads-tree__row .ads-icon {
+  color: var(--color-text-secondary);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ads-tree__chevron {
+    transition: transform var(--motion-duration-standard) var(--motion-easing-standard);
+  }
+}

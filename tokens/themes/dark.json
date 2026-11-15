@@ -334,6 +334,18 @@
       "tier": "semantic",
       "reference": "color-red-300",
       "description": "Dark theme override"
+    },
+    {
+      "name": "color-tooltip-bg",
+      "tier": "semantic",
+      "reference": "color-neutral-50",
+      "description": "Dark theme override"
+    },
+    {
+      "name": "color-tooltip-text",
+      "tier": "semantic",
+      "reference": "color-neutral-900",
+      "description": "Dark theme override"
     }
   ]
 }

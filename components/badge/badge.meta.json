@@ -1,0 +1,111 @@
+{
+  "id": "badge",
+  "purpose": "A small marker on or next to something: a status word such as Draft, a count of new items, or a dot.",
+  "variants": [
+    "status",
+    "count",
+    "dot"
+  ],
+  "states": [
+    "default"
+  ],
+  "props": [
+    {
+      "name": "variant",
+      "type": "'status' | 'count' | 'dot'",
+      "required": false,
+      "description": "Kind of badge. Defaults to status"
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "required": true,
+      "description": "Status text, or what a count or dot means (for example unread messages)"
+    },
+    {
+      "name": "count",
+      "type": "number",
+      "required": false,
+      "description": "Number for the count variant"
+    },
+    {
+      "name": "max",
+      "type": "number",
+      "required": false,
+      "description": "Counts above this show as max+. Defaults to 99"
+    },
+    {
+      "name": "tone",
+      "type": "'neutral' | 'primary' | 'info' | 'success' | 'warning' | 'danger'",
+      "required": false,
+      "description": "Colour role. Counts use primary or danger. Defaults to neutral"
+    }
+  ],
+  "whenToUse": [
+    "To show a status such as Draft or Live",
+    "To show how many new items there are"
+  ],
+  "whenNotToUse": [
+    "As a clickable filter — use Tag",
+    "For long text — use Banner"
+  ],
+  "related": [
+    "tag",
+    "avatar"
+  ],
+  "antiPatterns": [
+    "A dot whose meaning is only its colour",
+    "Counts above 99 shown in full"
+  ],
+  "spec": {
+    "anatomy": [
+      "Status: square tonal fill with text; count: square solid fill with a number; dot: 8px square"
+    ],
+    "sizes": [
+      "Height `size-icon-md`; padding `space-component-padding-xs`; dot `space-component-padding-sm`"
+    ],
+    "typography": [
+      "`type-caption-size` in SemiCondensed at the overline weight"
+    ],
+    "states": [
+      "Status on `color-container-*` with `color-on-container-*`; count on `color-interactive-default` or `color-text-danger` with `color-text-inverse`"
+    ],
+    "motion": [
+      "None"
+    ]
+  },
+  "tokensUsed": [
+    "color-border-danger",
+    "color-border-input",
+    "color-border-success",
+    "color-container-danger",
+    "color-container-info",
+    "color-container-neutral",
+    "color-container-primary",
+    "color-container-success",
+    "color-container-warning",
+    "color-interactive-default",
+    "color-on-container-danger",
+    "color-on-container-info",
+    "color-on-container-neutral",
+    "color-on-container-primary",
+    "color-on-container-success",
+    "color-on-container-warning",
+    "color-text-danger",
+    "color-text-inverse",
+    "color-text-warning",
+    "size-icon-md",
+    "space-component-padding-sm",
+    "space-component-padding-xs",
+    "type-caption-letter-spacing",
+    "type-caption-line-height",
+    "type-caption-size",
+    "type-overline-family",
+    "type-overline-weight"
+  ],
+  "a11yNotes": [
+    "Counts carry an aria-label with the full number and its meaning",
+    "Dots are role img with a label, so meaning is not colour alone",
+    "Not interactive and not focusable"
+  ]
+}

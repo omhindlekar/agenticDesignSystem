@@ -1,0 +1,137 @@
+/* Drawer: a square side sheet at elevation 4 over a scrim; slides in and out with the motion set. */
+.ads-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-index-modal);
+  background-color: color-mix(in srgb, var(--color-background-overlay) calc(var(--opacity-overlay) * 100%), transparent);
+}
+
+.ads-drawer {
+  position: fixed;
+  inset-block: 0;
+  inset-inline-end: 0;
+  box-sizing: border-box;
+  width: var(--size-drawer-md);
+  max-width: 100%;
+  border-inline-start: var(--border-width-default) solid var(--color-border-default);
+  background-color: var(--color-background-surface);
+  box-shadow: var(--elevation-4);
+  color: var(--color-text-primary);
+  outline: none;
+}
+
+.ads-drawer[data-variant="start"] {
+  inset-inline: 0 auto;
+  border-inline-start: none;
+  border-inline-end: var(--border-width-default) solid var(--color-border-default);
+}
+
+.ads-drawer[data-size="sm"] {
+  width: var(--size-drawer-sm);
+}
+
+.ads-drawer[data-size="lg"] {
+  width: var(--size-drawer-lg);
+}
+
+.ads-drawer__dialog {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  outline: none;
+}
+
+.ads-drawer__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-component-gap-md);
+  padding: var(--space-component-padding-md) var(--space-component-padding-lg);
+  border-block-end: var(--border-width-default) solid var(--color-border-default);
+}
+
+.ads-drawer__title {
+  margin: 0;
+  font-family: var(--type-h3-family);
+  font-size: var(--type-h3-size);
+  font-weight: var(--type-h3-weight);
+  line-height: var(--type-h3-line-height);
+  color: var(--color-text-heading);
+}
+
+.ads-drawer__body {
+  flex: 1;
+  overflow: auto;
+  padding: var(--space-component-padding-lg);
+  font-family: var(--type-body1-family);
+  font-size: var(--type-body1-size);
+  line-height: var(--type-body1-line-height);
+}
+
+.ads-drawer__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-component-gap-sm);
+  padding: var(--space-component-padding-md) var(--space-component-padding-lg);
+  border-block-start: var(--border-width-default) solid var(--color-border-default);
+}
+
+@keyframes ads-drawer-in-end {
+  from {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes ads-drawer-out-end {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes ads-drawer-in-start {
+  from {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes ads-drawer-out-start {
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ads-drawer-overlay[data-entering] {
+    animation: ads-fade-in var(--motion-duration-overlay) var(--motion-easing-enter);
+  }
+
+  .ads-drawer-overlay[data-exiting] {
+    animation: ads-fade-in var(--motion-duration-overlay-exit) var(--motion-easing-exit) reverse;
+  }
+
+  .ads-drawer[data-entering] {
+    animation: ads-drawer-in-end var(--motion-duration-overlay) var(--motion-easing-enter);
+  }
+
+  .ads-drawer[data-exiting] {
+    animation: ads-drawer-out-end var(--motion-duration-overlay-exit) var(--motion-easing-exit);
+  }
+
+  .ads-drawer[data-variant="start"][data-entering],
+  [dir="rtl"] .ads-drawer[data-variant="end"][data-entering] {
+    animation-name: ads-drawer-in-start;
+  }
+
+  .ads-drawer[data-variant="start"][data-exiting],
+  [dir="rtl"] .ads-drawer[data-variant="end"][data-exiting] {
+    animation-name: ads-drawer-out-start;
+  }
+
+  [dir="rtl"] .ads-drawer[data-variant="start"][data-entering] {
+    animation-name: ads-drawer-in-end;
+  }
+
+  [dir="rtl"] .ads-drawer[data-variant="start"][data-exiting] {
+    animation-name: ads-drawer-out-end;
+  }
+}

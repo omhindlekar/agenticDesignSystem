@@ -1,0 +1,95 @@
+{
+  "id": "heading",
+  "purpose": "A section heading at a semantic level, styled with the type scale; its look can differ from its level.",
+  "variants": [
+    "display",
+    "h1",
+    "h2",
+    "h3",
+    "h4"
+  ],
+  "states": [
+    "default"
+  ],
+  "props": [
+    {
+      "name": "level",
+      "type": "1 | 2 | 3 | 4",
+      "required": false,
+      "description": "Semantic level (h1 to h4). Defaults to 2"
+    },
+    {
+      "name": "appearance",
+      "type": "'display' | 'h1' | 'h2' | 'h3' | 'h4'",
+      "required": false,
+      "description": "Type role to draw it with; defaults to the level's role"
+    },
+    {
+      "name": "children",
+      "type": "React.ReactNode",
+      "required": true,
+      "description": "The heading text"
+    }
+  ],
+  "whenToUse": [
+    "To title pages and sections in the right outline order"
+  ],
+  "whenNotToUse": [
+    "For text that only looks big — use Text"
+  ],
+  "related": [
+    "text"
+  ],
+  "antiPatterns": [
+    "Skipping levels to get a size; use appearance instead"
+  ],
+  "spec": {
+    "anatomy": [
+      "A heading element in one display role"
+    ],
+    "sizes": [
+      "From `type-h1-size` to `type-h4-size`, or `type-display-size`"
+    ],
+    "typography": [
+      "SemiCondensed display roles"
+    ],
+    "states": [
+      "`color-text-heading`"
+    ],
+    "motion": [
+      "None"
+    ]
+  },
+  "tokensUsed": [
+    "color-text-heading",
+    "type-display-family",
+    "type-display-letter-spacing",
+    "type-display-line-height",
+    "type-display-size",
+    "type-display-weight",
+    "type-h1-family",
+    "type-h1-letter-spacing",
+    "type-h1-line-height",
+    "type-h1-size",
+    "type-h1-weight",
+    "type-h2-family",
+    "type-h2-letter-spacing",
+    "type-h2-line-height",
+    "type-h2-size",
+    "type-h2-weight",
+    "type-h3-family",
+    "type-h3-letter-spacing",
+    "type-h3-line-height",
+    "type-h3-size",
+    "type-h3-weight",
+    "type-h4-family",
+    "type-h4-letter-spacing",
+    "type-h4-line-height",
+    "type-h4-size",
+    "type-h4-weight"
+  ],
+  "a11yNotes": [
+    "Real h1 to h4 elements, so headings form the document outline",
+    "appearance changes only the look"
+  ]
+}

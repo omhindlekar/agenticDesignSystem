@@ -1,0 +1,112 @@
+{
+  "id": "list",
+  "purpose": "A vertical list of items with a title, description, leading icon and trailing detail. It becomes a keyboard list when items can be chosen or opened.",
+  "variants": [
+    "static",
+    "interactive"
+  ],
+  "states": [
+    "default"
+  ],
+  "props": [
+    {
+      "name": "label",
+      "type": "string",
+      "required": true,
+      "description": "Accessible name of the list"
+    },
+    {
+      "name": "items",
+      "type": "Array<{ id: string; title: string; description?: string; meta?: string; icon?: IconName }>",
+      "required": true,
+      "description": "Items"
+    },
+    {
+      "name": "selectionMode",
+      "type": "'none' | 'single' | 'multiple'",
+      "required": false,
+      "description": "Makes items selectable. Defaults to none"
+    },
+    {
+      "name": "selectedKeys",
+      "type": "string[]",
+      "required": false,
+      "description": "Selected item ids"
+    },
+    {
+      "name": "onSelectionChange",
+      "type": "(keys: string[]) => void",
+      "required": false,
+      "description": "Called with the selected ids"
+    },
+    {
+      "name": "onAction",
+      "type": "(id: string) => void",
+      "required": false,
+      "description": "Makes items openable; called with the id"
+    }
+  ],
+  "whenToUse": [
+    "For a set of similar items such as recent projects or notifications"
+  ],
+  "whenNotToUse": [
+    "For comparing attributes — use Table",
+    "For navigation — use SideNav"
+  ],
+  "related": [
+    "table",
+    "tree"
+  ],
+  "antiPatterns": [
+    "Lists with very different item shapes",
+    "Several actions per row without a menu"
+  ],
+  "spec": {
+    "anatomy": [
+      "Rows with an optional leading icon, title and description, and trailing meta; 1px dividers"
+    ],
+    "sizes": [
+      "Rows at least `size-control-lg` tall; padding `space-component-padding-sm` by `space-component-padding-md`"
+    ],
+    "typography": [
+      "Title `type-label-size`; description and meta `type-caption-size`"
+    ],
+    "states": [
+      "Interactive rows: hover `color-state-layer`, selected `color-container-primary`, focus ring `color-interactive-focus-ring`"
+    ],
+    "motion": [
+      "None"
+    ]
+  },
+  "tokensUsed": [
+    "border-width-default",
+    "border-width-focus",
+    "color-border-default",
+    "color-container-primary",
+    "color-interactive-focus-ring",
+    "color-on-container-primary",
+    "color-state-layer",
+    "color-text-primary",
+    "color-text-secondary",
+    "opacity-state-hover",
+    "opacity-state-pressed",
+    "size-control-lg",
+    "space-component-gap-md",
+    "space-component-padding-md",
+    "space-component-padding-sm",
+    "type-body2-family",
+    "type-body2-line-height",
+    "type-body2-size",
+    "type-caption-family",
+    "type-caption-line-height",
+    "type-caption-size",
+    "type-label-family",
+    "type-label-size",
+    "type-label-weight",
+    "z-index-state-layer"
+  ],
+  "a11yNotes": [
+    "Static lists are list and listitem",
+    "Interactive lists are a grid list: arrows move, Space selects, Enter opens"
+  ]
+}

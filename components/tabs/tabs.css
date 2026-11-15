@@ -1,0 +1,105 @@
+/* Tabs: a row (or column) of tabs with a 2px indicator on the selected one. */
+.ads-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-component-gap-md);
+}
+
+.ads-tabs[data-variant="vertical"] {
+  flex-direction: row;
+}
+
+.ads-tabs__list {
+  display: flex;
+  border-block-end: var(--border-width-default) solid var(--color-border-default);
+}
+
+.ads-tabs[data-variant="vertical"] .ads-tabs__list {
+  flex-direction: column;
+  border-block-end: none;
+  border-inline-end: var(--border-width-default) solid var(--color-border-default);
+}
+
+.ads-tabs__tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-component-gap-sm);
+  min-height: var(--size-control-md);
+  padding-inline: var(--space-component-padding-md);
+  color: var(--color-text-secondary);
+  font-family: var(--type-button-family);
+  font-size: var(--type-button-size);
+  font-weight: var(--type-button-weight);
+  letter-spacing: var(--type-button-letter-spacing);
+  cursor: pointer;
+  outline: none;
+  isolation: isolate;
+}
+
+.ads-tabs__tab::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-index-state-layer);
+  background-color: var(--color-state-layer);
+  opacity: 0;
+}
+
+.ads-tabs__tab:is([data-hovered], :hover):not([data-disabled])::before {
+  opacity: var(--opacity-state-hover);
+}
+
+.ads-tabs__tab:is([data-pressed], :active):not([data-disabled])::before {
+  opacity: var(--opacity-state-pressed);
+}
+
+.ads-tabs__tab:is([data-focus-visible], :focus-visible) {
+  outline: var(--border-width-focus) solid var(--color-interactive-focus-ring);
+  outline-offset: calc(var(--border-width-focus) * -1);
+}
+
+.ads-tabs__tab[data-selected] {
+  color: var(--color-text-link);
+}
+
+/* Selected indicator: a 2px bar on the list edge. */
+.ads-tabs__tab[data-selected]::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: calc(var(--border-width-default) * -1);
+  height: var(--border-width-focus);
+  background-color: var(--color-interactive-default);
+}
+
+.ads-tabs[data-variant="vertical"] .ads-tabs__tab[data-selected]::after {
+  inset-block: 0;
+  inset-inline: auto calc(var(--border-width-default) * -1);
+  width: var(--border-width-focus);
+  height: auto;
+}
+
+.ads-tabs__tab[data-disabled] {
+  color: color-mix(in srgb, var(--color-text-primary) calc(var(--opacity-disabled) * 100%), transparent);
+  cursor: not-allowed;
+}
+
+.ads-tabs__panel {
+  font-family: var(--type-body1-family);
+  font-size: var(--type-body1-size);
+  line-height: var(--type-body1-line-height);
+  color: var(--color-text-primary);
+  outline: none;
+}
+
+.ads-tabs__panel:is([data-focus-visible], :focus-visible) {
+  outline: var(--border-width-focus) solid var(--color-interactive-focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ads-tabs__tab::before {
+    transition: opacity var(--motion-duration-standard) var(--motion-easing-standard);
+  }
+}
