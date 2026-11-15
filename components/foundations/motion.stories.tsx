@@ -35,7 +35,29 @@ function MotionDemo() {
           </div>
         </div>
       </section>
+      <EnterExit />
     </div>
+  );
+}
+
+function EnterExit() {
+  const [open, setOpen] = useState(true);
+  return (
+    <section className="fd-section">
+      <h2 className="fd-section__heading">Enter and exit</h2>
+      <p className="fd-note">
+        Entering uses motion-easing-enter over motion-duration-overlay; leaving uses motion-easing-exit over
+        motion-duration-overlay-exit. Exits are shorter, so dismissing feels immediate.
+      </p>
+      <div>
+        <Button label={open ? 'Hide panel' : 'Show panel'} variant="outlined" onClick={() => setOpen((o) => !o)} />
+      </div>
+      <div className="fd-motion__track">
+        <div className="fd-motion__panel" data-open={open}>
+          <span className="fd-token__name">Panel</span>
+        </div>
+      </div>
+    </section>
   );
 }
 

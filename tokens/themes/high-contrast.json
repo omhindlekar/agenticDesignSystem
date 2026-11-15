@@ -1,0 +1,212 @@
+{
+  "attribute": "data-theme",
+  "value": "high-contrast",
+  "colorScheme": "light",
+  "description": "High-contrast theme: light surfaces with 7:1 text and 4.5:1 boundaries.",
+  "tokens": [
+    {
+      "name": "color-text-primary",
+      "tier": "semantic",
+      "reference": "color-neutral-900",
+      "description": "High-contrast theme override"
+    },
+    {
+      "name": "color-text-heading",
+      "tier": "semantic",
+      "reference": "color-blue-900",
+      "description": "High-contrast theme override"
+    },
+    {
+      "name": "color-text-secondary",
+      "tier": "semantic",
+      "reference": "color-neutral-800",
+      "description": "High-contrast theme override"
+    },
+    {
+      "name": "color-text-link",
+      "tier": "semantic",
+      "reference": "color-blue-800",
+      "description": "High-contrast theme override"
+    },
+    {
+      "name": "color-text-link-hover",
+      "tier": "semantic",
+      "reference": "color-blue-900",
+      "description": "High-contrast theme override"
+    },
+    {
+      "name": "color-text-danger",
+      "tier": "semantic",
+      "reference": "color-red-800",
+      "description": "High-contrast theme override"
+    },
+    {
+      "name": "color-text-success",
+      "tier": "semantic",
+      "reference": "color-lime-900",
+      "description": "High-contrast theme override"
+    },
+    {
+      "name": "color-text-danger-action",
+      "tier": "semantic",
+      "reference": "color-red-900",
+      "description": "High-contrast theme override"
+    },
+    {
+      "name": "color-text-warning",
+      "tier": "semantic",
+      "reference": "color-amber-900",
+      "description": "High-contrast theme override"
+    },
+    {
+      "name": "color-text-info",
+      "tier": "semantic",
+      "reference": "color-light-blue-900",
+      "description": "High-contrast theme override"
+    },
+    {
+      "name": "color-interactive-default",
+      "tier": "semantic",
+      "reference": "color-blue-800",
+      "description": "High-contrast theme override"
+    },
+    {
+      "name": "color-interactive-hover",
+      "tier": "semantic",
+      "reference": "color-blue-900",
+      "description": "High-contrast theme override"
+    },
+    {
+      "name": "color-interactive-active",
+      "tier": "semantic",
+      "reference": "color-blue-900",
+      "description": "High-contrast theme override"
+    },
+    {
+      "name": "color-interactive-focus-ring",
+      "tier": "semantic",
+      "reference": "color-blue-900",
+      "description": "High-contrast theme override"
+    },
+    {
+      "name": "color-border-default",
+      "tier": "semantic",
+      "reference": "color-neutral-700",
+      "description": "High-contrast theme override"
+    },
+    {
+      "name": "color-border-strong",
+      "tier": "semantic",
+      "reference": "color-neutral-800",
+      "description": "High-contrast theme override"
+    },
+    {
+      "name": "color-border-input",
+      "tier": "semantic",
+      "reference": "color-neutral-800",
+      "description": "High-contrast theme override"
+    },
+    {
+      "name": "color-border-input-hover",
+      "tier": "semantic",
+      "reference": "color-neutral-900",
+      "description": "High-contrast theme override"
+    },
+    {
+      "name": "color-border-disabled",
+      "tier": "semantic",
+      "reference": "color-neutral-500",
+      "description": "High-contrast theme override"
+    },
+    {
+      "name": "color-spinner-track",
+      "tier": "semantic",
+      "reference": "color-neutral-300",
+      "description": "High-contrast theme override"
+    },
+    {
+      "name": "color-border-interactive",
+      "tier": "semantic",
+      "reference": "color-blue-800",
+      "description": "High-contrast theme override"
+    },
+    {
+      "name": "color-border-danger",
+      "tier": "semantic",
+      "reference": "color-red-800",
+      "description": "High-contrast theme override"
+    },
+    {
+      "name": "color-border-success",
+      "tier": "semantic",
+      "reference": "color-lime-900",
+      "description": "High-contrast theme override"
+    },
+    {
+      "name": "color-status-success-text",
+      "tier": "semantic",
+      "reference": "color-lime-900",
+      "description": "High-contrast theme override"
+    },
+    {
+      "name": "color-status-danger-text",
+      "tier": "semantic",
+      "reference": "color-red-900",
+      "description": "High-contrast theme override"
+    },
+    {
+      "name": "color-status-warning-text",
+      "tier": "semantic",
+      "reference": "color-amber-900",
+      "description": "High-contrast theme override"
+    },
+    {
+      "name": "color-status-info-text",
+      "tier": "semantic",
+      "reference": "color-light-blue-900",
+      "description": "High-contrast theme override"
+    },
+    {
+      "name": "color-on-container-primary",
+      "tier": "semantic",
+      "reference": "color-blue-900",
+      "description": "High-contrast theme override"
+    },
+    {
+      "name": "color-on-container-info",
+      "tier": "semantic",
+      "reference": "color-light-blue-900",
+      "description": "High-contrast theme override"
+    },
+    {
+      "name": "color-on-container-warning",
+      "tier": "semantic",
+      "reference": "color-amber-900",
+      "description": "High-contrast theme override"
+    },
+    {
+      "name": "color-on-container-danger",
+      "tier": "semantic",
+      "reference": "color-red-900",
+      "description": "High-contrast theme override"
+    },
+    {
+      "name": "color-on-container-neutral",
+      "tier": "semantic",
+      "reference": "color-neutral-900",
+      "description": "High-contrast theme override"
+    },
+    {
+      "name": "color-state-layer",
+      "tier": "semantic",
+      "reference": "color-blue-800",
+      "description": "High-contrast theme override"
+    },
+    {
+      "name": "color-state-layer-danger",
+      "tier": "semantic",
+      "reference": "color-red-800",
+      "description": "High-contrast theme override"
+    }
+  ]
+}

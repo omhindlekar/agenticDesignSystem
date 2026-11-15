@@ -173,6 +173,9 @@ describe('FR-1 foundations: spacing and control heights', () => {
     ['space-component-padding-field', '12px'],
     ['border-width-control', '2px'],
     ['z-index-state-layer', '-1'],
+    ['size-icon-sm', '1rem'],
+    ['size-icon-md', '1.25rem'],
+    ['size-icon-lg', '1.5rem'],
   ])('FR-1: %s is %s', (name, value) => {
     expect(sem.get(name)).toBe(value);
   });
@@ -224,5 +227,38 @@ describe('FR-1 foundations: state layers and motion', () => {
 
   it('FR-1: the standard easing is a cubic-bezier curve', () => {
     expect(sem.get('motion-easing-standard')).toMatch(/^cubic-bezier\(/);
+  });
+});
+
+describe('FR-1 foundations: tonal colour roles', () => {
+  const sem = resolveSemanticTokens(root);
+  const prim = primitives();
+  it.each([
+    ['primary', 'color-blue-50', 'color-blue-900'],
+    ['info', 'color-light-blue-50', 'color-light-blue-900'],
+    ['success', 'color-lime-100', 'color-blue-900'],
+    ['warning', 'color-amber-100', 'color-amber-900'],
+    ['danger', 'color-red-50', 'color-red-800'],
+    ['neutral', 'color-neutral-100', 'color-neutral-900'],
+  ])('FR-1: %s container is %s with %s text', (role, fill, text) => {
+    expect(sem.get(`color-container-${role}`)).toBe(prim.get(fill));
+    expect(sem.get(`color-on-container-${role}`)).toBe(prim.get(text));
+  });
+});
+
+describe('FR-1 foundations: enter and exit motion', () => {
+  const sem = resolveSemanticTokens(root);
+  it.each([
+    ['motion-easing-enter', 'cubic-bezier(0, 0, 0, 1)'],
+    ['motion-easing-exit', 'cubic-bezier(0.3, 0, 1, 1)'],
+    ['motion-duration-exit', '100ms'],
+    ['motion-duration-overlay-exit', '150ms'],
+  ])('FR-1: %s is %s', (name, value) => {
+    expect(sem.get(name)).toBe(value);
+  });
+
+  it('FR-1: exits are shorter than their entrances', () => {
+    expect(parseFloat(sem.get('motion-duration-exit') ?? '')).toBeLessThan(parseFloat(sem.get('motion-duration-standard') ?? ''));
+    expect(parseFloat(sem.get('motion-duration-overlay-exit') ?? '')).toBeLessThan(parseFloat(sem.get('motion-duration-overlay') ?? ''));
   });
 });

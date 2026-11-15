@@ -1,4 +1,43 @@
 /* Input: label above, 40px field, caption-sized helper and error text below. */
+/* The control holds the field plus optional start icon and end actions. */
+.ads-input__control {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.ads-input__start {
+  position: absolute;
+  inset-inline-start: var(--space-component-padding-field);
+  display: inline-flex;
+  color: var(--color-text-secondary);
+  pointer-events: none;
+}
+
+.ads-input__end {
+  position: absolute;
+  inset-inline-end: var(--space-component-padding-xs);
+  display: inline-flex;
+  gap: var(--space-component-padding-xs);
+}
+
+/* Room for the start icon and for one or two end actions. */
+.ads-input[data-start="true"] .ads-input__field {
+  padding-inline-start: calc(var(--space-component-padding-field) + var(--size-icon-md) + var(--space-component-padding-sm));
+}
+
+.ads-input[data-end="1"] .ads-input__field {
+  padding-inline-end: calc(var(--size-control-sm) + var(--space-component-padding-sm));
+}
+
+.ads-input[data-end="2"] .ads-input__field {
+  padding-inline-end: calc(var(--size-control-sm) * 2 + var(--space-component-padding-xs) + var(--space-component-padding-sm));
+}
+
+.ads-input[data-state~="disabled"] .ads-input__start {
+  color: color-mix(in srgb, var(--color-text-primary) calc(var(--opacity-disabled) * 100%), transparent);
+}
+
 .ads-input__field {
   box-sizing: border-box;
   width: 100%;

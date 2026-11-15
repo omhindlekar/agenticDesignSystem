@@ -85,15 +85,13 @@
 .ads-checkbox__dash {
   position: absolute;
   display: none;
-  width: var(--size-control-indicator);
-  height: var(--size-control-indicator);
   color: var(--color-text-inverse);
   pointer-events: none;
 }
 
 .ads-checkbox__box:checked:not(:indeterminate) ~ .ads-checkbox__check,
 .ads-checkbox__box:indeterminate ~ .ads-checkbox__dash {
-  display: block;
+  display: inline-flex;
 }
 
 .ads-checkbox__label {

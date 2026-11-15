@@ -9,8 +9,7 @@
   position: absolute;
   inset-block-start: 50%;
   inset-inline-end: var(--space-component-padding-field);
-  width: var(--size-control-indicator);
-  height: var(--size-control-indicator);
+  display: inline-flex;
   color: var(--color-text-secondary);
   transform: translateY(-50%);
   pointer-events: none;
@@ -24,7 +23,7 @@
   margin: 0;
   padding-block: 0;
   padding-inline: var(--space-component-padding-field)
-    calc(var(--space-component-padding-field) + var(--size-control-indicator) + var(--space-component-padding-sm));
+    calc(var(--space-component-padding-field) + var(--size-icon-md) + var(--space-component-padding-sm));
   border: var(--border-width-default) solid var(--color-border-input);
   background-color: var(--color-background-surface);
   color: var(--color-text-primary);

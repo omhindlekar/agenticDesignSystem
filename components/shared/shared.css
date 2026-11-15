@@ -45,14 +45,6 @@
   opacity: var(--opacity-state-pressed);
 }
 
-/* ── Icons ──────────────────────────────────────────────────────────────── */
-.ads-icon {
-  display: inline-block;
-  flex: none;
-  width: 1em;
-  height: 1em;
-}
-
 /* ── Spinner: a spinning square on a neutral track ──────────────────────── */
 .ads-spinner {
   display: inline-block;
@@ -126,11 +118,9 @@
   color: var(--color-text-secondary);
 }
 
-/* Optical alignment: the icon sits on the first line of caption text. */
+/* Optical alignment: the 16px icon sits on the first line of 12px caption text. */
 .ads-field__message .ads-icon {
-  width: var(--size-control-indicator);
-  height: var(--size-control-indicator);
-  margin-block-start: calc(var(--border-width-default) * -1);
+  margin-block-start: calc(var(--border-width-default) * 2);
 }
 
 .ads-field__message[data-tone="error"] {

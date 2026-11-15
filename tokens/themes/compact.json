@@ -1,0 +1,49 @@
+{
+  "attribute": "data-density",
+  "value": "compact",
+  "description": "Compact density: one step smaller controls and tighter padding for dense screens such as tables and toolbars. Apply data-density=\"compact\" to the page or any container.",
+  "tokens": [
+    {
+      "name": "size-control-sm",
+      "tier": "semantic",
+      "reference": "size-7",
+      "description": "Compact small control (28px)"
+    },
+    {
+      "name": "size-control-md",
+      "tier": "semantic",
+      "reference": "size-8",
+      "description": "Compact medium control (32px)"
+    },
+    {
+      "name": "size-control-lg",
+      "tier": "semantic",
+      "reference": "size-10",
+      "description": "Compact large control (40px)"
+    },
+    {
+      "name": "size-hit-area",
+      "tier": "semantic",
+      "reference": "size-8",
+      "description": "Compact hit area (32px)"
+    },
+    {
+      "name": "space-component-padding-field",
+      "tier": "semantic",
+      "reference": "space-2",
+      "description": "Compact field padding (8px)"
+    },
+    {
+      "name": "space-component-padding-md",
+      "tier": "semantic",
+      "reference": "space-3",
+      "description": "Compact component padding (12px)"
+    },
+    {
+      "name": "space-component-gap-md",
+      "tier": "semantic",
+      "reference": "space-3",
+      "description": "Compact gap (12px)"
+    }
+  ]
+}

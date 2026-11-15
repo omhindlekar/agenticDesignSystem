@@ -12,10 +12,11 @@ const semantic = (JSON.parse(readFileSync(join(repoRoot, 'tokens/semantic.json')
 }).tokens;
 
 describe('FR-2 token build: tokens compile to CSS custom properties', () => {
-  it('FR-2: emits every semantic token exactly once', () => {
+  it('FR-2: the base :root block emits every semantic token exactly once', () => {
     const css = buildTokensCss(repoRoot);
+    const base = /^:root \{([^}]*)\}/m.exec(css)?.[1] ?? '';
     for (const { name } of semantic) {
-      const count = css.split(`--${name}:`).length - 1;
+      const count = base.split(`--${name}:`).length - 1;
       expect(count, name).toBe(1);
     }
   });
