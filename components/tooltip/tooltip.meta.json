@@ -70,6 +70,7 @@
     ]
   },
   "tokensUsed": [
+    "border-width-default",
     "color-tooltip-bg",
     "color-tooltip-text",
     "motion-duration-exit",

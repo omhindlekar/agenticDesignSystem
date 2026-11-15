@@ -20,13 +20,14 @@ Work in this order, one phase at a time, and stop at each phase's exit criteria:
 4. Phase 3: Maintainer and Docs agents, drift detection, versioning
 5. Phase 4: insight reports, variations, telemetry (the second theme moves into 1.9)
 
-Current phase: 1.11–1.12 (batched). Do not start a later phase unless I name it.
+Current phase: 1.13 (complete: industry-baseline parity 100%). Do not start a later phase unless I name it.
 Model calls go through packages/provider. Default provider is fake; real runs use
 the cli provider (my subscription). Never require an API key.
 
 ## Decisions
 
 - Source of truth for tokens is this repo (`tokens/`). Tokens are pushed one way to Figma. Never read tokens back from Figma.
+- Every component works in Windows High Contrast (forced colours: system colours only, DS-A-007) and right to left (logical properties, mirrored directional icons, DS-L-004). Keyboard follows the WAI-ARIA pattern declared in `checks/a11y/apg.ts`.
 - POC components: Button, Input, Select, Checkbox, Card, Modal, plus Icon and IconButton (added in phase 1.8).
 - Stack: React and TypeScript, Storybook as the component catalogue, Playwright snapshots for visual regression, axe-core for accessibility, Zod for schemas.
 - No existing screens to baseline against. Golden-set briefs are new; baselines come from the first approved components.
@@ -74,6 +75,8 @@ the cli provider (my subscription). Never require an API key.
 - Visual regression: `TODO` (phase 2)
 - Golden set: `TODO` (phase 2)
 - Industry-baseline parity report: `npm run parity`
+- Accessibility (axe in the browser, all themes): `npm run build-storybook && npm run a11y`
+- Figma library (one-way push): `npm run figma:sync -- scripts` (run the scripts with use_figma, in order), then `npm run figma:sync -- record <fileKey> <url>`; `npm run figma:sync -- check` reports drift
 - Build the icon set: `npm run icons:build` (after editing `components/icon/icon-list.json`)
 - Generate a screen: `npm run generate -- "<brief>"` (fake provider by default; `MODEL_PROVIDER=cli` for a real model). Writes `generated/<runId>/screen.tsx` (gitignored)
 - Re-record demo fixtures after a prompt, model, token or metadata change: `npm run fixtures:demo`

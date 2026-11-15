@@ -102,6 +102,23 @@ jobs:
       - run: npm ci
       - run: npm run build-storybook
 
+  a11y:
+    name: Accessibility (axe)
+    # Pinned: Playwright 1.56.1 cannot install Chromium on ubuntu-latest (26.04).
+    runs-on: ubuntu-24.04
+    needs: install
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run build-storybook
+      - name: axe on every story in light, dark and high contrast
+        run: npm run a11y
+
   generate:
     name: Generate demo screen (fake provider)
     runs-on: ubuntu-latest

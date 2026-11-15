@@ -6,7 +6,7 @@ import { primitive } from '../foundations/tokens';
 function paintSample(): string {
   const doc = (globalThis as { document?: Document }).document;
   // Outside a browser (the parity check) there may be no document or canvas to paint on.
-  if (!doc) return 'sample.png';
+  if (!doc || /jsdom/i.test(globalThis.navigator?.userAgent ?? '')) return 'sample.png';
   const canvas = doc.createElement('canvas');
   // Painted at 8x so it stays sharp when scaled up to the frame.
   canvas.width = 1280;

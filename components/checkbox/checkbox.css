@@ -147,3 +147,15 @@
       border-color var(--motion-duration-standard) var(--motion-easing-standard);
   }
 }
+
+/* Windows High Contrast: fills and shadows are dropped, so states use system colours. */
+@media (forced-colors: active) {
+  .ads-checkbox__box:is(:checked, :indeterminate) {
+    border-color: Highlight;
+    background-color: Highlight;
+  }
+
+  .ads-checkbox[data-state~="checked"] .ads-checkbox__check, .ads-checkbox[data-state~="indeterminate"] .ads-checkbox__dash {
+    color: HighlightText;
+  }
+}

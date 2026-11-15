@@ -123,3 +123,32 @@
       opacity var(--motion-duration-standard) var(--motion-easing-standard);
   }
 }
+
+/* Windows High Contrast: fills and shadows are dropped, so states use system colours. */
+@media (forced-colors: active) {
+  .ads-switch__track {
+    border-color: CanvasText;
+    background-color: Canvas;
+  }
+
+  .ads-switch__thumb {
+    background-color: CanvasText;
+  }
+
+  .ads-switch[data-state~="checked"] .ads-switch__track {
+    border-color: Highlight;
+    background-color: Highlight;
+  }
+
+  .ads-switch[data-state~="checked"] .ads-switch__thumb {
+    background-color: HighlightText;
+  }
+
+  .ads-switch[data-state~="disabled"] .ads-switch__track {
+    border-color: GrayText;
+  }
+
+  .ads-switch[data-state~="disabled"] .ads-switch__thumb {
+    background-color: GrayText;
+  }
+}

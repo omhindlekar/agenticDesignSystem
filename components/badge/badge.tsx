@@ -20,8 +20,10 @@ export function Badge({ variant = 'status', label, count = 0, max = 99, tone = '
   if (variant === 'count') {
     const shown = count > max ? `${max}+` : String(count);
     return (
-      <span className="ads-badge" data-variant="count" data-tone={tone} data-state="default" aria-label={`${count} ${label}`}>
+      <span className="ads-badge" data-variant="count" data-tone={tone} data-state="default">
         <span aria-hidden="true">{shown}</span>
+        {/* aria-label is not allowed on a plain span, so the full count is visually hidden text. */}
+        <span className="ads-visually-hidden">{`${count} ${label}`}</span>
       </span>
     );
   }

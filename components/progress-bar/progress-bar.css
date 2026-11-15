@@ -46,6 +46,16 @@
   }
 }
 
+/* Right to left: the sweep runs from the inline start, which is on the right. */
+@keyframes ads-progress-sweep-rtl {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(-300%);
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .ads-progress__fill {
     transition: width var(--motion-duration-standard) var(--motion-easing-standard);
@@ -55,5 +65,21 @@
     width: 33%;
     background-color: var(--color-interactive-default);
     animation: ads-progress-sweep calc(var(--motion-duration-overlay) * 7) var(--motion-easing-standard) infinite;
+  }
+
+  [dir="rtl"] .ads-progress[data-variant="indeterminate"] .ads-progress__fill {
+    animation-name: ads-progress-sweep-rtl;
+  }
+}
+
+/* Windows High Contrast: fills and shadows are dropped, so states use system colours. */
+@media (forced-colors: active) {
+  .ads-progress__track {
+    background-color: Canvas;
+    outline: var(--border-width-default) solid CanvasText;
+  }
+
+  .ads-progress__fill {
+    background-color: Highlight;
   }
 }

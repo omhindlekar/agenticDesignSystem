@@ -28,6 +28,9 @@ function dirs(name: string) {
   return { outDir: join(work, name, 'generated'), runsDir: join(work, name, 'runs') };
 }
 
+/** These run the whole pipeline end to end; under a full parallel suite they take longer than 5s. */
+const E2E_TIMEOUT = 30_000;
+
 describe('npm run generate (fake provider)', () => {
   it('FR-6/FR-7: demo brief runs end to end and passes', async () => {
     const lines: string[] = [];
@@ -55,7 +58,7 @@ describe('npm run generate (fake provider)', () => {
     expect(out).toMatch(/Retries:\s+composer 0, builder 0/);
     expect(out).toMatch(/Calls:\s+2/);
     expect(out).toMatch(/Provider:\s+fake/);
-  });
+  }, E2E_TIMEOUT);
 
   it('FR-19: the run log is written with an entry per agent', async () => {
     const d = dirs('log');
@@ -63,7 +66,7 @@ describe('npm run generate (fake provider)', () => {
     const entries = await new RunLogWriter(d.runsDir).read(res.result.runId);
     expect(entries.map((e) => e.agent)).toEqual(['context', 'composer', 'builder']);
     expect(entries.every((e) => e.outcome === 'pass')).toBe(true);
-  });
+  }, E2E_TIMEOUT);
 
   it('FR-8: an unrecorded brief under the fake provider escalates cleanly with a hint, no crash', async () => {
     const lines: string[] = [];
@@ -79,7 +82,7 @@ describe('npm run generate (fake provider)', () => {
     expect(res.tsxPath).toBeUndefined();
     expect(existsSync(d.outDir)).toBe(false);
     expect(lines.join('\n')).toMatch(/MODEL_PROVIDER=cli/);
-  });
+  }, E2E_TIMEOUT);
 
   it('taskId is derived from the brief so fixtures replay deterministically', () => {
     expect(taskIdForBrief(DEMO_BRIEF)).toBe(taskIdForBrief(DEMO_BRIEF));

@@ -163,3 +163,16 @@ describe('FR-4 rules.yaml: overlays and navigation', () => {
     expect(r?.appliesTo).toEqual(expect.arrayContaining(['link', 'tabs', 'breadcrumbs', 'side-nav', 'menu', 'button']));
   });
 });
+
+describe('FR-4 rules.yaml: forced colours and right to left', () => {
+  it('FR-4: DS-A-007 requires forced-colors rules with system colours, checked by token lint', () => {
+    const r = loadRules().find((x) => x.id === 'DS-A-007');
+    expect(r?.checkName).toBe('token-lint');
+    for (const word of ['forced-colors', 'Highlight', 'system colours']) expect(r?.statement).toContain(word);
+  });
+  it('FR-4: DS-L-004 requires logical properties and mirrored translates, checked by token lint', () => {
+    const r = loadRules().find((x) => x.id === 'DS-L-004');
+    expect(r?.checkName).toBe('token-lint');
+    for (const word of ['logical', 'inline-start', 'rtl']) expect(r?.statement).toContain(word);
+  });
+});

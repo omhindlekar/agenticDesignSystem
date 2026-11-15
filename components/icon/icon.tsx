@@ -1,6 +1,6 @@
 import '../shared/shared.css';
 import './icon.css';
-import { ICON_PATHS, ICON_VIEWBOX } from './icons.generated';
+import { ICON_MIRRORED, ICON_PATHS, ICON_VIEWBOX } from './icons.generated';
 import type { IconName } from './icons.generated';
 
 export type { IconName } from './icons.generated';
@@ -24,6 +24,8 @@ export function Icon({ name, size = 'md', label }: IconProps) {
       data-variant={labelled ? 'labelled' : 'decorative'}
       data-size={size}
       data-state="default"
+      // Directional icons (arrows, chevrons) flip in right-to-left layouts; see icon.css.
+      {...(ICON_MIRRORED.has(name) ? { 'data-mirror': 'rtl' } : {})}
       viewBox={ICON_VIEWBOX}
       fill="currentColor"
       focusable="false"

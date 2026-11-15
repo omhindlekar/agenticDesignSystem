@@ -11,7 +11,8 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const interactive = { variant: 'interactive' as const, onClick: () => {}, 'aria-label': 'Choose the Pro plan' };
+// The card's name comes from its visible content (WCAG 2.5.3); no aria-label replaces it.
+const interactive = { variant: 'interactive' as const, onClick: () => {} };
 
 export const DefaultVariant: Story = { args: { variant: 'default' }, parameters: { ads: { variant: 'default' } } };
 export const Interactive: Story = { args: interactive, parameters: { ads: { variant: 'interactive' } } };

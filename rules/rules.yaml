@@ -198,6 +198,63 @@ rules:
     example: ".ads-button { font-family: var(--font-family-display) }"
     counterExample: ".ads-modal__title { font-family: var(--font-family-body) }"
 
+  - id: DS-L-004
+    scope: layout
+    severity: error
+    statement: >
+      Layout mirrors in right-to-left languages. Components use logical
+      properties (margin-inline-start, inset-inline-end, border-inline-start,
+      text-align: start) instead of left and right, and any horizontal translate
+      has a matching [dir="rtl"] rule. Directional icons (arrows, chevrons) flip
+      in right-to-left; others do not.
+    check: auto
+    checkName: token-lint
+    appliesTo:
+      - list
+      - app-header
+      - avatar-group
+      - avatar
+      - badge
+      - banner
+      - breadcrumbs
+      - button
+      - card
+      - checkbox
+      - combobox
+      - date-picker
+      - divider
+      - drawer
+      - field
+      - heading
+      - icon-button
+      - icon
+      - image
+      - input
+      - link
+      - menu
+      - modal
+      - number-field
+      - popover
+      - progress-bar
+      - radio-group
+      - search-field
+      - segmented-control
+      - select
+      - side-nav
+      - slider
+      - spinner
+      - switch
+      - table
+      - tabs
+      - tag-group
+      - text
+      - textarea
+      - toast-region
+      - tooltip
+      - tree
+    example: "padding-inline-start: var(--space-component-padding-md)"
+    counterExample: "padding-left: var(--space-component-padding-md)"
+
   # ── Accessibility rules ───────────────────────────────────────────────────────
   - id: DS-A-001
     scope: accessibility
@@ -506,6 +563,51 @@ rules:
       - modal
     example: "color: var(--color-text-success)"
     counterExample: "Lime 500 (#84CC16) text on a white page (1.98:1)"
+
+  - id: DS-A-007
+    scope: accessibility
+    severity: error
+    statement: >
+      Every state stays visible in Windows High Contrast (forced colours). Where a
+      state is shown by a fill, an underline bar or a shadow (selected, checked,
+      current, progress, edges of overlays), the component adds an
+      @media (forced-colors: active) rule using CSS system colours (Highlight,
+      HighlightText, CanvasText, GrayText). Token colours are not used inside those
+      rules, and system colours are not used outside them.
+    check: auto
+    checkName: token-lint
+    appliesTo:
+      - list
+      - app-header
+      - avatar
+      - badge
+      - banner
+      - card
+      - checkbox
+      - date-picker
+      - divider
+      - drawer
+      - menu
+      - modal
+      - progress-bar
+      - radio-group
+      - segmented-control
+      - side-nav
+      - slider
+      - switch
+      - table
+      - tabs
+      - tag-group
+      - toast-region
+      - tooltip
+      - tree
+      - button
+      - icon-button
+      - combobox
+      - select
+      - menu
+    example: "@media (forced-colors: active) { .ads-tree__item[data-selected] { background-color: Highlight; color: HighlightText; } }"
+    counterExample: "A selected row shown only by background-color: var(--color-container-primary)"
 
   - id: DS-C-001
     scope: component

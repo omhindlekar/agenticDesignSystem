@@ -68,3 +68,16 @@
 .ads-badge[data-variant="dot"][data-tone="neutral"] {
   background-color: var(--color-border-input);
 }
+
+/* Windows High Contrast: fills and shadows are dropped, so states use system colours. */
+@media (forced-colors: active) {
+  .ads-badge {
+    /* Always forced, even inside a highlighted row, so its tone colours never show. */
+    forced-color-adjust: auto;
+    border: var(--border-width-default) solid CanvasText;
+  }
+
+  .ads-badge[data-variant="dot"] {
+    background-color: CanvasText;
+  }
+}

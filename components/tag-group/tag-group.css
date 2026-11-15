@@ -97,3 +97,21 @@
 .ads-tag__remove[data-focus-visible] {
   outline: var(--border-width-focus) solid var(--color-interactive-focus-ring);
 }
+
+/* Windows High Contrast: fills and shadows are dropped, so states use system colours. */
+@media (forced-colors: active) {
+  .ads-tag[data-selected] {
+    forced-color-adjust: none;
+    background-color: Highlight;
+    color: HighlightText;
+    border-color: Highlight;
+  }
+
+  /* Inside the highlight, text and marks take HighlightText on no backplate. */
+  .ads-tag[data-selected] *:not(.ads-badge, .ads-avatar) {
+    forced-color-adjust: none;
+    border-color: currentcolor;
+    background-color: transparent;
+    color: inherit;
+  }
+}

@@ -49,19 +49,44 @@ export function List({ label, items, selectionMode = 'none', selectedKeys, onSel
     );
   }
   return (
-    <div className="ads-list-root" data-variant="interactive" data-state="default">
+    <div
+      className="ads-list-root"
+      data-variant="interactive"
+      data-state="default"
+      // APG grid: Enter opens the focused item. React Aria skips the action on Enter once
+      // any item is selected, so Enter is handled here whenever there is an action.
+      {...(onAction
+        ? {
+            onKeyDownCapture: (e: React.KeyboardEvent) => {
+              const row = (e.target as HTMLElement).closest('[role="row"][data-key]');
+              if (e.key !== 'Enter' || !row) return;
+              e.preventDefault();
+              e.stopPropagation();
+              onAction(row.getAttribute('data-key') ?? '');
+            },
+          }
+        : {})}
+    >
       <GridList
         className="ads-list"
         aria-label={label}
         selectionMode={selectionMode}
         {...(selectedKeys ? { selectedKeys: new Set<Key>(selectedKeys) } : {})}
         {...(onSelectionChange
-          ? { onSelectionChange: (keys: Selection) => onSelectionChange(keys === 'all' ? items.map((i) => i.id) : [...keys].map(String)) }
+          ? {
+              onSelectionChange: (keys: Selection) =>
+                onSelectionChange(keys === 'all' ? items.map((i) => i.id) : [...keys].map(String)),
+            }
           : {})}
         {...(onAction ? { onAction: (k: Key) => onAction(String(k)) } : {})}
       >
         {items.map((item) => (
-          <GridListItem key={item.id} id={item.id} textValue={item.title} className="ads-list__item ads-list__item--interactive">
+          <GridListItem
+            key={item.id}
+            id={item.id}
+            textValue={item.title}
+            className="ads-list__item ads-list__item--interactive"
+          >
             <Row item={item} />
           </GridListItem>
         ))}

@@ -92,3 +92,24 @@
 .ads-list__item--interactive[data-selected] .ads-list__icon {
   color: inherit;
 }
+
+/* Windows High Contrast: fills and shadows are dropped, so states use system colours. */
+@media (forced-colors: active) {
+  .ads-list__item--interactive[data-selected] {
+    forced-color-adjust: none;
+    background-color: Highlight;
+    color: HighlightText;
+  }
+
+  /* Inside the highlight, text and marks take HighlightText on no backplate. */
+  .ads-list__item--interactive[data-selected] *:not(.ads-badge, .ads-avatar) {
+    forced-color-adjust: none;
+    border-color: currentcolor;
+    background-color: transparent;
+    color: inherit;
+  }
+
+  .ads-list__item--interactive[data-selected] :is(.ads-list__description, .ads-list__meta) {
+    color: HighlightText;
+  }
+}

@@ -98,10 +98,6 @@
   color: var(--color-text-heading);
 }
 
-[dir="rtl"] .ads-calendar__nav .ads-icon {
-  transform: scaleX(-1);
-}
-
 .ads-calendar__grid {
   border-collapse: collapse;
 }
@@ -185,5 +181,26 @@
 
   .ads-calendar__cell::before {
     transition: opacity var(--motion-duration-standard) var(--motion-easing-standard);
+  }
+}
+
+/* Windows High Contrast: fills and shadows are dropped, so states use system colours. */
+@media (forced-colors: active) {
+  .ads-calendar__cell[data-selected] {
+    forced-color-adjust: none;
+    background-color: Highlight;
+    color: HighlightText;
+  }
+
+  /* Inside the highlight, text and marks take HighlightText on no backplate. */
+  .ads-calendar__cell[data-selected] *:not(.ads-badge, .ads-avatar) {
+    forced-color-adjust: none;
+    border-color: currentcolor;
+    background-color: transparent;
+    color: inherit;
+  }
+
+  .ads-calendar__cell:is([data-disabled], [data-unavailable]) {
+    color: GrayText;
   }
 }

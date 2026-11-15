@@ -141,3 +141,18 @@
     transition: transform var(--motion-duration-standard) var(--motion-easing-enter);
   }
 }
+
+/* Windows High Contrast: fills and shadows are dropped, so states use system colours. */
+@media (forced-colors: active) {
+  .ads-radio__dot {
+    background-color: Highlight;
+  }
+
+  .ads-radio[data-selected] .ads-radio__box {
+    border-color: Highlight;
+  }
+
+  .ads-radio[data-disabled] .ads-radio__dot {
+    background-color: GrayText;
+  }
+}

@@ -103,3 +103,14 @@
     transition: opacity var(--motion-duration-standard) var(--motion-easing-standard);
   }
 }
+
+/* Windows High Contrast: fills and shadows are dropped, so states use system colours. */
+@media (forced-colors: active) {
+  .ads-tabs__tab[data-selected]::after {
+    background-color: Highlight;
+  }
+
+  .ads-tabs__tab[data-selected] {
+    color: Highlight;
+  }
+}

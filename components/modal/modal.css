@@ -155,3 +155,10 @@
     animation: ads-modal-panel-in var(--motion-duration-overlay) var(--motion-easing-standard);
   }
 }
+
+/* Windows High Contrast: fills and shadows are dropped, so states use system colours. */
+@media (forced-colors: active) {
+  .ads-modal__panel {
+    border-color: CanvasText;
+  }
+}

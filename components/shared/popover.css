@@ -126,3 +126,14 @@
     transition: opacity var(--motion-duration-standard) var(--motion-easing-standard);
   }
 }
+
+/* Windows High Contrast: fills and shadows are dropped, so states use system colours. */
+@media (forced-colors: active) {
+  .ads-popover {
+    border-color: CanvasText;
+  }
+
+  .ads-listbox__item[data-selected] {
+    color: Highlight;
+  }
+}

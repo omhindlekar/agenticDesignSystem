@@ -1326,10 +1326,11 @@
       },
       "baseline": true,
       "verified": false,
-      "status": "partial",
+      "status": "done",
       "phase": "1.13",
       "evidence": [
-        "components/button/tests/button.test.tsx"
+        "checks/a11y/apg.ts",
+        "checks/a11y/tests/apg-coverage.test.ts"
       ],
       "note": "Tested for the current components; must hold for every new one"
     },
@@ -1346,9 +1347,12 @@
       },
       "baseline": true,
       "verified": false,
-      "status": "missing",
+      "status": "done",
       "phase": "1.13",
-      "evidence": []
+      "evidence": [
+        "checks/token-lint/tests/forced-colors-rtl.test.ts",
+        "components/table/table.css"
+      ]
     },
     {
       "id": "rtl",
@@ -1363,9 +1367,13 @@
       },
       "baseline": true,
       "verified": false,
-      "status": "partial",
+      "status": "done",
       "phase": "1.13",
-      "evidence": [],
+      "evidence": [
+        "checks/a11y/tests/rtl.test.tsx",
+        "components/icon/icon-list.json",
+        ".storybook/preview.ts"
+      ],
       "note": "Logical CSS properties are used; no RTL test yet"
     },
     {
@@ -1400,9 +1408,12 @@
       },
       "baseline": true,
       "verified": false,
-      "status": "missing",
+      "status": "done",
       "phase": "1.13",
-      "evidence": []
+      "evidence": [
+        "checks/a11y/tests/axe.test.tsx",
+        "scripts/a11y.ts"
+      ]
     },
     {
       "id": "usage-docs",
@@ -1417,10 +1428,11 @@
       },
       "baseline": true,
       "verified": false,
-      "status": "partial",
+      "status": "done",
       "phase": "1.13",
       "evidence": [
-        "components/button/button.meta.json"
+        ".storybook/usage/usage-page.tsx",
+        "checks/a11y/tests/usage-coverage.test.ts"
       ],
       "note": "In metadata; not yet rendered as docs pages"
     },
@@ -1437,9 +1449,13 @@
       },
       "baseline": true,
       "verified": false,
-      "status": "missing",
+      "status": "done",
       "phase": "1.13",
-      "evidence": [],
+      "evidence": [
+        "scripts/figma-sync.ts",
+        "figma/sync-manifest.json",
+        "checks/figma/tests/drift.test.ts"
+      ],
       "note": "PRD FR-2"
     },
     {

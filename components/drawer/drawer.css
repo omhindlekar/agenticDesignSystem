@@ -135,3 +135,10 @@
     animation-name: ads-drawer-out-end;
   }
 }
+
+/* Windows High Contrast: fills and shadows are dropped, so states use system colours. */
+@media (forced-colors: active) {
+  .ads-drawer {
+    border-inline-color: CanvasText;
+  }
+}

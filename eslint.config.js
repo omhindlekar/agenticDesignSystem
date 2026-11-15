@@ -4,7 +4,8 @@ import tsparser from '@typescript-eslint/parser';
 
 export default [
   {
-    ignores: ['dist/**', 'node_modules/**', 'storybook-static/**', 'coverage/**', 'checks/*/fixtures/**'],
+    // figma/push/ and generated/figma-push/ hold use_figma function bodies (top-level return), not modules.
+    ignores: ['dist/**', 'node_modules/**', 'storybook-static/**', 'coverage/**', 'checks/*/fixtures/**', 'figma/push/**', 'generated/**'],
   },
   {
     files: ['**/*.ts', '**/*.tsx'],
