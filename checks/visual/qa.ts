@@ -3,7 +3,8 @@
  * Baselines live in evals/baselines/<id>.png and change only through an approved PR
  * (npm run baselines:approve). With no approved baseline the check is skipped, never passed.
  */
-import { existsSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
+import { guardedFs } from '../../packages/permissions/src/index.js';
 import { join } from 'node:path';
 import { comparePngs } from './compare.js';
 import type { VisualConfig } from './compare.js';
@@ -36,11 +37,12 @@ const check: QaCheck = {
     const cmp = comparePngs(actual, readFileSync(baseline), cfg);
     const evidence: string[] = [];
     if (evidenceDir && (cmp.ratio > cfg.maxDiffRatio || cmp.sizeChanged)) {
-      mkdirSync(evidenceDir, { recursive: true });
-      writeFileSync(join(evidenceDir, `${baselineId}.actual.png`), actual);
+      const fs = guardedFs('qa', repoRoot);
+      fs.mkdir(evidenceDir);
+      fs.writeFile(join(evidenceDir, `${baselineId}.actual.png`), actual);
       evidence.push(join(evidenceDir, `${baselineId}.actual.png`));
       if (cmp.diffPng) {
-        writeFileSync(join(evidenceDir, `${baselineId}.diff.png`), cmp.diffPng);
+        fs.writeFile(join(evidenceDir, `${baselineId}.diff.png`), cmp.diffPng);
         evidence.push(join(evidenceDir, `${baselineId}.diff.png`));
       }
     }

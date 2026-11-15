@@ -8,7 +8,8 @@
  * theme, comfortable density, reduced motion, with fonts loaded, so the same screen
  * always renders the same pixels (NFR-5).
  */
-import { mkdtempSync, writeFileSync, rmSync, existsSync } from 'node:fs';
+import { existsSync } from 'node:fs';
+import { guardedFs } from '../../packages/permissions/src/index.js';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -53,9 +54,10 @@ else { createRoot(root).render(createElement(Screen as () => null)); }
 `;
 
 export async function renderScreen(tsx: string, repoRoot: string): Promise<RenderedScreen> {
-  const dir = mkdtempSync(join(tmpdir(), 'ads-render-'));
-  writeFileSync(join(dir, 'screen.tsx'), tsx);
-  writeFileSync(join(dir, 'entry.tsx'), ENTRY.replaceAll('__REPO__', repoRoot));
+  const fs = guardedFs('qa', repoRoot);
+  const dir = fs.mkdtemp(join(tmpdir(), 'ads-render-'));
+  fs.writeFile(join(dir, 'screen.tsx'), tsx);
+  fs.writeFile(join(dir, 'entry.tsx'), ENTRY.replaceAll('__REPO__', repoRoot));
   await build({
     entryPoints: [join(dir, 'entry.tsx')],
     bundle: true,
@@ -70,7 +72,7 @@ export async function renderScreen(tsx: string, repoRoot: string): Promise<Rende
     define: { 'process.env.NODE_ENV': '"production"' },
   });
   const css = existsSync(join(dir, 'out', 'entry.css')) ? '<link rel="stylesheet" href="out/entry.css">' : '';
-  writeFileSync(
+  fs.writeFile(
     join(dir, 'index.html'),
     `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Generated screen</title>${css}` +
       `<style>body{margin:0;padding:24px;background:var(--color-background-page)}</style></head>` +
@@ -100,7 +102,7 @@ export async function renderScreen(tsx: string, repoRoot: string): Promise<Rende
   const renderError = await page.evaluate(() => document.getElementById('root')!.getAttribute('data-render-error'));
   if (renderError || errors.length) {
     await context.close();
-    rmSync(dir, { recursive: true, force: true });
+    fs.rm(dir);
     throw new Error(`The screen did not render: ${renderError ?? errors[0]}`);
   }
   return {
@@ -108,7 +110,7 @@ export async function renderScreen(tsx: string, repoRoot: string): Promise<Rende
     screenshot: () => page.screenshot({ fullPage: true }),
     close: async () => {
       await context.close();
-      rmSync(dir, { recursive: true, force: true });
+      fs.rm(dir);
     },
   };
 }

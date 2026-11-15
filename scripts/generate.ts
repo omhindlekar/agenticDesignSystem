@@ -9,7 +9,8 @@
  * Exit code 0 on pass, 1 on escalate/fail, 2 on usage error.
  */
 import { createHash } from 'node:crypto';
-import { mkdirSync, readFileSync, writeFileSync, statSync } from 'node:fs';
+import { readFileSync, statSync } from 'node:fs';
+import { guardedFs } from '../packages/permissions/src/index.js';
 import { join, dirname, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { runOrchestrator } from '../agents/orchestrator/index.js';
@@ -75,10 +76,12 @@ export async function runGenerate(brief: string, opts: GenerateOptions): Promise
     provider,
     model: config.model,
     flags: detectInstructions(brief),
+    ...(opts.baselineId ? { baselineId: opts.baselineId } : {}),
     startedAt: new Date().toISOString(),
   });
-  mkdirSync(join(runsDir, runId), { recursive: true });
-  writeFileSync(join(runsDir, runId, 'run.json'), `${JSON.stringify(record, null, 2)}\n`);
+  const orchestratorFs = guardedFs('orchestrator', repoRoot);
+  orchestratorFs.mkdir(join(runsDir, runId));
+  orchestratorFs.writeFile(join(runsDir, runId, 'run.json'), `${JSON.stringify(record, null, 2)}\n`);
 
   const result = await runOrchestrator(
     { taskId, brief, schemaVersion: SCHEMA_VERSION },
@@ -104,9 +107,10 @@ export async function runGenerate(brief: string, opts: GenerateOptions): Promise
   let tsxPath: string | undefined;
   if (result.outcome === 'pass' && result.tsx !== undefined) {
     const dir = join(outDir, result.runId);
-    mkdirSync(dir, { recursive: true });
+    const builderFs = guardedFs('builder', repoRoot);
+    builderFs.mkdir(dir);
     tsxPath = join(dir, 'screen.tsx');
-    writeFileSync(tsxPath, result.tsx.endsWith('\n') ? result.tsx : `${result.tsx}\n`, 'utf8');
+    builderFs.writeFile(tsxPath, result.tsx.endsWith('\n') ? result.tsx : `${result.tsx}\n`);
   }
 
   const row = (label: string, value: string) => print(`${`${label}:`.padEnd(12)}${value}`);

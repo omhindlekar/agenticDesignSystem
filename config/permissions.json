@@ -1,0 +1,39 @@
+{
+  "agents": {
+    "orchestrator": {
+      "read": ["config/**", "runs/**"],
+      "write": ["runs/**"],
+      "never": ["tokens/**", "components/**", "rules/**", "evals/baselines/**", "docs/**"]
+    },
+    "context": {
+      "read": ["tokens/**", "components/**", "rules/**"],
+      "write": [],
+      "never": ["**"]
+    },
+    "composer": {
+      "read": ["components/**", "rules/**", "tokens/**"],
+      "write": [],
+      "never": ["**"]
+    },
+    "builder": {
+      "read": ["components/**", "styles/**", "tokens/**"],
+      "write": ["generated/**", ".ads-typecheck-tmp-*/**"],
+      "never": ["tokens/**", "components/**", "rules/**", "evals/baselines/**", "docs/**"]
+    },
+    "qa": {
+      "read": ["generated/**", "components/**", "styles/**", "rules/**", "config/**", "evals/baselines/**"],
+      "write": ["runs/*/qa/**"],
+      "never": ["tokens/**", "components/**", "rules/**", "evals/baselines/**", "docs/**"]
+    },
+    "maintainer": {
+      "read": ["**"],
+      "write": ["tokens/**", "components/**", "rules/**", "styles/**"],
+      "never": ["evals/baselines/**", "docs/**"]
+    },
+    "docs": {
+      "read": ["components/**", "tokens/**", "rules/**"],
+      "write": ["docs/**", "CHANGELOG.md"],
+      "never": ["tokens/**", "components/**", "rules/**", "evals/baselines/**"]
+    }
+  }
+}

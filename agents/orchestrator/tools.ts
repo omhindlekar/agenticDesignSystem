@@ -136,7 +136,14 @@ export async function runOrchestrator(input: TaskInput, deps: OrchestratorDeps):
     extra: { flags?: string[]; ruleIds?: string[] } = {},
   ) => {
     if (!logWriter) return;
-    const out = output === undefined ? '' : typeof output === 'string' ? output : JSON.stringify(output);
+    // Timings and the run id vary between runs of the same work; leave them out of the hash
+    // so a replay of the same run hashes the same (FR-19, NFR-5).
+    const out =
+      output === undefined
+        ? ''
+        : typeof output === 'string'
+          ? output
+          : JSON.stringify(output, (k, v: unknown) => (k === 'durationMs' ? undefined : v)).replaceAll(runId, '<run>');
     await logWriter.write({
       runId,
       agent,

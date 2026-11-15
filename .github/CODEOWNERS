@@ -1,0 +1,8 @@
+# Changes to the design system's source of truth need the owner's approval (PRD governance,
+# FR-18). Branch protection must require code-owner review for this to take effect.
+/tokens/          @omhindlekar
+/components/      @omhindlekar
+/rules/           @omhindlekar
+/evals/baselines/ @omhindlekar
+/config/permissions.json @omhindlekar
+/agents/          @omhindlekar

@@ -31,6 +31,14 @@ export function createProvider(config: ProviderConfig, repoRoot: string): ModelP
       base = new FakeProvider(fixturesDir);
       break;
     }
+    case 'replay':
+      // Replays a past run: recorded fixtures, then responses the real model gave earlier
+      // (runs/.provider-cache). Never calls a model (FR-19).
+      base = new FakeProvider([
+        join(repoRoot, 'evals', 'fixtures', 'provider'),
+        join(repoRoot, 'runs', '.provider-cache'),
+      ]);
+      break;
     case 'api':
       base = new ApiProvider(config.pricing);
       break;
@@ -39,14 +47,14 @@ export function createProvider(config: ProviderConfig, repoRoot: string): ModelP
       break;
     default:
       throw new Error(
-        `Unknown provider: "${name}". Valid values: fake, api, claude-cli (alias: cli). ` +
+        `Unknown provider: "${name}". Valid values: fake, replay, api, claude-cli (alias: cli). ` +
           `Set MODEL_PROVIDER env var or config.provider.`,
       );
   }
 
   // The fake provider is never cached: its fixtures are the record, and a cache hit could
   // hide a missing fixture locally that CI would then fail on.
-  if (config.cache?.enabled !== false && name !== 'fake') {
+  if (config.cache?.enabled !== false && name !== 'fake' && name !== 'replay') {
     const cacheDir = join(repoRoot, 'runs', '.provider-cache');
     mkdirSync(cacheDir, { recursive: true });
     return new CachingProvider(base, cacheDir);

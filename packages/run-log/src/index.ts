@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto';
-import { appendFile, mkdir, readFile } from 'node:fs/promises';
+import { readFile } from 'node:fs/promises';
+import { guardedFs } from '../../permissions/src/index.js';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { RunLogEntrySchema } from '@ads/schemas';
@@ -16,9 +17,10 @@ export class RunLogWriter {
   async write(entry: RunLogEntry): Promise<void> {
     RunLogEntrySchema.parse(entry);
     const runDir = join(this.runsDir, entry.runId);
-    await mkdir(runDir, { recursive: true });
-    const line = JSON.stringify(entry) + '\n';
-    await appendFile(join(runDir, 'log.jsonl'), line, 'utf8');
+    // Run logs belong to the orchestrator (config/permissions.json).
+    const fs = guardedFs('orchestrator');
+    fs.mkdir(runDir);
+    fs.appendFile(join(runDir, 'log.jsonl'), JSON.stringify(entry) + '\n');
   }
 
   async read(runId: string): Promise<RunLogEntry[]> {

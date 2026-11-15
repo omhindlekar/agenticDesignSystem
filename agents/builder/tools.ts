@@ -1,4 +1,5 @@
-import { mkdtempSync, writeFileSync, rmSync, readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
+import { guardedFs } from '../../packages/permissions/src/index.js';
 import { spawnSync } from 'node:child_process';
 import { join } from 'node:path';
 import { lintString } from '../../checks/token-lint/index.js';
@@ -125,11 +126,12 @@ export function typeCheckBuilderOutput(tsx: string, repoRoot: string): TypeCheck
   // A unique directory per call: parallel runs (test workers, concurrent generates)
   // must not overwrite or delete each other's files. It lives under repoRoot so
   // 'react' and the components resolve from the repo's node_modules.
-  const checkDir = mkdtempSync(join(repoRoot, '.ads-typecheck-tmp-'));
+  const fs = guardedFs('builder', repoRoot);
+  const checkDir = fs.mkdtemp(join(repoRoot, '.ads-typecheck-tmp-'));
 
   try {
-    writeFileSync(join(checkDir, 'screen.tsx'), tsx, 'utf8');
-    writeFileSync(
+    fs.writeFile(join(checkDir, 'screen.tsx'), tsx);
+    fs.writeFile(
       join(checkDir, 'tsconfig.json'),
       JSON.stringify({
         compilerOptions: {
@@ -149,7 +151,6 @@ export function typeCheckBuilderOutput(tsx: string, repoRoot: string): TypeCheck
         },
         include: ['screen.tsx'],
       }),
-      'utf8',
     );
 
     const tscPath = join(repoRoot, 'node_modules', '.bin', 'tsc');
@@ -165,7 +166,7 @@ export function typeCheckBuilderOutput(tsx: string, repoRoot: string): TypeCheck
     return { valid: false, errors };
   } finally {
     try {
-      rmSync(checkDir, { recursive: true, force: true });
+      fs.rm(checkDir);
     } catch {
       // best-effort cleanup
     }

@@ -31,8 +31,7 @@ export class ApiProvider implements ModelProvider {
     const inputTokens = message.usage?.input_tokens ?? 0;
     const outputTokens = message.usage?.output_tokens ?? 0;
     const costUsd =
-      (inputTokens / 1_000_000) * pricing.inputPerMTokenUsd +
-      (outputTokens / 1_000_000) * pricing.outputPerMTokenUsd;
+      (inputTokens / 1_000_000) * pricing.inputPerMTokenUsd + (outputTokens / 1_000_000) * pricing.outputPerMTokenUsd;
 
     return { text: textBlock.text, costUsd };
   }

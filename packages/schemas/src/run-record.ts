@@ -15,6 +15,8 @@ export const RunRecordSchema = z.object({
   model: z.string().min(1),
   /** Instruction-like text found in the brief, treated as data and flagged. */
   flags: z.array(z.string()),
+  /** Golden-set id when the run compared against a visual baseline. */
+  baselineId: z.string().optional(),
   startedAt: z.string().datetime(),
 });
 

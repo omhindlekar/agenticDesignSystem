@@ -139,6 +139,7 @@ describe('FR-10: visual regression against an approved baseline', () => {
     mkdirSync(join(dir, 'evals', 'baselines'), { recursive: true });
     mkdirSync(join(dir, 'config'));
     copyFileSync(join(root, 'config/defaults.json'), join(dir, 'config/defaults.json'));
+    copyFileSync(join(root, 'config/permissions.json'), join(dir, 'config/permissions.json'));
     writeFileSync(join(dir, 'evals/baselines/screen.png'), png(10, 10, 255));
     return dir;
   };
@@ -149,7 +150,7 @@ describe('FR-10: visual regression against an approved baseline', () => {
     tsx: '',
     repoRoot,
     baselineId,
-    evidenceDir: join(repoRoot, 'evidence'),
+    evidenceDir: join(repoRoot, 'runs', 'r', 'qa'),
     render: async () => ({ page: undefined as never, screenshot: async () => shot, close: async () => {} }),
   });
   it('FR-10: matches when nothing changed', async () => {
