@@ -1,0 +1,43 @@
+const VARS=await figma.variables.getLocalVariablesAsync();
+const VM=new Map(VARS.map(v=>[v.name,v]));
+const V=n=>{const v=VM.get(n);if(!v)throw new Error('no var '+n);return v;};
+const TS=new Map((await figma.getLocalTextStylesAsync()).map(s=>[s.name,s]));
+for(const s of TS.values())await figma.loadFontAsync(s.fontName);
+const ES=new Map((await figma.getLocalEffectStylesAsync()).map(s=>[s.name,s]));
+const paint=n=>figma.variables.setBoundVariableForPaint({type:'SOLID',color:{r:0,g:0,b:0}},'color',V(n));
+const fill=(node,n)=>{node.fills=n?[paint(n)]:[];return node;};
+const stroke=(node,n,w='border/width-default',align='INSIDE')=>{node.strokes=[paint(n)];node.strokeAlign=align;node.setBoundVariable('strokeWeight',V(w));return node;};
+const bind=(node,field,n)=>{node.setBoundVariable(field,V(n));return node;};
+const square=node=>{for(const f of['topLeftRadius','topRightRadius','bottomLeftRadius','bottomRightRadius'])node.setBoundVariable(f,V('radius/component-sm'));return node;};
+const pad=(f,x,y)=>{if(x){bind(f,'paddingLeft',x);bind(f,'paddingRight',x);}if(y){bind(f,'paddingTop',y);bind(f,'paddingBottom',y);}return f;};
+const AL=(dir,o={})=>{const f=figma.createAutoLayout(dir,o);f.fills=[];f.clipsContent=false;return f;};
+const row=(o)=>AL('HORIZONTAL',Object.assign({counterAxisAlignItems:'CENTER'},o||{}));
+const col=(o)=>AL('VERTICAL',o||{});
+const fixW=(n,w)=>{n.resize(w,n.height);n.layoutSizingHorizontal='FIXED';return n;};
+const fillW=n=>{n.layoutSizingHorizontal='FILL';return n;};
+const txt=async(s,style,color,o={})=>{const t=figma.createText();await t.setTextStyleIdAsync(TS.get('Type/'+style).id);t.characters=s;fill(t,color||'color/text/primary');if(o.underline)t.textDecoration='UNDERLINE';t.name=o.name||s.slice(0,24);return t;};
+const GLY=new Map();
+{const ip=figma.root.children.find(p=>p.name==='Icons');for(const c of ip.findAllWithCriteria({types:['COMPONENT']}))if(c.name.startsWith('Glyph/'))GLY.set(c.name.slice(6),c);}
+const icon=(name,sz='md',color='color/text/primary')=>{const g=GLY.get(name);if(!g)throw new Error('no glyph '+name);const i=g.createInstance();const px={sm:16,md:20,lg:24}[sz];i.resize(px,px);bind(i,'width','size/icon-'+sz);bind(i,'height','size/icon-'+sz);for(const n of i.findAll(n=>'fills'in n&&n.type!=='INSTANCE'))n.fills=[paint(color)];i.name='Icon '+name;return i;};
+const layer=(c,state,tone)=>{if(!['hover','active','focus'].includes(state))return;const r=figma.createRectangle();r.name='State layer';c.insertChild(0,r);r.layoutPositioning='ABSOLUTE';r.x=0;r.y=0;r.resize(c.width,c.height);r.constraints={horizontal:'STRETCH',vertical:'STRETCH'};fill(r,tone==='danger'?'color/state/layer-danger':'color/state/layer');bind(r,'opacity',{hover:'opacity/state-hover',active:'opacity/state-pressed',focus:'opacity/state-focus'}[state]);};
+const ring=(c,inset)=>{const o=inset?0:4;const w0=c.width,h0=c.height,isC=c.type==='COMPONENT';if(!isC&&c.layoutMode&&c.layoutMode!=='NONE'){c.primaryAxisSizingMode='FIXED';c.counterAxisSizingMode='FIXED';}const r=figma.createFrame();r.name='Focus ring';r.fills=[];c.appendChild(r);r.layoutPositioning='ABSOLUTE';if(!isC&&(c.width!==w0||c.height!==h0))c.resize(w0,h0);r.x=-o;r.y=-o;r.resize(w0+2*o,h0+2*o);r.constraints={horizontal:'STRETCH',vertical:'STRETCH'};stroke(r,'color/interactive/focus-ring','border/width-focus',inset?'INSIDE':'INSIDE');c.clipsContent=false;};
+const dim=c=>bind(c,'opacity','opacity/disabled');
+const C=(dir,o={})=>{const c=figma.createComponent();c.layoutMode=dir;c.primaryAxisSizingMode='AUTO';c.counterAxisSizingMode='AUTO';c.fills=[];c.clipsContent=false;if(dir==='HORIZONTAL')c.counterAxisAlignItems='CENTER';Object.assign(c,o);return c;};
+const STORY='https://github.com/omhindlekar/agenticDesignSystem/blob/main/components/';
+const PAGE=figma.currentPage;
+let NEXT_Y=0;for(const n of PAGE.children)NEXT_Y=Math.max(NEXT_Y,n.y+n.height+120);
+const sets=[];
+const makeSet=async(id,name,purpose,variants,states,build,o={})=>{
+  if(PAGE.findChild(n=>n.type==='COMPONENT_SET'&&n.name===name))return;
+  const comps=[];
+  for(const v of variants)for(const s of states){const c=await build(v,s);c.name=(o.single?'':'Variant='+v+', ')+'State='+s;if(o.noState)c.name='Variant='+v;comps.push(c);}
+  const set=figma.combineAsVariants(comps,PAGE);set.name=name;
+  set.layoutMode='HORIZONTAL';set.layoutWrap='WRAP';set.primaryAxisSizingMode='FIXED';set.counterAxisSizingMode='AUTO';
+  set.itemSpacing=o.gap||24;set.counterAxisSpacing=o.gap||24;set.paddingLeft=set.paddingRight=set.paddingTop=set.paddingBottom=32;
+  set.resize(o.width||1200,set.height);set.counterAxisSizingMode='AUTO';
+  set.fills=[paint('color/background/page')];stroke(set,'color/border/default');
+  set.description=purpose+'\n\nCode: components/'+id+'/'+id+'.tsx · Usage: Storybook Usage/'+name;
+  set.documentationLinks=[{uri:STORY+id+'/'+id+'.tsx'}];
+  set.x=0;set.y=NEXT_Y;NEXT_Y+=set.height+120;
+  sets.push({id:set.id,name,variants:comps.length});
+};
