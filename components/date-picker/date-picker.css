@@ -1,0 +1,189 @@
+/* DatePicker: 40px segmented date field with a calendar button, and a square calendar popover. */
+.ads-date-picker__group {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  min-height: var(--size-control-md);
+  padding-inline: var(--space-component-padding-field) var(--space-component-padding-xs);
+  border: var(--border-width-default) solid var(--color-border-input);
+  background-color: var(--color-background-surface);
+}
+
+.ads-date-picker__input {
+  display: flex;
+  flex: 1;
+  font-family: var(--type-body1-family);
+  font-size: var(--type-body1-size);
+  line-height: var(--type-body1-line-height);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-primary);
+}
+
+.ads-date-picker__segment {
+  padding-inline: calc(var(--border-width-default) * 2);
+  outline: none;
+}
+
+.ads-date-picker__segment[data-placeholder],
+.ads-date-picker__segment[data-type="literal"] {
+  color: var(--color-text-secondary);
+}
+
+.ads-date-picker__segment[data-focused] {
+  background-color: var(--color-container-primary);
+  color: var(--color-on-container-primary);
+}
+
+.ads-date-picker__button {
+  margin-inline-start: auto;
+}
+
+.ads-date-picker__group:is([data-hovered], :hover):not([data-disabled]) {
+  border-color: var(--color-border-input-hover);
+}
+
+.ads-date-picker__group:is([data-focus-within], :focus-within) {
+  border-color: var(--color-border-interactive);
+}
+
+.ads-date-picker__group:is([data-focus-visible], :has(.ads-date-picker__segment:focus-visible)) {
+  outline: var(--border-width-focus) solid var(--color-interactive-focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+.ads-date-picker[data-state~="filled"] .ads-date-picker__input {
+  color: var(--color-text-primary);
+}
+
+.ads-date-picker[data-state~="error"] .ads-date-picker__group {
+  border-color: var(--color-border-danger);
+}
+
+.ads-date-picker[data-state~="disabled"] .ads-date-picker__group {
+  border-color: var(--color-border-disabled);
+  background-color: var(--color-interactive-disabled);
+}
+
+.ads-date-picker[data-state~="disabled"] .ads-date-picker__input,
+.ads-date-picker[data-state~="disabled"] .ads-field__label {
+  color: color-mix(in srgb, var(--color-text-primary) calc(var(--opacity-disabled) * 100%), transparent);
+  cursor: not-allowed;
+}
+
+/* Calendar */
+.ads-date-picker__popover {
+  min-width: 0;
+  max-height: none;
+}
+
+.ads-date-picker__dialog {
+  padding: var(--space-component-padding-md);
+  outline: none;
+}
+
+.ads-calendar__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-component-gap-sm);
+  margin-block-end: var(--space-component-padding-sm);
+}
+
+.ads-calendar__heading {
+  margin: 0;
+  font-family: var(--type-h4-family);
+  font-size: var(--type-h4-size);
+  font-weight: var(--type-h4-weight);
+  line-height: var(--type-h4-line-height);
+  color: var(--color-text-heading);
+}
+
+[dir="rtl"] .ads-calendar__nav .ads-icon {
+  transform: scaleX(-1);
+}
+
+.ads-calendar__grid {
+  border-collapse: collapse;
+}
+
+.ads-calendar__grid th {
+  padding-block-end: var(--space-component-padding-xs);
+  font-family: var(--type-overline-family);
+  font-size: var(--type-overline-size);
+  font-weight: var(--type-overline-weight);
+  letter-spacing: var(--type-overline-letter-spacing);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.ads-calendar__cell {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--size-control-md);
+  height: var(--size-control-md);
+  font-family: var(--type-body2-family);
+  font-size: var(--type-body2-size);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  outline: none;
+  isolation: isolate;
+}
+
+.ads-calendar__cell::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-index-state-layer);
+  background-color: var(--color-state-layer);
+  opacity: 0;
+}
+
+.ads-calendar__cell:is([data-hovered], :hover):not([data-disabled])::before {
+  opacity: var(--opacity-state-hover);
+}
+
+.ads-calendar__cell:is([data-pressed], :active):not([data-disabled])::before {
+  opacity: var(--opacity-state-pressed);
+}
+
+/*
+ * Today: an inset outline square, so it reads without relying on colour alone.
+ * Declared before the focus rule so the focus ring wins on today's date.
+ */
+.ads-calendar__cell[data-today] {
+  outline: var(--border-width-default) solid var(--color-border-interactive);
+  outline-offset: calc(var(--border-width-default) * -1);
+}
+
+.ads-calendar__cell:is([data-focus-visible], :focus-visible) {
+  outline: var(--border-width-focus) solid var(--color-interactive-focus-ring);
+  outline-offset: calc(var(--border-width-focus) * -1);
+}
+
+.ads-calendar__cell[data-outside-month] {
+  display: none;
+}
+
+.ads-calendar__cell[data-selected] {
+  background-color: var(--color-interactive-default);
+  color: var(--color-text-inverse);
+  font-weight: var(--font-weight-label);
+}
+
+.ads-calendar__cell:is([data-disabled], [data-unavailable]) {
+  color: color-mix(in srgb, var(--color-text-primary) calc(var(--opacity-disabled) * 100%), transparent);
+  text-decoration: line-through;
+  cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ads-date-picker__group {
+    transition: border-color var(--motion-duration-standard) var(--motion-easing-standard);
+  }
+
+  .ads-calendar__cell::before {
+    transition: opacity var(--motion-duration-standard) var(--motion-easing-standard);
+  }
+}

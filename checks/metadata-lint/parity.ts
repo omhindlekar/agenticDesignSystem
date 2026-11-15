@@ -209,7 +209,9 @@ export function checkStories(meta: MetaLike, stories: StoryCoverage[]): ParityIs
 
 /** data-variant and data-state of the first (root) element in rendered markup. */
 export function parseRootAttributes(markup: string): RootAttributes {
-  const tag = /^\s*<[a-zA-Z][^>]*>/.exec(markup)?.[0] ?? '';
+  // React Aria's collection builder renders hidden <template> elements before the root.
+  const rootMarkup = markup.replace(/^(?:\s*<template\b[^>]*>[\s\S]*?<\/template>)+/, '');
+  const tag = /^\s*<[a-zA-Z][^>]*>/.exec(rootMarkup)?.[0] ?? '';
   const variant = /\sdata-variant="([^"]*)"/.exec(tag)?.[1];
   const state = /\sdata-state="([^"]*)"/.exec(tag)?.[1] ?? '';
   return { variant, states: state.split(/\s+/).filter(Boolean) };

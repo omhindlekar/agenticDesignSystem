@@ -73,6 +73,16 @@ rules:
       - card
       - modal
       - icon-button
+      - textarea
+      - search-field
+      - field
+      - radio-group
+      - switch
+      - segmented-control
+      - slider
+      - number-field
+      - combobox
+      - date-picker
     example: "border: var(--border-width-default) solid var(--color-border-default)"
     counterExample: "border-radius: 50%"
 
@@ -127,6 +137,16 @@ rules:
       - checkbox
       - card
       - modal
+      - textarea
+      - search-field
+      - field
+      - radio-group
+      - switch
+      - segmented-control
+      - slider
+      - number-field
+      - combobox
+      - date-picker
     example: ".ads-button { font-family: var(--font-family-display) }"
     counterExample: ".ads-modal__title { font-family: var(--font-family-body) }"
 
@@ -150,6 +170,16 @@ rules:
       - modal
       - icon
       - icon-button
+      - textarea
+      - search-field
+      - field
+      - radio-group
+      - switch
+      - segmented-control
+      - slider
+      - number-field
+      - combobox
+      - date-picker
     example: "Use color-text-primary on color-background-surface (passes 4.5:1)"
     counterExample: "Light grey text on white background"
 
@@ -169,6 +199,16 @@ rules:
       - select
       - checkbox
       - icon-button
+      - textarea
+      - search-field
+      - field
+      - radio-group
+      - switch
+      - segmented-control
+      - slider
+      - number-field
+      - combobox
+      - date-picker
     example: "outline: var(--border-width-focus) solid var(--color-interactive-focus-ring); outline-offset: var(--focus-ring-offset)"
     counterExample: "outline: none"
 
@@ -186,6 +226,11 @@ rules:
       - button
       - checkbox
       - icon-button
+      - radio-group
+      - switch
+      - segmented-control
+      - slider
+      - number-field
     example: "min-height: var(--size-control-md)"
     counterExample: "A 16px icon button with no padding around it"
 
@@ -202,6 +247,15 @@ rules:
       - input
       - select
       - checkbox
+      - textarea
+      - search-field
+      - field
+      - radio-group
+      - switch
+      - slider
+      - number-field
+      - combobox
+      - date-picker
     example: "<label htmlFor='email'>Email</label><input id='email' />"
     counterExample: "<input placeholder='Email' />"
 
@@ -238,6 +292,16 @@ rules:
       - card
       - modal
       - icon-button
+      - textarea
+      - search-field
+      - field
+      - radio-group
+      - switch
+      - segmented-control
+      - slider
+      - number-field
+      - combobox
+      - date-picker
     example: "opacity: var(--opacity-state-hover)"
     counterExample: "opacity: 0.08"
 
@@ -259,6 +323,16 @@ rules:
       - card
       - modal
       - icon-button
+      - textarea
+      - search-field
+      - field
+      - radio-group
+      - switch
+      - segmented-control
+      - slider
+      - number-field
+      - combobox
+      - date-picker
     example: "@media (prefers-reduced-motion: no-preference) { .x { transition: color var(--motion-duration-standard) var(--motion-easing-standard); } }"
     counterExample: "transition: all 300ms ease"
 
@@ -281,6 +355,11 @@ rules:
       - select
       - checkbox
       - modal
+      - search-field
+      - segmented-control
+      - number-field
+      - combobox
+      - date-picker
     example: "<IconButton icon=\"close\" label=\"Close dialog\" />"
     counterExample: "<button><svg viewBox=\"0 0 24 24\">…</svg></button>"
 
@@ -366,3 +445,22 @@ rules:
       - modal
     example: "A multi-step form in one modal with step indicators"
     counterExample: "A confirmation modal opened from inside another modal"
+
+  - id: DS-C-006
+    scope: component
+    severity: error
+    statement: >
+      Choose from lists and pick dates with the design system's Select,
+      Combobox and DatePicker. Native <select> and <input type="date">, and
+      hand-rolled role="combobox" widgets, are not used: they do not follow the
+      design system's look, and hand-rolled ones rarely meet the WAI-ARIA
+      keyboard patterns. Use Select for short lists, Combobox for long or
+      searchable ones.
+    check: auto
+    checkName: token-lint
+    appliesTo:
+      - select
+      - combobox
+      - date-picker
+    example: "<Combobox label=\"Country\" options={countries} />"
+    counterExample: "<select name=\"country\">…</select>"

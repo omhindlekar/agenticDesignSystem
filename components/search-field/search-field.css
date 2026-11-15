@@ -1,0 +1,83 @@
+/* SearchField: 40px field with a search icon and a Clear icon button. */
+.ads-search-field__control {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.ads-search-field__icon {
+  position: absolute;
+  inset-inline-start: var(--space-component-padding-field);
+  display: inline-flex;
+  color: var(--color-text-secondary);
+  pointer-events: none;
+}
+
+.ads-search-field__input {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: var(--size-control-md);
+  margin: 0;
+  padding-block: 0;
+  padding-inline: calc(var(--space-component-padding-field) + var(--size-icon-md) + var(--space-component-padding-sm))
+    calc(var(--size-control-sm) + var(--space-component-padding-sm));
+  border: var(--border-width-default) solid var(--color-border-input);
+  background-color: var(--color-background-surface);
+  color: var(--color-text-primary);
+  font-family: var(--type-body1-family);
+  font-size: var(--type-body1-size);
+  line-height: var(--type-body1-line-height);
+  letter-spacing: var(--type-body1-letter-spacing);
+  appearance: none;
+}
+
+/* The browser's own cancel button is replaced by the Clear icon button. */
+.ads-search-field__input::-webkit-search-cancel-button {
+  appearance: none;
+}
+
+.ads-search-field__input::placeholder {
+  color: var(--color-text-secondary);
+  opacity: 1;
+}
+
+.ads-search-field__input:is([data-hovered], :hover):not(:disabled) {
+  border-color: var(--color-border-input-hover);
+}
+
+.ads-search-field__input:is([data-focus-visible], :focus-visible) {
+  outline: var(--border-width-focus) solid var(--color-interactive-focus-ring);
+  outline-offset: var(--focus-ring-offset);
+  border-color: var(--color-border-interactive);
+}
+
+.ads-search-field__clear {
+  position: absolute;
+  inset-inline-end: var(--space-component-padding-xs);
+}
+
+.ads-search-field[data-state~="filled"] .ads-search-field__input {
+  color: var(--color-text-primary);
+}
+
+.ads-search-field__input:disabled {
+  outline: none;
+}
+
+.ads-search-field[data-state~="disabled"] .ads-search-field__input {
+  background-color: var(--color-interactive-disabled);
+  border-color: var(--color-border-disabled);
+  color: color-mix(in srgb, var(--color-text-primary) calc(var(--opacity-disabled) * 100%), transparent);
+  cursor: not-allowed;
+}
+
+.ads-search-field[data-state~="disabled"] .ads-search-field__icon,
+.ads-search-field[data-state~="disabled"] .ads-field__label {
+  color: color-mix(in srgb, var(--color-text-primary) calc(var(--opacity-disabled) * 100%), transparent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ads-search-field__input {
+    transition: border-color var(--motion-duration-standard) var(--motion-easing-standard);
+  }
+}

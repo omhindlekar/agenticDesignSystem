@@ -1,0 +1,83 @@
+/* Combobox: a 40px text field with a chevron button that opens the shared list box. */
+.ads-combobox__control {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.ads-combobox__input {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: var(--size-control-md);
+  margin: 0;
+  padding-block: 0;
+  padding-inline: var(--space-component-padding-field) calc(var(--size-control-sm) + var(--space-component-padding-sm));
+  border: var(--border-width-default) solid var(--color-border-input);
+  background-color: var(--color-background-surface);
+  color: var(--color-text-primary);
+  font-family: var(--type-body1-family);
+  font-size: var(--type-body1-size);
+  line-height: var(--type-body1-line-height);
+  letter-spacing: var(--type-body1-letter-spacing);
+}
+
+.ads-combobox__input::placeholder {
+  color: var(--color-text-secondary);
+  opacity: 1;
+}
+
+.ads-combobox__trigger {
+  position: absolute;
+  inset-inline-end: var(--space-component-padding-xs);
+}
+
+.ads-combobox__input:is([data-hovered], :hover):not(:disabled) {
+  border-color: var(--color-border-input-hover);
+}
+
+.ads-combobox__input:is([data-focus-visible], :focus-visible) {
+  outline: var(--border-width-focus) solid var(--color-interactive-focus-ring);
+  outline-offset: var(--focus-ring-offset);
+  border-color: var(--color-border-interactive);
+}
+
+.ads-combobox[data-open] .ads-combobox__input {
+  border-color: var(--color-border-interactive);
+}
+
+.ads-combobox[data-open] .ads-combobox__trigger .ads-icon {
+  transform: rotate(180deg);
+}
+
+.ads-combobox[data-state~="filled"] .ads-combobox__input {
+  color: var(--color-text-primary);
+}
+
+.ads-combobox[data-state~="error"] .ads-combobox__input {
+  border-color: var(--color-border-danger);
+}
+
+.ads-combobox__input:disabled {
+  outline: none;
+}
+
+.ads-combobox[data-state~="disabled"] .ads-combobox__input {
+  background-color: var(--color-interactive-disabled);
+  border-color: var(--color-border-disabled);
+  color: color-mix(in srgb, var(--color-text-primary) calc(var(--opacity-disabled) * 100%), transparent);
+  cursor: not-allowed;
+}
+
+.ads-combobox[data-state~="disabled"] .ads-field__label {
+  color: color-mix(in srgb, var(--color-text-primary) calc(var(--opacity-disabled) * 100%), transparent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ads-combobox__input {
+    transition: border-color var(--motion-duration-standard) var(--motion-easing-standard);
+  }
+
+  .ads-combobox__trigger .ads-icon {
+    transition: transform var(--motion-duration-standard) var(--motion-easing-standard);
+  }
+}

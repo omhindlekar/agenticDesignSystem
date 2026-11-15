@@ -1,0 +1,124 @@
+/*
+ * Shared popover and list box: the Select and Combobox option lists, the date picker
+ * calendar, and later Menu. Square, elevation 2, enters and leaves with the motion set.
+ * React Aria sets data-entering / data-exiting / data-placement and --trigger-width.
+ */
+.ads-popover {
+  box-sizing: border-box;
+  min-width: var(--trigger-width);
+  overflow: auto;
+  border: var(--border-width-default) solid var(--color-border-default);
+  background-color: var(--color-background-surface);
+  box-shadow: var(--shadow-component-menu);
+  color: var(--color-text-primary);
+  outline: none;
+}
+
+.ads-listbox {
+  display: flex;
+  flex-direction: column;
+  /* About eight options, then the list scrolls. Set here, not on the popover, because
+     React Aria sets an inline max-height on the popover from the available space. */
+  max-height: calc(var(--size-control-md) * 8);
+  overflow: auto;
+  padding-block: var(--space-component-padding-xs);
+  outline: none;
+}
+
+.ads-listbox__item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-component-gap-sm);
+  min-height: var(--size-control-md);
+  padding-inline: var(--space-component-padding-field);
+  font-family: var(--type-body1-family);
+  font-size: var(--type-body1-size);
+  line-height: var(--type-body1-line-height);
+  letter-spacing: var(--type-body1-letter-spacing);
+  cursor: pointer;
+  outline: none;
+  isolation: isolate;
+}
+
+/* State layer behind the item text. */
+.ads-listbox__item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-index-state-layer);
+  background-color: var(--color-state-layer);
+  opacity: 0;
+}
+
+.ads-listbox__item:is([data-hovered], :hover):not([data-disabled])::before {
+  opacity: var(--opacity-state-hover);
+}
+
+.ads-listbox__item[data-focused]::before {
+  opacity: var(--opacity-state-focus);
+}
+
+.ads-listbox__item:is([data-pressed], :active):not([data-disabled])::before {
+  opacity: var(--opacity-state-pressed);
+}
+
+/* Keyboard focus also gets the ring, inset so it is not clipped by the popover. */
+.ads-listbox__item:is([data-focus-visible], :focus-visible) {
+  outline: var(--border-width-focus) solid var(--color-interactive-focus-ring);
+  outline-offset: calc(var(--border-width-focus) * -1);
+}
+
+.ads-listbox__item[data-selected] {
+  color: var(--color-text-link);
+  font-weight: var(--font-weight-label);
+}
+
+.ads-listbox__check {
+  display: inline-flex;
+  margin-inline-start: auto;
+  visibility: hidden;
+}
+
+.ads-listbox__item[data-selected] .ads-listbox__check {
+  visibility: visible;
+}
+
+.ads-listbox__item[data-disabled] {
+  color: color-mix(in srgb, var(--color-text-primary) calc(var(--opacity-disabled) * 100%), transparent);
+  cursor: not-allowed;
+}
+
+.ads-listbox__empty {
+  padding: var(--space-component-padding-sm) var(--space-component-padding-field);
+  font-family: var(--type-body2-family);
+  font-size: var(--type-body2-size);
+  color: var(--color-text-secondary);
+}
+
+@keyframes ads-popover-in {
+  from {
+    opacity: 0;
+    transform: translateY(calc(var(--space-component-padding-xs) * -1));
+  }
+}
+
+@keyframes ads-popover-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ads-popover[data-entering] {
+    animation: ads-popover-in var(--motion-duration-overlay) var(--motion-easing-enter);
+  }
+
+  .ads-popover[data-exiting] {
+    animation: ads-popover-out var(--motion-duration-overlay-exit) var(--motion-easing-exit);
+  }
+
+  .ads-listbox__item::before {
+    transition: opacity var(--motion-duration-standard) var(--motion-easing-standard);
+  }
+}

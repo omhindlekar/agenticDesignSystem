@@ -1,29 +1,15 @@
-/* Select: same anatomy as Input, with an SVG chevron over the native control. */
-.ads-select__control {
+/* Select: a field-styled button that opens the shared list box popover. */
+.ads-select__field {
   position: relative;
   display: flex;
-  flex-direction: column;
-}
-
-.ads-select__chevron {
-  position: absolute;
-  inset-block-start: 50%;
-  inset-inline-end: var(--space-component-padding-field);
-  display: inline-flex;
-  color: var(--color-text-secondary);
-  transform: translateY(-50%);
-  pointer-events: none;
-}
-
-.ads-select__field {
-  appearance: none;
+  align-items: center;
+  gap: var(--space-component-gap-sm);
   box-sizing: border-box;
   width: 100%;
   min-height: var(--size-control-md);
   margin: 0;
   padding-block: 0;
-  padding-inline: var(--space-component-padding-field)
-    calc(var(--space-component-padding-field) + var(--size-icon-md) + var(--space-component-padding-sm));
+  padding-inline: var(--space-component-padding-field);
   border: var(--border-width-default) solid var(--color-border-input);
   background-color: var(--color-background-surface);
   color: var(--color-text-primary);
@@ -32,23 +18,46 @@
   font-weight: var(--type-body1-weight);
   line-height: var(--type-body1-line-height);
   letter-spacing: var(--type-body1-letter-spacing);
+  text-align: start;
   cursor: pointer;
 }
 
-.ads-select__field:hover:not(:disabled) {
+.ads-select__value {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Placeholder colour whenever nothing is selected, whatever else the state is. */
+.ads-select__value[data-placeholder] {
+  color: var(--color-text-secondary);
+}
+
+.ads-select__chevron {
+  display: inline-flex;
+  color: var(--color-text-secondary);
+}
+
+.ads-select__field:is([data-hovered], :hover):not([data-disabled]) {
   border-color: var(--color-border-input-hover);
 }
 
-/* Focus: the 2px blue 600 ring with a 2px white gap, and a blue border. */
-.ads-select__field:focus-visible {
+/* Focus: the 2px blue ring with a 2px gap, and a blue border. Open also gets the blue border. */
+.ads-select__field:is([data-focus-visible], :focus-visible) {
   outline: var(--border-width-focus) solid var(--color-interactive-focus-ring);
   outline-offset: var(--focus-ring-offset);
   border-color: var(--color-border-interactive);
 }
 
-/* Placeholder colour whenever nothing is selected, whatever else the state is. */
-.ads-select:not([data-state~="selected"]) .ads-select__field {
-  color: var(--color-text-secondary);
+.ads-select__field[data-pressed],
+.ads-select[data-open] .ads-select__field {
+  border-color: var(--color-border-interactive);
+}
+
+.ads-select[data-open] .ads-select__chevron {
+  transform: rotate(180deg);
 }
 
 .ads-select[data-state~="selected"] .ads-select__field {
@@ -64,7 +73,6 @@
   border-color: var(--color-border-success);
 }
 
-/* Natively disabled: not focusable, so no ring and no hover response. */
 .ads-select__field:disabled {
   outline: none;
 }
@@ -77,6 +85,7 @@
 }
 
 .ads-select[data-state~="disabled"] .ads-select__chevron,
+.ads-select[data-state~="disabled"] .ads-select__value,
 .ads-select[data-state~="disabled"] .ads-field__label {
   color: color-mix(in srgb, var(--color-text-primary) calc(var(--opacity-disabled) * 100%), transparent);
 }
@@ -84,5 +93,9 @@
 @media (prefers-reduced-motion: no-preference) {
   .ads-select__field {
     transition: border-color var(--motion-duration-standard) var(--motion-easing-standard);
+  }
+
+  .ads-select__chevron {
+    transition: transform var(--motion-duration-standard) var(--motion-easing-standard);
   }
 }

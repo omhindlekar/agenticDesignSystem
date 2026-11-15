@@ -1,0 +1,166 @@
+{
+  "id": "radio-group",
+  "purpose": "Lets the user choose exactly one option from a short, visible list. Each option is a square radio with a square mark.",
+  "variants": [
+    "default",
+    "error"
+  ],
+  "states": [
+    "default",
+    "hover",
+    "focus",
+    "disabled",
+    "error"
+  ],
+  "props": [
+    {
+      "name": "label",
+      "type": "string",
+      "required": true,
+      "description": "Group label"
+    },
+    {
+      "name": "options",
+      "type": "Array<{ value: string; label: string; description?: string; disabled?: boolean }>",
+      "required": true,
+      "description": "Options, each with an optional description line"
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "required": false,
+      "description": "Controlled selected value"
+    },
+    {
+      "name": "defaultValue",
+      "type": "string",
+      "required": false,
+      "description": "Initial selection when uncontrolled"
+    },
+    {
+      "name": "orientation",
+      "type": "'vertical' | 'horizontal'",
+      "required": false,
+      "description": "Stack or row. Defaults to vertical"
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "required": false,
+      "description": "Form field name"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "required": false,
+      "description": "Disables the whole group"
+    },
+    {
+      "name": "required",
+      "type": "boolean",
+      "required": false,
+      "description": "Marks the group required"
+    },
+    {
+      "name": "helperText",
+      "type": "string",
+      "required": false,
+      "description": "Guidance below the group"
+    },
+    {
+      "name": "errorMessage",
+      "type": "string",
+      "required": false,
+      "description": "Error below the group; sets the error state"
+    },
+    {
+      "name": "onChange",
+      "type": "(value: string) => void",
+      "required": false,
+      "description": "Called with the selected value"
+    }
+  ],
+  "whenToUse": [
+    "For two to six mutually exclusive options that should all be visible",
+    "When the options need a short description each"
+  ],
+  "whenNotToUse": [
+    "For many options — use Select or Combobox",
+    "For on/off settings — use Switch or Checkbox",
+    "For a compact view switch — use SegmentedControl"
+  ],
+  "related": [
+    "checkbox",
+    "select",
+    "segmented-control"
+  ],
+  "antiPatterns": [
+    "A single radio on its own",
+    "Leaving no option selected when one is required and has a sensible default"
+  ],
+  "spec": {
+    "anatomy": [
+      "Group label, options each with a 20px square radio in a 40px hit area, label and optional description, helper or error text"
+    ],
+    "sizes": [
+      "Radio `size-control-indicator` (20px) with a `border-width-control` border; hit area `size-hit-area` (40px)"
+    ],
+    "typography": [
+      "Option label `type-label-size`; description `type-caption-size`"
+    ],
+    "states": [
+      "Selected: `color-interactive-default` frame and square mark; hover and press `color-state-layer`; focus ring `color-interactive-focus-ring`; error `color-border-danger`; disabled at `opacity-disabled`"
+    ],
+    "motion": [
+      "Mark scales in with `motion-easing-enter` over `motion-duration-standard`; none under reduced motion"
+    ]
+  },
+  "tokensUsed": [
+    "border-width-control",
+    "border-width-default",
+    "border-width-focus",
+    "color-background-surface",
+    "color-border-danger",
+    "color-border-disabled",
+    "color-border-input",
+    "color-border-input-hover",
+    "color-interactive-default",
+    "color-interactive-disabled",
+    "color-interactive-focus-ring",
+    "color-interactive-hover",
+    "color-state-layer",
+    "color-text-danger",
+    "color-text-primary",
+    "color-text-secondary",
+    "color-text-success",
+    "focus-ring-offset",
+    "font-family-body",
+    "motion-duration-standard",
+    "motion-easing-enter",
+    "motion-easing-standard",
+    "opacity-disabled",
+    "opacity-state-focus",
+    "opacity-state-hover",
+    "opacity-state-pressed",
+    "size-control-indicator",
+    "size-hit-area",
+    "space-component-gap-md",
+    "space-component-padding-xs",
+    "type-caption-family",
+    "type-caption-letter-spacing",
+    "type-caption-line-height",
+    "type-caption-size",
+    "type-caption-weight",
+    "type-label-family",
+    "type-label-letter-spacing",
+    "type-label-line-height",
+    "type-label-size",
+    "type-label-weight",
+    "z-index-state-layer"
+  ],
+  "a11yNotes": [
+    "role radiogroup named by its label",
+    "Arrow keys move the selection and skip disabled options; Tab enters and leaves the group",
+    "Error text is linked by aria-describedby"
+  ]
+}

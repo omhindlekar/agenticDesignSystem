@@ -347,9 +347,11 @@
       },
       "baseline": true,
       "verified": true,
-      "status": "missing",
+      "status": "done",
       "phase": "1.10",
-      "evidence": [],
+      "evidence": [
+        "components/segmented-control/segmented-control.meta.json"
+      ],
       "theirNames": {
         "material3": "Segmented button",
         "carbon": "Content switcher",
@@ -388,10 +390,11 @@
       },
       "baseline": true,
       "verified": true,
-      "status": "missing",
+      "status": "done",
       "phase": "1.10",
-      "evidence": [],
-      "note": "M3 and Carbon cover it inside text fields"
+      "evidence": [
+        "components/textarea/textarea.meta.json"
+      ]
     },
     {
       "id": "select",
@@ -406,12 +409,12 @@
       },
       "baseline": true,
       "verified": true,
-      "status": "partial",
+      "status": "done",
       "phase": "1.10",
       "evidence": [
-        "components/select/select.meta.json"
-      ],
-      "note": "Ours uses the browser's native option list"
+        "components/select/select.meta.json",
+        "components/shared/popover.css"
+      ]
     },
     {
       "id": "combobox",
@@ -426,9 +429,11 @@
       },
       "baseline": true,
       "verified": true,
-      "status": "missing",
+      "status": "done",
       "phase": "1.10",
-      "evidence": [],
+      "evidence": [
+        "components/combobox/combobox.meta.json"
+      ],
       "theirNames": {
         "carbon": "Dropdown / Multiselect",
         "atlassian": "Select",
@@ -467,9 +472,11 @@
       },
       "baseline": true,
       "verified": true,
-      "status": "missing",
+      "status": "done",
       "phase": "1.10",
-      "evidence": [],
+      "evidence": [
+        "components/radio-group/radio-group.meta.json"
+      ],
       "theirNames": {
         "polaris": "Choice list",
         "fluent2": "Radio group"
@@ -488,9 +495,11 @@
       },
       "baseline": true,
       "verified": true,
-      "status": "missing",
+      "status": "done",
       "phase": "1.10",
-      "evidence": [],
+      "evidence": [
+        "components/switch/switch.meta.json"
+      ],
       "theirNames": {
         "carbon": "Toggle",
         "atlassian": "Toggle"
@@ -509,9 +518,11 @@
       },
       "baseline": true,
       "verified": true,
-      "status": "missing",
+      "status": "done",
       "phase": "1.10",
-      "evidence": [],
+      "evidence": [
+        "components/slider/slider.meta.json"
+      ],
       "theirNames": {
         "atlassian": "Range"
       }
@@ -529,12 +540,11 @@
       },
       "baseline": true,
       "verified": true,
-      "status": "partial",
+      "status": "done",
       "phase": "1.10",
       "evidence": [
-        "components/input/input.meta.json"
-      ],
-      "note": "Input with startIcon search; no dedicated search field"
+        "components/search-field/search-field.meta.json"
+      ]
     },
     {
       "id": "number-input",
@@ -549,9 +559,11 @@
       },
       "baseline": true,
       "verified": true,
-      "status": "missing",
+      "status": "done",
       "phase": "1.10",
-      "evidence": []
+      "evidence": [
+        "components/number-field/number-field.meta.json"
+      ]
     },
     {
       "id": "date-picker",
@@ -566,9 +578,11 @@
       },
       "baseline": true,
       "verified": true,
-      "status": "missing",
+      "status": "done",
       "phase": "1.10",
-      "evidence": []
+      "evidence": [
+        "components/date-picker/date-picker.meta.json"
+      ]
     },
     {
       "id": "form-field",
@@ -583,12 +597,11 @@
       },
       "baseline": true,
       "verified": true,
-      "status": "partial",
+      "status": "done",
       "phase": "1.10",
       "evidence": [
-        "components/shared/shared.css"
-      ],
-      "note": "Field anatomy is built into each control; no standalone Field"
+        "components/field/field.meta.json"
+      ]
     },
     {
       "id": "progress-bar",
@@ -722,9 +735,12 @@
       },
       "baseline": true,
       "verified": false,
-      "status": "missing",
+      "status": "partial",
       "phase": "1.11",
-      "evidence": []
+      "evidence": [
+        "components/shared/popover.css"
+      ],
+      "note": "Popovers (Select, Combobox, DatePicker) animate out; Modal does not yet (1.11)"
     },
     {
       "id": "tooltip",

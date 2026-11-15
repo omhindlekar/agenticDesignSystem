@@ -68,7 +68,7 @@ describe('FR-4 rules.yaml: structure and schema', () => {
   });
 
   it('FR-4: rules cover all POC components in their appliesTo fields', () => {
-    const poc = ['button', 'input', 'select', 'checkbox', 'card', 'modal', 'icon', 'icon-button'];
+    const poc = ['button', 'input', 'select', 'checkbox', 'card', 'modal', 'icon', 'icon-button', 'textarea', 'search-field', 'field', 'radio-group', 'switch', 'segmented-control', 'slider', 'number-field', 'combobox', 'date-picker'];
     const covered = new Set(loadRules().flatMap((r) => r.appliesTo));
     for (const c of poc) {
       expect(covered.has(c), `No rule applies to "${c}"`).toBe(true);
@@ -137,5 +137,14 @@ describe('FR-4 rules.yaml: phase 1.7 foundations', () => {
   });
   it('FR-4: DS-A-001 states the disabled exemption', () => {
     expect(rule('DS-A-001')?.statement).toMatch(/disabled/i);
+  });
+});
+
+describe('FR-4 rules.yaml: pickers', () => {
+  it('FR-4: DS-C-006 points native and hand-rolled pickers to Select, Combobox and DatePicker', () => {
+    const r = loadRules().find((x) => x.id === 'DS-C-006');
+    expect(r?.checkName).toBe('token-lint');
+    for (const name of ['Select', 'Combobox', 'DatePicker']) expect(r?.statement).toContain(name);
+    expect(r?.appliesTo).toEqual(expect.arrayContaining(['select', 'combobox', 'date-picker']));
   });
 });
