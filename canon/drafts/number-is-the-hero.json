@@ -1,0 +1,41 @@
+{
+  "id": "number-is-the-hero",
+  "name": "The number is the hero",
+  "rule": "On money and metric screens, the key figure is the largest, highest-contrast element, with labels and trends quieter.",
+  "leaders": [
+    {
+      "leader": "carbon",
+      "url": "https://carbondesignsystem.com/data-visualization/dashboards/",
+      "retrievedAt": "2026-11-16",
+      "note": "Ranks data by importance. The most important figures get the highest contrast, the largest area and the top position, with few metrics and generous white space."
+    },
+    {
+      "leader": "stripe",
+      "url": "https://docs.stripe.com/stripe-apps/patterns/chart-layout",
+      "retrievedAt": "2026-11-16",
+      "note": "Metric blocks pair a small secondary-colour caption with a bold headline value. A sparkline beside it adds direction without competing with the number."
+    }
+  ],
+  "mapsTo": {
+    "tokens": [
+      "color-text-heading",
+      "color-text-secondary",
+      "space-layout-section"
+    ],
+    "components": [
+      "dashboard-page",
+      "card",
+      "heading",
+      "text",
+      "section"
+    ],
+    "rules": []
+  },
+  "check": "vision:hierarchy",
+  "appliesTo": [
+    "dashboard-page",
+    "all"
+  ],
+  "version": "1.0.0",
+  "refreshedAt": "2026-11-16"
+}

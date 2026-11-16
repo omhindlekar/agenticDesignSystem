@@ -1,0 +1,18 @@
+{
+  "ranAt": "2026-11-16T15:55:10.581Z",
+  "model": "claude-sonnet-5-5",
+  "calls": 1,
+  "apiEquivalentUsd": 0.1230226,
+  "accepted": [],
+  "rejected": [
+    {
+      "id": "visible-labels",
+      "issues": [
+        "mapsTo: Unrecognized key(s) in object: '__note'"
+      ]
+    }
+  ],
+  "missing": [],
+  "unpreferredSources": [],
+  "flags": []
+}

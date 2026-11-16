@@ -1,0 +1,25 @@
+{
+  "note": "Principles the canon researches. Om edits this list; canon:refresh turns each into a draft in canon/drafts/.",
+  "seeds": [
+    { "id": "one-primary-action", "name": "One primary action per view", "intent": "Each view has one visually dominant action; the rest are quieter." },
+    { "id": "outcome-first", "name": "Outcome first", "intent": "Lead with the result or status, then the detail that supports it." },
+    { "id": "number-is-the-hero", "name": "The number is the hero", "intent": "On money and metric screens, the key figure is the largest element." },
+    { "id": "specific-time", "name": "Specific time over vague time", "intent": "Say exactly when something happens rather than soon or in a few days." },
+    { "id": "calm-confirmation", "name": "Calm confirmation", "intent": "Confirm serious actions calmly and factually, without celebration." },
+    { "id": "progressive-disclosure", "name": "Progressive disclosure", "intent": "Show what most people need first; reveal the rest on demand." },
+    { "id": "visible-labels", "name": "Labels stay visible", "intent": "Field labels sit outside the field and never disappear when typing." },
+    { "id": "errors-say-how", "name": "Errors say what and how", "intent": "Errors explain what went wrong and how to fix it, without blame." },
+    { "id": "undo-over-confirm", "name": "Undo over confirm", "intent": "Prefer undo for reversible actions; confirm only what cannot be undone." },
+    { "id": "destructive-last", "name": "Destructive actions last", "intent": "Destructive actions sit apart and last, and ask for confirmation." },
+    { "id": "readable-measure", "name": "Readable measure", "intent": "Keep text and form columns to a comfortable reading width." },
+    { "id": "one-spacing-scale", "name": "One spacing scale", "intent": "All spacing comes from one scale, so rhythm stays consistent." },
+    { "id": "density-follows-task", "name": "Density follows the task", "intent": "Dense layouts for scanning data; generous space for decisions." },
+    { "id": "copyable-identifiers", "name": "Copyable identifiers", "intent": "References and IDs people must quote can be copied in one action." },
+    { "id": "factual-trust-cues", "name": "Factual trust cues", "intent": "Build trust with concrete facts and controls, not decorative badges." },
+    { "id": "empty-states-teach", "name": "Empty states teach", "intent": "An empty state explains what will appear and offers the next step." },
+    { "id": "keyboard-matches-visual", "name": "Keyboard path matches the visual path", "intent": "Focus order follows the visual reading order." },
+    { "id": "hierarchy-not-colour", "name": "Hierarchy without colour alone", "intent": "Convey importance with size, weight and position, not colour alone." },
+    { "id": "consistent-edges", "name": "Consistent alignment edges", "intent": "Elements share a few alignment edges, so the page reads as one grid." },
+    { "id": "protective-defaults", "name": "Defaults that protect", "intent": "Risky or costly options are off by default and need a deliberate choice." }
+  ]
+}

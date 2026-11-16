@@ -1,0 +1,38 @@
+{
+  "id": "protective-defaults",
+  "name": "Defaults that protect",
+  "rule": "Keep risky or costly options off by default, so turning them on takes a deliberate choice.",
+  "leaders": [
+    {
+      "leader": "material",
+      "url": "https://developer.android.com/training/permissions/requesting",
+      "retrievedAt": "2026-11-16",
+      "note": "Apps start sandboxed. Sensitive access is requested in context, needs an explicit user choice, and a denial is respected. Unused permissions reset to denied over time."
+    },
+    {
+      "leader": "stripe",
+      "url": "https://docs.stripe.com/keys-best-practices",
+      "retrievedAt": "2026-11-16",
+      "note": "Advises least privilege. Restricted keys grant only the access a task needs. Secret keys are shown once. IP limits are opt-in. Sandbox keys are the safer default for testing."
+    }
+  ],
+  "mapsTo": {
+    "tokens": [],
+    "components": [
+      "switch",
+      "checkbox",
+      "modal",
+      "settings-page",
+      "form-page"
+    ],
+    "rules": []
+  },
+  "check": "vision:trust-and-polish",
+  "appliesTo": [
+    "settings-page",
+    "form-page",
+    "all"
+  ],
+  "version": "1.0.0",
+  "refreshedAt": "2026-11-16"
+}

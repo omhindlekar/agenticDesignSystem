@@ -1,0 +1,38 @@
+{
+  "id": "specific-time",
+  "name": "Specific time over vague time",
+  "rule": "Give the exact date or time, with its time zone where it matters, rather than soon or in a few days.",
+  "leaders": [
+    {
+      "leader": "carbon",
+      "url": "https://carbondesignsystem.com/components/date-picker/usage/",
+      "retrievedAt": "2026-11-16",
+      "note": "Specific times should carry a time zone, and AM/PM is written uniformly. Date formats are shown and localised. Vague relative terms need a preset select instead of a date picker."
+    },
+    {
+      "leader": "stripe",
+      "url": "https://docs.stripe.com/billing/revenue-recovery/customer-emails",
+      "retrievedAt": "2026-11-16",
+      "note": "Renewal emails show a real date set in the customer's time zone, falling back to the account zone, then UTC. Reminders are tied to stated lead times, such as 7 days before a trial ends."
+    }
+  ],
+  "mapsTo": {
+    "tokens": [
+      "color-text-primary",
+      "color-text-secondary"
+    ],
+    "components": [
+      "text",
+      "date-picker",
+      "table",
+      "list"
+    ],
+    "rules": []
+  },
+  "check": "vision:copy-and-tone",
+  "appliesTo": [
+    "all"
+  ],
+  "version": "1.0.0",
+  "refreshedAt": "2026-11-16"
+}

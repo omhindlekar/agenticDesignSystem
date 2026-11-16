@@ -1,0 +1,45 @@
+{
+  "id": "factual-trust-cues",
+  "name": "Factual trust cues",
+  "rule": "Earn trust with specific, verifiable facts and real controls, not decorative badges or vague reassurance.",
+  "leaders": [
+    {
+      "leader": "wise",
+      "url": "https://wise.com/gb/pricing/send-money",
+      "retrievedAt": "2026-11-16",
+      "note": "States the actual fee basis, the rate source and a discount threshold. It names what drives cost and links a calculator for exact figures."
+    },
+    {
+      "leader": "vercel",
+      "url": "https://vercel.com/docs/security/compliance",
+      "retrievedAt": "2026-11-16",
+      "note": "Lists named attestations and certifications with scope, a certificate link and a trust center, plus concrete encryption, backup and failover details."
+    },
+    {
+      "leader": "stripe",
+      "url": "https://docs.stripe.com/keys",
+      "retrievedAt": "2026-11-16",
+      "note": "Backs security with controls users can act on: scoped keys, access policies, rotation with a grace period, and request logs per key."
+    }
+  ],
+  "mapsTo": {
+    "tokens": [
+      "color-text-secondary",
+      "color-text-link"
+    ],
+    "components": [
+      "badge",
+      "banner",
+      "link",
+      "text",
+      "section"
+    ],
+    "rules": []
+  },
+  "check": "vision:trust-and-polish",
+  "appliesTo": [
+    "all"
+  ],
+  "version": "1.0.0",
+  "refreshedAt": "2026-11-16"
+}

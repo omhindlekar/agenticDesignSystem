@@ -1,0 +1,39 @@
+{
+  "id": "copyable-identifiers",
+  "name": "Copyable identifiers",
+  "rule": "Make any ID, key or reference people must quote copyable in a single click or tap, with visible confirmation.",
+  "leaders": [
+    {
+      "leader": "carbon",
+      "url": "https://carbondesignsystem.com/components/code-snippet/usage/",
+      "retrievedAt": "2026-11-16",
+      "note": "Snippets copy in one action: click the snippet inline, or the copy icon otherwise. A tooltip confirms, and keyboard users can trigger it too."
+    },
+    {
+      "leader": "stripe",
+      "url": "https://docs.stripe.com/keys",
+      "retrievedAt": "2026-11-16",
+      "note": "Dashboard key values copy by clicking them. Users are told to copy a new secret key right away because it cannot be shown again."
+    }
+  ],
+  "mapsTo": {
+    "tokens": [
+      "size-icon-sm",
+      "size-hit-area"
+    ],
+    "components": [
+      "icon-button",
+      "button",
+      "tooltip",
+      "toast-region",
+      "text"
+    ],
+    "rules": []
+  },
+  "check": "manual",
+  "appliesTo": [
+    "all"
+  ],
+  "version": "1.0.0",
+  "refreshedAt": "2026-11-16"
+}

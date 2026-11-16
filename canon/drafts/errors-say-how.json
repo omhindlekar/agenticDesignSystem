@@ -1,0 +1,45 @@
+{
+  "id": "errors-say-how",
+  "name": "Errors say what and how",
+  "rule": "Say what went wrong, then how to fix it, in plain and neutral words that don't blame the person.",
+  "leaders": [
+    {
+      "leader": "carbon",
+      "url": "https://carbondesignsystem.com/patterns/forms-pattern/",
+      "retrievedAt": "2026-11-16",
+      "note": "Errors appear inline next to the field. They state the problem, then the fix, with specifics such as the exact rule, and clear once resolved."
+    },
+    {
+      "leader": "vercel",
+      "url": "https://vercel.com/geist/error",
+      "retrievedAt": "2026-11-16",
+      "note": "Messages lead with what happened, then a concrete recovery step such as retry. They stay sincere, never joke, and name the failed resource."
+    },
+    {
+      "leader": "stripe",
+      "url": "https://docs.stripe.com/stripe-apps/patterns/empty-state",
+      "retrievedAt": "2026-11-16",
+      "note": "Failed loads get their own error state that explains the failure and offers a retry. It is kept separate from the empty state."
+    }
+  ],
+  "mapsTo": {
+    "tokens": [
+      "color-text-danger",
+      "space-component-gap-sm"
+    ],
+    "components": [
+      "field",
+      "banner",
+      "toast-region",
+      "error-page",
+      "form-page"
+    ],
+    "rules": []
+  },
+  "check": "vision:copy-and-tone",
+  "appliesTo": [
+    "all"
+  ],
+  "version": "1.0.0",
+  "refreshedAt": "2026-11-16"
+}

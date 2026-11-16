@@ -1,0 +1,46 @@
+{
+  "id": "outcome-first",
+  "name": "Outcome first, detail after",
+  "rule": "Open with the result or status, then give the supporting detail beneath it for people who want it.",
+  "leaders": [
+    {
+      "leader": "stripe",
+      "url": "https://docs.stripe.com/stripe-apps/patterns/chart-layout",
+      "retrievedAt": "2026-11-16",
+      "note": "Puts the current value above the trend chart so people get the answer first. The Dashboard home uses the same order: headline figure, then the chart."
+    },
+    {
+      "leader": "carbon",
+      "url": "https://carbondesignsystem.com/patterns/notification-pattern/",
+      "retrievedAt": "2026-11-16",
+      "note": "Each notification starts from a status, such as success for a completed task. Task-triggered messages stay short, with the status first and context only when needed."
+    },
+    {
+      "leader": "vercel",
+      "url": "https://vercel.com/geist/modal",
+      "retrievedAt": "2026-11-16",
+      "note": "Modal body copy states the main consequence first, in one to three sentences. Any further detail follows."
+    }
+  ],
+  "mapsTo": {
+    "tokens": [
+      "color-text-heading",
+      "color-text-secondary",
+      "space-component-gap-sm"
+    ],
+    "components": [
+      "heading",
+      "text",
+      "card",
+      "banner",
+      "toast-region"
+    ],
+    "rules": []
+  },
+  "check": "vision:outcome-clarity",
+  "appliesTo": [
+    "all"
+  ],
+  "version": "1.0.0",
+  "refreshedAt": "2026-11-16"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "keyboard-matches-visual",
+  "name": "Keyboard path matches the visual path",
+  "rule": "Tab and screen-reader order follows the visual reading order. Adjust the order only where layout alone gets it wrong.",
+  "leaders": [
+    {
+      "leader": "carbon",
+      "url": "https://carbondesignsystem.com/guidelines/accessibility/keyboard/",
+      "retrievedAt": "2026-11-16",
+      "note": "Focus follows source order, so the source is arranged to give a predictable flow: header, navigation, content, footer."
+    },
+    {
+      "leader": "material",
+      "url": "https://developer.android.com/develop/ui/compose/accessibility/traversal",
+      "retrievedAt": "2026-11-16",
+      "note": "Traversal defaults to left-to-right, top-to-bottom. Groups and indexes are applied only where that default misreads the layout."
+    }
+  ],
+  "mapsTo": {
+    "tokens": [],
+    "components": [
+      "page-shell",
+      "app-header",
+      "side-nav",
+      "form-page",
+      "modal",
+      "drawer"
+    ],
+    "rules": []
+  },
+  "check": "manual",
+  "appliesTo": [
+    "all"
+  ],
+  "version": "1.0.0",
+  "refreshedAt": "2026-11-16"
+}

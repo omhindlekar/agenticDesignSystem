@@ -29,7 +29,8 @@
     "prebuild-storybook": "npm run tokens:build",
     "build-storybook": "storybook build",
     "generate": "tsx scripts/generate.ts",
-    "fixtures:demo": "tsx scripts/record-fixture.ts evals/fixtures/demo/sign-in.spec.json evals/fixtures/demo/sign-in.screen.tsx \"A sign-in card with email and password inputs, a remember-me checkbox and a primary sign-in button\""
+    "fixtures:demo": "tsx scripts/record-fixture.ts evals/fixtures/demo/sign-in.spec.json evals/fixtures/demo/sign-in.screen.tsx \"A sign-in card with email and password inputs, a remember-me checkbox and a primary sign-in button\"",
+    "canon:refresh": "tsx scripts/canon-refresh.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.8.0",

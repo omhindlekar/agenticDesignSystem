@@ -1,0 +1,44 @@
+{
+  "id": "one-spacing-scale",
+  "name": "One spacing scale",
+  "rule": "Take every gap and padding from a single named scale so rhythm stays consistent across components and pages.",
+  "leaders": [
+    {
+      "leader": "carbon",
+      "url": "https://carbondesignsystem.com/elements/spacing/overview/",
+      "retrievedAt": "2026-11-16",
+      "note": "One token scale serves both inside components and between them. Raw margins are replaced by tokens, and a Stack component applies equal gaps."
+    },
+    {
+      "leader": "apple",
+      "url": "https://developer.apple.com/design/human-interface-guidelines/layout.md",
+      "retrievedAt": "2026-11-16",
+      "note": "Says uneven spacing stops a grid reading as a grid and makes scanning harder, so spacing must be consistent. Grouping uses space, containers or separators."
+    }
+  ],
+  "mapsTo": {
+    "tokens": [
+      "space-component-padding-xs",
+      "space-component-padding-sm",
+      "space-component-padding-md",
+      "space-component-padding-lg",
+      "space-component-gap-sm",
+      "space-component-gap-md",
+      "space-layout-section",
+      "space-layout-page"
+    ],
+    "components": [
+      "stack",
+      "grid",
+      "section",
+      "container"
+    ],
+    "rules": []
+  },
+  "check": "vision:spacing-rhythm",
+  "appliesTo": [
+    "all"
+  ],
+  "version": "1.0.0",
+  "refreshedAt": "2026-11-16"
+}

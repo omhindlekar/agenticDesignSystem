@@ -1,0 +1,41 @@
+{
+  "id": "hierarchy-not-colour",
+  "name": "Hierarchy without colour alone",
+  "rule": "Show importance and state with size, weight, position, icons or text, so colour never carries meaning alone.",
+  "leaders": [
+    {
+      "leader": "material",
+      "url": "https://developer.android.com/guide/topics/ui/accessibility/principles",
+      "retrievedAt": "2026-11-16",
+      "note": "Tells designers to separate element categories with shape, size, text, or pattern as well as colour, so colour-blind users can tell them apart."
+    },
+    {
+      "leader": "carbon",
+      "url": "https://carbondesignsystem.com/components/text-input/usage/",
+      "retrievedAt": "2026-11-16",
+      "note": "An error combines a coloured border with an icon and a written message, so the state doesn't depend on hue."
+    }
+  ],
+  "mapsTo": {
+    "tokens": [
+      "color-text-heading",
+      "color-text-primary",
+      "color-text-danger",
+      "size-icon-md"
+    ],
+    "components": [
+      "heading",
+      "text",
+      "badge",
+      "icon",
+      "banner"
+    ],
+    "rules": []
+  },
+  "check": "vision:hierarchy",
+  "appliesTo": [
+    "all"
+  ],
+  "version": "1.0.0",
+  "refreshedAt": "2026-11-16"
+}

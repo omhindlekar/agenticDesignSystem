@@ -1,0 +1,41 @@
+{
+  "id": "empty-states-teach",
+  "name": "Empty states teach",
+  "rule": "An empty state says why it's empty and what will show up here. It offers one clear next step.",
+  "leaders": [
+    {
+      "leader": "carbon",
+      "url": "https://carbondesignsystem.com/patterns/empty-states-pattern/",
+      "retrievedAt": "2026-11-16",
+      "note": "A short, upbeat title and body copy say what would appear and why it's empty. One primary action leads, with an optional docs link."
+    },
+    {
+      "leader": "stripe",
+      "url": "https://docs.stripe.com/stripe-apps/patterns/empty-state",
+      "retrievedAt": "2026-11-16",
+      "note": "The title names what is missing. The description says when data shows up, and the action label echoes the title. Filtered-out results get different copy."
+    }
+  ],
+  "mapsTo": {
+    "tokens": [
+      "color-text-secondary",
+      "space-layout-section",
+      "space-component-gap-md"
+    ],
+    "components": [
+      "empty-state",
+      "table",
+      "list",
+      "button",
+      "dashboard-page"
+    ],
+    "rules": []
+  },
+  "check": "vision:outcome-clarity",
+  "appliesTo": [
+    "dashboard-page",
+    "settings-page"
+  ],
+  "version": "1.0.0",
+  "refreshedAt": "2026-11-16"
+}

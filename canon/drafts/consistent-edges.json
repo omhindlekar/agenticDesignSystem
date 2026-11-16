@@ -1,0 +1,40 @@
+{
+  "id": "consistent-edges",
+  "name": "Consistent alignment edges",
+  "rule": "Line elements up along a small set of shared edges so the whole page reads as one grid.",
+  "leaders": [
+    {
+      "leader": "carbon",
+      "url": "https://carbondesignsystem.com/elements/2x-grid/overview/",
+      "retrievedAt": "2026-11-16",
+      "note": "Columns and rows define key lines that many objects align to. Text sits on the inner padding edge. Components that share a size scale and inner spacing form a grid on their own."
+    },
+    {
+      "leader": "material",
+      "url": "https://developer.android.com/design/ui/mobile/guides/layout-and-content/grids-and-units",
+      "retrievedAt": "2026-11-16",
+      "note": "A baseline grid keeps spacing and alignment consistent. Column, modular and hierarchical grids give content shared lines to snap to, while sizing stays flexible across screen sizes."
+    }
+  ],
+  "mapsTo": {
+    "tokens": [
+      "space-layout-page",
+      "space-layout-section",
+      "space-component-gap-md"
+    ],
+    "components": [
+      "grid",
+      "container",
+      "page-shell",
+      "stack",
+      "section"
+    ],
+    "rules": []
+  },
+  "check": "vision:alignment",
+  "appliesTo": [
+    "all"
+  ],
+  "version": "1.0.0",
+  "refreshedAt": "2026-11-16"
+}
