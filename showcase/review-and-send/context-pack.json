@@ -1,0 +1,625 @@
+{
+  "taskId": "gen-e4596d0dc3a2",
+  "tokenIds": [
+    {
+      "id": "border-width-default",
+      "reason": "Used by component: card"
+    },
+    {
+      "id": "border-width-focus",
+      "reason": "Used by component: card"
+    },
+    {
+      "id": "color-background-raised",
+      "reason": "Used by component: card"
+    },
+    {
+      "id": "color-background-sunken",
+      "reason": "Used by component: card"
+    },
+    {
+      "id": "color-border-default",
+      "reason": "Used by component: card"
+    },
+    {
+      "id": "color-border-disabled",
+      "reason": "Used by component: card"
+    },
+    {
+      "id": "color-border-interactive",
+      "reason": "Used by component: card"
+    },
+    {
+      "id": "color-interactive-disabled",
+      "reason": "Used by component: card"
+    },
+    {
+      "id": "color-interactive-focus-ring",
+      "reason": "Used by component: card"
+    },
+    {
+      "id": "color-text-heading",
+      "reason": "Used by component: card"
+    },
+    {
+      "id": "color-text-primary",
+      "reason": "Used by component: card"
+    },
+    {
+      "id": "color-text-secondary",
+      "reason": "Used by component: card"
+    },
+    {
+      "id": "elevation-0",
+      "reason": "Used by component: card"
+    },
+    {
+      "id": "elevation-1",
+      "reason": "Used by component: card"
+    },
+    {
+      "id": "elevation-2",
+      "reason": "Used by component: card"
+    },
+    {
+      "id": "focus-ring-offset",
+      "reason": "Used by component: card"
+    },
+    {
+      "id": "motion-duration-standard",
+      "reason": "Used by component: card"
+    },
+    {
+      "id": "motion-easing-standard",
+      "reason": "Used by component: card"
+    },
+    {
+      "id": "opacity-disabled",
+      "reason": "Used by component: card"
+    },
+    {
+      "id": "space-component-gap-md",
+      "reason": "Used by component: card"
+    },
+    {
+      "id": "space-component-gap-sm",
+      "reason": "Used by component: card"
+    },
+    {
+      "id": "space-component-padding-lg",
+      "reason": "Used by component: card"
+    },
+    {
+      "id": "space-component-padding-md",
+      "reason": "Used by component: card"
+    },
+    {
+      "id": "space-component-padding-xs",
+      "reason": "Used by component: card"
+    },
+    {
+      "id": "type-body2-family",
+      "reason": "Used by component: card"
+    },
+    {
+      "id": "type-body2-letter-spacing",
+      "reason": "Used by component: card"
+    },
+    {
+      "id": "type-body2-line-height",
+      "reason": "Used by component: card"
+    },
+    {
+      "id": "type-body2-size",
+      "reason": "Used by component: card"
+    },
+    {
+      "id": "type-body2-weight",
+      "reason": "Used by component: card"
+    },
+    {
+      "id": "type-h4-family",
+      "reason": "Used by component: card"
+    },
+    {
+      "id": "type-h4-letter-spacing",
+      "reason": "Used by component: card"
+    },
+    {
+      "id": "type-h4-line-height",
+      "reason": "Used by component: card"
+    },
+    {
+      "id": "type-h4-size",
+      "reason": "Used by component: card"
+    },
+    {
+      "id": "type-h4-weight",
+      "reason": "Used by component: card"
+    },
+    {
+      "id": "type-body1-family",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-body1-letter-spacing",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-body1-line-height",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-body1-size",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-body1-weight",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-button-family",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-button-letter-spacing",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-button-line-height",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-button-size",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-button-weight",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-caption-family",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-caption-letter-spacing",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-caption-line-height",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-caption-size",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-caption-weight",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-display-family",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-display-letter-spacing",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-display-line-height",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-display-size",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-display-weight",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-h1-family",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-h1-letter-spacing",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-h1-line-height",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-h1-size",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-h1-weight",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-h2-family",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-h2-letter-spacing",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-h2-line-height",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-h2-size",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-h2-weight",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-h3-family",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-h3-letter-spacing",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-h3-line-height",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-h3-size",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-h3-weight",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-label-family",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-label-letter-spacing",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-label-line-height",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-label-size",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-label-weight",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-overline-family",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-overline-letter-spacing",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-overline-line-height",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-overline-size",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-overline-weight",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-subtitle-family",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-subtitle-letter-spacing",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-subtitle-line-height",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-subtitle-size",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "type-subtitle-weight",
+      "reason": "Used by component: text"
+    },
+    {
+      "id": "color-background-surface",
+      "reason": "Used by component: input"
+    },
+    {
+      "id": "color-border-danger",
+      "reason": "Used by component: input"
+    },
+    {
+      "id": "color-border-input",
+      "reason": "Used by component: input"
+    },
+    {
+      "id": "color-border-input-hover",
+      "reason": "Used by component: input"
+    },
+    {
+      "id": "color-border-success",
+      "reason": "Used by component: input"
+    },
+    {
+      "id": "color-text-danger",
+      "reason": "Used by component: input"
+    },
+    {
+      "id": "color-text-success",
+      "reason": "Used by component: input"
+    },
+    {
+      "id": "font-family-body",
+      "reason": "Used by component: input"
+    },
+    {
+      "id": "size-control-md",
+      "reason": "Used by component: input"
+    },
+    {
+      "id": "size-control-sm",
+      "reason": "Used by component: input"
+    },
+    {
+      "id": "size-icon-md",
+      "reason": "Used by component: input"
+    },
+    {
+      "id": "space-component-padding-field",
+      "reason": "Used by component: input"
+    },
+    {
+      "id": "space-component-padding-sm",
+      "reason": "Used by component: input"
+    },
+    {
+      "id": "color-text-link",
+      "reason": "Used by component: link"
+    },
+    {
+      "id": "color-text-link-hover",
+      "reason": "Used by component: link"
+    },
+    {
+      "id": "color-background-overlay",
+      "reason": "Used by component: modal"
+    },
+    {
+      "id": "color-interactive-default",
+      "reason": "Used by component: modal"
+    },
+    {
+      "id": "color-spinner-track",
+      "reason": "Used by component: modal"
+    },
+    {
+      "id": "elevation-4",
+      "reason": "Used by component: modal"
+    },
+    {
+      "id": "motion-duration-overlay",
+      "reason": "Used by component: modal"
+    },
+    {
+      "id": "motion-duration-overlay-exit",
+      "reason": "Used by component: modal"
+    },
+    {
+      "id": "motion-easing-exit",
+      "reason": "Used by component: modal"
+    },
+    {
+      "id": "opacity-overlay",
+      "reason": "Used by component: modal"
+    },
+    {
+      "id": "size-control-indicator",
+      "reason": "Used by component: modal"
+    },
+    {
+      "id": "size-modal-lg",
+      "reason": "Used by component: modal"
+    },
+    {
+      "id": "size-modal-md",
+      "reason": "Used by component: modal"
+    },
+    {
+      "id": "size-modal-sm",
+      "reason": "Used by component: modal"
+    },
+    {
+      "id": "space-layout-page",
+      "reason": "Used by component: modal"
+    },
+    {
+      "id": "z-index-modal",
+      "reason": "Used by component: modal"
+    },
+    {
+      "id": "color-container-danger",
+      "reason": "Used by component: banner"
+    },
+    {
+      "id": "color-container-info",
+      "reason": "Used by component: banner"
+    },
+    {
+      "id": "color-container-success",
+      "reason": "Used by component: banner"
+    },
+    {
+      "id": "color-container-warning",
+      "reason": "Used by component: banner"
+    },
+    {
+      "id": "color-on-container-danger",
+      "reason": "Used by component: banner"
+    },
+    {
+      "id": "color-on-container-info",
+      "reason": "Used by component: banner"
+    },
+    {
+      "id": "color-on-container-success",
+      "reason": "Used by component: banner"
+    },
+    {
+      "id": "color-on-container-warning",
+      "reason": "Used by component: banner"
+    },
+    {
+      "id": "color-text-info",
+      "reason": "Used by component: banner"
+    },
+    {
+      "id": "color-text-warning",
+      "reason": "Used by component: banner"
+    },
+    {
+      "id": "font-weight-heading",
+      "reason": "Used by component: banner"
+    },
+    {
+      "id": "color-interactive-active",
+      "reason": "Used by component: button"
+    },
+    {
+      "id": "color-interactive-hover",
+      "reason": "Used by component: button"
+    },
+    {
+      "id": "color-state-layer",
+      "reason": "Used by component: button"
+    },
+    {
+      "id": "color-state-layer-danger",
+      "reason": "Used by component: button"
+    },
+    {
+      "id": "color-status-danger-text",
+      "reason": "Used by component: button"
+    },
+    {
+      "id": "color-text-danger-action",
+      "reason": "Used by component: button"
+    },
+    {
+      "id": "color-text-inverse",
+      "reason": "Used by component: button"
+    },
+    {
+      "id": "opacity-state-focus",
+      "reason": "Used by component: button"
+    },
+    {
+      "id": "opacity-state-hover",
+      "reason": "Used by component: button"
+    },
+    {
+      "id": "opacity-state-pressed",
+      "reason": "Used by component: button"
+    },
+    {
+      "id": "size-control-lg",
+      "reason": "Used by component: button"
+    },
+    {
+      "id": "z-index-state-layer",
+      "reason": "Used by component: button"
+    }
+  ],
+  "componentIds": [
+    {
+      "id": "card",
+      "reason": "The task describes it: \"amount\""
+    },
+    {
+      "id": "text",
+      "reason": "The task describes it: \"amount\""
+    },
+    {
+      "id": "input",
+      "reason": "The task describes it: \"one-time code\""
+    },
+    {
+      "id": "link",
+      "reason": "The task describes it: \"edit\""
+    },
+    {
+      "id": "modal",
+      "reason": "The task describes it: \"edit\""
+    },
+    {
+      "id": "banner",
+      "reason": "The task describes it: \"caution\""
+    },
+    {
+      "id": "button",
+      "reason": "The task describes it: \"send\""
+    }
+  ],
+  "ruleIds": [
+    {
+      "id": "DS-T-001",
+      "reason": "Applies to: button, input, card, modal"
+    },
+    {
+      "id": "DS-T-002",
+      "reason": "Applies to: button, input, card, modal"
+    },
+    {
+      "id": "DS-T-003",
+      "reason": "Applies to: button, input, card, modal"
+    },
+    {
+      "id": "DS-L-001",
+      "reason": "Applies to: button, input, card, modal"
+    },
+    {
+      "id": "DS-L-002",
+      "reason": "Applies to: card, modal"
+    },
+    {
+      "id": "DS-A-005",
+      "reason": "Applies to: modal"
+    },
+    {
+      "id": "DS-A-006",
+      "reason": "Applies to: input, card, modal"
+    },
+    {
+      "id": "DS-C-001",
+      "reason": "Applies to: button"
+    },
+    {
+      "id": "DS-C-002",
+      "reason": "Applies to: button, modal"
+    },
+    {
+      "id": "DS-C-004",
+      "reason": "Applies to: card"
+    },
+    {
+      "id": "DS-C-005",
+      "reason": "Applies to: modal"
+    }
+  ]
+}

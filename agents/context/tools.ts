@@ -16,6 +16,13 @@ export interface DataStore {
   tokens: Token[];
   components: ComponentMetadata[];
   rules: Rule[];
+  /** Everyday words that imply a component (agents/context/vocabulary.json). */
+  concepts?: Concept[];
+}
+
+export interface Concept {
+  words: string[];
+  components: string[];
 }
 
 export async function loadDataStore(repoRoot: string): Promise<DataStore> {
@@ -23,7 +30,20 @@ export async function loadDataStore(repoRoot: string): Promise<DataStore> {
     tokens: loadTokens(repoRoot),
     components: loadComponents(repoRoot),
     rules: loadRules(repoRoot),
+    concepts: loadConcepts(repoRoot),
   };
+}
+
+function loadConcepts(repoRoot: string): Concept[] {
+  const path = join(repoRoot, 'agents', 'context', 'vocabulary.json');
+  if (!existsSync(path)) return [];
+  return (JSON.parse(readFileSync(path, 'utf8')) as { concepts: Concept[] }).concepts;
+}
+
+/** Whole-word, case-insensitive phrase match; hyphens count as spaces ("sign-in" is "sign in"). */
+function mentions(text: string, phrase: string): boolean {
+  const norm = (s: string) => ` ${s.toLowerCase().replace(/[-_]/g, ' ').replace(/[^\p{L}\p{N}\s]/gu, ' ').replace(/\s+/g, ' ').trim()} `;
+  return norm(text).includes(norm(phrase));
 }
 
 function loadTokens(repoRoot: string): Token[] {
@@ -140,6 +160,16 @@ export function selectContext(input: ContextInput, store: DataStore): ContextPac
       id: component.id,
       reason: `The task names it: ${component.id.split('-').join(' ')}`,
     }));
+
+  // 1b. Components the brief describes without naming them (FR-5): "one-time code" implies Input.
+  const known = new Set(store.components.map((c) => c.id));
+  for (const concept of store.concepts ?? []) {
+    const hit = concept.words.find((w) => mentions(input.task, w));
+    if (!hit) continue;
+    for (const id of concept.components)
+      if (known.has(id) && !selectedComponents.some((c) => c.id === id))
+        selectedComponents.push({ id, reason: `The task describes it: "${hit}"` });
+  }
 
   const selectedComponentIds = new Set(selectedComponents.map((c) => c.id));
 

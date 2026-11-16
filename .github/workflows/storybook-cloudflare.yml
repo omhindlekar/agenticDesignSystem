@@ -1,0 +1,48 @@
+name: Storybook on Cloudflare Pages
+
+# Builds Storybook and uploads storybook-static to Cloudflare Pages on every merge to main.
+# Works from a private repository on Cloudflare's free plan.
+#
+# Off by default: the job is skipped (not failed) unless the repository variable
+# DEPLOY_STORYBOOK_CLOUDFLARE is "true". Needs, in Settings → Secrets and variables → Actions:
+#   secrets   CLOUDFLARE_API_TOKEN (Account · Cloudflare Pages · Edit) and CLOUDFLARE_ACCOUNT_ID
+#   variable  CLOUDFLARE_PAGES_PROJECT (for example agentic-ds-storybook)
+# The *.pages.dev address is public unless protected with Cloudflare Access.
+# See docs-source/hosting.md.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cloudflare-pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Build and deploy to Cloudflare Pages
+    if: vars.DEPLOY_STORYBOOK_CLOUDFLARE == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+      - run: npm ci
+      - run: npm run build-storybook
+      # Creates the Pages project on the first run; later runs find it already exists.
+      - uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages project create ${{ vars.CLOUDFLARE_PAGES_PROJECT }} --production-branch main
+        continue-on-error: true
+      - uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy storybook-static --project-name=${{ vars.CLOUDFLARE_PAGES_PROJECT }} --branch main

@@ -1,0 +1,19 @@
+{
+  "note": "Everyday words in a brief that imply a component, so briefs need not name components (FR-5). Matched as whole words or phrases, case-insensitive. Templates are added with the page layer (phase 2c).",
+  "concepts": [
+    { "words": ["amount", "balance", "total", "fee", "price", "cost", "summary", "details", "review"], "components": ["card", "text"] },
+    { "words": ["recipient", "payee", "supplier", "bank", "account"], "components": ["card", "text"] },
+    { "words": ["email", "password", "username", "phone number", "postcode", "one-time code", "verification code", "otp", "pin", "reference"], "components": ["input"] },
+    { "words": ["edit", "change", "modify", "update"], "components": ["link", "modal"] },
+    { "words": ["caution", "warning", "notice", "alert", "reassurance"], "components": ["banner"] },
+    { "words": ["send", "submit", "pay", "confirm", "continue", "save", "sign in", "log in"], "components": ["button"] },
+    { "words": ["go back", "back", "cancel", "return"], "components": ["button", "link"] },
+    { "words": ["remember me", "agree", "consent", "opt in"], "components": ["checkbox"] },
+    { "words": ["country", "choose from", "pick from"], "components": ["select"] },
+    { "words": ["toggle", "notifications", "on or off"], "components": ["switch"] },
+    { "words": ["date range", "deadline", "due date"], "components": ["date-picker"] },
+    { "words": ["search"], "components": ["search-field"] },
+    { "words": ["filter"], "components": ["menu"] },
+    { "words": ["title", "heading"], "components": ["heading"] }
+  ]
+}

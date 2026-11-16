@@ -1,0 +1,11 @@
+{
+  "runId": "9cff59a3-e12f-4e92-866c-c5a075a4d434",
+  "taskId": "gen-e4596d0dc3a2",
+  "brief": "Design the \"Review and send\" screen in Northwind Business, shown just before a business owner sends INR 8,45,000 to a supplier they have paid only once before.\n\nThe moment: they are about to move serious money. They need to catch a mistake before it's too late, without feeling slowed down or alarmed.\n\nMust include:\n- Amount, recipient (name, bank, last 4 digits), the account it comes from, the arrival estimate and any fee. The fee is INR 0 today.\n- A way to edit any detail without starting over.\n- A light caution that this recipient is new to them. Not a red alarm.\n- A required one-time code confirmation before sending.\n- One clear \"Send INR 8,45,000\" action and a quiet way to go back.\n\nTone: calm, precise, trustworthy. Our components, tokens, fonts, square corners. Desktop first, works at 375px, light and dark, AA contrast.",
+  "schemaVersion": "1.1.0",
+  "configHash": "1b03be2958bec22a",
+  "provider": "claude-cli",
+  "model": "claude-sonnet-4-6",
+  "flags": [],
+  "startedAt": "2026-11-16T18:58:17.358Z"
+}

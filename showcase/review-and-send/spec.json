@@ -1,0 +1,527 @@
+{
+  "taskId": "gen-e4596d0dc3a2",
+  "tree": {
+    "component": "card",
+    "props": {
+      "variant": "flat",
+      "padding": "lg",
+      "aria-label": "Review and send transfer"
+    },
+    "tokenRefs": [
+      "color-background-surface",
+      "space-layout-page"
+    ],
+    "states": [
+      "default"
+    ],
+    "children": [
+      {
+        "component": "text",
+        "props": {
+          "variant": "h2",
+          "as": "div",
+          "tone": "heading",
+          "children": "Review and send"
+        },
+        "tokenRefs": [
+          "color-text-heading",
+          "type-h2-family",
+          "type-h2-size",
+          "type-h2-weight",
+          "type-h2-line-height"
+        ],
+        "states": []
+      },
+      {
+        "component": "text",
+        "props": {
+          "variant": "body1",
+          "as": "p",
+          "tone": "secondary",
+          "children": "Check every detail carefully. Transfers cannot be recalled once sent."
+        },
+        "tokenRefs": [
+          "color-text-secondary",
+          "type-body1-family",
+          "type-body1-size",
+          "type-body1-line-height",
+          "space-component-gap-sm"
+        ],
+        "states": []
+      },
+      {
+        "component": "banner",
+        "props": {
+          "tone": "info",
+          "title": "First time paying this recipient",
+          "children": "You have only paid Sharma Textiles Pvt Ltd once before. Verify the account details are correct before sending."
+        },
+        "tokenRefs": [
+          "color-container-info",
+          "color-on-container-info",
+          "color-text-info",
+          "space-component-gap-md"
+        ],
+        "states": []
+      },
+      {
+        "component": "card",
+        "props": {
+          "variant": "default",
+          "padding": "lg",
+          "aria-label": "Transfer summary"
+        },
+        "tokenRefs": [
+          "color-background-raised",
+          "elevation-1",
+          "color-border-default",
+          "border-width-default",
+          "space-component-gap-md"
+        ],
+        "states": [],
+        "children": [
+          {
+            "component": "text",
+            "props": {
+              "variant": "overline",
+              "as": "span",
+              "tone": "secondary",
+              "children": "AMOUNT"
+            },
+            "tokenRefs": [
+              "color-text-secondary",
+              "type-overline-family",
+              "type-overline-size",
+              "type-overline-letter-spacing"
+            ],
+            "states": []
+          },
+          {
+            "component": "text",
+            "props": {
+              "variant": "display",
+              "as": "div",
+              "tone": "heading",
+              "children": "INR 8,45,000"
+            },
+            "tokenRefs": [
+              "color-text-heading",
+              "type-display-family",
+              "type-display-size",
+              "type-display-weight",
+              "type-display-line-height",
+              "space-component-gap-md"
+            ],
+            "states": []
+          },
+          {
+            "component": "card",
+            "props": {
+              "variant": "flat",
+              "padding": "md",
+              "aria-label": "Recipient — edit"
+            },
+            "tokenRefs": [
+              "color-border-default",
+              "border-width-default",
+              "space-component-padding-md"
+            ],
+            "states": [],
+            "children": [
+              {
+                "component": "text",
+                "props": {
+                  "variant": "caption",
+                  "as": "span",
+                  "tone": "secondary",
+                  "children": "TO"
+                },
+                "tokenRefs": [
+                  "color-text-secondary",
+                  "type-caption-family",
+                  "type-caption-size",
+                  "type-caption-letter-spacing"
+                ],
+                "states": []
+              },
+              {
+                "component": "text",
+                "props": {
+                  "variant": "body1",
+                  "as": "div",
+                  "tone": "primary",
+                  "children": "Sharma Textiles Pvt Ltd"
+                },
+                "tokenRefs": [
+                  "color-text-primary",
+                  "type-body1-family",
+                  "type-body1-size",
+                  "type-body1-weight"
+                ],
+                "states": []
+              },
+              {
+                "component": "text",
+                "props": {
+                  "variant": "body2",
+                  "as": "div",
+                  "tone": "secondary",
+                  "children": "HDFC Bank · Account ending 4821"
+                },
+                "tokenRefs": [
+                  "color-text-secondary",
+                  "type-body2-family",
+                  "type-body2-size"
+                ],
+                "states": []
+              },
+              {
+                "component": "link",
+                "props": {
+                  "href": "#edit-recipient",
+                  "variant": "standalone",
+                  "children": "Edit recipient"
+                },
+                "tokenRefs": [
+                  "color-text-link",
+                  "color-text-link-hover",
+                  "type-body2-family"
+                ],
+                "states": [
+                  "default",
+                  "hover",
+                  "focus"
+                ]
+              }
+            ]
+          },
+          {
+            "component": "card",
+            "props": {
+              "variant": "flat",
+              "padding": "md",
+              "aria-label": "Source account — edit"
+            },
+            "tokenRefs": [
+              "color-border-default",
+              "border-width-default",
+              "space-component-padding-md"
+            ],
+            "states": [],
+            "children": [
+              {
+                "component": "text",
+                "props": {
+                  "variant": "caption",
+                  "as": "span",
+                  "tone": "secondary",
+                  "children": "FROM"
+                },
+                "tokenRefs": [
+                  "color-text-secondary",
+                  "type-caption-family",
+                  "type-caption-size",
+                  "type-caption-letter-spacing"
+                ],
+                "states": []
+              },
+              {
+                "component": "text",
+                "props": {
+                  "variant": "body1",
+                  "as": "div",
+                  "tone": "primary",
+                  "children": "Northwind Current Account · 9034"
+                },
+                "tokenRefs": [
+                  "color-text-primary",
+                  "type-body1-family",
+                  "type-body1-size",
+                  "type-body1-weight"
+                ],
+                "states": []
+              },
+              {
+                "component": "link",
+                "props": {
+                  "href": "#edit-source",
+                  "variant": "standalone",
+                  "children": "Edit account"
+                },
+                "tokenRefs": [
+                  "color-text-link",
+                  "color-text-link-hover",
+                  "type-body2-family"
+                ],
+                "states": [
+                  "default",
+                  "hover",
+                  "focus"
+                ]
+              }
+            ]
+          },
+          {
+            "component": "card",
+            "props": {
+              "variant": "flat",
+              "padding": "md",
+              "aria-label": "Arrival estimate"
+            },
+            "tokenRefs": [
+              "color-border-default",
+              "border-width-default",
+              "space-component-padding-md"
+            ],
+            "states": [],
+            "children": [
+              {
+                "component": "text",
+                "props": {
+                  "variant": "caption",
+                  "as": "span",
+                  "tone": "secondary",
+                  "children": "ARRIVES"
+                },
+                "tokenRefs": [
+                  "color-text-secondary",
+                  "type-caption-family",
+                  "type-caption-size",
+                  "type-caption-letter-spacing"
+                ],
+                "states": []
+              },
+              {
+                "component": "text",
+                "props": {
+                  "variant": "body1",
+                  "as": "div",
+                  "tone": "primary",
+                  "children": "Today by 5:00 PM (NEFT)"
+                },
+                "tokenRefs": [
+                  "color-text-primary",
+                  "type-body1-family",
+                  "type-body1-size"
+                ],
+                "states": []
+              }
+            ]
+          },
+          {
+            "component": "card",
+            "props": {
+              "variant": "flat",
+              "padding": "md",
+              "aria-label": "Transfer fee"
+            },
+            "tokenRefs": [
+              "color-border-default",
+              "border-width-default",
+              "space-component-padding-md"
+            ],
+            "states": [],
+            "children": [
+              {
+                "component": "text",
+                "props": {
+                  "variant": "caption",
+                  "as": "span",
+                  "tone": "secondary",
+                  "children": "FEE"
+                },
+                "tokenRefs": [
+                  "color-text-secondary",
+                  "type-caption-family",
+                  "type-caption-size",
+                  "type-caption-letter-spacing"
+                ],
+                "states": []
+              },
+              {
+                "component": "text",
+                "props": {
+                  "variant": "body1",
+                  "as": "div",
+                  "tone": "primary",
+                  "children": "INR 0"
+                },
+                "tokenRefs": [
+                  "color-text-primary",
+                  "type-body1-family",
+                  "type-body1-size",
+                  "type-body1-weight"
+                ],
+                "states": []
+              },
+              {
+                "component": "text",
+                "props": {
+                  "variant": "caption",
+                  "as": "div",
+                  "tone": "secondary",
+                  "children": "No fee applies to this transfer today"
+                },
+                "tokenRefs": [
+                  "color-text-secondary",
+                  "type-caption-family",
+                  "type-caption-size"
+                ],
+                "states": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "component": "card",
+        "props": {
+          "variant": "default",
+          "padding": "lg",
+          "aria-label": "One-time code confirmation"
+        },
+        "tokenRefs": [
+          "color-background-raised",
+          "elevation-1",
+          "color-border-default",
+          "border-width-default",
+          "space-component-gap-md"
+        ],
+        "states": [],
+        "children": [
+          {
+            "component": "text",
+            "props": {
+              "variant": "subtitle",
+              "as": "div",
+              "tone": "heading",
+              "children": "Confirm with one-time code"
+            },
+            "tokenRefs": [
+              "color-text-heading",
+              "type-subtitle-family",
+              "type-subtitle-size",
+              "type-subtitle-weight"
+            ],
+            "states": []
+          },
+          {
+            "component": "text",
+            "props": {
+              "variant": "body2",
+              "as": "p",
+              "tone": "secondary",
+              "children": "We sent a 6-digit code to your registered mobile number. Enter it below to authorise this transfer."
+            },
+            "tokenRefs": [
+              "color-text-secondary",
+              "type-body2-family",
+              "type-body2-size",
+              "type-body2-line-height",
+              "space-component-gap-sm"
+            ],
+            "states": []
+          },
+          {
+            "component": "input",
+            "props": {
+              "label": "One-time code",
+              "placeholder": "Enter 6-digit code",
+              "type": "tel",
+              "name": "otp",
+              "required": true,
+              "helperText": "Code expires in 10 minutes"
+            },
+            "tokenRefs": [
+              "color-border-input",
+              "color-border-input-hover",
+              "color-border-interactive",
+              "color-border-danger",
+              "color-border-success",
+              "space-component-padding-field",
+              "size-control-md",
+              "color-interactive-focus-ring",
+              "border-width-focus",
+              "focus-ring-offset"
+            ],
+            "states": [
+              "default",
+              "focused",
+              "error",
+              "success"
+            ]
+          }
+        ]
+      },
+      {
+        "component": "button",
+        "props": {
+          "label": "Send INR 8,45,000",
+          "variant": "contained",
+          "tone": "primary",
+          "size": "lg",
+          "type": "submit"
+        },
+        "tokenRefs": [
+          "color-interactive-default",
+          "color-interactive-hover",
+          "color-interactive-active",
+          "color-interactive-disabled",
+          "color-interactive-focus-ring",
+          "type-button-family",
+          "type-button-size",
+          "type-button-weight",
+          "type-button-letter-spacing",
+          "size-control-lg",
+          "motion-duration-standard",
+          "motion-easing-standard",
+          "opacity-disabled",
+          "focus-ring-offset",
+          "border-width-focus"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "focus",
+          "loading",
+          "disabled"
+        ]
+      },
+      {
+        "component": "button",
+        "props": {
+          "label": "Go back",
+          "variant": "ghost",
+          "size": "md",
+          "type": "button"
+        },
+        "tokenRefs": [
+          "color-text-secondary",
+          "color-interactive-hover",
+          "color-interactive-focus-ring",
+          "type-button-family",
+          "type-button-size",
+          "size-control-md",
+          "motion-duration-standard",
+          "focus-ring-offset",
+          "border-width-focus"
+        ],
+        "states": [
+          "default",
+          "hover",
+          "focus"
+        ]
+      }
+    ]
+  },
+  "statesCovered": [
+    "default",
+    "hover",
+    "focus",
+    "focused",
+    "loading",
+    "disabled",
+    "error",
+    "success"
+  ]
+}

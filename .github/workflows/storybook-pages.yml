@@ -1,0 +1,53 @@
+name: Storybook on GitHub Pages
+
+# Builds the Storybook catalogue (components, templates, examples and the Showcase) and
+# publishes it to GitHub Pages on every merge to main.
+#
+# Off by default: both jobs are skipped (not failed) unless the repository variable
+# DEPLOY_STORYBOOK is "true" (Settings → Secrets and variables → Actions → Variables).
+# Pages also has to be enabled with "GitHub Actions" as the source (Settings → Pages),
+# which needs a public repository on the free plan. See docs-source/hosting.md.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deployment at a time; a newer merge replaces a queued one, never an in-progress one.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build Storybook
+    if: vars.DEPLOY_STORYBOOK == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+      - run: npm ci
+      # prebuild-storybook rebuilds styles/tokens.css from tokens/ first.
+      - run: npm run build-storybook
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: storybook-static
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    if: vars.DEPLOY_STORYBOOK == 'true'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

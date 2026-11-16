@@ -1,0 +1,75 @@
+{
+  "taskId": "gen-e4596d0dc3a2",
+  "overallStatus": "fail",
+  "checks": [
+    {
+      "checkName": "token-lint",
+      "status": "pass",
+      "failingRuleIds": [],
+      "reason": "No hardcoded design values.",
+      "durationMs": 2
+    },
+    {
+      "checkName": "rules-audit",
+      "status": "fail",
+      "failingRuleIds": [
+        "DS-C-004"
+      ],
+      "reason": "6 component, composition or copy rule(s) broken.",
+      "durationMs": 2
+    },
+    {
+      "checkName": "a11y",
+      "status": "pass",
+      "failingRuleIds": [],
+      "reason": "WCAG 2.2 AA automated checks pass; 5 keyboard stop(s), all with a visible focus indicator.",
+      "durationMs": 1008
+    },
+    {
+      "checkName": "visual",
+      "status": "skipped",
+      "failingRuleIds": [],
+      "reason": "This screen has no baseline id (not a golden-set run).",
+      "durationMs": 0
+    }
+  ],
+  "findings": [
+    {
+      "checkName": "rules-audit",
+      "ruleId": "DS-C-004",
+      "message": "A Card is nested inside another Card; separate them with layout spacing instead.",
+      "evidence": "tree.children[3]"
+    },
+    {
+      "checkName": "rules-audit",
+      "ruleId": "DS-C-004",
+      "message": "A Card is nested inside another Card; separate them with layout spacing instead.",
+      "evidence": "tree.children[3].children[2]"
+    },
+    {
+      "checkName": "rules-audit",
+      "ruleId": "DS-C-004",
+      "message": "A Card is nested inside another Card; separate them with layout spacing instead.",
+      "evidence": "tree.children[3].children[3]"
+    },
+    {
+      "checkName": "rules-audit",
+      "ruleId": "DS-C-004",
+      "message": "A Card is nested inside another Card; separate them with layout spacing instead.",
+      "evidence": "tree.children[3].children[4]"
+    },
+    {
+      "checkName": "rules-audit",
+      "ruleId": "DS-C-004",
+      "message": "A Card is nested inside another Card; separate them with layout spacing instead.",
+      "evidence": "tree.children[3].children[5]"
+    },
+    {
+      "checkName": "rules-audit",
+      "ruleId": "DS-C-004",
+      "message": "A Card is nested inside another Card; separate them with layout spacing instead.",
+      "evidence": "tree.children[4]"
+    }
+  ],
+  "durationMs": 1022
+}
