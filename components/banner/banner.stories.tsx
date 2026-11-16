@@ -17,4 +17,23 @@ export const Danger: Story = {
   args: { tone: 'danger', title: 'Sync failed', children: 'We could not reach the server.', actions: <Button label="Retry" variant="outlined" tone="danger" size="sm" /> },
   parameters: { ads: { variant: 'danger' } },
 };
+/** Outlined and text actions take the banner's text colour, so they meet AA on every tone and theme. */
+export const InfoWithActions: Story = {
+  args: {
+    tone: 'info',
+    title: 'Need to cancel? You have 30 minutes',
+    children: 'You can cancel this payment until 12:12 pm today.',
+    actions: (
+      <>
+        <Button label="Cancel payment" variant="outlined" size="sm" />
+        <Button label="Learn more" variant="text" size="sm" />
+      </>
+    ),
+  },
+  parameters: { ads: { variant: 'info' } },
+};
+export const WarningWithAction: Story = {
+  args: { tone: 'warning', actions: <Button label="Upgrade plan" variant="outlined" size="sm" /> },
+  parameters: { ads: { variant: 'warning' } },
+};
 export const Default: Story = { parameters: { ads: { state: 'default' } } };

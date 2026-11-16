@@ -63,6 +63,16 @@
   margin-block-start: var(--space-component-padding-xs);
 }
 
+/*
+ * Outlined and text actions take the banner's text colour, which meets AA on the banner's
+ * fill in every theme (link blue does not on the dark info fill). Contained and danger-tone
+ * actions keep their own colours.
+ */
+.ads-banner__actions .ads-button:is([data-variant="outlined"], [data-variant="text"]):not([data-tone="danger"]):not([aria-disabled]) {
+  border-color: currentColor;
+  color: inherit;
+}
+
 /* The dismiss icon takes the banner's text colour. */
 .ads-banner__dismiss .ads-icon-button {
   color: inherit;
