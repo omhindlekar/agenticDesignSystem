@@ -17,5 +17,5 @@
       "@ads/components": ["./components/index.ts"]
     }
   },
-  "include": ["components/**/*", ".storybook/**/*", "scripts/**/*", "checks/**/*.tsx"]
+  "include": ["components/**/*", "examples/**/*", ".storybook/**/*", "scripts/**/*", "checks/**/*.tsx"]
 }
