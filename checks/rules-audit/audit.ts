@@ -7,6 +7,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import type { ComponentNode, ScreenSpec } from '../../packages/schemas/src/screen-spec.js';
 import type { QaCheck, QaCheckOutcome } from '../qa-check.js';
+import { auditComposition, pageLayerEnforced } from './composition.js';
 
 type Finding = QaCheckOutcome['findings'][number];
 
@@ -137,10 +138,10 @@ export function auditSpec(spec: ScreenSpec, repoRoot: string): Finding[] {
 const check: QaCheck = {
   name: 'rules-audit',
   async run({ spec, repoRoot }) {
-    const findings = auditSpec(spec, repoRoot);
+    const findings = [...auditSpec(spec, repoRoot), ...(pageLayerEnforced(repoRoot) ? auditComposition(spec, repoRoot) : [])];
     return findings.length
-      ? { status: 'fail', reason: `${findings.length} component rule(s) broken.`, findings }
-      : { status: 'pass', reason: 'Component rules followed.', findings: [] };
+      ? { status: 'fail', reason: `${findings.length} component, composition or copy rule(s) broken.`, findings }
+      : { status: 'pass', reason: 'Component, composition and copy rules followed.', findings: [] };
   },
 };
 export default check;
