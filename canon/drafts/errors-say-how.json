@@ -1,0 +1,43 @@
+{
+  "id": "errors-say-how",
+  "name": "Errors say what and how",
+  "rule": "State what went wrong in plain, blame-free words, show it next to the problem, and give the exact step that fixes it.",
+  "leaders": [
+    {
+      "leader": "apple",
+      "url": "https://developer.apple.com/design/human-interface-guidelines/writing.md",
+      "retrievedAt": "2026-11-16",
+      "note": "Errors sit next to the problem and don't blame. They give the fix, such as the required password length, instead of a bare 'Invalid name'. They also avoid a vague 'we' and 'oops'."
+    },
+    {
+      "leader": "stripe",
+      "url": "https://docs.stripe.com/error-handling?lang=node",
+      "retrievedAt": "2026-11-16",
+      "note": "Each error type gets a problem statement and a concrete next step, such as asking for another payment method. Errors also carry a code, the field involved and a docs link."
+    }
+  ],
+  "mapsTo": {
+    "tokens": [
+      "color-text-danger",
+      "space-component-gap-sm"
+    ],
+    "components": [
+      "field",
+      "input",
+      "banner",
+      "toast-region",
+      "error-page",
+      "form-page",
+      "textarea"
+    ],
+    "rules": [
+      "DS-W-004"
+    ]
+  },
+  "check": "rule:DS-W-004",
+  "appliesTo": [
+    "all"
+  ],
+  "version": "1.0.0",
+  "refreshedAt": "2026-11-16"
+}

@@ -1,0 +1,47 @@
+{
+  "id": "visible-labels",
+  "name": "Labels stay visible",
+  "rule": "Put a label outside every field and keep it on screen while typing. A placeholder never replaces the label.",
+  "leaders": [
+    {
+      "leader": "apple",
+      "url": "https://developer.apple.com/design/human-interface-guidelines/text-fields.md",
+      "retrievedAt": "2026-11-16",
+      "note": "Placeholder text vanishes once someone types, so Apple suggests a separate label to remind people what the field is for."
+    },
+    {
+      "leader": "carbon",
+      "url": "https://carbondesignsystem.com/patterns/forms-pattern/",
+      "retrievedAt": "2026-11-16",
+      "note": "Every text input gets a descriptive, visible label. Placeholders vanish on typing, so they must not carry crucial information or stand in for the label."
+    }
+  ],
+  "mapsTo": {
+    "tokens": [
+      "color-text-primary",
+      "space-component-padding-field",
+      "space-component-gap-sm"
+    ],
+    "components": [
+      "field",
+      "input",
+      "textarea",
+      "select",
+      "combobox",
+      "number-field",
+      "form-page"
+    ],
+    "rules": [
+      "DS-W-003",
+      "DS-A-004"
+    ]
+  },
+  "check": "rule:DS-W-003",
+  "appliesTo": [
+    "form-page",
+    "auth-page",
+    "settings-page"
+  ],
+  "version": "1.0.0",
+  "refreshedAt": "2026-11-16"
+}

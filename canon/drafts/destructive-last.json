@@ -1,0 +1,50 @@
+{
+  "id": "destructive-last",
+  "name": "Destructive actions last",
+  "rule": "Keep destructive actions apart and last in order, and make people confirm them with a clear, specific prompt.",
+  "leaders": [
+    {
+      "leader": "carbon",
+      "url": "https://carbondesignsystem.com/components/modal/usage/",
+      "retrievedAt": "2026-11-16",
+      "note": "Irreversible actions use a danger modal whose primary button is styled as a danger action. The cancel button comes first and the primary action sits at the end."
+    },
+    {
+      "leader": "vercel",
+      "url": "https://vercel.com/geist/modal",
+      "retrievedAt": "2026-11-16",
+      "note": "Destructive dialogs put focus on Cancel and lead with the consequence. The verb-noun primary button sits last, and high-stakes ones require typing the resource name."
+    },
+    {
+      "leader": "material",
+      "url": "https://developer.android.com/develop/ui/compose/components/dialog",
+      "retrievedAt": "2026-11-16",
+      "note": "Deleting a file is a dialog use case. Dismiss comes before confirm, with the actions grouped at the end of the dialog."
+    }
+  ],
+  "mapsTo": {
+    "tokens": [
+      "color-text-danger-action",
+      "space-component-gap-md",
+      "size-modal-sm"
+    ],
+    "components": [
+      "modal",
+      "button",
+      "menu",
+      "divider",
+      "settings-page"
+    ],
+    "rules": [
+      "DS-P-005",
+      "DS-P-009",
+      "DS-C-002"
+    ]
+  },
+  "check": "rule:DS-P-005",
+  "appliesTo": [
+    "all"
+  ],
+  "version": "1.0.0",
+  "refreshedAt": "2026-11-16"
+}

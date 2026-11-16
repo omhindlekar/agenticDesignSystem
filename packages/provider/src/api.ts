@@ -16,6 +16,7 @@ export class ApiProvider implements ModelProvider {
   }
 
   async complete(prompt: string, opts: CompleteOptions): Promise<CompleteResult> {
+    if (opts.tools?.length) throw new Error('ApiProvider: web research runs only through the claude CLI provider (MODEL_PROVIDER=cli)');
     const message = await this.client.messages.create({
       model: opts.model,
       max_tokens: opts.maxTokens,

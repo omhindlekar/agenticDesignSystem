@@ -1,0 +1,44 @@
+{
+  "id": "hierarchy-not-colour",
+  "name": "Hierarchy without colour alone",
+  "rule": "Show importance through size, weight, position and shape or icons. The design should still read clearly in greyscale.",
+  "leaders": [
+    {
+      "leader": "apple",
+      "url": "https://developer.apple.com/help/app-store-connect/manage-app-accessibility/differentiate-without-color-alone-evaluation-criteria",
+      "retrievedAt": "2026-11-16",
+      "note": "Says colour must not be the only signal. Add placement, order, shape, icons or labels, and test the app in greyscale to find places where colour alone carries meaning."
+    },
+    {
+      "leader": "carbon",
+      "url": "https://carbondesignsystem.com/guidelines/accessibility/color",
+      "retrievedAt": "2026-11-16",
+      "note": "Says colour must not be the only way to share information, signal actions, ask for a response or tell elements apart. Suggests checking designs with a colour-blind simulator."
+    }
+  ],
+  "mapsTo": {
+    "tokens": [
+      "color-text-heading",
+      "color-text-primary",
+      "color-text-secondary"
+    ],
+    "components": [
+      "heading",
+      "text",
+      "badge",
+      "icon",
+      "button"
+    ],
+    "rules": [
+      "DS-A-007",
+      "DS-A-001",
+      "DS-P-003"
+    ]
+  },
+  "check": "vision:hierarchy",
+  "appliesTo": [
+    "all"
+  ],
+  "version": "1.0.0",
+  "refreshedAt": "2026-11-16"
+}

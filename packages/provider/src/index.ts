@@ -10,7 +10,10 @@ export { FakeProvider } from './fake.js';
 export { CachingProvider } from './cache.js';
 export { ApiProvider } from './api.js';
 export { ClaudeCliProvider } from './cli.js';
-export type { ModelProvider, CompleteOptions, CompleteResult, ProviderConfig } from './types.js';
+export type { ModelProvider, CompleteOptions, CompleteResult, ProviderConfig, ToolEvent, WebTool } from './types.js';
+export { WEB_TOOLS } from './types.js';
+export { parseStreamJson } from './cli.js';
+export { cacheKey } from './fake.js';
 
 const ALIASES: Record<string, string> = { cli: 'claude-cli' };
 

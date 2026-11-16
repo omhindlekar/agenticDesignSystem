@@ -1,0 +1,47 @@
+{
+  "id": "density-follows-task",
+  "name": "Density follows the task",
+  "rule": "Tighten rows and spacing where people scan and compare data; give decisions and forms more room.",
+  "leaders": [
+    {
+      "leader": "carbon",
+      "url": "https://carbondesignsystem.com/components/data-table/usage/",
+      "retrievedAt": "2026-11-16",
+      "note": "Offers a range of row heights. Tighter rows pack in more data, looser ones suit emphasis and multi-line content. Hover and zebra stripes aid scanning."
+    },
+    {
+      "leader": "apple",
+      "url": "https://developer.apple.com/design/human-interface-guidelines/lists-and-tables.md",
+      "retrievedAt": "2026-11-16",
+      "note": "Rows suit scannable text, so entries stay short. Grouped styles add space between sets, and alternating row colors help track values across wide tables."
+    }
+  ],
+  "mapsTo": {
+    "tokens": [
+      "space-component-padding-sm",
+      "space-component-padding-md",
+      "space-component-padding-lg",
+      "size-control-sm",
+      "size-control-md",
+      "size-control-lg"
+    ],
+    "components": [
+      "table",
+      "list",
+      "dashboard-page",
+      "form-page",
+      "settings-page"
+    ],
+    "rules": [
+      "DS-P-004"
+    ]
+  },
+  "check": "vision:spacing-rhythm",
+  "appliesTo": [
+    "dashboard-page",
+    "form-page",
+    "settings-page"
+  ],
+  "version": "1.0.0",
+  "refreshedAt": "2026-11-16"
+}

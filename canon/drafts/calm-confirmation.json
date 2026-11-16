@@ -1,0 +1,49 @@
+{
+  "id": "calm-confirmation",
+  "name": "Calm, factual confirmation",
+  "rule": "Confirm serious actions in plain, factual words: name the action, state the consequence, and skip celebration.",
+  "leaders": [
+    {
+      "leader": "vercel",
+      "url": "https://vercel.com/geist/modal",
+      "retrievedAt": "2026-11-16",
+      "note": "Destructive modals state irreversibility plainly. The primary button is a verb plus noun matching the title, Cancel gets default focus, and a short factual toast follows."
+    },
+    {
+      "leader": "carbon",
+      "url": "https://carbondesignsystem.com/components/modal/usage/",
+      "retrievedAt": "2026-11-16",
+      "note": "Confirmation titles are brief verb phrases, with plain direct copy that names the action and its consequences. Vague labels like OK or Done are avoided. Danger modals mark irreversible steps."
+    },
+    {
+      "leader": "stripe",
+      "url": "https://docs.stripe.com/stripe-apps/patterns/communicating-state",
+      "retrievedAt": "2026-11-16",
+      "note": "Post-action feedback is a short temporary toast, such as Changes saved. Anything needing attention goes in a persistent banner instead."
+    }
+  ],
+  "mapsTo": {
+    "tokens": [
+      "color-text-primary",
+      "color-text-success",
+      "space-component-padding-md"
+    ],
+    "components": [
+      "modal",
+      "toast-region",
+      "banner",
+      "button",
+      "text"
+    ],
+    "rules": [
+      "DS-W-002",
+      "DS-P-009"
+    ]
+  },
+  "check": "vision:copy-and-tone",
+  "appliesTo": [
+    "all"
+  ],
+  "version": "1.0.0",
+  "refreshedAt": "2026-11-16"
+}

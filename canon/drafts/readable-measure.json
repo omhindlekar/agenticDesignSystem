@@ -1,0 +1,38 @@
+{
+  "id": "readable-measure",
+  "name": "Readable measure",
+  "rule": "Cap prose and form columns at a comfortable reading width; size fields to the data they hold, never to the full page.",
+  "leaders": [
+    {
+      "leader": "apple",
+      "url": "https://developer.apple.com/design/human-interface-guidelines/layout.md",
+      "retrievedAt": "2026-11-16",
+      "note": "Provides layout guides that apply standard margins and restrict text width so lines stay readable, and ties alignment to scannability."
+    },
+    {
+      "leader": "carbon",
+      "url": "https://carbondesignsystem.com/components/text-input/usage/",
+      "retrievedAt": "2026-11-16",
+      "note": "Field widths follow the expected content length and snap to the grid. It warns against fields far wider than the data they collect."
+    }
+  ],
+  "mapsTo": {
+    "tokens": [],
+    "components": [
+      "container",
+      "text",
+      "field",
+      "form-page",
+      "page-shell"
+    ],
+    "rules": [
+      "DS-P-008"
+    ]
+  },
+  "check": "rule:DS-P-008",
+  "appliesTo": [
+    "all"
+  ],
+  "version": "1.0.0",
+  "refreshedAt": "2026-11-16"
+}

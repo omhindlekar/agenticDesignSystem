@@ -1,0 +1,41 @@
+{
+  "id": "copyable-identifiers",
+  "name": "Copyable identifiers",
+  "rule": "Give people a one-action way to copy any ID or reference they must quote, with brief confirmation that it copied.",
+  "leaders": [
+    {
+      "leader": "linear",
+      "url": "https://linear.app/changelog/2019-06-20-international-keyboard-shortcut-improvements",
+      "retrievedAt": "2026-11-16",
+      "note": "Linear has one-shortcut commands to copy an issue's ID and its git branch name, so people can paste identifiers elsewhere without selecting text."
+    },
+    {
+      "leader": "stripe",
+      "url": "https://stripe.com/th/blog/dashboard-updates-oct-2020",
+      "retrievedAt": "2026-11-16",
+      "note": "The Dashboard has a single shortcut that copies the ID of the object being viewed, since people use IDs to look up records and match customers to payments."
+    }
+  ],
+  "mapsTo": {
+    "tokens": [
+      "size-icon-sm",
+      "size-touch-target-min"
+    ],
+    "components": [
+      "icon-button",
+      "button",
+      "tooltip",
+      "toast-region",
+      "text"
+    ],
+    "rules": []
+  },
+  "check": "manual",
+  "appliesTo": [
+    "table",
+    "dashboard-page",
+    "settings-page"
+  ],
+  "version": "1.0.0",
+  "refreshedAt": "2026-11-16"
+}

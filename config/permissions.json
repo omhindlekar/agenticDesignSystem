@@ -11,9 +11,9 @@
       "never": ["**"]
     },
     "strategist": {
-      "read": ["references/**", "patterns/**", "components/**", "rules/**", "tokens/**", "config/**"],
-      "write": ["patterns/*.json"],
-      "never": ["references/**", "tokens/**", "components/**", "rules/**", "styles/**", "generated/**", "evals/**", "docs/**", "runs/**", "config/**"]
+      "read": ["references/**", "patterns/**", "canon/**", "components/**", "rules/**", "tokens/**", "config/**"],
+      "write": ["patterns/*.json", "canon/drafts/*.json", "runs/**/strategist/**"],
+      "never": ["references/**", "tokens/**", "components/**", "rules/**", "styles/**", "generated/**", "evals/**", "docs/**", "config/**", "runs/.provider-cache/**", "runs/**/log.jsonl", "runs/**/run.json", "runs/**/qa/**"]
     },
     "composer": {
       "read": ["components/**", "rules/**", "tokens/**"],

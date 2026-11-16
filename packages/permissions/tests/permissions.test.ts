@@ -83,10 +83,14 @@ describe('NFR-7: no agent can write outside its permitted paths', () => {
   });
 });
 
-describe('NFR-13: the Strategist writes only pattern specs', () => {
-  it('NFR-13: it may write a pattern spec, as JSON, directly in patterns/', () => {
+describe('NFR-13: the Strategist writes only pattern specs, canon drafts and its own run folder', () => {
+  it('NFR-13: it may write pattern specs, canon drafts and research logs in its run folder', () => {
     expect(can('strategist', 'patterns/login.json')).toBe(true);
     expect(can('strategist', join(REPO_ROOT, 'patterns', 'checkout-form.json'))).toBe(true);
+    expect(can('strategist', 'canon/drafts/specific-time.json')).toBe(true);
+    expect(can('strategist', 'canon/drafts/report.json')).toBe(true);
+    expect(can('strategist', 'runs/abc/strategist/research.json')).toBe(true);
+    expect(can('strategist', 'runs/golden/abc/strategist/research.json')).toBe(true);
   });
 
   it.each([
@@ -96,7 +100,14 @@ describe('NFR-13: the Strategist writes only pattern specs', () => {
     ['patterns/cache/page.html', 'no fetched pages, at any depth'],
     ['references/notes.md', "Om's references are read-only"],
     ['runs/abc/log.jsonl', 'the run log is written by the orchestrator'],
-    ['runs/abc/strategist/research.json', 'research logs reach the run log through the orchestrator'],
+    ['runs/abc/run.json', 'nor the run record'],
+    ['runs/abc/qa/report.json', 'nor QA output'],
+    ['runs/.provider-cache/abc.json', 'nor the provider cache'],
+    ['runs/abc/strategist/../log.jsonl', 'no escaping its run folder'],
+    ['canon/specific-time.json', 'approved canon is promoted by Om, by PR'],
+    ['canon/seed-list.json', "the seed list is Om's"],
+    ['canon/drafts/notes.md', 'drafts are JSON only'],
+    ['canon/drafts/old/x.json', 'drafts sit directly in canon/drafts/'],
     ['generated/abc/screen.tsx', 'not screens'],
     ['components/auth-page/auth-page.tsx', 'not components'],
     ['tokens/semantic.json', 'not tokens'],

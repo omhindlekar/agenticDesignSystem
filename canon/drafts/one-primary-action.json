@@ -1,0 +1,46 @@
+{
+  "id": "one-primary-action",
+  "name": "One primary action per view",
+  "rule": "Give each view a single dominant action; every other action is visibly quieter, so the next step is obvious.",
+  "leaders": [
+    {
+      "leader": "carbon",
+      "url": "https://carbondesignsystem.com/components/button/usage/",
+      "retrievedAt": "2026-11-16",
+      "note": "Allows one primary button per page to mark the main call to action. Header, modal and side-panel buttons are not counted. Content-only pages may use no primary button."
+    },
+    {
+      "leader": "stripe",
+      "url": "https://docs.stripe.com/stripe-apps/patterns/action-buttons",
+      "retrievedAt": "2026-11-16",
+      "note": "Keeps actions in a consistent header spot. On detail views the primary action comes first, and a full-page app gets one page-wide primary action."
+    },
+    {
+      "leader": "vercel",
+      "url": "https://vercel.com/geist/button",
+      "retrievedAt": "2026-11-16",
+      "note": "The default button style is the primary action, such as save or deploy. A secondary style sits beside it for supporting actions, and a separate error style is for destructive confirmations."
+    }
+  ],
+  "mapsTo": {
+    "tokens": [
+      "color-text-inverse",
+      "space-component-gap-md"
+    ],
+    "components": [
+      "button",
+      "page-shell",
+      "app-header",
+      "modal"
+    ],
+    "rules": [
+      "DS-P-002"
+    ]
+  },
+  "check": "rule:DS-P-002",
+  "appliesTo": [
+    "all"
+  ],
+  "version": "1.0.0",
+  "refreshedAt": "2026-11-16"
+}

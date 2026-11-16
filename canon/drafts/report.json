@@ -1,0 +1,14 @@
+{
+  "ranAt": "2026-11-16T18:33:52.997Z",
+  "model": "claude-sonnet-5-5",
+  "calls": 1,
+  "apiEquivalentUsd": 0.2675992,
+  "accepted": [
+    "errors-say-how",
+    "factual-trust-cues"
+  ],
+  "rejected": [],
+  "missing": [],
+  "unpreferredSources": [],
+  "flags": []
+}

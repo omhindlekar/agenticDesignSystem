@@ -1,0 +1,45 @@
+{
+  "id": "progressive-disclosure",
+  "name": "Progressive disclosure",
+  "rule": "Lead with what most people need and tuck optional or advanced content behind a clear control.",
+  "leaders": [
+    {
+      "leader": "carbon",
+      "url": "https://carbondesignsystem.com/patterns/forms-pattern/",
+      "retrievedAt": "2026-11-16",
+      "note": "Conditional form fields appear only when an earlier answer makes them relevant, which keeps the form short and focused."
+    },
+    {
+      "leader": "vercel",
+      "url": "https://vercel.com/geist/collapse",
+      "retrievedAt": "2026-11-16",
+      "note": "Collapsibles hold optional material such as advanced settings. They start closed, essential content stays visible, and urgent or destructive actions stay out."
+    },
+    {
+      "leader": "material",
+      "url": "https://developer.android.com/develop/ui/compose/components/menu",
+      "retrievedAt": "2026-11-16",
+      "note": "A compact icon trigger opens a temporary menu, so secondary actions stay out of the main view until someone asks for them."
+    }
+  ],
+  "mapsTo": {
+    "tokens": [
+      "space-component-gap-md",
+      "space-layout-section"
+    ],
+    "components": [
+      "section",
+      "popover",
+      "menu",
+      "tabs",
+      "drawer"
+    ],
+    "rules": []
+  },
+  "check": "vision:information-order",
+  "appliesTo": [
+    "all"
+  ],
+  "version": "1.0.0",
+  "refreshedAt": "2026-11-16"
+}

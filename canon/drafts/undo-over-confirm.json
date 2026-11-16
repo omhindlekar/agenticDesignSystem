@@ -1,0 +1,43 @@
+{
+  "id": "undo-over-confirm",
+  "name": "Undo over confirm",
+  "rule": "Let people reverse recoverable actions with undo; interrupt with a confirmation only for what cannot come back.",
+  "leaders": [
+    {
+      "leader": "linear",
+      "url": "https://linear.app/docs/delete-archive-issues",
+      "retrievedAt": "2026-11-16",
+      "note": "Deleting an issue needs no prompt. Undo restores it right away, and deleted items stay restorable from archives for roughly a month."
+    },
+    {
+      "leader": "material",
+      "url": "https://developer.android.com/develop/ui/compose/components/snackbar",
+      "retrievedAt": "2026-11-16",
+      "note": "After a delete, a brief snackbar confirms the action and offers Undo, so the flow is never blocked by a dialog."
+    },
+    {
+      "leader": "carbon",
+      "url": "https://carbondesignsystem.com/components/modal/usage/",
+      "retrievedAt": "2026-11-16",
+      "note": "The blocking danger modal is kept for destructive or irreversible actions where a slip would cause serious data loss."
+    }
+  ],
+  "mapsTo": {
+    "tokens": [],
+    "components": [
+      "toast-region",
+      "modal",
+      "button"
+    ],
+    "rules": [
+      "DS-P-009",
+      "DS-C-002"
+    ]
+  },
+  "check": "vision:outcome-clarity",
+  "appliesTo": [
+    "all"
+  ],
+  "version": "1.0.0",
+  "refreshedAt": "2026-11-16"
+}
