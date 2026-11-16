@@ -21,14 +21,14 @@ const Shipped = z.object({
 
 export const CapabilitySchema = z.object({
   id: z.string().regex(/^[a-z0-9-]+$/),
-  area: z.enum(['foundations', 'actions', 'inputs', 'feedback', 'overlays', 'navigation', 'data-display', 'quality', 'docs-tooling']),
+  area: z.enum(['layout', 'foundations', 'actions', 'inputs', 'feedback', 'overlays', 'navigation', 'data-display', 'quality', 'docs-tooling']),
   name: z.string().min(1),
   shippedBy: Shipped,
   baseline: z.boolean(),
   /** true when confirmed against the source index pages; false when from foundation docs and to be spot-checked */
   verified: z.boolean(),
   status: z.enum(['done', 'partial', 'missing']),
-  phase: z.string().regex(/^(?:1\.\d+|later)$/),
+  phase: z.string().regex(/^(?:1\.\d+|2[a-z]|later)$/),
   evidence: z.array(z.string()),
   theirNames: z.record(System, z.string()).optional(),
   note: z.string().optional(),
