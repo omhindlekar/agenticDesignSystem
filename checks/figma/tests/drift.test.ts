@@ -58,7 +58,7 @@ describe('FR-2, BR-4 Figma library in step with the repo (one-way push)', () => 
 
   it('BR-4: the push scripts are generated from the repo and fit the use_figma size limit', () => {
     const scripts = buildPushScripts(payload, root);
-    expect(Object.keys(scripts)).toHaveLength(10);
+    expect(Object.keys(scripts)).toHaveLength(11);
     for (const [name, code] of Object.entries(scripts)) expect(code.length, name).toBeLessThan(50_000);
   });
 
@@ -73,6 +73,8 @@ describe('FR-2, BR-4 Figma library in step with the repo (one-way push)', () => 
     }
     expect(scripts['03-pages-icons.js']).toMatch(/GLY_HAVE/);
     expect(scripts['10-layout.js']).toMatch(/'Layout'/);
+    expect(scripts['11-templates.js']).toMatch(/'Templates'/);
+    expect(scripts['03-pages-icons.js']).toMatch(/'Layout','Templates'/);
   });
 
   it('BR-4: Figma is not behind the repo — tokens and component metadata match the last recorded push', () => {
