@@ -1,0 +1,55 @@
+/*
+ * Northwind payment confirmation. Layout comes from PageShell, Container and Stack; this file
+ * only styles the status mark and the details list. Tokens only, logical properties, square corners.
+ */
+.nw-pay__mark {
+  display: inline-flex;
+  padding: var(--space-component-padding-sm);
+  background: var(--color-container-success);
+  color: var(--color-on-container-success);
+}
+
+.nw-pay__mark[data-tone="neutral"] {
+  background: var(--color-container-neutral);
+  color: var(--color-on-container-neutral);
+}
+
+.nw-pay__details {
+  margin: 0;
+}
+
+.nw-pay__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-component-padding-xs) var(--space-component-gap-md);
+  padding-block: var(--space-component-padding-sm);
+  border-block-start: var(--border-width-default) solid var(--color-border-default);
+}
+
+.nw-pay__row > dt {
+  color: var(--color-text-secondary);
+}
+
+.nw-pay__row > dd {
+  /* Values stay in the right-hand column, even on their own line on a phone. */
+  margin: 0;
+  margin-inline-start: auto;
+  text-align: end;
+}
+
+.nw-pay__reference {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-component-padding-xs);
+}
+
+@media (forced-colors: active) {
+  .nw-pay__mark {
+    border: var(--border-width-default) solid CanvasText;
+  }
+  .nw-pay__row {
+    border-block-start-color: CanvasText;
+  }
+}
