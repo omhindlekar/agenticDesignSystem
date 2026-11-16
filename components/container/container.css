@@ -1,0 +1,23 @@
+/* Container: a centred column with the page side margin. Widths come from size tokens. */
+.ads-container {
+  box-sizing: border-box;
+  inline-size: 100%;
+  margin-inline: auto;
+  padding-inline: var(--layout-margin-md);
+}
+
+.ads-container[data-variant="sm"] {
+  max-inline-size: calc(var(--size-container-sm) + 2 * var(--layout-margin-md));
+}
+
+.ads-container[data-variant="md"] {
+  max-inline-size: calc(var(--size-container-md) + 2 * var(--layout-margin-md));
+}
+
+.ads-container[data-variant="lg"] {
+  max-inline-size: calc(var(--size-container-lg) + 2 * var(--layout-margin-md));
+}
+
+.ads-container[data-variant="full"] {
+  max-inline-size: calc(var(--size-content-max) + 2 * var(--layout-margin-md));
+}

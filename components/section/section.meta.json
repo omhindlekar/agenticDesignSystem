@@ -1,0 +1,102 @@
+{
+  "id": "section",
+  "purpose": "A titled region of a page: heading, optional description and actions, then its content. The danger variant is the danger zone.",
+  "variants": [
+    "plain",
+    "surface",
+    "danger"
+  ],
+  "states": [
+    "default"
+  ],
+  "props": [
+    {
+      "name": "title",
+      "type": "string",
+      "required": true,
+      "description": "Section heading, in sentence case"
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "required": false,
+      "description": "One sentence under the heading, at most about 140 characters"
+    },
+    {
+      "name": "headingLevel",
+      "type": "2 | 3",
+      "required": false,
+      "description": "Heading level; 2 (default) for page sections, 3 inside another section"
+    },
+    {
+      "name": "actions",
+      "type": "ReactNode",
+      "required": false,
+      "description": "Buttons or links for the whole section, shown beside the heading"
+    },
+    {
+      "name": "variant",
+      "type": "'plain' | 'surface' | 'danger'",
+      "required": false,
+      "description": "plain (default) has no panel; surface adds a bordered panel; danger is the danger zone, with a danger border"
+    },
+    {
+      "name": "children",
+      "type": "ReactNode",
+      "required": false,
+      "description": "The section content"
+    }
+  ],
+  "whenToUse": [
+    "To group related fields or content under a heading on a page",
+    "danger for destructive actions such as deleting an account, always the last section"
+  ],
+  "whenNotToUse": [
+    "For a clickable or selectable container \u2014 use Card",
+    "For a page title \u2014 the page template owns the h1"
+  ],
+  "related": [
+    "card",
+    "heading",
+    "stack"
+  ],
+  "antiPatterns": [
+    "Destructive actions outside a danger section",
+    "Skipping heading levels, such as an h3 section directly under the h1",
+    "A Section with only a heading and no content"
+  ],
+  "spec": {
+    "anatomy": [
+      "Header: heading, description, actions",
+      "Body"
+    ],
+    "sizes": [
+      "Gap `space-component-gap-md`; surface and danger padding `space-component-padding-lg`"
+    ],
+    "typography": [
+      "Heading h3 appearance at level 2, h4 at level 3; description body 2 secondary"
+    ],
+    "states": [
+      "Borders `color-border-default`, danger `color-border-danger`; panel `color-background-surface`"
+    ],
+    "motion": [
+      "None"
+    ]
+  },
+  "tokensUsed": [
+    "border-width-default",
+    "color-background-surface",
+    "color-border-danger",
+    "color-border-default",
+    "size-grid-item-sm",
+    "space-component-gap-md",
+    "space-component-gap-sm",
+    "space-component-padding-lg",
+    "space-component-padding-xs"
+  ],
+  "a11yNotes": [
+    "A region landmark named by its heading (aria-labelledby)",
+    "headingLevel keeps the outline continuous: h1 page title, h2 sections, h3 sub-sections"
+  ],
+  "kind": "layout"
+}

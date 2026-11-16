@@ -8,7 +8,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '../../..');
-const COMPONENTS = ['button', 'input', 'select', 'checkbox', 'card', 'modal', 'icon', 'icon-button', 'textarea', 'search-field', 'field', 'radio-group', 'switch', 'segmented-control', 'slider', 'number-field', 'combobox', 'date-picker', 'spinner', 'progress-bar', 'banner', 'toast-region', 'badge', 'tooltip', 'popover', 'menu', 'drawer', 'link', 'tabs', 'breadcrumbs', 'side-nav', 'app-header', 'table', 'list', 'tag-group', 'avatar', 'avatar-group', 'divider', 'tree', 'image', 'text', 'heading'];
+const COMPONENTS = ['button', 'input', 'select', 'checkbox', 'card', 'modal', 'icon', 'icon-button', 'textarea', 'search-field', 'field', 'radio-group', 'switch', 'segmented-control', 'slider', 'number-field', 'combobox', 'date-picker', 'spinner', 'progress-bar', 'banner', 'toast-region', 'badge', 'tooltip', 'popover', 'menu', 'drawer', 'link', 'tabs', 'breadcrumbs', 'side-nav', 'app-header', 'table', 'list', 'tag-group', 'avatar', 'avatar-group', 'divider', 'tree', 'image', 'text', 'heading', 'container', 'stack', 'grid', 'section', 'page-shell'];
 
 const varsIn = (css: string): Set<string> => new Set([...css.matchAll(/var\(--([a-z0-9-]+)/g)].map((m) => m[1] ?? ''));
 

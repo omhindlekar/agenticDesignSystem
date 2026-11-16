@@ -1,0 +1,52 @@
+/* Section: a titled page region. Surface and danger variants add a bordered panel. */
+.ads-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-component-gap-md);
+  min-inline-size: 0;
+}
+
+.ads-section__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-component-gap-md);
+}
+
+.ads-section__intro {
+  display: flex;
+  flex: 1 1 var(--size-grid-item-sm);
+  flex-direction: column;
+  gap: var(--space-component-padding-xs);
+}
+
+.ads-section__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-component-gap-sm);
+}
+
+.ads-section__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-component-gap-md);
+}
+
+.ads-section[data-variant="surface"],
+.ads-section[data-variant="danger"] {
+  padding: var(--space-component-padding-lg);
+  border: var(--border-width-default) solid var(--color-border-default);
+  background: var(--color-background-surface);
+}
+
+.ads-section[data-variant="danger"] {
+  border-color: var(--color-border-danger);
+}
+
+@media (forced-colors: active) {
+  .ads-section[data-variant="surface"],
+  .ads-section[data-variant="danger"] {
+    border-color: CanvasText;
+  }
+}

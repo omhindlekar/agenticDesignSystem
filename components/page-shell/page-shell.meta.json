@@ -1,0 +1,111 @@
+{
+  "id": "page-shell",
+  "purpose": "The frame of a page: optional header, side navigation and footer around the one main landmark, with a skip link.",
+  "variants": [
+    "page",
+    "sunken"
+  ],
+  "states": [
+    "default"
+  ],
+  "props": [
+    {
+      "name": "header",
+      "type": "ReactNode",
+      "required": false,
+      "description": "The page header, usually an AppHeader"
+    },
+    {
+      "name": "nav",
+      "type": "ReactNode",
+      "required": false,
+      "description": "Side navigation, usually a SideNav"
+    },
+    {
+      "name": "footer",
+      "type": "ReactNode",
+      "required": false,
+      "description": "Footer content, such as legal links; wrapped in a footer landmark"
+    },
+    {
+      "name": "background",
+      "type": "'page' | 'sunken'",
+      "required": false,
+      "description": "page (default) or sunken, which makes surface panels stand out"
+    },
+    {
+      "name": "skipLinkLabel",
+      "type": "string",
+      "required": false,
+      "description": "Text of the skip link; defaults to Skip to main content"
+    },
+    {
+      "name": "children",
+      "type": "ReactNode",
+      "required": true,
+      "description": "The page content, rendered inside main"
+    }
+  ],
+  "whenToUse": [
+    "As the root of every full page that has no page template",
+    "Inside page templates, which build on it"
+  ],
+  "whenNotToUse": [
+    "Inside a Modal, Drawer or Card",
+    "More than once on a page \u2014 there is only one main"
+  ],
+  "related": [
+    "app-header",
+    "side-nav",
+    "container"
+  ],
+  "antiPatterns": [
+    "Two main landmarks on one page",
+    "Screens with a bare stack of fields and no page frame"
+  ],
+  "spec": {
+    "anatomy": [
+      "Skip link",
+      "Header",
+      "Body: nav and main",
+      "Footer"
+    ],
+    "sizes": [
+      "Main padding `space-layout-section` block, `space-layout-page` inline; footer padding `space-component-padding-md`; main narrows to `size-container-sm` before nav wraps"
+    ],
+    "typography": [
+      "Skip link label type"
+    ],
+    "states": [
+      "Background `color-background-page` or `color-background-sunken`; skip link `color-interactive-default` with `color-text-inverse`, focus ring `color-interactive-focus-ring`"
+    ],
+    "motion": [
+      "None"
+    ]
+  },
+  "tokensUsed": [
+    "border-width-default",
+    "border-width-focus",
+    "color-background-page",
+    "color-background-sunken",
+    "color-border-default",
+    "color-interactive-default",
+    "color-interactive-focus-ring",
+    "color-text-inverse",
+    "color-text-primary",
+    "focus-ring-offset",
+    "size-container-sm",
+    "space-component-padding-md",
+    "space-component-padding-sm",
+    "space-layout-page",
+    "space-layout-section",
+    "type-label-family",
+    "type-label-weight",
+    "z-index-modal"
+  ],
+  "a11yNotes": [
+    "One main landmark; header, navigation and footer are landmarks",
+    "With a header or nav, a skip link is the first Tab stop and moves focus to main (WCAG 2.4.1)"
+  ],
+  "kind": "layout"
+}

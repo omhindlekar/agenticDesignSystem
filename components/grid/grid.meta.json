@@ -1,0 +1,73 @@
+{
+  "id": "grid",
+  "purpose": "Arranges items in equal columns that drop as space runs out, so it is responsive without breakpoints.",
+  "variants": [
+    "default"
+  ],
+  "states": [
+    "default"
+  ],
+  "props": [
+    {
+      "name": "columns",
+      "type": "1 | 2 | 3 | 4 | 6 | 12",
+      "required": false,
+      "description": "Most columns to show; defaults to 3"
+    },
+    {
+      "name": "minItemWidth",
+      "type": "'sm' | 'md'",
+      "required": false,
+      "description": "Narrowest an item may get before a column drops: sm 240px for KPI tiles, md 320px (default) for cards"
+    },
+    {
+      "name": "children",
+      "type": "ReactNode",
+      "required": true,
+      "description": "The items, one per cell"
+    }
+  ],
+  "whenToUse": [
+    "KPI tiles, card collections and other sets of equal items",
+    "Two-column field pairs such as city and postcode"
+  ],
+  "whenNotToUse": [
+    "For a single row of buttons \u2014 use a horizontal Stack",
+    "For data with rows and columns \u2014 use Table"
+  ],
+  "related": [
+    "stack",
+    "card",
+    "container"
+  ],
+  "antiPatterns": [
+    "Fixed pixel column widths",
+    "Placing items of very different importance in equal cells"
+  ],
+  "spec": {
+    "anatomy": [
+      "A CSS grid of equal columns"
+    ],
+    "sizes": [
+      "Gap `layout-gutter-lg`; minimum item width `size-grid-item-sm` or `size-grid-item-md`"
+    ],
+    "typography": [
+      "None"
+    ],
+    "states": [
+      "None"
+    ],
+    "motion": [
+      "None"
+    ]
+  },
+  "tokensUsed": [
+    "layout-gutter-lg",
+    "size-grid-item-md",
+    "size-grid-item-sm"
+  ],
+  "a11yNotes": [
+    "Purely visual: adds no role; reading order follows source order"
+  ],
+  "kind": "layout"
+}
