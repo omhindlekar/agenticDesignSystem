@@ -6,3 +6,8 @@ export * from './screen-spec.js';
 export * from './qa-report.js';
 export * from './handoff-message.js';
 export * from './run-log-entry.js';
+export * from './pipeline.js';
+export * from './golden-brief.js';
+export * from './permissions.js';
+export * from './run-record.js';
+export * from './handoff-registry.js';

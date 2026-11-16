@@ -1,0 +1,22 @@
+{
+  "id": "pricing-cards",
+  "screenType": "marketing",
+  "brief": "Three pricing cards for the free, team and enterprise plans, each with the plan name as a heading, a price as text, a badge on the recommended plan, and a choose plan button",
+  "expectedComponents": [
+    "card",
+    "heading",
+    "text",
+    "badge",
+    "button"
+  ],
+  "forbiddenComponents": [
+    "table",
+    "modal"
+  ],
+  "forbiddenPatterns": [
+    "No nested cards"
+  ],
+  "passCriteria": [
+    "Every QA check passes"
+  ]
+}

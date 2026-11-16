@@ -32,57 +32,69 @@ function dirs(name: string) {
 const E2E_TIMEOUT = 30_000;
 
 describe('npm run generate (fake provider)', () => {
-  it('FR-6/FR-7: demo brief runs end to end and passes', async () => {
-    const lines: string[] = [];
-    const res = await runGenerate(DEMO_BRIEF, { repoRoot, ...dirs('demo'), print: (l) => lines.push(l) });
+  it(
+    'FR-6/FR-7: demo brief runs end to end and passes',
+    async () => {
+      const lines: string[] = [];
+      const res = await runGenerate(DEMO_BRIEF, { repoRoot, ...dirs('demo'), print: (l) => lines.push(l) });
 
-    expect(res.exitCode).toBe(0);
-    expect(res.result.outcome).toBe('pass');
+      expect(res.exitCode).toBe(0);
+      expect(res.result.outcome).toBe('pass');
 
-    // FR-6: the spec validates and uses only registered components
-    const spec = ScreenSpecSchema.parse(res.result.spec);
-    const ids = JSON.stringify(spec.tree).match(/"component":"([^"]+)"/g) ?? [];
-    expect(ids.length).toBeGreaterThan(1);
+      // FR-6: the spec validates and uses only registered components
+      const spec = ScreenSpecSchema.parse(res.result.spec);
+      const ids = JSON.stringify(spec.tree).match(/"component":"([^"]+)"/g) ?? [];
+      expect(ids.length).toBeGreaterThan(1);
 
-    // FR-7: the TSX is written, passes token lint and type-checks against the real components
-    expect(res.tsxPath).toBeDefined();
-    const tsx = readFileSync(res.tsxPath ?? '', 'utf8');
-    expect(tsx).toContain("from '@ads/components'");
-    expect(validateBuilderOutput(tsx).valid).toBe(true);
-    expect(typeCheckBuilderOutput(tsx, repoRoot).valid).toBe(true);
+      // FR-7: the TSX is written, passes token lint and type-checks against the real components
+      expect(res.tsxPath).toBeDefined();
+      const tsx = readFileSync(res.tsxPath ?? '', 'utf8');
+      expect(tsx).toContain("from '@ads/components'");
+      expect(validateBuilderOutput(tsx).valid).toBe(true);
+      expect(typeCheckBuilderOutput(tsx, repoRoot).valid).toBe(true);
 
-    // Output: spec, run id, retries and call count
-    const out = lines.join('\n');
-    expect(out).toContain('"tree"');
-    expect(out).toContain(`Run id:     ${res.result.runId}`);
-    expect(out).toMatch(/Retries:\s+composer 0, builder 0/);
-    expect(out).toMatch(/Calls:\s+2/);
-    expect(out).toMatch(/Provider:\s+fake/);
-  }, E2E_TIMEOUT);
+      // Output: spec, run id, retries and call count
+      const out = lines.join('\n');
+      expect(out).toContain('"tree"');
+      expect(out).toContain(`Run id:     ${res.result.runId}`);
+      expect(out).toMatch(/Retries:\s+composer 0, builder 0/);
+      expect(out).toMatch(/Calls:\s+2/);
+      expect(out).toMatch(/Provider:\s+fake/);
+    },
+    E2E_TIMEOUT,
+  );
 
-  it('FR-19: the run log is written with an entry per agent', async () => {
-    const d = dirs('log');
-    const res = await runGenerate(DEMO_BRIEF, { repoRoot, ...d, print: () => {} });
-    const entries = await new RunLogWriter(d.runsDir).read(res.result.runId);
-    expect(entries.map((e) => e.agent)).toEqual(['context', 'composer', 'builder']);
-    expect(entries.every((e) => e.outcome === 'pass')).toBe(true);
-  }, E2E_TIMEOUT);
+  it(
+    'FR-19: the run log is written with an entry per agent',
+    async () => {
+      const d = dirs('log');
+      const res = await runGenerate(DEMO_BRIEF, { repoRoot, ...d, print: () => {} });
+      const entries = await new RunLogWriter(d.runsDir).read(res.result.runId);
+      expect(entries.map((e) => e.agent)).toEqual(['context', 'composer', 'builder', 'qa']);
+      expect(entries.every((e) => e.outcome === 'pass')).toBe(true);
+    },
+    E2E_TIMEOUT,
+  );
 
-  it('FR-8: an unrecorded brief under the fake provider escalates cleanly with a hint, no crash', async () => {
-    const lines: string[] = [];
-    const d = dirs('unknown');
-    const res = await runGenerate('A dashboard nobody recorded a fixture for', {
-      repoRoot,
-      ...d,
-      print: (l) => lines.push(l),
-    });
-    expect(res.exitCode).toBe(1);
-    expect(res.result.outcome).toBe('escalate');
-    expect(res.result.attempts.composer).toBe(3);
-    expect(res.tsxPath).toBeUndefined();
-    expect(existsSync(d.outDir)).toBe(false);
-    expect(lines.join('\n')).toMatch(/MODEL_PROVIDER=cli/);
-  }, E2E_TIMEOUT);
+  it(
+    'FR-8: an unrecorded brief under the fake provider escalates cleanly with a hint, no crash',
+    async () => {
+      const lines: string[] = [];
+      const d = dirs('unknown');
+      const res = await runGenerate('A dashboard nobody recorded a fixture for', {
+        repoRoot,
+        ...d,
+        print: (l) => lines.push(l),
+      });
+      expect(res.exitCode).toBe(1);
+      expect(res.result.outcome).toBe('escalate');
+      expect(res.result.attempts.composer).toBe(3);
+      expect(res.tsxPath).toBeUndefined();
+      expect(existsSync(d.outDir)).toBe(false);
+      expect(lines.join('\n')).toMatch(/MODEL_PROVIDER=cli/);
+    },
+    E2E_TIMEOUT,
+  );
 
   it('taskId is derived from the brief so fixtures replay deterministically', () => {
     expect(taskIdForBrief(DEMO_BRIEF)).toBe(taskIdForBrief(DEMO_BRIEF));

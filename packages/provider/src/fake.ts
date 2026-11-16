@@ -8,13 +8,21 @@ export function hashKey(model: string, maxTokens: number, prompt: string): strin
 }
 
 export class FakeProvider implements ModelProvider {
-  constructor(private readonly fixturesDir: string) {}
+  /** Looks in each directory in turn (replay also reads the real-model cache). */
+  private readonly dirs: string[];
+  constructor(fixturesDir: string | string[]) {
+    this.dirs = Array.isArray(fixturesDir) ? fixturesDir : [fixturesDir];
+  }
+
+  private get fixturesDir(): string {
+    return this.dirs.join(', ');
+  }
 
   async complete(prompt: string, opts: CompleteOptions): Promise<CompleteResult> {
     const key = hashKey(opts.model, opts.maxTokens, prompt);
-    const fixturePath = join(this.fixturesDir, `${key}.json`);
+    const fixturePath = this.dirs.map((d) => join(d, `${key}.json`)).find((p) => existsSync(p));
 
-    if (!existsSync(fixturePath)) {
+    if (!fixturePath) {
       throw new Error(
         `FakeProvider: no fixture for hash ${key}.\n` +
           `Fixture directory: ${this.fixturesDir}\n` +
@@ -23,6 +31,7 @@ export class FakeProvider implements ModelProvider {
       );
     }
 
-    return JSON.parse(readFileSync(fixturePath, 'utf8')) as CompleteResult;
+    const { text } = JSON.parse(readFileSync(fixturePath, 'utf8')) as CompleteResult;
+    return { text, costUsd: 0 };
   }
 }

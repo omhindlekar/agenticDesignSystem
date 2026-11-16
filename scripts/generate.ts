@@ -9,14 +9,16 @@
  * Exit code 0 on pass, 1 on escalate/fail, 2 on usage error.
  */
 import { createHash } from 'node:crypto';
-import { mkdirSync, readFileSync, writeFileSync, statSync } from 'node:fs';
+import { readFileSync, statSync } from 'node:fs';
+import { guardedFs } from '../packages/permissions/src/index.js';
 import { join, dirname, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { runOrchestrator } from '../agents/orchestrator/index.js';
 import type { OrchestratorResult } from '../agents/orchestrator/index.js';
-import { loadDataStore, runContextAgent } from '../agents/context/index.js';
-import { runComposerWithCost } from '../agents/composer/index.js';
-import { runBuilderWithCost } from '../agents/builder/index.js';
+import { randomUUID } from 'node:crypto';
+import { loadDataStore, detectInstructions } from '../agents/context/index.js';
+import { createAgentRegistry } from '../agents/registry.js';
+import { RunRecordSchema } from '../packages/schemas/src/run-record.js';
 import { RunLogWriter } from '../packages/run-log/src/index.js';
 import { resolveProviderName } from '../packages/provider/src/index.js';
 import type { ProviderConfig } from '../packages/provider/src/index.js';
@@ -25,7 +27,7 @@ import type { ProviderConfig } from '../packages/provider/src/index.js';
 export const DEMO_BRIEF =
   'A sign-in card with email and password inputs, a remember-me checkbox and a primary sign-in button';
 
-const SCHEMA_VERSION = '1.0.0';
+export const SCHEMA_VERSION = '1.1.0';
 
 /** Deterministic task id: the same brief gives the same prompts, so fixtures replay. */
 export function taskIdForBrief(brief: string): string {
@@ -37,6 +39,28 @@ export interface GenerateOptions {
   outDir?: string;
   runsDir?: string;
   print?: (line: string) => void;
+  /** Golden-set id: the visual check compares against evals/baselines/<id>.png. */
+  baselineId?: string;
+  /** Fixed run id (replay). */
+  runId?: string;
+}
+
+/** A Storybook story for a generated screen, under "Generated", marked when QA failed. */
+export function writeGeneratedStory(outDir: string, runId: string, brief: string, qaPassed: boolean, repoRoot: string): string {
+  const short = brief.replace(/\s+/g, ' ').split(/[:.,]/)[0]!.trim().slice(0, 48).replace(/[/'"`\\]/g, '');
+  const title = `Generated/${short} (${qaPassed ? 'QA passed' : 'QA failed'}) ${runId.slice(0, 8)}`;
+  const dir = join(outDir, 'stories');
+  const fs = guardedFs('builder', repoRoot);
+  fs.mkdir(dir);
+  const file = join(dir, `${runId}.stories.tsx`);
+  fs.writeFile(
+    file,
+    `import type { Meta, StoryObj } from '@storybook/react-vite';\nimport * as mod from '../${runId}/screen';\n\n` +
+      `const Screen = ((mod as Record<string, unknown>).default ?? (mod as Record<string, unknown>).Screen) as () => React.JSX.Element;\n` +
+      `/** ${brief.replace(/\*\//g, '')} */\nconst meta = { title: ${JSON.stringify(title)}, parameters: { layout: 'padded' } } satisfies Meta;\nexport default meta;\n\n` +
+      `export const Screen_: StoryObj = { name: 'Screen', render: () => <Screen /> };\n`,
+  );
+  return file;
 }
 
 export interface GenerateResult {
@@ -57,20 +81,38 @@ export async function runGenerate(brief: string, opts: GenerateOptions): Promise
   const taskId = taskIdForBrief(brief);
   const store = await loadDataStore(repoRoot);
 
+  const runId = opts.runId ?? randomUUID();
+  const configText = ['defaults.json', 'pipeline.json']
+    .map((f) => readFileSync(join(repoRoot, 'config', f), 'utf8'))
+    .join('\n');
+  const record = RunRecordSchema.parse({
+    runId,
+    taskId,
+    brief,
+    schemaVersion: SCHEMA_VERSION,
+    configHash: createHash('sha256').update(configText).digest('hex').slice(0, 16),
+    provider,
+    model: config.model,
+    flags: detectInstructions(brief),
+    ...(opts.baselineId ? { baselineId: opts.baselineId } : {}),
+    startedAt: new Date().toISOString(),
+  });
+  const orchestratorFs = guardedFs('orchestrator', repoRoot);
+  orchestratorFs.mkdir(join(runsDir, runId));
+  orchestratorFs.writeFile(join(runsDir, runId, 'run.json'), `${JSON.stringify(record, null, 2)}\n`);
+
   const result = await runOrchestrator(
     { taskId, brief, schemaVersion: SCHEMA_VERSION },
     {
       repoRoot,
+      runId,
       logWriter: new RunLogWriter(runsDir),
-      contextRunner: async ({ taskId: id, task }) => runContextAgent({ taskId: id, task }, store),
-      composerRunner: async ({ taskId: id, brief: b, contextPack, previousError }) => {
-        const { spec, costUsd } = await runComposerWithCost({ taskId: id, brief: b, contextPack }, previousError, repoRoot);
-        return { result: spec, costUsd };
-      },
-      builderRunner: async ({ taskId: id, spec, contextPack, previousError }) => {
-        const { output, costUsd } = await runBuilderWithCost({ taskId: id, spec, contextPack }, previousError, repoRoot);
-        return { result: output.tsx, costUsd };
-      },
+      agents: createAgentRegistry({
+        repoRoot,
+        store,
+        runsDir,
+        ...(opts.baselineId ? { baselineId: opts.baselineId } : {}),
+      }),
     },
   );
 
@@ -81,11 +123,15 @@ export async function runGenerate(brief: string, opts: GenerateOptions): Promise
   }
 
   let tsxPath: string | undefined;
-  if (result.outcome === 'pass' && result.tsx !== undefined) {
+  let storyPath: string | undefined;
+  // Save the screen when it passed, and whenever QA ran on it (even if a cap then stopped the run), so it can be reviewed.
+  if (result.tsx !== undefined && (result.outcome === 'pass' || result.qaReport !== undefined)) {
     const dir = join(outDir, result.runId);
-    mkdirSync(dir, { recursive: true });
+    const builderFs = guardedFs('builder', repoRoot);
+    builderFs.mkdir(dir);
     tsxPath = join(dir, 'screen.tsx');
-    writeFileSync(tsxPath, result.tsx.endsWith('\n') ? result.tsx : `${result.tsx}\n`, 'utf8');
+    builderFs.writeFile(tsxPath, result.tsx.endsWith('\n') ? result.tsx : `${result.tsx}\n`);
+    storyPath = writeGeneratedStory(outDir, result.runId, brief, result.outcome === 'pass' && result.qaReport?.overallStatus === 'pass', repoRoot);
   }
 
   const row = (label: string, value: string) => print(`${`${label}:`.padEnd(12)}${value}`);
@@ -93,10 +139,27 @@ export async function runGenerate(brief: string, opts: GenerateOptions): Promise
   row('Task id', result.taskId);
   row('Provider', `${provider} (model ${config.model})`);
   row('Outcome', result.outcome);
-  row('Retries', `composer ${Math.max(result.attempts.composer - 1, 0)}, builder ${Math.max(result.attempts.builder - 1, 0)}`);
+  row(
+    'Retries',
+    Object.entries(result.attempts)
+      .map(([agent, n]) => `${agent} ${Math.max(n - 1, 0)}`)
+      .join(', '),
+  );
+  if (result.qaReport) {
+    row(
+      'QA',
+      `${result.qaReport.overallStatus}${result.firstPass ? ' (first pass)' : ''}: ${result.qaReport.checks.map((c) => `${c.checkName} ${c.status}`).join(', ')}`,
+    );
+    for (const f of result.qaReport.findings ?? [])
+      print(
+        `  ${f.ruleId}${f.criterion ? ` (WCAG ${f.criterion})` : ''}: ${f.message}${f.evidence ? ` [${f.evidence}]` : ''}`,
+      );
+  }
+  if (result.flags.length) row('Flagged', result.flags.join('; '));
   row('Calls', String(result.calls));
   row('Cost', `$${result.costUsd.toFixed(4)}${provider === 'claude-cli' ? ' (not reported by the CLI provider)' : ''}`);
   if (tsxPath) row('Generated', show(tsxPath));
+  if (storyPath) row('Story', `${show(storyPath)} (Storybook: Generated)`);
   row('Run log', show(join(runsDir, result.runId, 'log.jsonl')));
 
   if (result.outcome !== 'pass') {
@@ -126,7 +189,7 @@ if (process.argv[1] && statSync(process.argv[1]).ino === statSync(thisFile).ino)
   runGenerate(brief, { repoRoot: join(dirname(thisFile), '..') })
     .then(({ exitCode }) => process.exit(exitCode))
     .catch((err: unknown) => {
-      console.error(`generate: unexpected error: ${err instanceof Error ? err.stack ?? err.message : String(err)}`);
+      console.error(`generate: unexpected error: ${err instanceof Error ? (err.stack ?? err.message) : String(err)}`);
       process.exit(1);
     });
 }

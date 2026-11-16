@@ -8,11 +8,7 @@ import type { ModelProvider, CompleteOptions, CompleteResult } from './types.js'
 // Rate-limit signals come from the CLI layer (stderr / non-zero exit), never from model output.
 const RATE_LIMIT_PATTERNS = /rate.?limit|429|too many requests|overloaded/i;
 
-type Spawner = (
-  cmd: string,
-  args: string[],
-  opts: Parameters<typeof spawnSync>[2],
-) => SpawnSyncReturns<string>;
+type Spawner = (cmd: string, args: string[], opts: Parameters<typeof spawnSync>[2]) => SpawnSyncReturns<string>;
 
 export class ClaudeCliProvider implements ModelProvider {
   private readonly spawner: Spawner;
@@ -31,14 +27,17 @@ export class ClaudeCliProvider implements ModelProvider {
         'claude',
         [
           '-p',
-          '--tools', '',            // disable all built-in tools
-          '--output-format', 'text',
-          '--model', opts.model,
+          '--tools',
+          '', // disable all built-in tools
+          '--output-format',
+          'text',
+          '--model',
+          opts.model,
         ],
         {
-          input: prompt,            // prompt via stdin, not as a CLI argument
+          input: prompt, // prompt via stdin, not as a CLI argument
           encoding: 'utf8',
-          cwd: tmpDir,              // empty dir — no CLAUDE.md to load
+          cwd: tmpDir, // empty dir — no CLAUDE.md to load
           timeout: 120_000,
           maxBuffer: 10 * 1024 * 1024,
         },
@@ -59,7 +58,9 @@ export class ClaudeCliProvider implements ModelProvider {
       if (result.status !== 0) {
         throw new Error(
           `ClaudeCliProvider: claude exited with status ${result.status ?? 'null'}. ` +
-            (stderr ? `stderr: ${stderr}` : 'No stderr output.'),
+            (stderr ? `stderr: ${stderr}` : 'No stderr output.') +
+            // On a failed exit, stdout is the CLI's own message (for example a usage limit), not model output.
+            ((result.stdout ?? '').trim() ? ` stdout: ${(result.stdout ?? '').trim().slice(0, 300)}` : ''),
         );
       }
 
@@ -70,7 +71,11 @@ export class ClaudeCliProvider implements ModelProvider {
 
       return { text: stdout, costUsd: 0 };
     } finally {
-      try { rmSync(tmpDir, { recursive: true, force: true }); } catch { /* ignore cleanup errors */ }
+      try {
+        rmSync(tmpDir, { recursive: true, force: true });
+      } catch {
+        /* ignore cleanup errors */
+      }
     }
   }
 }

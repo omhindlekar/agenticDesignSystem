@@ -29,9 +29,7 @@ describe('FR-9 QAReportSchema', () => {
     const passing = {
       taskId: 'task-002',
       overallStatus: 'pass',
-      checks: [
-        { checkName: 'token-lint', status: 'pass', failingRuleIds: [] },
-      ],
+      checks: [{ checkName: 'token-lint', status: 'pass', failingRuleIds: [] }],
     };
     expect(QAReportSchema.safeParse(passing).success).toBe(true);
   });
@@ -57,10 +55,49 @@ describe('FR-9 QAReportSchema', () => {
     const skipped = {
       taskId: 'task-003',
       overallStatus: 'pass',
-      checks: [
-        { checkName: 'visual-regression', status: 'skipped', failingRuleIds: [] },
-      ],
+      checks: [{ checkName: 'visual-regression', status: 'skipped', failingRuleIds: [] }],
     };
     expect(QAReportSchema.safeParse(skipped).success).toBe(true);
+  });
+});
+
+describe('FR-9, FR-20 QAReportSchema findings', () => {
+  const finding = {
+    checkName: 'token-lint',
+    ruleId: 'DS-001',
+    message: 'Use a colour token instead of #3b82f6.',
+    evidence: 'screen.tsx:12',
+  };
+  it('FR-20: accepts findings that explain every failing rule in one sentence', () => {
+    expect(QAReportSchema.safeParse({ ...validReport, findings: [finding] }).success).toBe(true);
+  });
+  it('FR-20: rejects a failing rule with no finding explaining it', () => {
+    expect(QAReportSchema.safeParse({ ...validReport, findings: [] }).success).toBe(false);
+  });
+  it('FR-11: an accessibility finding can cite the WCAG success criterion', () => {
+    const a11y = {
+      checkName: 'accessibility',
+      ruleId: 'DS-A-001',
+      criterion: '1.4.3',
+      message: 'Text contrast is 3.1:1; it needs 4.5:1.',
+    };
+    expect(QAReportSchema.safeParse({ ...validReport, findings: [finding, a11y] }).success).toBe(true);
+  });
+  it('FR-9: overallStatus must agree with the checks', () => {
+    expect(QAReportSchema.safeParse({ ...validReport, overallStatus: 'pass' }).success).toBe(false);
+    const allPass = {
+      taskId: 't',
+      overallStatus: 'fail',
+      checks: [{ checkName: 'x', status: 'pass', failingRuleIds: [] }],
+    };
+    expect(QAReportSchema.safeParse(allPass).success).toBe(false);
+  });
+  it('FR-9: skipped checks are allowed in a passing report', () => {
+    const r = {
+      taskId: 't',
+      overallStatus: 'pass',
+      checks: [{ checkName: 'visual', status: 'skipped', failingRuleIds: [], reason: 'No approved baseline.' }],
+    };
+    expect(QAReportSchema.safeParse(r).success).toBe(true);
   });
 });

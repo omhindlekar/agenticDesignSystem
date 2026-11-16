@@ -1,0 +1,19 @@
+{
+  "id": "delete-confirmation",
+  "screenType": "confirmation",
+  "brief": "A confirmation modal asking whether to delete the project, with a short warning text, a cancel button and a delete button",
+  "expectedComponents": [
+    "modal",
+    "button"
+  ],
+  "forbiddenComponents": [
+    "tooltip"
+  ],
+  "forbiddenPatterns": [
+    "Destructive action uses the danger tone",
+    "Modal has a title"
+  ],
+  "passCriteria": [
+    "Every QA check passes"
+  ]
+}

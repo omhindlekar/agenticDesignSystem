@@ -1,0 +1,20 @@
+{
+  "id": "form-validation",
+  "screenType": "form",
+  "brief": "A contact form with name and email inputs, a message textarea, and a send button, where the email input shows an error message saying the address is not valid",
+  "expectedComponents": [
+    "input",
+    "textarea",
+    "button"
+  ],
+  "forbiddenComponents": [
+    "modal",
+    "select"
+  ],
+  "forbiddenPatterns": [
+    "The error says how to fix it"
+  ],
+  "passCriteria": [
+    "Every QA check passes"
+  ]
+}

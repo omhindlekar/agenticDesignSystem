@@ -1,0 +1,20 @@
+{
+  "id": "date-range-filter",
+  "screenType": "filter",
+  "brief": "A filter bar with a date picker for the start date, a date picker for the end date, a segmented control to choose day, week or month, and an apply filters button",
+  "expectedComponents": [
+    "date-picker",
+    "segmented-control",
+    "button"
+  ],
+  "forbiddenComponents": [
+    "select",
+    "input"
+  ],
+  "forbiddenPatterns": [
+    "Dates use the date picker, not text inputs"
+  ],
+  "passCriteria": [
+    "Every QA check passes"
+  ]
+}

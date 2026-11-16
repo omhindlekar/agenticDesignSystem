@@ -3,15 +3,9 @@ import { ContextPackSchema } from '../src/context-pack.js';
 
 const validPack = {
   taskId: 'task-001',
-  tokenIds: [
-    { id: 'color-interactive-default', reason: 'Button uses this token for its background' },
-  ],
-  componentIds: [
-    { id: 'button', reason: 'Primary action on the screen' },
-  ],
-  ruleIds: [
-    { id: 'DS-001', reason: 'All colours must reference a semantic token' },
-  ],
+  tokenIds: [{ id: 'color-interactive-default', reason: 'Button uses this token for its background' }],
+  componentIds: [{ id: 'button', reason: 'Primary action on the screen' }],
+  ruleIds: [{ id: 'DS-001', reason: 'All colours must reference a semantic token' }],
 };
 
 describe('FR-5 ContextPackSchema', () => {
@@ -44,12 +38,14 @@ describe('FR-5 ContextPackSchema', () => {
   });
 
   it('FR-5: accepts an empty context pack (no matching tokens/components/rules)', () => {
-    expect(ContextPackSchema.safeParse({
-      taskId: 'task-002',
-      tokenIds: [],
-      componentIds: [],
-      ruleIds: [],
-    }).success).toBe(true);
+    expect(
+      ContextPackSchema.safeParse({
+        taskId: 'task-002',
+        tokenIds: [],
+        componentIds: [],
+        ruleIds: [],
+      }).success,
+    ).toBe(true);
   });
 
   it('FR-5: rejects a pack without a taskId', () => {

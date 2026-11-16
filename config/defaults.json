@@ -15,6 +15,13 @@
     "includePaths": ["components"],
     "extensions": [".tsx", ".ts", ".css", ".scss"]
   },
+  "visual": {
+    "pixelThreshold": 0.1,
+    "maxDiffRatio": 0.001
+  },
+  "qa": {
+    "budgetMs": 120000
+  },
   "runLog": {
     "retentionDays": 365
   }

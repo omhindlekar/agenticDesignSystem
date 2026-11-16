@@ -1,0 +1,20 @@
+{
+  "id": "empty-state",
+  "screenType": "empty state",
+  "brief": "An empty state for a projects page: a heading saying there are no projects yet, a line of explanatory text, and a create project button",
+  "expectedComponents": [
+    "heading",
+    "text",
+    "button"
+  ],
+  "forbiddenComponents": [
+    "table",
+    "modal"
+  ],
+  "forbiddenPatterns": [
+    "One clear next step"
+  ],
+  "passCriteria": [
+    "Every QA check passes"
+  ]
+}

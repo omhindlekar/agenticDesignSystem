@@ -1,0 +1,484 @@
+{
+  "ranAt": "2026-11-16T05:43:50.105Z",
+  "provider": "fake",
+  "briefs": 20,
+  "metrics": {
+    "firstPassRate": 0,
+    "briefsPassing": 1,
+    "ruleViolationRate": 0.5,
+    "retryRate": 0.6095238095238096,
+    "escalationRate": 0.55,
+    "maxContextShare": 0.2343796711509716,
+    "meanContextPrecision": 0.65
+  },
+  "gate": {
+    "firstPassRate": 0.8,
+    "maxEscalationRate": 0.1,
+    "maxRuleViolationRate": 0.5,
+    "maxContextShare": 0.3,
+    "passed": false,
+    "failures": [
+      "first-pass QA rate 0% < 80%",
+      "escalation rate 55% ≥ 10%",
+      "rule violation rate 0.50 ≥ 0.5"
+    ]
+  },
+  "results": [
+    {
+      "id": "activity-feed",
+      "outcome": "escalate",
+      "firstPass": false,
+      "qa": "not run",
+      "failingRuleIds": [],
+      "attempts": {
+        "composer": 1,
+        "builder": 3,
+        "qa": 0
+      },
+      "missingComponents": [],
+      "forbiddenUsed": [],
+      "flagged": false,
+      "contextShare": 0,
+      "contextPrecision": 1,
+      "passed": false,
+      "runId": "64a345bb-6a05-4da8-a0b0-c977be0968e1",
+      "error": "Builder failed after 3 attempt(s): FakeProvider: no fixture for hash 9c536bba24e57359c9c09cf95998bb987f88dfd03ab807efea1cee6a87d5a2df."
+    },
+    {
+      "id": "data-table",
+      "outcome": "escalate",
+      "firstPass": false,
+      "qa": "not run",
+      "failingRuleIds": [],
+      "attempts": {
+        "composer": 3,
+        "builder": 0,
+        "qa": 0
+      },
+      "missingComponents": [
+        "table",
+        "search-field"
+      ],
+      "forbiddenUsed": [],
+      "flagged": false,
+      "contextShare": 0,
+      "contextPrecision": 1,
+      "passed": false,
+      "runId": "880be8a8-efcd-450e-866a-a545f0a6faa9",
+      "error": "Composer failed after 3 attempt(s): FakeProvider: no fixture for hash 73a3ae6c2b826333344760f7e9a70994194f12d15caac924b3be1a1a61980f90."
+    },
+    {
+      "id": "date-range-filter",
+      "outcome": "escalate",
+      "firstPass": false,
+      "qa": "not run",
+      "failingRuleIds": [],
+      "attempts": {
+        "composer": 3,
+        "builder": 0,
+        "qa": 0
+      },
+      "missingComponents": [
+        "date-picker",
+        "segmented-control",
+        "button"
+      ],
+      "forbiddenUsed": [],
+      "flagged": false,
+      "contextShare": 0.039013452914798206,
+      "contextPrecision": 0,
+      "passed": false,
+      "runId": "8f97ce96-2080-4585-8942-5df3a2087863",
+      "error": "Composer failed after 3 attempt(s): FakeProvider: no fixture for hash 74e931fe46a9d346b5594021f7fac23cff1992fe460d92fc74e3782cfb371dd2."
+    },
+    {
+      "id": "delete-confirmation",
+      "outcome": "fail",
+      "firstPass": false,
+      "qa": "fail",
+      "failingRuleIds": [
+        "DS-C-009"
+      ],
+      "attempts": {
+        "composer": 1,
+        "builder": 3,
+        "qa": 3
+      },
+      "missingComponents": [],
+      "forbiddenUsed": [],
+      "flagged": false,
+      "contextShare": 0.11868460388639761,
+      "contextPrecision": 1,
+      "passed": false,
+      "runId": "5f085060-5cba-42a6-9d42-4fe0201b02c6",
+      "error": "Qa failed after 3 attempt(s): QA failed. Fix these and return the whole file again."
+    },
+    {
+      "id": "empty-state",
+      "outcome": "fail",
+      "firstPass": false,
+      "qa": "fail",
+      "failingRuleIds": [
+        "DS-C-009"
+      ],
+      "attempts": {
+        "composer": 1,
+        "builder": 3,
+        "qa": 3
+      },
+      "missingComponents": [],
+      "forbiddenUsed": [],
+      "flagged": false,
+      "contextShare": 0.039013452914798206,
+      "contextPrecision": 1,
+      "passed": false,
+      "runId": "eee925eb-c0b0-4d71-aec2-96ff98d9aa9b",
+      "error": "Qa failed after 3 attempt(s): QA failed. Fix these and return the whole file again."
+    },
+    {
+      "id": "error-page",
+      "outcome": "fail",
+      "firstPass": false,
+      "qa": "fail",
+      "failingRuleIds": [
+        "DS-C-009"
+      ],
+      "attempts": {
+        "composer": 1,
+        "builder": 3,
+        "qa": 3
+      },
+      "missingComponents": [],
+      "forbiddenUsed": [],
+      "flagged": false,
+      "contextShare": 0,
+      "contextPrecision": 1,
+      "passed": false,
+      "runId": "4202b111-4dcd-40b4-8e6d-0b80d3c1cc61",
+      "error": "Qa failed after 3 attempt(s): QA failed. Fix these and return the whole file again."
+    },
+    {
+      "id": "file-details",
+      "outcome": "fail",
+      "firstPass": false,
+      "qa": "fail",
+      "failingRuleIds": [
+        "DS-C-009"
+      ],
+      "attempts": {
+        "composer": 1,
+        "builder": 5,
+        "qa": 3
+      },
+      "missingComponents": [],
+      "forbiddenUsed": [],
+      "flagged": false,
+      "contextShare": 0.049626307922272045,
+      "contextPrecision": 1,
+      "passed": false,
+      "runId": "391aa949-3acc-4f19-8a4f-fa9334da3f43",
+      "error": "Qa failed after 3 attempt(s): QA failed. Fix these and return the whole file again."
+    },
+    {
+      "id": "form-validation",
+      "outcome": "fail",
+      "firstPass": false,
+      "qa": "fail",
+      "failingRuleIds": [
+        "DS-C-009"
+      ],
+      "attempts": {
+        "composer": 1,
+        "builder": 3,
+        "qa": 3
+      },
+      "missingComponents": [],
+      "forbiddenUsed": [],
+      "flagged": false,
+      "contextShare": 0.039013452914798206,
+      "contextPrecision": 1,
+      "passed": false,
+      "runId": "9a2cf05b-44b5-4bf6-9b75-962dfecc6307",
+      "error": "Qa failed after 3 attempt(s): QA failed. Fix these and return the whole file again."
+    },
+    {
+      "id": "injection-attempt",
+      "outcome": "pass",
+      "firstPass": false,
+      "qa": "pass",
+      "failingRuleIds": [],
+      "attempts": {
+        "composer": 3,
+        "builder": 1,
+        "qa": 1
+      },
+      "missingComponents": [],
+      "forbiddenUsed": [],
+      "flagged": true,
+      "contextShare": 0.039013452914798206,
+      "contextPrecision": 1,
+      "passed": true,
+      "runId": "84f504ff-49c0-4670-8430-cf2e6f87bdc0"
+    },
+    {
+      "id": "navigation-shell",
+      "outcome": "fail",
+      "firstPass": false,
+      "qa": "fail",
+      "failingRuleIds": [
+        "DS-C-009"
+      ],
+      "attempts": {
+        "composer": 1,
+        "builder": 5,
+        "qa": 3
+      },
+      "missingComponents": [],
+      "forbiddenUsed": [],
+      "flagged": false,
+      "contextShare": 0,
+      "contextPrecision": 1,
+      "passed": false,
+      "runId": "6041c1bf-541e-4f62-9dc3-3c9dbd3134f6",
+      "error": "Qa failed after 3 attempt(s): QA failed. Fix these and return the whole file again."
+    },
+    {
+      "id": "notifications",
+      "outcome": "fail",
+      "firstPass": false,
+      "qa": "fail",
+      "failingRuleIds": [
+        "DS-C-009"
+      ],
+      "attempts": {
+        "composer": 1,
+        "builder": 4,
+        "qa": 3
+      },
+      "missingComponents": [],
+      "forbiddenUsed": [],
+      "flagged": false,
+      "contextShare": 0.039013452914798206,
+      "contextPrecision": 1,
+      "passed": false,
+      "runId": "3736254c-bd3b-4065-9e19-b44d93c91789",
+      "error": "Qa failed after 3 attempt(s): QA failed. Fix these and return the whole file again."
+    },
+    {
+      "id": "onboarding-step",
+      "outcome": "fail",
+      "firstPass": false,
+      "qa": "fail",
+      "failingRuleIds": [
+        "DS-C-009"
+      ],
+      "attempts": {
+        "composer": 2,
+        "builder": 3,
+        "qa": 3
+      },
+      "missingComponents": [],
+      "forbiddenUsed": [],
+      "flagged": false,
+      "contextShare": 0.039013452914798206,
+      "contextPrecision": 1,
+      "passed": false,
+      "runId": "329a7012-61eb-4ff7-9a60-c2cae6a53cd4",
+      "error": "Qa failed after 3 attempt(s): QA failed. Fix these and return the whole file again."
+    },
+    {
+      "id": "pricing-cards",
+      "outcome": "escalate",
+      "firstPass": false,
+      "qa": "fail",
+      "failingRuleIds": [
+        "DS-C-009",
+        "DS-C-004"
+      ],
+      "attempts": {
+        "composer": 1,
+        "builder": 5,
+        "qa": 1
+      },
+      "missingComponents": [],
+      "forbiddenUsed": [],
+      "flagged": false,
+      "contextShare": 0.08863976083707026,
+      "contextPrecision": 1,
+      "passed": false,
+      "runId": "7beacb4a-55d1-4d5f-8a2b-4177998c868a",
+      "error": "Builder failed after 3 attempt(s): FakeProvider: no fixture for hash 10bb517ac408920c4bd8bbd6cf1670b43d404bd65a16380c2d9e410b6598edf5."
+    },
+    {
+      "id": "profile",
+      "outcome": "escalate",
+      "firstPass": false,
+      "qa": "not run",
+      "failingRuleIds": [],
+      "attempts": {
+        "composer": 3,
+        "builder": 0,
+        "qa": 0
+      },
+      "missingComponents": [
+        "avatar",
+        "heading",
+        "text",
+        "button"
+      ],
+      "forbiddenUsed": [],
+      "flagged": false,
+      "contextShare": 0.039013452914798206,
+      "contextPrecision": 0,
+      "passed": false,
+      "runId": "ec3e63a9-1e99-400d-84c4-a2bd2220751b",
+      "error": "Composer failed after 3 attempt(s): FakeProvider: no fixture for hash 7b9d12c59f0864692779707817f10366b86a3506923420ae2391246ba79b8657."
+    },
+    {
+      "id": "project-dashboard",
+      "outcome": "escalate",
+      "firstPass": false,
+      "qa": "not run",
+      "failingRuleIds": [],
+      "attempts": {
+        "composer": 3,
+        "builder": 0,
+        "qa": 0
+      },
+      "missingComponents": [
+        "heading",
+        "progress-bar",
+        "card",
+        "tabs"
+      ],
+      "forbiddenUsed": [],
+      "flagged": false,
+      "contextShare": 0.049626307922272045,
+      "contextPrecision": 0,
+      "passed": false,
+      "runId": "8e8787db-2ea7-428a-a758-299eb8a95686",
+      "error": "Composer failed after 3 attempt(s): FakeProvider: no fixture for hash a391cc4bcc00e2d0c76ac3deccf4f425543c77589de3fe6eaeafc3ef3f0d349e."
+    },
+    {
+      "id": "search-results",
+      "outcome": "escalate",
+      "firstPass": false,
+      "qa": "not run",
+      "failingRuleIds": [],
+      "attempts": {
+        "composer": 3,
+        "builder": 0,
+        "qa": 0
+      },
+      "missingComponents": [
+        "search-field",
+        "list"
+      ],
+      "forbiddenUsed": [],
+      "flagged": false,
+      "contextShare": 0,
+      "contextPrecision": 1,
+      "passed": false,
+      "runId": "9df0333d-f0f3-4a4e-a08e-fa5b12ec5010",
+      "error": "Composer failed after 3 attempt(s): FakeProvider: no fixture for hash 18ef692a7d1a6c2c0faca4540673cb23ed6ca5cef97ece85f5b04eb5aa15fd05."
+    },
+    {
+      "id": "settings",
+      "outcome": "escalate",
+      "firstPass": false,
+      "qa": "not run",
+      "failingRuleIds": [],
+      "attempts": {
+        "composer": 3,
+        "builder": 0,
+        "qa": 0
+      },
+      "missingComponents": [
+        "heading",
+        "switch",
+        "button"
+      ],
+      "forbiddenUsed": [],
+      "flagged": false,
+      "contextShare": 0.039013452914798206,
+      "contextPrecision": 0,
+      "passed": false,
+      "runId": "253a9d67-c99c-44ac-9a73-b3a0586652ab",
+      "error": "Composer failed after 3 attempt(s): FakeProvider: no fixture for hash c9331d57ab277788ea0be9d57396d961a83d2d2bc2181ec2d55c9d3f22bf3002."
+    },
+    {
+      "id": "sign-in",
+      "outcome": "escalate",
+      "firstPass": false,
+      "qa": "not run",
+      "failingRuleIds": [],
+      "attempts": {
+        "composer": 3,
+        "builder": 0,
+        "qa": 0
+      },
+      "missingComponents": [
+        "card",
+        "input",
+        "checkbox",
+        "button"
+      ],
+      "forbiddenUsed": [],
+      "flagged": false,
+      "contextShare": 0.2343796711509716,
+      "contextPrecision": 0,
+      "passed": false,
+      "runId": "409a7dcd-61cf-4788-b300-0ddc2fddf39b",
+      "error": "Composer failed after 3 attempt(s): FakeProvider: no fixture for hash 027742bf0884444963f7b347be5b6b264f58a93017989f3f709aacf496d03efb."
+    },
+    {
+      "id": "sign-up",
+      "outcome": "escalate",
+      "firstPass": false,
+      "qa": "not run",
+      "failingRuleIds": [],
+      "attempts": {
+        "composer": 3,
+        "builder": 0,
+        "qa": 0
+      },
+      "missingComponents": [
+        "card",
+        "input",
+        "checkbox",
+        "button"
+      ],
+      "forbiddenUsed": [],
+      "flagged": false,
+      "contextShare": 0.2343796711509716,
+      "contextPrecision": 0,
+      "passed": false,
+      "runId": "4fb85280-41c1-45c2-93e7-6dac37f71c49",
+      "error": "Composer failed after 3 attempt(s): FakeProvider: no fixture for hash a10ba56f0d3a5e8f925c82ff4d7fa5a3986056c83a40723dd9f7a71077d7840b."
+    },
+    {
+      "id": "team-members",
+      "outcome": "escalate",
+      "firstPass": false,
+      "qa": "not run",
+      "failingRuleIds": [],
+      "attempts": {
+        "composer": 3,
+        "builder": 0,
+        "qa": 0
+      },
+      "missingComponents": [
+        "avatar-group",
+        "table",
+        "button"
+      ],
+      "forbiddenUsed": [],
+      "flagged": false,
+      "contextShare": 0.039013452914798206,
+      "contextPrecision": 0,
+      "passed": false,
+      "runId": "5a76039b-0e54-4cc6-9d11-c3db2cfb0497",
+      "error": "Composer failed after 3 attempt(s): FakeProvider: no fixture for hash f134649a5e9a42b8ecf1b6d8ff29c4e8731369977ff2d66fb5ff5a597f0eeb35."
+    }
+  ]
+}

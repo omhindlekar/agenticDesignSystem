@@ -1,0 +1,21 @@
+{
+  "id": "sign-up",
+  "screenType": "authentication",
+  "brief": "A create-account form in a card: full name, email and password inputs, a checkbox to accept the terms, and a create account button",
+  "expectedComponents": [
+    "card",
+    "input",
+    "checkbox",
+    "button"
+  ],
+  "forbiddenComponents": [
+    "modal"
+  ],
+  "forbiddenPatterns": [
+    "One contained button",
+    "Every field has a visible label"
+  ],
+  "passCriteria": [
+    "Every QA check passes"
+  ]
+}

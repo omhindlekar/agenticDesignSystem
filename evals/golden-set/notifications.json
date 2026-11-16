@@ -1,0 +1,20 @@
+{
+  "id": "notifications",
+  "screenType": "notifications",
+  "brief": "A notifications panel listing recent notifications in a list, with a banner at the top saying two items need attention and a mark all as read button",
+  "expectedComponents": [
+    "list",
+    "banner",
+    "button"
+  ],
+  "forbiddenComponents": [
+    "modal",
+    "toast-region"
+  ],
+  "forbiddenPatterns": [
+    "Banner tone matches the message"
+  ],
+  "passCriteria": [
+    "Every QA check passes"
+  ]
+}

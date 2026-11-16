@@ -1,0 +1,19 @@
+{
+  "id": "search-results",
+  "screenType": "search",
+  "brief": "A search results page with a search field at the top and a list of matching documents underneath, each with a title and a short description",
+  "expectedComponents": [
+    "search-field",
+    "list"
+  ],
+  "forbiddenComponents": [
+    "table",
+    "select"
+  ],
+  "forbiddenPatterns": [
+    "Search field has a label"
+  ],
+  "passCriteria": [
+    "Every QA check passes"
+  ]
+}

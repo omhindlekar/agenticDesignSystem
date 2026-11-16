@@ -1,0 +1,19 @@
+{
+  "id": "navigation-shell",
+  "screenType": "app shell",
+  "brief": "An app shell with an app header showing the product name and a search field, and a side navigation with links to home, projects, members and settings",
+  "expectedComponents": [
+    "app-header",
+    "side-nav"
+  ],
+  "forbiddenComponents": [
+    "menu",
+    "tabs"
+  ],
+  "forbiddenPatterns": [
+    "Navigation uses links, not buttons"
+  ],
+  "passCriteria": [
+    "Every QA check passes"
+  ]
+}

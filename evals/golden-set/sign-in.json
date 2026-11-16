@@ -1,0 +1,22 @@
+{
+  "id": "sign-in",
+  "screenType": "authentication",
+  "brief": "A sign-in screen: a card with email and password inputs, a remember-me checkbox and a sign-in button",
+  "expectedComponents": [
+    "card",
+    "input",
+    "checkbox",
+    "button"
+  ],
+  "forbiddenComponents": [
+    "modal",
+    "select"
+  ],
+  "forbiddenPatterns": [
+    "One contained button",
+    "No nested cards"
+  ],
+  "passCriteria": [
+    "Every QA check passes"
+  ]
+}
