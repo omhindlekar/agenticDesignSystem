@@ -58,8 +58,21 @@ describe('FR-2, BR-4 Figma library in step with the repo (one-way push)', () => 
 
   it('BR-4: the push scripts are generated from the repo and fit the use_figma size limit', () => {
     const scripts = buildPushScripts(payload, root);
-    expect(Object.keys(scripts)).toHaveLength(9);
+    expect(Object.keys(scripts)).toHaveLength(10);
     for (const [name, code] of Object.entries(scripts)) expect(code.length, name).toBeLessThan(50_000);
+  });
+
+  it('BR-4: the push scripts are incremental, so pushing to the live library never duplicates anything', () => {
+    const scripts = buildPushScripts(payload, root);
+    for (const [name, code] of Object.entries(scripts)) {
+      // Every create is guarded by a lookup of what already exists in the file.
+      if (/createVariableCollection\(/.test(code)) expect(code, name).toMatch(/getLocalVariableCollectionsAsync/);
+      if (/createVariable\(/.test(code)) expect(code, name).toMatch(/getLocalVariablesAsync/);
+      if (/createTextStyle\(/.test(code)) expect(code, name).toMatch(/getLocalTextStylesAsync/);
+      if (/createEffectStyle\(/.test(code)) expect(code, name).toMatch(/getLocalEffectStylesAsync/);
+    }
+    expect(scripts['03-pages-icons.js']).toMatch(/GLY_HAVE/);
+    expect(scripts['10-layout.js']).toMatch(/'Layout'/);
   });
 
   it('BR-4: Figma is not behind the repo — tokens and component metadata match the last recorded push', () => {

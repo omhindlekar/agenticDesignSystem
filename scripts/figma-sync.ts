@@ -311,34 +311,41 @@ export function buildPushScripts(payload: PushPayload, root = REPO): Record<stri
   const j = (x: unknown) => JSON.stringify(x);
   const css = `const css=n=>'var(--'+n.replace(/\\//g,'-')+')';const T={C:'COLOR',F:'FLOAT',S:'STRING'};`;
   const scripts: Record<string, string> = {};
-  scripts['01-primitives-color.js'] = `const PRIM=${j(prim)};const COL=${j(col)};${css}
+  // Incremental: every collection, mode, variable and style is looked up by name first, so a
+  // push to the live library adds what is missing and updates values, never duplicating.
+  const up = `const COLS=await figma.variables.getLocalVariableCollectionsAsync();const ALLV=await figma.variables.getLocalVariablesAsync();
+const coll=(name,modes)=>{let c=COLS.find(x=>x.name===name);if(!c){c=figma.variables.createVariableCollection(name);c.renameMode(c.modes[0].modeId,modes[0]);for(const m of modes.slice(1))c.addMode(m);}return [c,modes.map(n=>c.modes.find(m=>m.name===n).modeId)];};
+let ADDED=0;const upsert=(c,n,type)=>{let v=ALLV.find(x=>x.variableCollectionId===c.id&&x.name===n);if(!v){v=figma.variables.createVariable(n,c,type);ADDED++;}return v;};`;
+  scripts['01-primitives-color.js'] = `const PRIM=${j(prim)};const COL=${j(col)};${css}${up}
 const hex=h=>{h=h.replace('#','');return {r:parseInt(h.slice(0,2),16)/255,g:parseInt(h.slice(2,4),16)/255,b:parseInt(h.slice(4,6),16)/255};};
-const prim=figma.variables.createVariableCollection('Primitives');prim.renameMode(prim.modes[0].modeId,'Value');const pm=prim.modes[0].modeId;const by={};
-for(const [n,t,v] of PRIM){const x=figma.variables.createVariable(n,prim,T[t]);x.scopes=[];x.setVariableCodeSyntax('WEB',css(n));x.setValueForMode(pm,t==='C'?hex(v):v);by[n]=x;}
-const col=figma.variables.createVariableCollection('Color');col.renameMode(col.modes[0].modeId,'Light');const modes=[col.modes[0].modeId,col.addMode('Dark'),col.addMode('High contrast')];
-for(const [n,scopes,al,d] of COL){const x=figma.variables.createVariable(n,col,'COLOR');x.scopes=scopes;x.description=d;x.setVariableCodeSyntax('WEB',css(n));al.forEach((a,i)=>x.setValueForMode(modes[i],{type:'VARIABLE_ALIAS',id:by[a].id}));}
-return {primitives:PRIM.length,colors:COL.length};`;
-  scripts['02-semantic-styles.js'] = `const SEM=${j(sem)};const TS=${j(ts)};const ES=${j(es)};${css}
-const cols=await figma.variables.getLocalVariableCollectionsAsync();const prim=cols.find(c=>c.name==='Primitives');const by={};
-for(const v of await figma.variables.getLocalVariablesAsync())if(v.variableCollectionId===prim.id)by[v.name]=v;
-const sem=figma.variables.createVariableCollection('Semantic');sem.renameMode(sem.modes[0].modeId,'Comfortable');const m1=sem.modes[0].modeId,m2=sem.addMode('Compact');
-for(const [n,t,sc,a1,a2,d] of SEM){const x=figma.variables.createVariable(n,sem,T[t]);x.scopes=sc;x.description=d;x.setVariableCodeSyntax('WEB',css(n));x.setValueForMode(m1,{type:'VARIABLE_ALIAS',id:by[a1].id});x.setValueForMode(m2,{type:'VARIABLE_ALIAS',id:by[a2||a1].id});}
-const W={400:'Regular',500:'Medium',600:'SemiBold',700:'Bold'};
-for(const [name,fam,w,size,lh,ls,up] of TS){const f={family:fam,style:W[w]};await figma.loadFontAsync(f);const s=figma.createTextStyle();s.name=name;s.fontName=f;s.fontSize=size;s.lineHeight={unit:'PIXELS',value:lh};s.letterSpacing={unit:'PERCENT',value:ls};if(up)s.textCase='UPPER';}
-for(const [name,sh] of ES){const s=figma.createEffectStyle();s.name=name;s.effects=sh.map(([x,y,blur,spread,r,g,b,a])=>({type:'DROP_SHADOW',color:{r,g,b,a},offset:{x,y},radius:blur,spread,visible:true,blendMode:'NORMAL'}));}
-return {semantic:SEM.length,textStyles:TS.length,effectStyles:ES.length};`;
+const [prim,[pm]]=coll('Primitives',['Value']);const by={};
+for(const [n,t,v] of PRIM){const x=upsert(prim,n,T[t]);x.scopes=[];x.setVariableCodeSyntax('WEB',css(n));x.setValueForMode(pm,t==='C'?hex(v):v);by[n]=x;}
+const [col,modes]=coll('Color',['Light','Dark','High contrast']);
+for(const [n,scopes,al,d] of COL){const x=upsert(col,n,'COLOR');x.scopes=scopes;x.description=d;x.setVariableCodeSyntax('WEB',css(n));al.forEach((a,i)=>x.setValueForMode(modes[i],{type:'VARIABLE_ALIAS',id:by[a].id}));}
+return {primitives:PRIM.length,colors:COL.length,added:ADDED};`;
+  scripts['02-semantic-styles.js'] = `const SEM=${j(sem)};const TS=${j(ts)};const ES=${j(es)};${css}${up}
+const prim=COLS.find(c=>c.name==='Primitives');const by={};
+for(const v of ALLV)if(v.variableCollectionId===prim.id)by[v.name]=v;
+const [sem,[m1,m2]]=coll('Semantic',['Comfortable','Compact']);
+for(const [n,t,sc,a1,a2,d] of SEM){const x=upsert(sem,n,T[t]);x.scopes=sc;x.description=d;x.setVariableCodeSyntax('WEB',css(n));x.setValueForMode(m1,{type:'VARIABLE_ALIAS',id:by[a1].id});x.setValueForMode(m2,{type:'VARIABLE_ALIAS',id:by[a2||a1].id});}
+const W={400:'Regular',500:'Medium',600:'SemiBold',700:'Bold'};const HAVE_TS=await figma.getLocalTextStylesAsync();const HAVE_ES=await figma.getLocalEffectStylesAsync();
+for(const [name,fam,w,size,lh,ls,up] of TS){const f={family:fam,style:W[w]};await figma.loadFontAsync(f);const s=HAVE_TS.find(x=>x.name===name)||figma.createTextStyle();s.name=name;s.fontName=f;s.fontSize=size;s.lineHeight={unit:'PIXELS',value:lh};s.letterSpacing={unit:'PERCENT',value:ls};s.textCase=up?'UPPER':'ORIGINAL';}
+for(const [name,sh] of ES){const s=HAVE_ES.find(x=>x.name===name)||figma.createEffectStyle();s.name=name;s.effects=sh.map(([x,y,blur,spread,r,g,b,a])=>({type:'DROP_SHADOW',color:{r,g,b,a},offset:{x,y},radius:blur,spread,visible:true,blendMode:'NORMAL'}));}
+return {semantic:SEM.length,textStyles:TS.length,effectStyles:ES.length,added:ADDED};`;
   const iconSrc = readFileSync(join(root, 'components', 'icon', 'icons.generated.ts'), 'utf8');
   const paths = Object.fromEntries([...iconSrc.matchAll(/^ {2}(\w+): '([^']+)',$/gm)].map((m) => [m[1], m[2]]));
   scripts['03-pages-icons.js'] =
-    `const P=${j(paths)};const PAGES=['Cover','Foundations','Icons','Actions','Inputs','Feedback','Overlays','Navigation','Data display'];
+    `const P=${j(paths)};const PAGES=['Cover','Foundations','Icons','Layout','Actions','Inputs','Feedback','Overlays','Navigation','Data display'];
 if(figma.root.children[0].name==='Page 1')figma.root.children[0].name='Cover';for(const n of PAGES)if(!figma.root.children.find(p=>p.name===n)){const p=figma.createPage();p.name=n;}
+PAGES.forEach((n,i)=>{const p=figma.root.children.find(x=>x.name===n);if(p&&figma.root.children.indexOf(p)!==i)figma.root.insertChild(i,p);});
 const icons=figma.root.children.find(p=>p.name==='Icons');await figma.setCurrentPageAsync(icons);const tp=(await figma.variables.getLocalVariablesAsync()).find(v=>v.name==='color/text/primary');
-const grid=figma.createAutoLayout('HORIZONTAL',{name:'Icon glyphs',itemSpacing:16,counterAxisSpacing:16,paddingLeft:32,paddingRight:32,paddingTop:32,paddingBottom:32});grid.layoutWrap='WRAP';grid.primaryAxisSizingMode='FIXED';grid.resize(800,100);grid.counterAxisSizingMode='AUTO';
-for(const [name,d] of Object.entries(P)){const svg=figma.createNodeFromSvg('<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 -960 960 960"><path d="'+d+'"/></svg>');const c=figma.createComponent();c.name='Glyph/'+name;c.resize(24,24);c.fills=[];
+const GLY_HAVE=new Set(icons.findAllWithCriteria({types:['COMPONENT']}).map(c=>c.name));
+let grid=icons.findChild(n=>n.name==='Icon glyphs');if(!grid){grid=figma.createAutoLayout('HORIZONTAL',{name:'Icon glyphs',itemSpacing:16,counterAxisSpacing:16,paddingLeft:32,paddingRight:32,paddingTop:32,paddingBottom:32});grid.layoutWrap='WRAP';grid.primaryAxisSizingMode='FIXED';grid.resize(800,100);grid.counterAxisSizingMode='AUTO';}
+for(const [name,d] of Object.entries(P)){if(GLY_HAVE.has('Glyph/'+name))continue;const svg=figma.createNodeFromSvg('<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 -960 960 960"><path d="'+d+'"/></svg>');const c=figma.createComponent();c.name='Glyph/'+name;c.resize(24,24);c.fills=[];
 for(const ch of [...svg.children]){c.appendChild(ch);ch.constraints={horizontal:'SCALE',vertical:'SCALE'};if('fills' in ch)ch.fills=[figma.variables.setBoundVariableForPaint({type:'SOLID',color:{r:0,g:0,b:0}},'color',tp)];}svg.remove();grid.appendChild(c);}
 return {glyphs:Object.keys(P).length};`;
   const lib = readFileSync(join(root, 'figma', 'push', 'lib.js'), 'utf8');
-  ['actions', 'inputs', 'feedback', 'overlays', 'navigation', 'data'].forEach((area, i) => {
+  ['actions', 'inputs', 'feedback', 'overlays', 'navigation', 'data', 'layout'].forEach((area, i) => {
     scripts[`${String(i + 4).padStart(2, '0')}-${area}.js`] = readFileSync(
       join(root, 'figma', 'push', `${area}.js`),
       'utf8',
