@@ -10,6 +10,11 @@
       "write": [],
       "never": ["**"]
     },
+    "strategist": {
+      "read": ["references/**", "patterns/**", "components/**", "rules/**", "tokens/**", "config/**"],
+      "write": ["patterns/*.json"],
+      "never": ["references/**", "tokens/**", "components/**", "rules/**", "styles/**", "generated/**", "evals/**", "docs/**", "runs/**", "config/**"]
+    },
     "composer": {
       "read": ["components/**", "rules/**", "tokens/**"],
       "write": [],
