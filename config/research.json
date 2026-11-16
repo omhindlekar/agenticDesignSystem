@@ -1,0 +1,17 @@
+{
+  "model": "claude-sonnet-5-5",
+  "timeoutMs": 600000,
+  "maxTokens": 16000,
+  "batchSize": 5,
+  "copyGuardWords": 8,
+  "leaders": {
+    "apple": ["developer.apple.com", "apple.com"],
+    "linear": ["linear.app"],
+    "stripe": ["stripe.com", "docs.stripe.com"],
+    "vercel": ["vercel.com"],
+    "wise": ["wise.com", "wise.design"],
+    "carbon": ["carbondesignsystem.com", "ibm.com"],
+    "material": ["m3.material.io", "material.io", "developer.android.com"]
+  },
+  "preferredPublishers": ["nngroup.com", "baymard.com", "design-system.service.gov.uk", "gov.uk", "w3.org"]
+}
