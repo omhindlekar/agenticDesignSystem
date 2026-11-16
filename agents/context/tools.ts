@@ -10,6 +10,7 @@ import type { ComponentMetadata } from '../../packages/schemas/src/component-met
 import type { Rule } from '../../packages/schemas/src/rule.js';
 import type { ContextPack } from '../../packages/schemas/src/context-pack.js';
 import type { ContextInput } from './schema.js';
+import { PAGE_LAYER_SCOPES, pageLayerEnforced } from '../../packages/config/src/index.js';
 
 export interface DataStore {
   tokens: Token[];
@@ -53,7 +54,9 @@ function loadRules(repoRoot: string): Rule[] {
   const rulesPath = join(repoRoot, 'rules', 'rules.yaml');
   if (!existsSync(rulesPath)) return [];
   const parsed = yamlLoad(readFileSync(rulesPath, 'utf8')) as { rules: unknown[] };
-  return parsed.rules.map((r) => RuleSchema.parse(r));
+  const rules = parsed.rules.map((r) => RuleSchema.parse(r));
+  // Page-layer rules reach agents only once they are enforced (FR-21).
+  return pageLayerEnforced(repoRoot) ? rules : rules.filter((r) => !PAGE_LAYER_SCOPES.has(r.scope));
 }
 
 const STOP_WORDS = new Set([

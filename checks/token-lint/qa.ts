@@ -1,5 +1,7 @@
 /** QA check: token lint on the generated screen (DS-T-*, DS-L-*, DS-I-*, DS-C-006). */
 import { lintString } from './index.js';
+import { lintGeneratedLayout } from './generated.js';
+import { pageLayerEnforced } from '../rules-audit/composition.js';
 import type { QaCheck } from '../qa-check.js';
 
 const SENTENCE: Record<string, (m: string) => string> = {
@@ -16,12 +18,14 @@ const SENTENCE: Record<string, (m: string) => string> = {
   'hardcoded-line-height': (m) => `Use a line-height token instead of "${m}".`,
   'raw-svg': () => 'Draw icons with the Icon component, not raw SVG.',
   'native-picker': (m) => `Use Select, Combobox or DatePicker instead of "${m}".`,
+  'inline-layout': (m) => `Don't set "${m}" inline; take layout from Stack, Grid, Container, Section or the page template.`,
+  'style-element': () => 'Remove the <style> block; take layout from layout components and the page template.',
 };
 
 const check: QaCheck = {
   name: 'token-lint',
-  async run({ tsx }) {
-    const violations = lintString(tsx, 'screen.tsx');
+  async run({ tsx, repoRoot }) {
+    const violations = [...lintString(tsx, 'screen.tsx'), ...(pageLayerEnforced(repoRoot) ? lintGeneratedLayout(tsx) : [])];
     if (!violations.length) return { status: 'pass', reason: 'No hardcoded design values.', findings: [] };
     return {
       status: 'fail',

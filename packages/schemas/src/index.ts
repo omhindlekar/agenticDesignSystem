@@ -11,3 +11,5 @@ export * from './golden-brief.js';
 export * from './permissions.js';
 export * from './run-record.js';
 export * from './handoff-registry.js';
+export * from './pattern-spec.js';
+export * from './design-dossier.js';

@@ -20,7 +20,8 @@
     "maxDiffRatio": 0.001
   },
   "qa": {
-    "budgetMs": 120000
+    "budgetMs": 120000,
+    "pageLayer": false
   },
   "runLog": {
     "retentionDays": 365

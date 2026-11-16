@@ -24,10 +24,10 @@ describe('NFR-7: no agent can write outside its permitted paths', () => {
   ];
 
   it('NFR-7: the PRD agents all have permissions', () => {
-    expect(AGENTS.sort()).toEqual(['builder', 'composer', 'context', 'docs', 'maintainer', 'orchestrator', 'qa']);
+    expect(AGENTS.sort()).toEqual(['builder', 'composer', 'context', 'docs', 'maintainer', 'orchestrator', 'qa', 'strategist']);
   });
 
-  it.each(['orchestrator', 'context', 'composer', 'builder', 'qa'])(
+  it.each(['orchestrator', 'context', 'strategist', 'composer', 'builder', 'qa'])(
     'NFR-7: %s cannot write tokens, components, rules or baselines',
     (agent) => {
       for (const p of PROTECTED) expect(can(agent, p), `${agent} → ${p}`).toBe(false);
@@ -80,6 +80,48 @@ describe('NFR-7: no agent can write outside its permitted paths', () => {
     expect(globToRegExp('runs/*/qa/**').test('runs/abc/def/qa/x.png')).toBe(false);
     expect(globToRegExp('docs/**').test('docs')).toBe(true);
     expect(globToRegExp('**').test('anything/at/all')).toBe(true);
+  });
+});
+
+describe('NFR-13: the Strategist writes only pattern specs', () => {
+  it('NFR-13: it may write a pattern spec, as JSON, directly in patterns/', () => {
+    expect(can('strategist', 'patterns/login.json')).toBe(true);
+    expect(can('strategist', join(REPO_ROOT, 'patterns', 'checkout-form.json'))).toBe(true);
+  });
+
+  it.each([
+    ['patterns/login.png', 'no screenshots or other files in patterns/'],
+    ['patterns/login.md', 'no notes beside the specs'],
+    ['patterns/README.md', 'not the folder guide'],
+    ['patterns/cache/page.html', 'no fetched pages, at any depth'],
+    ['references/notes.md', "Om's references are read-only"],
+    ['runs/abc/log.jsonl', 'the run log is written by the orchestrator'],
+    ['runs/abc/strategist/research.json', 'research logs reach the run log through the orchestrator'],
+    ['generated/abc/screen.tsx', 'not screens'],
+    ['components/auth-page/auth-page.tsx', 'not components'],
+    ['tokens/semantic.json', 'not tokens'],
+    ['rules/rules.yaml', 'not rules'],
+    ['evals/golden-set/sign-in.json', 'not the golden set'],
+    ['docs/index.md', 'not generated docs'],
+    ['config/permissions.json', 'not its own permissions'],
+    ['patterns/../tokens/semantic.json', 'no escaping the folder'],
+  ])('NFR-13: it cannot write %s (%s)', (path) => {
+    expect(can('strategist', path)).toBe(false);
+  });
+
+  it('NFR-13: it cannot write outside the repository, except temp scratch files', () => {
+    expect(can('strategist', '/etc/hosts')).toBe(false);
+    expect(can('strategist', join(REPO_ROOT, '..', 'patterns', 'login.json'))).toBe(false);
+    expect(can('strategist', join(tmpdir(), 'ads-research-1', 'notes.json'))).toBe(true);
+  });
+
+  it('NFR-13: the guarded writer refuses before touching the disk', () => {
+    expect(() => guardedFs('strategist').writeFile(join(REPO_ROOT, 'references', 'x.md'), 'x')).toThrow(PermissionError);
+    expect(existsSync(join(REPO_ROOT, 'references', 'x.md'))).toBe(false);
+  });
+
+  it('NFR-13: no agent may write references/; every agent may read it only if listed', () => {
+    for (const a of Object.keys(loadPermissions().agents)) expect(can(a, 'references/notes.md'), a).toBe(false);
   });
 });
 

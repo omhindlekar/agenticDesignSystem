@@ -951,3 +951,222 @@ rules:
       - button
     example: "<SideNav label=\"Main\" items={pages} currentId=\"settings\" />"
     counterExample: "A Menu whose items each change the page"
+
+  # ── Composition rules (phase 2c, FR-21) ─────────────────────────────────────
+  # Enforced when config qa.pageLayer is on (from phase 2c PR 5).
+  - id: DS-P-001
+    scope: composition
+    severity: error
+    statement: >
+      Every screen starts from a page template (AuthPage, FormPage, SettingsPage,
+      DashboardPage, EmptyState, ErrorPage) or, when none fits, PageShell. A bare
+      stack of components is not a screen.
+    check: auto
+    checkName: rules-audit
+    appliesTo: [auth-page, form-page, settings-page, dashboard-page, empty-state, error-page, page-shell]
+    example: "<AuthPage title=\"Sign in\" primaryAction={…}>fields</AuthPage>"
+    counterExample: "<div><Input …/><Button …/></div> as the whole screen"
+
+  - id: DS-P-002
+    scope: composition
+    severity: error
+    statement: >
+      One primary (contained) action per view, and one per dialog. Every other
+      action is outlined or text, so the next step is never in doubt.
+    check: auto
+    checkName: rules-audit
+    appliesTo: [button, auth-page, form-page, settings-page, dashboard-page, modal]
+    example: "Sign in (contained), then Sign in with single sign-on (outlined)"
+    counterExample: "Two contained buttons side by side"
+
+  - id: DS-P-003
+    scope: composition
+    severity: error
+    statement: >
+      Headings form one outline: the template's title is the only h1, page
+      sections are h2, and sub-sections h3 sit inside a section. Never skip a level.
+    check: auto
+    checkName: rules-audit
+    appliesTo: [heading, section, auth-page, form-page, settings-page, dashboard-page]
+    example: "SettingsPage title (h1) > Section Profile (h2)"
+    counterExample: "A level-1 Heading inside a page template"
+
+  - id: DS-P-004
+    scope: composition
+    severity: error
+    statement: >
+      Layout, spacing and backgrounds come only from layout components (Stack,
+      Grid, Container, Section, PageShell) and page templates. Generated screens
+      set no inline layout styles and add no style blocks, even with tokens.
+    check: auto
+    checkName: token-lint
+    appliesTo: [stack, grid, container, section, page-shell]
+    example: "<Stack gap=\"md\">…</Stack>"
+    counterExample: "<div style={{ display: 'flex', gap: 'var(--space-component-gap-md)' }}>"
+
+  - id: DS-P-005
+    scope: composition
+    severity: error
+    statement: >
+      Content runs title, description, content, then actions. Destructive actions
+      sit in a danger-zone Section, which comes after every other section, or in a
+      confirmation Modal.
+    check: auto
+    checkName: rules-audit
+    appliesTo: [section, settings-page, button]
+    example: "SettingsPage dangerZone: Section variant=\"danger\" with Delete account"
+    counterExample: "Delete account next to Save profile"
+
+  - id: DS-P-006
+    scope: composition
+    severity: warning
+    statement: >
+      Forms group related fields in titled Sections; more than six fields in one
+      group need sections. Every field has a visible label, helper text explains
+      format rules, and the submit action comes after the fields.
+    check: auto
+    checkName: rules-audit
+    appliesTo: [form-page, section, input, select, checkbox, radio-group, switch, textarea]
+    example: "Checkout: Section Shipping address, Section Payment, then Place order"
+    counterExample: "Twelve fields in one column with no headings"
+
+  - id: DS-P-007
+    scope: composition
+    severity: error
+    statement: >
+      A screen built on a template fills every required slot, and each child names
+      the slot it fills with a component that slot accepts (see the template's
+      metadata).
+    check: auto
+    checkName: rules-audit
+    appliesTo: [auth-page, form-page, settings-page, dashboard-page, empty-state, error-page]
+    example: "AuthPage with title, form fields and primaryAction"
+    counterExample: "AuthPage with fields but no primary action"
+
+  - id: DS-P-008
+    scope: composition
+    severity: warning
+    statement: >
+      Forms and sign-in panels keep a readable width: inside a template, or in a
+      Container of size sm or md. Fields never stretch across a wide screen.
+    check: auto
+    checkName: rules-audit
+    appliesTo: [container, page-shell, input, select]
+    example: "<PageShell><Container size=\"sm\">fields</Container></PageShell>"
+    counterExample: "Full-width fields across a 1440px screen"
+
+  - id: DS-P-009
+    scope: composition
+    severity: error
+    statement: >
+      A destructive action asks for confirmation in one Modal (one level, see
+      DS-C-005) before it runs; it never happens on the first click.
+    check: auto
+    checkName: rules-audit
+    appliesTo: [modal, button, settings-page]
+    example: "Delete account opens a Modal: Delete your account? with a danger button"
+    counterExample: "Delete account deletes straight away"
+
+  # ── Copy rules (phase 2c, FR-27) ────────────────────────────────────────────
+  - id: DS-W-001
+    scope: copy
+    severity: warning
+    statement: >
+      Headings are specific and in sentence case: say what the page or section is
+      for, not what kind of thing it is.
+    check: auto
+    checkName: rules-audit
+    appliesTo: [heading, section, auth-page, form-page, settings-page, dashboard-page, card, modal]
+    example: "Sign in to Northwind Business"
+    counterExample: "Login Screen"
+
+  - id: DS-W-002
+    scope: copy
+    severity: error
+    statement: >
+      Buttons start with a verb and say what happens. Never Submit, OK, Yes or
+      Click here.
+    check: auto
+    checkName: rules-audit
+    appliesTo: [button]
+    example: "Place order"
+    counterExample: "Submit"
+
+  - id: DS-W-003
+    scope: copy
+    severity: error
+    statement: >
+      Every field has a visible label. Helper text explains a format or rule;
+      a placeholder only shows an example and never replaces the label.
+    check: auto
+    checkName: a11y
+    appliesTo: [input, select, textarea, combobox, date-picker, number-field]
+    example: "Label Postcode, helper text For example, SW1A 1AA"
+    counterExample: "A field whose only label is its placeholder"
+
+  - id: DS-W-004
+    scope: copy
+    severity: warning
+    statement: >
+      An error message is one sentence: what went wrong and how to fix it. Never
+      just Invalid or Error.
+    check: auto
+    checkName: rules-audit
+    appliesTo: [input, select, textarea, checkbox, banner]
+    example: "Enter an email address in the format name@company.com"
+    counterExample: "Invalid input"
+
+  - id: DS-W-005
+    scope: copy
+    severity: error
+    statement: >
+      No placeholder copy ships: no Lorem ipsum, TODO, or words like Label, Title
+      or Text standing in for the real ones.
+    check: auto
+    checkName: rules-audit
+    appliesTo: [heading, text, button, input, section, card]
+    example: "Order summary"
+    counterExample: "Title"
+
+  - id: DS-W-006
+    scope: copy
+    severity: warning
+    statement: >
+      A description under a title is one sentence of at most 140 characters.
+    check: auto
+    checkName: rules-audit
+    appliesTo: [section, auth-page, form-page, settings-page, dashboard-page, empty-state]
+    example: "This is how other people in your business see you."
+    counterExample: "A paragraph of three sentences under a section title"
+
+  # ── Strategy rules (phase 2c, FR-22 to FR-26) ───────────────────────────────
+  # Manual until the dossier QA checks land (phase 2c PR 6).
+  - id: DS-S-001
+    scope: strategy
+    severity: error
+    statement: >
+      Every screen has a design dossier that is present, valid and fresh: each
+      best-practice item cites a source the research log shows was fetched, with
+      its retrieval date; research is in our own words; the pattern spec has not
+      expired; and Om's references were read when they exist.
+    check: manual
+    appliesTo: [auth-page, form-page, settings-page, dashboard-page, empty-state, error-page, page-shell]
+
+  - id: DS-S-002
+    scope: strategy
+    severity: error
+    statement: >
+      The spec contains every required part of the dossier, each with a component
+      the part accepts, in the dossier's order.
+    check: manual
+    appliesTo: [auth-page, form-page, settings-page, dashboard-page, empty-state, error-page]
+
+  - id: DS-S-003
+    scope: strategy
+    severity: warning
+    statement: >
+      Every departure from the pattern is marked with the innovation that
+      justifies it, and every innovation has a rationale, a risk and a rules check.
+      At most one is unconventional, and it is flagged for review.
+    check: manual
+    appliesTo: [auth-page, form-page, settings-page, dashboard-page, empty-state, error-page]
