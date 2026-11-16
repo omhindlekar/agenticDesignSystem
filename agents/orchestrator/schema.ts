@@ -13,6 +13,7 @@ export const OrchestratorResultSchema = z.object({
   taskId: z.string().min(1),
   runId: z.string().min(1),
   outcome: RunOutcomeSchema,
+  /** The last screen the Builder produced: on pass, and on a QA fail so it can be reviewed. */
   tsx: z.string().optional(),
   error: z.string().optional(),
   /** The validated Composer output, present once the Composer step has passed. */

@@ -45,6 +45,24 @@ export interface GenerateOptions {
   runId?: string;
 }
 
+/** A Storybook story for a generated screen, under "Generated", marked when QA failed. */
+export function writeGeneratedStory(outDir: string, runId: string, brief: string, qaPassed: boolean, repoRoot: string): string {
+  const short = brief.replace(/\s+/g, ' ').split(/[:.,]/)[0]!.trim().slice(0, 48).replace(/[/'"`\\]/g, '');
+  const title = `Generated/${short} (${qaPassed ? 'QA passed' : 'QA failed'}) ${runId.slice(0, 8)}`;
+  const dir = join(outDir, 'stories');
+  const fs = guardedFs('builder', repoRoot);
+  fs.mkdir(dir);
+  const file = join(dir, `${runId}.stories.tsx`);
+  fs.writeFile(
+    file,
+    `import type { Meta, StoryObj } from '@storybook/react-vite';\nimport * as mod from '../${runId}/screen';\n\n` +
+      `const Screen = ((mod as Record<string, unknown>).default ?? (mod as Record<string, unknown>).Screen) as () => React.JSX.Element;\n` +
+      `/** ${brief.replace(/\*\//g, '')} */\nconst meta = { title: ${JSON.stringify(title)}, parameters: { layout: 'padded' } } satisfies Meta;\nexport default meta;\n\n` +
+      `export const Screen_: StoryObj = { name: 'Screen', render: () => <Screen /> };\n`,
+  );
+  return file;
+}
+
 export interface GenerateResult {
   exitCode: number;
   result: OrchestratorResult;
@@ -105,12 +123,15 @@ export async function runGenerate(brief: string, opts: GenerateOptions): Promise
   }
 
   let tsxPath: string | undefined;
-  if (result.outcome === 'pass' && result.tsx !== undefined) {
+  let storyPath: string | undefined;
+  // Save the screen when it passed, and whenever QA ran on it (even if a cap then stopped the run), so it can be reviewed.
+  if (result.tsx !== undefined && (result.outcome === 'pass' || result.qaReport !== undefined)) {
     const dir = join(outDir, result.runId);
     const builderFs = guardedFs('builder', repoRoot);
     builderFs.mkdir(dir);
     tsxPath = join(dir, 'screen.tsx');
     builderFs.writeFile(tsxPath, result.tsx.endsWith('\n') ? result.tsx : `${result.tsx}\n`);
+    storyPath = writeGeneratedStory(outDir, result.runId, brief, result.outcome === 'pass' && result.qaReport?.overallStatus === 'pass', repoRoot);
   }
 
   const row = (label: string, value: string) => print(`${`${label}:`.padEnd(12)}${value}`);
@@ -138,6 +159,7 @@ export async function runGenerate(brief: string, opts: GenerateOptions): Promise
   row('Calls', String(result.calls));
   row('Cost', `$${result.costUsd.toFixed(4)}${provider === 'claude-cli' ? ' (not reported by the CLI provider)' : ''}`);
   if (tsxPath) row('Generated', show(tsxPath));
+  if (storyPath) row('Story', `${show(storyPath)} (Storybook: Generated)`);
   row('Run log', show(join(runsDir, result.runId, 'log.jsonl')));
 
   if (result.outcome !== 'pass') {

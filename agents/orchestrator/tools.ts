@@ -173,7 +173,8 @@ export async function runOrchestrator(input: TaskInput, deps: OrchestratorDeps):
       outcome,
       ...(error !== undefined ? { error } : {}),
       ...(s !== undefined ? { spec: s } : {}),
-      ...(outcome === 'pass' && tsx !== undefined ? { tsx } : {}),
+      // The last screen built is kept even when QA fails, so a person can look at it.
+      ...(tsx !== undefined ? { tsx } : {}),
       ...(qa !== undefined ? { qaReport: qa } : {}),
       attempts: { ...attempts },
       firstPass: outcome === 'pass' && firstPass,

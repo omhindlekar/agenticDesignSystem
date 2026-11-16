@@ -80,7 +80,7 @@ describe('FR-9: QA is a pipeline step, and a failed report goes back to Composer
     const { d } = deps(vi.fn().mockResolvedValue({ result: failing, costUsd: 0 }));
     const r = await runOrchestrator(input, d);
     expect(r.outcome).toBe('fail');
-    expect(r.tsx).toBeUndefined();
+    expect(r.tsx).toBeDefined(); // kept for review even though QA failed
     expect(r.qaReport?.overallStatus).toBe('fail');
     expect(r.attempts['qa']).toBe(3);
     expect(r.error).toMatch(/Qa failed after 3 attempt/);
