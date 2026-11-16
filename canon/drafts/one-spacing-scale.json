@@ -33,9 +33,12 @@
       "section",
       "container"
     ],
-    "rules": []
+    "rules": [
+      "DS-P-004",
+      "DS-T-002"
+    ]
   },
-  "check": "vision:spacing-rhythm",
+  "check": "rule:DS-P-004",
   "appliesTo": [
     "all"
   ],

@@ -29,7 +29,9 @@
       "stack",
       "section"
     ],
-    "rules": []
+    "rules": [
+      "DS-P-004"
+    ]
   },
   "check": "vision:alignment",
   "appliesTo": [

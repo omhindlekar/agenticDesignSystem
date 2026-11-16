@@ -26,9 +26,12 @@
       "modal",
       "drawer"
     ],
-    "rules": []
+    "rules": [
+      "DS-A-008",
+      "DS-A-002"
+    ]
   },
-  "check": "manual",
+  "check": "rule:DS-A-008",
   "appliesTo": [
     "all"
   ],

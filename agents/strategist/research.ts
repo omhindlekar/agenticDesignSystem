@@ -108,11 +108,38 @@ export function verifyCanonDraft(
   for (const t of e.mapsTo.tokens) if (!catalogue.tokens.has(t)) issues.push(`token "${t}" does not exist`);
   for (const c of e.mapsTo.components) if (!catalogue.components.has(c)) issues.push(`component "${c}" does not exist`);
   for (const r of e.mapsTo.rules) if (!catalogue.rules.has(r)) issues.push(`rule "${r}" does not exist`);
-  if (e.check.startsWith('rules-audit:') && !catalogue.rules.has(e.check.slice(12))) issues.push(`check names rule "${e.check.slice(12)}", which does not exist`);
+  if (e.check.startsWith('rule:')) {
+    const id = e.check.slice(5);
+    if (!catalogue.rules.has(id)) issues.push(`check names rule "${id}", which does not exist`);
+    else if (!e.mapsTo.rules.includes(id)) issues.push(`check names rule "${id}", which is not in mapsTo.rules`);
+  }
   return issues;
 }
 
-export function buildCanonPrompt(seeds: Seed[], cfg: ResearchConfig, catalogue: Catalogue, today = new Date().toISOString().slice(0, 10)): string {
+/** Steering for a re-research: leaders to prefer and pages that must not be cited again. */
+export interface Guidance {
+  prefer?: string[];
+  avoid?: string[];
+}
+
+export function buildCanonPrompt(
+  seeds: Seed[],
+  cfg: ResearchConfig,
+  catalogue: Catalogue,
+  today = new Date().toISOString().slice(0, 10),
+  guidance: Guidance = {},
+): string {
+  const steer = [
+    guidance.prefer?.length
+      ? `Prefer these leaders where they genuinely apply the principle: ${guidance.prefer.join(', ')}. Never pad with a weak link: two strong sources beat four weak ones.`
+      : '',
+    guidance.avoid?.length ? `Do not cite these pages; they were judged too weak or off-topic:\n${guidance.avoid.map((u) => `- ${u}`).join('\n')}` : '',
+    guidance.prefer?.length || guidance.avoid?.length
+      ? 'Every cited page must directly show or state the principle, not a related topic.'
+      : '',
+  ]
+    .filter(Boolean)
+    .join('\n');
   const leaders = CANON_LEADERS.map((l) => `- ${l}: ${(cfg.leaders[l] ?? []).join(', ')}`).join('\n');
   return `You are researching a craft canon for a design system: named UI and UX principles, each backed by how leading products and design systems apply it.
 
@@ -124,7 +151,7 @@ ${seeds.map((s) => `- id "${s.id}": ${s.name}. ${s.intent}`).join('\n')}
 ## How to research
 Use WebSearch, then WebFetch. For each principle, find at least two of these leaders applying it, on their own official sites:
 ${leaders}
-Only cite a page you fetched successfully. If a fetch fails, do not cite that page.
+Only cite a page you fetched successfully. If a fetch fails, do not cite that page.${steer ? `\n${steer}` : ''}
 Each leader appears at most once per principle: if you read two pages from one leader, cite the clearest one. Prefer leaders you have not cited yet, so the canon draws on all seven.
 
 ## Output
@@ -141,7 +168,7 @@ Rules for the text:
   Components: ${[...catalogue.components].join(', ')}
   Rules: ${[...catalogue.rules].join(', ')}
   Tokens (examples; use exact names only): ${[...catalogue.tokens].filter((t) => /^(space|size|color-text|type)-/.test(t)).slice(0, 40).join(', ')}
-- check is "rules-audit:<rule id>" when a rule in mapsTo.rules is checked by rules-audit and verifies the principle, else "vision:<item>" with item one of ${CRAFT_RUBRIC_ITEMS.join(', ')}, else "manual".`;
+- check is "rule:<rule id>" when a rule in mapsTo.rules verifies the principle, else "vision:<item>" with item one of ${CRAFT_RUBRIC_ITEMS.join(', ')}, else "manual".`;
 }
 
 /** The JSON array in a model reply, with or without a code fence or a lead-in sentence. */
@@ -174,6 +201,7 @@ export async function runCanonRefresh(opts: {
   seeds: Seed[];
   write: (path: string, data: string) => void;
   today?: string;
+  guidance?: Guidance;
 }): Promise<RefreshReport> {
   const cfg = loadResearchConfig(opts.repoRoot);
   const catalogue = loadCatalogue(opts.repoRoot);
@@ -185,7 +213,7 @@ export async function runCanonRefresh(opts: {
   const save = () => opts.write(reportPath, `${JSON.stringify(report, null, 2)}\n`);
   for (let i = 0; i < opts.seeds.length; i += cfg.batchSize) {
     const batch = opts.seeds.slice(i, i + cfg.batchSize);
-    const res = await opts.provider.complete(buildCanonPrompt(batch, cfg, catalogue, today), {
+    const res = await opts.provider.complete(buildCanonPrompt(batch, cfg, catalogue, today, opts.guidance), {
       model: cfg.model,
       maxTokens: cfg.maxTokens,
       tools: WEB_TOOLS,
@@ -205,6 +233,10 @@ export async function runCanonRefresh(opts: {
         continue;
       }
       const issues = verifyCanonDraft(draft, res, cfg, catalogue);
+      const avoided = ((draft as { leaders?: Array<{ url?: string }> }).leaders ?? [])
+        .map((l) => l.url ?? '')
+        .filter((u) => opts.guidance?.avoid?.some((a) => norm(a) === norm(u)));
+      issues.push(...avoided.map((u) => `${u} was ruled out as too weak, but is cited again`));
       if (issues.length) report.rejected.push({ id: seed.id, issues });
       else {
         const entry: CanonEntry = CanonEntrySchema.parse(draft);

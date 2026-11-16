@@ -35,7 +35,10 @@
       "button",
       "text"
     ],
-    "rules": []
+    "rules": [
+      "DS-W-002",
+      "DS-P-009"
+    ]
   },
   "check": "vision:copy-and-tone",
   "appliesTo": [

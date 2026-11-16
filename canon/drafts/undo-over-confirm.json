@@ -29,7 +29,10 @@
       "modal",
       "button"
     ],
-    "rules": []
+    "rules": [
+      "DS-P-009",
+      "DS-C-002"
+    ]
   },
   "check": "vision:outcome-clarity",
   "appliesTo": [

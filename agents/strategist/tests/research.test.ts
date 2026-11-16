@@ -63,9 +63,24 @@ describe('FR-24: canon research guards', () => {
     expect(issues).toMatch(/DS-Z-999/);
   });
 
-  it('FR-24: a rules-audit check must name a real rule', () => {
-    expect(verifyCanonDraft(entry({ check: 'rules-audit:DS-P-002' }), research(), cfg, catalogue)).toEqual([]);
-    expect(verifyCanonDraft(entry({ check: 'rules-audit:DS-P-099' }), research(), cfg, catalogue).join(' ')).toMatch(/DS-P-099/);
+  it('FR-24: a rule check names a real rule that the entry also maps to', () => {
+    const maps = { tokens: [], components: ['button'], rules: ['DS-P-002'] };
+    expect(verifyCanonDraft(entry({ mapsTo: maps, check: 'rule:DS-P-002' }), research(), cfg, catalogue)).toEqual([]);
+    expect(verifyCanonDraft(entry({ mapsTo: maps, check: 'rule:DS-P-099' }), research(), cfg, catalogue).join(' ')).toMatch(/DS-P-099/);
+    expect(verifyCanonDraft(entry({ check: 'rule:DS-P-002' }), research(), cfg, catalogue).join(' ')).toMatch(/not in mapsTo\.rules/);
+  });
+
+  it('FR-24: re-research can prefer leaders and rule out weak pages, and a ruled-out page is rejected if cited again', async () => {
+    const p = buildCanonPrompt([{ id: 'x', name: 'X', intent: 'x' }], cfg, catalogue, '2026-11-16', { prefer: ['linear', 'wise'], avoid: ['https://stripe.com/resources/delivery-promise'] });
+    expect(p).toMatch(/Prefer these leaders.*linear, wise/);
+    expect(p).toMatch(/Do not cite these pages[\s\S]*delivery-promise/);
+    const writes: Record<string, string> = {};
+    const provider: ModelProvider = { complete: async () => ({ text: JSON.stringify([entry()]), costUsd: 0, ...research() }) };
+    const report = await runCanonRefresh({
+      repoRoot: root, provider, seeds: [{ id: 'specific-time', name: 'S', intent: 's' }], write: (k, v) => (writes[k] = v), today: '2026-11-16',
+      guidance: { avoid: ['https://stripe.com/resources/delivery-promise/'] },
+    });
+    expect(report.rejected[0]?.issues.join(' ')).toMatch(/ruled out as too weak/);
   });
 
   it('FR-24: schema problems (pixel values, missing leaders) are reported, not thrown', () => {

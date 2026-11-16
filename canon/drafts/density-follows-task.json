@@ -32,7 +32,9 @@
       "form-page",
       "settings-page"
     ],
-    "rules": []
+    "rules": [
+      "DS-P-004"
+    ]
   },
   "check": "vision:spacing-rhythm",
   "appliesTo": [

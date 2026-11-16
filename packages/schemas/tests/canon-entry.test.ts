@@ -37,9 +37,10 @@ describe('FR-24 CanonEntrySchema', () => {
   });
 
   it('FR-24: says how QA verifies it', () => {
-    for (const check of ['rules-audit:DS-P-002', 'vision:hierarchy', 'vision:outcome-clarity', 'manual'])
+    for (const check of ['rule:DS-P-002', 'rule:DS-P-004', 'vision:hierarchy', 'vision:outcome-clarity', 'manual'])
       expect(CanonEntrySchema.safeParse({ ...validEntry(), check }).success, check).toBe(true);
     expect(CanonEntrySchema.safeParse({ ...validEntry(), check: 'eyeball' }).success).toBe(false);
+    expect(CanonEntrySchema.safeParse({ ...validEntry(), check: 'rules-audit:DS-P-002' }).success).toBe(false);
     expect(CanonEntrySchema.safeParse({ ...validEntry(), check: 'vision:vibes' }).success).toBe(false);
   });
 

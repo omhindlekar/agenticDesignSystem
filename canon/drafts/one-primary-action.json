@@ -33,9 +33,11 @@
       "app-header",
       "modal"
     ],
-    "rules": []
+    "rules": [
+      "DS-P-002"
+    ]
   },
-  "check": "vision:action-hierarchy",
+  "check": "rule:DS-P-002",
   "appliesTo": [
     "all"
   ],

@@ -35,9 +35,13 @@
       "divider",
       "settings-page"
     ],
-    "rules": []
+    "rules": [
+      "DS-P-005",
+      "DS-P-009",
+      "DS-C-002"
+    ]
   },
-  "check": "vision:action-hierarchy",
+  "check": "rule:DS-P-005",
   "appliesTo": [
     "all"
   ],

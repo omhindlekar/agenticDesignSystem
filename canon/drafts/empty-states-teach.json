@@ -29,9 +29,12 @@
       "button",
       "dashboard-page"
     ],
-    "rules": []
+    "rules": [
+      "DS-P-007",
+      "DS-P-001"
+    ]
   },
-  "check": "vision:outcome-clarity",
+  "check": "rule:DS-P-007",
   "appliesTo": [
     "dashboard-page",
     "settings-page"

@@ -25,9 +25,11 @@
       "form-page",
       "page-shell"
     ],
-    "rules": []
+    "rules": [
+      "DS-P-008"
+    ]
   },
-  "check": "vision:type-rhythm",
+  "check": "rule:DS-P-008",
   "appliesTo": [
     "all"
   ],

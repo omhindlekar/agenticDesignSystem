@@ -1,5 +1,5 @@
 /**
- * npm run canon:refresh [-- <id…>]
+ * npm run canon:refresh [-- <id…>] [--prefer=linear,stripe] [--avoid=<url>,<url>]
  *
  * Researches the principles in canon/seed-list.json (all, or only the ids given) with the real
  * model's WebSearch and WebFetch tools, and writes drafts to canon/drafts/ plus report.json.
@@ -19,6 +19,8 @@ const thisFile = fileURLToPath(import.meta.url);
 if (process.argv[1] && statSync(process.argv[1]).ino === statSync(thisFile).ino) {
   const repoRoot = join(dirname(thisFile), '..');
   const only = process.argv.slice(2).filter((a) => !a.startsWith('--'));
+  const flag = (name: string) => process.argv.find((a) => a.startsWith(`--${name}=`))?.slice(name.length + 3).split(',').filter(Boolean);
+  const guidance = { ...(flag('prefer') ? { prefer: flag('prefer')! } : {}), ...(flag('avoid') ? { avoid: flag('avoid')! } : {}) };
   const all = (JSON.parse(readFileSync(join(repoRoot, 'canon', 'seed-list.json'), 'utf8')) as { seeds: Seed[] }).seeds;
   const seeds = only.length ? all.filter((s) => only.includes(s.id)) : all;
   const unknown = only.filter((id) => !all.some((s) => s.id === id));
@@ -33,7 +35,7 @@ if (process.argv[1] && statSync(process.argv[1]).ino === statSync(thisFile).ino)
   console.log(
     `Researching ${seeds.length} principle(s) in ${Math.ceil(seeds.length / cfg.batchSize)} call(s) with ${cfg.model} via ${resolveProviderName({ model: cfg.model })}…`,
   );
-  runCanonRefresh({ repoRoot, provider, seeds, write: (p, d) => fs.writeFile(p, d) })
+  runCanonRefresh({ repoRoot, provider, seeds, guidance, write: (p, d) => fs.writeFile(p, d) })
     .then((r) => {
       console.log(`Drafts written: ${r.accepted.length} (${r.accepted.join(', ') || 'none'})`);
       for (const x of r.rejected) console.log(`Rejected ${x.id}: ${x.issues.join('; ')}`);

@@ -36,10 +36,13 @@ export const CanonEntrySchema = z
       .refine((ls) => new Set(ls.map((l) => l.leader)).size === ls.length, 'each leader once'),
     /** Where the principle lives in this system; ids are checked against tokens, components and rules. */
     mapsTo: z.object({ tokens: z.array(z.string()), components: z.array(z.string()), rules: z.array(z.string()) }).strict(),
-    /** How QA verifies it: a rules-audit rule, a craft-rubric item scored by the vision review, or manual. */
+    /**
+     * How QA verifies it: rule:<id> (by whichever check enforces that rule in rules.yaml), a
+     * craft-rubric item scored by the vision review, or manual.
+     */
     check: z
       .string()
-      .regex(/^(?:rules-audit:DS-[A-Z]-\d{3}|vision:[a-z-]+|manual)$/)
+      .regex(/^(?:rule:DS-[A-Z]-\d{3}|vision:[a-z-]+|manual)$/)
       .refine((c) => !c.startsWith('vision:') || (CRAFT_RUBRIC_ITEMS as readonly string[]).includes(c.slice(7)), 'vision:<item> must be a craft-rubric item'),
     /** Screen types it applies to, or ["all"]. */
     appliesTo: z.array(z.string().min(1)).min(1),

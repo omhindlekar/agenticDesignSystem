@@ -1,38 +1,40 @@
 {
   "id": "factual-trust-cues",
   "name": "Factual trust cues",
-  "rule": "Earn trust with specific, verifiable facts and real controls, not decorative badges or vague reassurance.",
+  "rule": "Earn trust with specific, checkable facts and controls the user can use, not decorative badges or vague reassurance.",
   "leaders": [
     {
-      "leader": "wise",
-      "url": "https://wise.com/gb/pricing/send-money",
-      "retrievedAt": "2026-11-16",
-      "note": "States the actual fee basis, the rate source and a discount threshold. It names what drives cost and links a calculator for exact figures."
-    },
-    {
-      "leader": "vercel",
-      "url": "https://vercel.com/docs/security/compliance",
-      "retrievedAt": "2026-11-16",
-      "note": "Lists named attestations and certifications with scope, a certificate link and a trust center, plus concrete encryption, backup and failover details."
-    },
-    {
       "leader": "stripe",
-      "url": "https://docs.stripe.com/keys",
+      "url": "https://docs.stripe.com/security",
       "retrievedAt": "2026-11-16",
-      "note": "Backs security with controls users can act on: scoped keys, access policies, rotation with a grace period, and request logs per key."
+      "note": "Names the exact audit level, the encryption standard and the reports available on request. It also lists user controls: passkey MFA, roles, audit logs and new-device alerts."
+    },
+    {
+      "leader": "wise",
+      "url": "https://wise.com/us/safety-and-security/",
+      "retrievedAt": "2026-11-16",
+      "note": "Explains how customer money is kept separate and which regulator oversees it. It lists certifications and gives users controls: two-step login, card freeze and spend alerts."
+    },
+    {
+      "leader": "apple",
+      "url": "https://www.apple.com/privacy/control/",
+      "retrievedAt": "2026-11-16",
+      "note": "Describes specific permissions, usage indicators, a seven-day app access report and opt-in analytics. It shows what is collected and puts the user in control, with no seals."
     }
   ],
   "mapsTo": {
     "tokens": [
       "color-text-secondary",
-      "color-text-link"
+      "color-text-success"
     ],
     "components": [
+      "card",
+      "section",
+      "list",
+      "settings-page",
+      "auth-page",
       "badge",
-      "banner",
-      "link",
-      "text",
-      "section"
+      "link"
     ],
     "rules": []
   },
