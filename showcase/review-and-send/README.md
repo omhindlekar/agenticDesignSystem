@@ -1,5 +1,7 @@
 # Showcase: Review and send
 
+> **Before: generated, QA failed.** This is the pipeline's first attempt, kept as the "before" picture; it is not the finished screen.
+
 The "Review and send" brief (Northwind Business, ₹8,45,000 to a supplier paid once before),
 run through the full pipeline with the real model. **The screen is the pipeline's output,
 copied verbatim and not edited.**
@@ -31,10 +33,10 @@ yet. When it is, this brief is re-run and its direction is saved here.
 - **Not caught by any check yet** (the page-layer rules and the design review come in phase 2c PRs 6–7):
   - no page frame, and content pinned left at a fixed width instead of a template (DS-P-001)
   - inline layout styles (DS-P-004)
-  - "Edit recipient" and "Edit account" are links to `#edit-…` that open nothing, so a detail cannot really be edited in place
-  - pressing Send without a code shows no error; there is no validation
+  - "Edit recipient" and "Edit account" are links to `#edit-…` that open nothing, so a detail cannot really be edited in place (#23)
+  - pressing Send without a code shows no error; there is no validation (#24)
   - the amount and the fee have no Change link
-  - at phone width the amount, at display size, breaks across two lines ("INR / 8,45,000")
+  - at phone width the amount, at display size, breaks across two lines ("INR / 8,45,000") (#25)
 
 ## Stories
 
