@@ -31,7 +31,7 @@ the cli provider (my subscription). Never require an API key.
 - Source of truth for tokens is this repo (`tokens/`). Tokens are pushed one way to Figma. Never read tokens back from Figma.
 - Every component works in Windows High Contrast (forced colours: system colours only, DS-A-007) and right to left (logical properties, mirrored directional icons, DS-L-004). Keyboard follows the WAI-ARIA pattern declared in `checks/a11y/apg.ts`.
 - POC components: Button, Input, Select, Checkbox, Card, Modal, plus Icon and IconButton (added in phase 1.8).
-- Page layer (phase 2c): layout components Container, Stack, Grid, Section and PageShell (`kind: layout` in metadata), then page templates with named slots (`kind: template`). Generated screens get layout from these, never from inline styles.
+- Page layer (phase 2c): layout components Container, Stack, Grid, Section and PageShell (`kind: layout` in metadata), and page templates with named slots (`kind: template`): AuthPage, FormPage, SettingsPage, DashboardPage, EmptyState and ErrorPage. Generated screens get layout from these, never from inline styles.
 - Stack: React and TypeScript, Storybook as the component catalogue, Playwright snapshots for visual regression, axe-core for accessibility, Zod for schemas.
 - No existing screens to baseline against. Golden-set briefs are new; baselines come from the first approved components.
 - Cost cap per run is configuration with a low default. Record the cost of every run.
