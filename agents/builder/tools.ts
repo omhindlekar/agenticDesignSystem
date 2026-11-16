@@ -1,7 +1,7 @@
 import { readFileSync, existsSync } from 'node:fs';
 import { guardedFs } from '../../packages/permissions/src/index.js';
 import { spawnSync } from 'node:child_process';
-import { join } from 'node:path';
+import { join, resolve } from 'node:path';
 import { lintString } from '../../checks/token-lint/index.js';
 import type { LintViolation } from '../../checks/token-lint/index.js';
 import type { BuilderInput } from './schema.js';
@@ -122,7 +122,9 @@ export interface TypeCheckResult {
   errors: string[];
 }
 
-export function typeCheckBuilderOutput(tsx: string, repoRoot: string): TypeCheckResult {
+export function typeCheckBuilderOutput(tsx: string, root: string): TypeCheckResult {
+  // tsc runs with the scratch folder as cwd, so every path it gets must be absolute.
+  const repoRoot = resolve(root);
   // A unique directory per call: parallel runs (test workers, concurrent generates)
   // must not overwrite or delete each other's files. It lives under repoRoot so
   // 'react' and the components resolve from the repo's node_modules.

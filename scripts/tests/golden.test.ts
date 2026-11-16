@@ -2,6 +2,7 @@ import { describe, it, expect, afterAll } from 'vitest';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { runGolden, loadGoldenSet, GATE } from '../golden.js';
+import { DEMO_BRIEF } from '../generate.js';
 import { closeRenderer } from '../../checks/render/render.js';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '../..');
@@ -15,11 +16,13 @@ describe('FR-6, FR-7: golden set runner', () => {
   });
 
   it('FR-6, FR-7, FR-9: a recorded brief runs the whole pipeline, QA included, and is measured', async () => {
-    const report = await runGolden(root, { only: ['sign-in'], print: () => {} });
+    // The demo brief has hand-written fixtures, so this tests the runner, not the model.
+    const demo = { ...loadGoldenSet(root).find((b) => b.id === 'sign-in')!, id: 'demo', brief: DEMO_BRIEF };
+    const report = await runGolden(root, { briefs: [demo], print: () => {} });
     expect(report.briefs).toBe(1);
     const r = report.results[0]!;
     expect(r).toMatchObject({
-      id: 'sign-in',
+      id: 'demo',
       outcome: 'pass',
       firstPass: true,
       qa: 'pass',

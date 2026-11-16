@@ -68,10 +68,10 @@ const componentsIn = (n: ComponentNode | undefined): string[] =>
 
 export async function runGolden(
   repoRoot: string,
-  opts: { only?: string[]; print?: (l: string) => void } = {},
+  opts: { only?: string[]; print?: (l: string) => void; briefs?: GoldenBrief[] } = {},
 ): Promise<GoldenReport> {
   const print = opts.print ?? ((l: string) => console.log(l));
-  const briefs = loadGoldenSet(repoRoot).filter((b) => !opts.only?.length || opts.only.includes(b.id));
+  const briefs = (opts.briefs ?? loadGoldenSet(repoRoot)).filter((b) => !opts.only?.length || opts.only.includes(b.id));
   const store = await loadDataStore(repoRoot);
   const totalRuleText = store.rules.map((r) => r.statement).join('').length;
   const results: BriefResult[] = [];
@@ -166,7 +166,8 @@ export function saveRecordedFixtures(repoRoot: string, since: number): number {
   if (!existsSync(cache)) return 0;
   let n = 0;
   for (const f of readdirSync(cache)) {
-    if (!f.endsWith('.json') || statSync(join(cache, f)).mtimeMs < since) continue;
+    // Never overwrite a fixture: hand-written demo fixtures and earlier recordings stay as they are.
+    if (!f.endsWith('.json') || statSync(join(cache, f)).mtimeMs < since || existsSync(join(fixtures, f))) continue;
     copyFileSync(join(cache, f), join(fixtures, f));
     n++;
   }

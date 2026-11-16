@@ -279,7 +279,9 @@ export async function runOrchestrator(input: TaskInput, deps: OrchestratorDeps):
       }
       for (let j = targetIndex; j <= i; j++) {
         const again = steps[j]!;
-        const err = await runStep(again, j === targetIndex ? qaFeedback(report) : undefined);
+        // Every step that runs again sees the findings: the spec step fixes spec problems,
+        // the build step fixes token and accessibility problems.
+        const err = await runStep(again, qaFeedback(report));
         if (err) return finish('escalate', err);
         if (again.modelBacked) {
           const g = await guard(again.agent);

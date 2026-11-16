@@ -58,7 +58,9 @@ export class ClaudeCliProvider implements ModelProvider {
       if (result.status !== 0) {
         throw new Error(
           `ClaudeCliProvider: claude exited with status ${result.status ?? 'null'}. ` +
-            (stderr ? `stderr: ${stderr}` : 'No stderr output.'),
+            (stderr ? `stderr: ${stderr}` : 'No stderr output.') +
+            // On a failed exit, stdout is the CLI's own message (for example a usage limit), not model output.
+            ((result.stdout ?? '').trim() ? ` stdout: ${(result.stdout ?? '').trim().slice(0, 300)}` : ''),
         );
       }
 

@@ -16,7 +16,7 @@ import { join, dirname, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { hashKey } from '../packages/provider/src/fake.js';
 import { loadDataStore, runContextAgent } from '../agents/context/index.js';
-import { buildComposerPrompt, parseComposerResponse } from '../agents/composer/tools.js';
+import { buildComposerPrompt, loadComposerApis, parseComposerResponse } from '../agents/composer/tools.js';
 import { COMPOSER_MAX_TOKENS } from '../agents/composer/index.js';
 import { buildBuilderPrompt, loadComponentApis, parseBuilderResponse } from '../agents/builder/tools.js';
 import { BUILDER_MAX_TOKENS } from '../agents/builder/index.js';
@@ -33,11 +33,21 @@ export async function recordFixtures(
   const taskId = taskIdForBrief(brief);
   const contextPack = runContextAgent({ taskId, task: brief }, await loadDataStore(repoRoot));
 
-  const composerPrompt = buildComposerPrompt({ taskId, brief, contextPack });
+  const composerPrompt = buildComposerPrompt(
+    { taskId, brief, contextPack },
+    undefined,
+    loadComposerApis(
+      repoRoot,
+      contextPack.componentIds.map((c) => c.id),
+    ),
+  );
   // Parse exactly as the Composer does, so an invalid spec fails here rather than at replay.
   const spec = parseComposerResponse(taskId, composerResponse, contextPack);
 
-  const apis = loadComponentApis(repoRoot, contextPack.componentIds.map((c) => c.id));
+  const apis = loadComponentApis(
+    repoRoot,
+    contextPack.componentIds.map((c) => c.id),
+  );
   const builderPrompt = buildBuilderPrompt({ taskId, spec, contextPack }, undefined, apis);
   parseBuilderResponse(builderResponse);
 

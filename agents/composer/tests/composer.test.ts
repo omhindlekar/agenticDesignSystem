@@ -119,9 +119,9 @@ describe('FR-6: Composer registry enforcement', () => {
       },
       statesCovered: ['default'],
     });
-    expect(() =>
-      parseComposerResponse('task-001', specWithUnknown, composerInput.contextPack),
-    ).toThrow(/unregistered component/i);
+    expect(() => parseComposerResponse('task-001', specWithUnknown, composerInput.contextPack)).toThrow(
+      /unregistered component/i,
+    );
   });
 
   it('FR-6: throws when a nested node contains an unregistered component', () => {
@@ -143,9 +143,9 @@ describe('FR-6: Composer registry enforcement', () => {
       },
       statesCovered: ['default'],
     });
-    expect(() =>
-      parseComposerResponse('task-001', specWithNestedUnknown, composerInput.contextPack),
-    ).toThrow(/unregistered component/i);
+    expect(() => parseComposerResponse('task-001', specWithNestedUnknown, composerInput.contextPack)).toThrow(
+      /unregistered component/i,
+    );
   });
 
   it('FR-6: throws when a tokenRef is not in the context pack', () => {
@@ -159,16 +159,15 @@ describe('FR-6: Composer registry enforcement', () => {
       },
       statesCovered: ['default'],
     });
-    expect(() =>
-      parseComposerResponse('task-001', specWithUnknownToken, composerInput.contextPack),
-    ).toThrow(/unregistered token/i);
+    expect(() => parseComposerResponse('task-001', specWithUnknownToken, composerInput.contextPack)).toThrow(
+      /unregistered token/i,
+    );
   });
 });
 
 describe('FR-6: Composer integration (requires a live provider)', () => {
   // Runs when MODEL_PROVIDER=api (ANTHROPIC_API_KEY set) or MODEL_PROVIDER=claude-cli
-  const hasLiveProvider =
-    !!process.env['ANTHROPIC_API_KEY'] || process.env['MODEL_PROVIDER'] === 'claude-cli';
+  const hasLiveProvider = !!process.env['ANTHROPIC_API_KEY'] || process.env['MODEL_PROVIDER'] === 'claude-cli';
 
   it.skipIf(!hasLiveProvider)('FR-6: runComposer returns valid ScreenSpec from live provider', async () => {
     const { runComposer } = await import('../index.js');

@@ -51,7 +51,7 @@ function deps(qa: AgentRunner, extra: Partial<OrchestratorDeps> = {}) {
   return { d, builder, entries };
 }
 
-describe('FR-9: QA is a pipeline step, and a failed report goes back to Builder', () => {
+describe('FR-9: QA is a pipeline step, and a failed report goes back to Composer and Builder', () => {
   it('FR-9: a first-pass run passes QA with no retries', async () => {
     const { d } = deps(vi.fn().mockResolvedValue({ result: passing, costUsd: 0 }));
     const r = await runOrchestrator(input, d);
@@ -61,7 +61,7 @@ describe('FR-9: QA is a pipeline step, and a failed report goes back to Builder'
     expect(r.attempts).toEqual({ composer: 1, builder: 1, qa: 1 });
   });
 
-  it('FR-9, FR-20: QA findings are sent to Builder, which retries, and the run then passes (not first-pass)', async () => {
+  it('FR-9, FR-20: QA findings are sent to every step that runs again, and the run then passes (not first-pass)', async () => {
     const qa = vi
       .fn()
       .mockResolvedValueOnce({ result: failing, costUsd: 0 })
@@ -70,7 +70,7 @@ describe('FR-9: QA is a pipeline step, and a failed report goes back to Builder'
     const r = await runOrchestrator(input, d);
     expect(r.outcome).toBe('pass');
     expect(r.firstPass).toBe(false);
-    expect(r.attempts).toEqual({ composer: 1, builder: 2, qa: 2 });
+    expect(r.attempts).toEqual({ composer: 2, builder: 2, qa: 2 });
     const feedback = (builder.mock.calls[1]![0] as { previousError: string }).previousError;
     expect(feedback).toContain('DS-T-001');
     expect(feedback).toContain('Use a colour token instead of #fff.');
@@ -106,6 +106,7 @@ describe('FR-9: QA is a pipeline step, and a failed report goes back to Builder'
       'composer:pass',
       'builder:pass',
       'qa:fail',
+      'composer:pass',
       'builder:pass',
       'qa:pass',
     ]);
@@ -131,12 +132,10 @@ describe('NFR-10: adding an agent needs a pipeline entry and a runner, not orche
         { agent: 'qa', output: 'qa-report', modelBacked: false, retry: { on: 'qa-fail', feedbackTo: 'builder' } },
       ],
     };
-    const reviewer = vi
-      .fn()
-      .mockImplementation(async ({ outputs }: { outputs: Record<string, unknown> }) => ({
-        result: outputs['composer'],
-        costUsd: 0,
-      }));
+    const reviewer = vi.fn().mockImplementation(async ({ outputs }: { outputs: Record<string, unknown> }) => ({
+      result: outputs['composer'],
+      costUsd: 0,
+    }));
     const { d } = deps(vi.fn().mockResolvedValue({ result: passing, costUsd: 0 }), { pipeline, agents: { reviewer } });
     const r = await runOrchestrator(input, d);
     expect(r.outcome).toBe('pass');
@@ -165,13 +164,11 @@ describe('Injection safety: flags from agents reach the result and the log', () 
   it('FR-19: a flag raised by the context step is reported and logged', async () => {
     const { d, entries } = deps(vi.fn().mockResolvedValue({ result: passing, costUsd: 0 }), {
       agents: {
-        context: vi
-          .fn()
-          .mockResolvedValue({
-            result: pack,
-            costUsd: 0,
-            flags: ['instruction-in-brief: "ignore previous instructions"'],
-          }),
+        context: vi.fn().mockResolvedValue({
+          result: pack,
+          costUsd: 0,
+          flags: ['instruction-in-brief: "ignore previous instructions"'],
+        }),
       },
     });
     const r = await runOrchestrator(input, d);

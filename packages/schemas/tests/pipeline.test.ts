@@ -7,7 +7,7 @@ const pipeline = {
     { agent: 'context', output: 'context-pack', modelBacked: false },
     { agent: 'composer', output: 'screen-spec', modelBacked: true, retry: { on: 'schema' } },
     { agent: 'builder', output: 'tsx', modelBacked: true, retry: { on: 'schema' } },
-    { agent: 'qa', output: 'qa-report', modelBacked: false, retry: { on: 'qa-fail', feedbackTo: 'builder' } },
+    { agent: 'qa', output: 'qa-report', modelBacked: false, retry: { on: 'qa-fail', feedbackTo: 'composer' } },
   ],
 };
 

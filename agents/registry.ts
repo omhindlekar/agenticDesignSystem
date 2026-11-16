@@ -4,6 +4,7 @@
  * step; the orchestrator does not change (NFR-10).
  */
 import { join } from 'node:path';
+import { guardedFs } from '../packages/permissions/src/index.js';
 import { runContextAgent, detectInstructions } from './context/index.js';
 import { runComposerWithCost } from './composer/index.js';
 import { runBuilderWithCost } from './builder/index.js';
@@ -60,6 +61,12 @@ export function createAgentRegistry(opts: RegistryOptions): Record<string, Agent
         },
         { repoRoot, ...(opts.runsDir ? { evidenceDir: join(opts.runsDir, runId, 'qa') } : {}) },
       );
+      // Keep the report beside the run log, so failures can be read later (QA writes only under runs/<id>/qa).
+      if (opts.runsDir) {
+        const fs = guardedFs('qa', repoRoot);
+        fs.mkdir(join(opts.runsDir, runId, 'qa'));
+        fs.writeFile(join(opts.runsDir, runId, 'qa', `report-${Date.now()}.json`), JSON.stringify(report, null, 2));
+      }
       return { result: report, costUsd: 0 };
     },
   };

@@ -22,7 +22,7 @@
     },
     "qa": {
       "read": ["generated/**", "components/**", "styles/**", "rules/**", "config/**", "evals/baselines/**"],
-      "write": ["runs/*/qa/**"],
+      "write": ["runs/**/qa/**"],
       "never": ["tokens/**", "components/**", "rules/**", "evals/baselines/**", "docs/**"]
     },
     "maintainer": {

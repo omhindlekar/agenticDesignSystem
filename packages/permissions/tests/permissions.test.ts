@@ -52,6 +52,8 @@ describe('NFR-7: no agent can write outside its permitted paths', () => {
     expect(can('builder', '.ads-typecheck-tmp-x1/screen.tsx')).toBe(true);
     expect(can('builder', 'runs/abc/log.jsonl')).toBe(false);
     expect(can('qa', 'runs/abc/qa/sign-in.diff.png')).toBe(true);
+    expect(can('qa', 'runs/golden/abc/qa/report.json')).toBe(true);
+    expect(can('qa', 'runs/golden/abc/log.jsonl')).toBe(false);
     expect(can('qa', 'runs/abc/log.jsonl')).toBe(false);
     expect(can('docs', 'docs/button.md')).toBe(true);
     expect(can('docs', 'components/button/button.meta.json')).toBe(false);
