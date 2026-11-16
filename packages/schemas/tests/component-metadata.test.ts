@@ -52,3 +52,32 @@ describe('FR-3 ComponentMetadataSchema', () => {
     expect(ComponentMetadataSchema.safeParse(bad).success).toBe(false);
   });
 });
+
+describe('FR-3 ComponentMetadataSchema: layout and template kinds (phase 2c)', () => {
+  it('FR-3: kind defaults to absent and accepts component, layout and template', () => {
+    expect(ComponentMetadataSchema.safeParse(validMetadata).success).toBe(true);
+    for (const kind of ['component', 'layout', 'template']) {
+      expect(ComponentMetadataSchema.safeParse({ ...validMetadata, kind }).success).toBe(true);
+    }
+    expect(ComponentMetadataSchema.safeParse({ ...validMetadata, kind: 'page' }).success).toBe(false);
+  });
+
+  it('FR-3: a template declares named slots with what each accepts', () => {
+    const template = {
+      ...validMetadata,
+      id: 'auth-page',
+      kind: 'template',
+      slots: [
+        { name: 'title', required: true, accepts: ['text'], description: 'Page title, h1' },
+        { name: 'form', required: true, accepts: ['input', 'checkbox'], description: 'The fields' },
+      ],
+    };
+    expect(ComponentMetadataSchema.safeParse(template).success).toBe(true);
+  });
+
+  it('FR-3: rejects a slot with no name or an empty accepts list', () => {
+    const slot = { name: 'form', required: true, accepts: ['input'], description: 'Fields' };
+    expect(ComponentMetadataSchema.safeParse({ ...validMetadata, slots: [{ ...slot, name: '' }] }).success).toBe(false);
+    expect(ComponentMetadataSchema.safeParse({ ...validMetadata, slots: [{ ...slot, accepts: [] }] }).success).toBe(false);
+  });
+});
