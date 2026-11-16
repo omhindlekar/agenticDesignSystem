@@ -11,7 +11,7 @@ const spec: UsageSpec = {
       do: {
         caption: 'Describe what the image shows.',
         example: (
-          <div style={{ width: 'var(--size-modal-sm)' }}>
+          <div style={{ width: 'var(--size-modal-sm)', maxWidth: '100%' }}>
             <Image src="" alt="Team photo from the 2026 offsite" ratio="16:9" />
           </div>
         ),
@@ -20,7 +20,7 @@ const spec: UsageSpec = {
         caption: "Don't use a file name or 'image' as the alt text.",
         antiPattern: 'Missing or meaningless alt text',
         example: (
-          <div style={{ width: 'var(--size-modal-sm)' }}>
+          <div style={{ width: 'var(--size-modal-sm)', maxWidth: '100%' }}>
             <Image src="" alt="IMG_2041.jpg" ratio="16:9" />
           </div>
         ),

@@ -55,6 +55,7 @@ const DIALOG = (modal: boolean): ApgInteractive => ({
 const TEXT_FIELD =
   'A native text field: typing, selection and caret keys come from the platform. Tab moves in and out.';
 const STATIC = 'Not interactive: it takes no focus and has no keys of its own.';
+const TEMPLATE = 'A page template: it takes no focus itself; keyboard comes from the components in its slots, in source order.';
 
 export const APG_CONTRACT: Record<string, ApgEntry> = {
   'app-header': {
@@ -121,6 +122,12 @@ export const APG_CONTRACT: Record<string, ApgEntry> = {
   stack: { exempt: STATIC },
   grid: { exempt: STATIC },
   section: { exempt: STATIC },
+  'auth-page': { exempt: TEMPLATE },
+  'form-page': { exempt: TEMPLATE },
+  'settings-page': { exempt: TEMPLATE },
+  'dashboard-page': { exempt: TEMPLATE },
+  'empty-state': { exempt: TEMPLATE },
+  'error-page': { exempt: TEMPLATE },
   'page-shell': {
     pattern: 'landmarks',
     url: `${APG}/landmarks/`,

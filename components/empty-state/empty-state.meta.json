@@ -1,0 +1,139 @@
+{
+  "id": "empty-state",
+  "purpose": "Nothing to show yet: an icon, a title saying what is empty, one sentence on why, and the action that fills it.",
+  "variants": [
+    "page",
+    "inline"
+  ],
+  "states": [
+    "default"
+  ],
+  "props": [
+    {
+      "name": "variant",
+      "type": "'page' | 'inline'",
+      "required": false,
+      "description": "inline (default) sits inside a section with an h2; page fills the screen and owns the h1"
+    },
+    {
+      "name": "icon",
+      "type": "IconName",
+      "required": false,
+      "description": "An icon for the kind of content"
+    },
+    {
+      "name": "eyebrow",
+      "type": "ReactNode",
+      "required": false,
+      "description": "A short line above the title, such as an error code"
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "required": true,
+      "description": "What is empty"
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "required": true,
+      "description": "One sentence on why it is empty or what goes here"
+    },
+    {
+      "name": "primaryAction",
+      "type": "ReactNode",
+      "required": true,
+      "description": "The action that fills the space"
+    },
+    {
+      "name": "secondaryAction",
+      "type": "ReactNode",
+      "required": false,
+      "description": "A link to learn more"
+    }
+  ],
+  "whenToUse": [
+    "A list, table or page with no content yet, or no results"
+  ],
+  "whenNotToUse": [
+    "Errors that stop the whole page — use ErrorPage",
+    "Loading — use Spinner or ProgressBar"
+  ],
+  "related": [
+    "error-page",
+    "button",
+    "icon"
+  ],
+  "antiPatterns": [
+    "An empty state with no action",
+    "Blaming the user for the empty state"
+  ],
+  "spec": {
+    "anatomy": [
+      "Icon",
+      "Eyebrow",
+      "Title",
+      "Description",
+      "Actions"
+    ],
+    "sizes": [
+      "Body up to `size-container-sm`; gaps `space-component-gap-md`; inline padding `space-layout-section`"
+    ],
+    "typography": [
+      "Title h1 (page) or h3 appearance (inline); description body 1 secondary"
+    ],
+    "states": [
+      "Icon on `color-container-primary`; inline dashed `color-border-strong`"
+    ],
+    "motion": [
+      "None"
+    ]
+  },
+  "tokensUsed": [
+    "border-width-default",
+    "color-background-sunken",
+    "color-background-surface",
+    "color-border-strong",
+    "color-container-primary",
+    "color-on-container-primary",
+    "color-text-primary",
+    "color-text-secondary",
+    "layout-margin-md",
+    "size-container-sm",
+    "space-component-gap-md",
+    "space-component-gap-sm",
+    "space-component-padding-lg",
+    "space-component-padding-md",
+    "space-layout-section"
+  ],
+  "a11yNotes": [
+    "page is the main landmark with an h1; inline uses an h2 inside its section"
+  ],
+  "kind": "template",
+  "slots": [
+    {
+      "name": "title",
+      "required": true,
+      "accepts": [
+        "heading"
+      ],
+      "description": "Says what is empty. Example: No invoices yet."
+    },
+    {
+      "name": "description",
+      "required": true,
+      "accepts": [
+        "text"
+      ],
+      "description": "One sentence. Example: Invoices you send appear here."
+    },
+    {
+      "name": "primaryAction",
+      "required": true,
+      "accepts": [
+        "button"
+      ],
+      "description": "The action that fills it. Example: Create invoice."
+    }
+  ]
+}

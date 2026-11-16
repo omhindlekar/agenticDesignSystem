@@ -1,0 +1,4 @@
+/* ErrorPage: an EmptyState page with an error code; it adds no styles of its own beyond the frame. */
+.ads-error-page {
+  background: var(--color-background-sunken);
+}

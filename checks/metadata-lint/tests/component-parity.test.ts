@@ -14,7 +14,7 @@ import {
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, '../../..');
-const POC_COMPONENTS = ['button', 'input', 'select', 'checkbox', 'card', 'modal', 'icon', 'icon-button', 'textarea', 'search-field', 'field', 'radio-group', 'switch', 'segmented-control', 'slider', 'number-field', 'combobox', 'date-picker', 'spinner', 'progress-bar', 'banner', 'toast-region', 'badge', 'tooltip', 'popover', 'menu', 'drawer', 'link', 'tabs', 'breadcrumbs', 'side-nav', 'app-header', 'table', 'list', 'tag-group', 'avatar', 'avatar-group', 'divider', 'tree', 'image', 'text', 'heading', 'container', 'stack', 'grid', 'section', 'page-shell'] as const;
+const POC_COMPONENTS = ['button', 'input', 'select', 'checkbox', 'card', 'modal', 'icon', 'icon-button', 'textarea', 'search-field', 'field', 'radio-group', 'switch', 'segmented-control', 'slider', 'number-field', 'combobox', 'date-picker', 'spinner', 'progress-bar', 'banner', 'toast-region', 'badge', 'tooltip', 'popover', 'menu', 'drawer', 'link', 'tabs', 'breadcrumbs', 'side-nav', 'app-header', 'table', 'list', 'tag-group', 'avatar', 'avatar-group', 'divider', 'tree', 'image', 'text', 'heading', 'container', 'stack', 'grid', 'section', 'page-shell', 'auth-page', 'form-page', 'settings-page', 'dashboard-page', 'empty-state', 'error-page'] as const;
 
 describe('FR-3 component ↔ metadata parity (real components)', () => {
   for (const name of POC_COMPONENTS) {

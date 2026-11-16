@@ -1,0 +1,171 @@
+{
+  "id": "form-page",
+  "purpose": "A page whose job is one form, such as checkout or account details: titled sections of fields, then the actions, with an optional summary beside the form.",
+  "variants": [
+    "single-column",
+    "with-summary"
+  ],
+  "states": [
+    "default"
+  ],
+  "props": [
+    {
+      "name": "variant",
+      "type": "'single-column' | 'with-summary'",
+      "required": false,
+      "description": "single-column (default), or with-summary for a summary panel beside the form"
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "required": true,
+      "description": "Page title, h1"
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "required": false,
+      "description": "One sentence under the title"
+    },
+    {
+      "name": "header",
+      "type": "ReactNode",
+      "required": false,
+      "description": "The app header"
+    },
+    {
+      "name": "backLink",
+      "type": "ReactNode",
+      "required": false,
+      "description": "A link back, above the title"
+    },
+    {
+      "name": "children",
+      "type": "ReactNode",
+      "required": true,
+      "description": "The form, one Section per group of fields"
+    },
+    {
+      "name": "summary",
+      "type": "ReactNode",
+      "required": false,
+      "description": "with-summary only: a summary such as the order total"
+    },
+    {
+      "name": "actions",
+      "type": "ReactNode",
+      "required": true,
+      "description": "The submit button, with any cancel or back action"
+    },
+    {
+      "name": "footer",
+      "type": "ReactNode",
+      "required": false,
+      "description": "Footer content"
+    },
+    {
+      "name": "onSubmit",
+      "type": "(event: FormEvent<HTMLFormElement>) => void",
+      "required": false,
+      "description": "Called on submit; the page does not reload"
+    }
+  ],
+  "whenToUse": [
+    "Checkout, account details, applications and any page that exists to complete one form",
+    "with-summary when people need to see what they are agreeing to, such as an order total"
+  ],
+  "whenNotToUse": [
+    "Sign-in and recovery — use AuthPage",
+    "Many unrelated settings — use SettingsPage"
+  ],
+  "related": [
+    "section",
+    "auth-page",
+    "settings-page",
+    "card"
+  ],
+  "antiPatterns": [
+    "More than six fields with no sections",
+    "Actions above the fields",
+    "A total people only see after the submit button"
+  ],
+  "spec": {
+    "anatomy": [
+      "Back link",
+      "Title and description",
+      "Sections",
+      "Actions",
+      "Summary (with-summary)"
+    ],
+    "sizes": [
+      "Container md or lg; summary column at least `size-grid-item-md`; gaps `space-layout-section`, `space-component-padding-lg`"
+    ],
+    "typography": [
+      "Title h1"
+    ],
+    "states": [
+      "Sunken page background from PageShell"
+    ],
+    "motion": [
+      "None"
+    ]
+  },
+  "tokensUsed": [
+    "size-container-sm",
+    "size-grid-item-md",
+    "space-component-gap-sm",
+    "space-component-padding-lg",
+    "space-layout-section"
+  ],
+  "a11yNotes": [
+    "One main landmark; the form is named by the h1",
+    "The summary comes before the form in source order, so people reach the total before the fields and the submit button"
+  ],
+  "kind": "template",
+  "slots": [
+    {
+      "name": "title",
+      "required": true,
+      "accepts": [
+        "heading"
+      ],
+      "description": "What the form achieves. Example: Checkout. Up to about 40 characters."
+    },
+    {
+      "name": "description",
+      "required": false,
+      "accepts": [
+        "text"
+      ],
+      "description": "One sentence on what happens when they finish. Up to 140 characters."
+    },
+    {
+      "name": "sections",
+      "required": true,
+      "accepts": [
+        "section"
+      ],
+      "description": "One Section per group of related fields, each titled. Example: Shipping address, Payment."
+    },
+    {
+      "name": "summary",
+      "required": false,
+      "accepts": [
+        "card",
+        "section",
+        "list",
+        "text"
+      ],
+      "description": "with-summary only. What is being bought or submitted, with the total last. Shown beside the form, or above it on narrow screens."
+    },
+    {
+      "name": "actions",
+      "required": true,
+      "accepts": [
+        "button",
+        "link"
+      ],
+      "description": "One contained submit button that says what happens, last. Example: Place order. Optional text button to cancel."
+    }
+  ]
+}

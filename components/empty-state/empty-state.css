@@ -1,0 +1,65 @@
+/* EmptyState: centred icon, title, one sentence and the action that fills the space. */
+.ads-empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-primary);
+}
+
+.ads-empty-state[data-variant="page"] {
+  min-block-size: 100vh;
+  background: var(--color-background-sunken);
+}
+
+.ads-empty-state[data-variant="inline"] {
+  padding-block: var(--space-layout-section);
+  padding-inline: var(--space-component-padding-lg);
+  border: var(--border-width-default) dashed var(--color-border-strong);
+  background: var(--color-background-surface);
+}
+
+.ads-empty-state__main {
+  display: flex;
+  box-sizing: border-box;
+  inline-size: 100%;
+  justify-content: center;
+  padding-block: var(--space-layout-section);
+  padding-inline: var(--layout-margin-md);
+}
+
+.ads-empty-state__body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-component-gap-md);
+  max-inline-size: var(--size-container-sm);
+  text-align: center;
+}
+
+.ads-empty-state__icon {
+  display: inline-flex;
+  padding: var(--space-component-padding-md);
+  background: var(--color-container-primary);
+  color: var(--color-on-container-primary);
+}
+
+.ads-empty-state__eyebrow {
+  color: var(--color-text-secondary);
+}
+
+.ads-empty-state__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-component-gap-sm);
+  margin-block-start: var(--space-component-gap-sm);
+}
+
+@media (forced-colors: active) {
+  .ads-empty-state__icon {
+    border: var(--border-width-default) solid CanvasText;
+  }
+  .ads-empty-state[data-variant="inline"] {
+    border-color: CanvasText;
+  }
+}

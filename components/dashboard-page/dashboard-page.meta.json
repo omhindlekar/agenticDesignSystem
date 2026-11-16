@@ -1,0 +1,185 @@
+{
+  "id": "dashboard-page",
+  "purpose": "An overview page: a header row with title, filters and actions, a row of KPI tiles, the main content and an optional aside.",
+  "variants": [
+    "default"
+  ],
+  "states": [
+    "default"
+  ],
+  "props": [
+    {
+      "name": "title",
+      "type": "string",
+      "required": true,
+      "description": "Page title, h1"
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "required": false,
+      "description": "One sentence under the title"
+    },
+    {
+      "name": "header",
+      "type": "ReactNode",
+      "required": false,
+      "description": "The app header"
+    },
+    {
+      "name": "nav",
+      "type": "ReactNode",
+      "required": false,
+      "description": "Side navigation"
+    },
+    {
+      "name": "filters",
+      "type": "ReactNode",
+      "required": false,
+      "description": "Search, date range and filter controls in the header row"
+    },
+    {
+      "name": "actions",
+      "type": "ReactNode",
+      "required": false,
+      "description": "Page actions such as Export, in the header row"
+    },
+    {
+      "name": "kpis",
+      "type": "ReactNode",
+      "required": false,
+      "description": "KPI tiles, one Card each; they wrap on narrow screens"
+    },
+    {
+      "name": "children",
+      "type": "ReactNode",
+      "required": true,
+      "description": "The main content"
+    },
+    {
+      "name": "aside",
+      "type": "ReactNode",
+      "required": false,
+      "description": "Secondary content beside the main content"
+    },
+    {
+      "name": "footer",
+      "type": "ReactNode",
+      "required": false,
+      "description": "Footer content"
+    }
+  ],
+  "whenToUse": [
+    "Overview and analytics pages, and any page whose header needs search, a date range or filters"
+  ],
+  "whenNotToUse": [
+    "A page that exists to complete a form — use FormPage"
+  ],
+  "related": [
+    "grid",
+    "card",
+    "search-field",
+    "date-picker",
+    "menu"
+  ],
+  "antiPatterns": [
+    "Filters scattered through the content instead of the header row",
+    "More than one primary action in the header row"
+  ],
+  "spec": {
+    "anatomy": [
+      "Header row: title, description, filters, actions",
+      "KPI tiles",
+      "Content",
+      "Aside"
+    ],
+    "sizes": [
+      "Container full; KPI tiles at least `size-grid-item-sm`; gaps `layout-gutter-lg`, `space-layout-section`"
+    ],
+    "typography": [
+      "Title h1"
+    ],
+    "states": [
+      "Sunken page background from PageShell"
+    ],
+    "motion": [
+      "None"
+    ]
+  },
+  "tokensUsed": [
+    "layout-gutter-lg",
+    "size-container-sm",
+    "size-grid-item-md",
+    "size-grid-item-sm",
+    "space-component-gap-md",
+    "space-component-gap-sm",
+    "space-component-padding-lg",
+    "space-layout-section"
+  ],
+  "a11yNotes": [
+    "One main landmark",
+    "Filters come before the content they filter, in source order"
+  ],
+  "kind": "template",
+  "slots": [
+    {
+      "name": "title",
+      "required": true,
+      "accepts": [
+        "heading"
+      ],
+      "description": "What the page is an overview of. Example: Overview."
+    },
+    {
+      "name": "filters",
+      "required": false,
+      "accepts": [
+        "search-field",
+        "date-picker",
+        "menu",
+        "select",
+        "segmented-control"
+      ],
+      "description": "Each control labelled; a date range as two labelled dates or one range control."
+    },
+    {
+      "name": "actions",
+      "required": false,
+      "accepts": [
+        "button",
+        "menu"
+      ],
+      "description": "At most one contained action; others outlined."
+    },
+    {
+      "name": "kpis",
+      "required": false,
+      "accepts": [
+        "card"
+      ],
+      "description": "Tiles with a label, a value and its period. Example: Balance, £12,400, today."
+    },
+    {
+      "name": "content",
+      "required": true,
+      "accepts": [
+        "table",
+        "card",
+        "list",
+        "section",
+        "tabs"
+      ],
+      "description": "The main data."
+    },
+    {
+      "name": "aside",
+      "required": false,
+      "accepts": [
+        "card",
+        "list",
+        "section"
+      ],
+      "description": "Secondary information."
+    }
+  ]
+}

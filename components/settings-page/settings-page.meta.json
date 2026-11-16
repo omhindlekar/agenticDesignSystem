@@ -1,0 +1,144 @@
+{
+  "id": "settings-page",
+  "purpose": "Account and app settings: titled sections of settings, optional settings navigation, and the danger zone last.",
+  "variants": [
+    "with-nav",
+    "single"
+  ],
+  "states": [
+    "default"
+  ],
+  "props": [
+    {
+      "name": "variant",
+      "type": "'with-nav' | 'single'",
+      "required": false,
+      "description": "single (default) or with-nav for a settings navigation column"
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "required": true,
+      "description": "Page title, h1"
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "required": false,
+      "description": "One sentence under the title"
+    },
+    {
+      "name": "header",
+      "type": "ReactNode",
+      "required": false,
+      "description": "The app header"
+    },
+    {
+      "name": "nav",
+      "type": "ReactNode",
+      "required": false,
+      "description": "with-nav only: SideNav or Tabs listing settings areas"
+    },
+    {
+      "name": "children",
+      "type": "ReactNode",
+      "required": true,
+      "description": "The settings, one Section per topic"
+    },
+    {
+      "name": "dangerZone",
+      "type": "ReactNode",
+      "required": false,
+      "description": "A danger Section for destructive actions; always rendered last"
+    },
+    {
+      "name": "footer",
+      "type": "ReactNode",
+      "required": false,
+      "description": "Footer content"
+    }
+  ],
+  "whenToUse": [
+    "Profile, notification, security and billing settings"
+  ],
+  "whenNotToUse": [
+    "A single form with one submit — use FormPage"
+  ],
+  "related": [
+    "section",
+    "side-nav",
+    "switch",
+    "modal"
+  ],
+  "antiPatterns": [
+    "Destructive actions outside the danger zone",
+    "One long section mixing unrelated settings"
+  ],
+  "spec": {
+    "anatomy": [
+      "Title and description",
+      "Settings navigation (with-nav)",
+      "Sections",
+      "Danger zone"
+    ],
+    "sizes": [
+      "Container md or lg; the nav keeps its own width; sections at least `size-container-sm` before they wrap; gaps `space-layout-section`, `space-component-padding-lg`"
+    ],
+    "typography": [
+      "Title h1"
+    ],
+    "states": [
+      "Sunken page background from PageShell"
+    ],
+    "motion": [
+      "None"
+    ]
+  },
+  "tokensUsed": [
+    "size-container-sm",
+    "space-component-gap-md",
+    "space-component-gap-sm",
+    "space-component-padding-lg",
+    "space-layout-section"
+  ],
+  "a11yNotes": [
+    "One main landmark",
+    "The danger zone is last in source order, after every other setting"
+  ],
+  "kind": "template",
+  "slots": [
+    {
+      "name": "title",
+      "required": true,
+      "accepts": [
+        "heading"
+      ],
+      "description": "Example: Settings, or Account settings."
+    },
+    {
+      "name": "nav",
+      "required": false,
+      "accepts": [
+        "side-nav",
+        "tabs"
+      ],
+      "description": "with-nav only. One entry per settings area."
+    },
+    {
+      "name": "sections",
+      "required": true,
+      "accepts": [
+        "section"
+      ],
+      "description": "One titled Section per topic, such as Profile or Notifications. Switches for on/off settings; each change says when it takes effect."
+    },
+    {
+      "name": "dangerZone",
+      "required": false,
+      "accepts": [
+        "section"
+      ],
+      "description": "A danger Section titled for the action, such as Delete account, with one sentence on the consequence and a danger button that opens a confirmation Modal."
+    }
+  ]
+}
