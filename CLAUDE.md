@@ -16,11 +16,13 @@ Work in this order, one phase at a time, and stop at each phase's exit criteria:
    - 1.10: inputs and selection
    - 1.11–1.12 (batched): feedback, overlays, navigation, layout and data display
    - 1.13: quality bar and docs (keyboard per WAI-ARIA practices, forced colours, RTL, axe, usage docs)
-3. Phase 2b: QA agent, four checks, golden set
+3. Phase 2b: QA agent, four checks, golden set (merged; golden gate moved to 2c)
+   - 2c: page layer (layout components, page templates), then the Strategist agent and design
+     dossiers; ends with the golden set re-recorded and five showcase briefs Om rates presentable
 4. Phase 3: Maintainer and Docs agents, drift detection, versioning
 5. Phase 4: insight reports, variations, telemetry (the second theme moves into 1.9)
 
-Current phase: 1.13 (complete: industry-baseline parity 100%). Do not start a later phase unless I name it.
+Current phase: 2c (page layer first; plan approved 2026-11-16). Do not start a later phase unless I name it.
 Model calls go through packages/provider. Default provider is fake; real runs use
 the cli provider (my subscription). Never require an API key.
 
@@ -29,6 +31,7 @@ the cli provider (my subscription). Never require an API key.
 - Source of truth for tokens is this repo (`tokens/`). Tokens are pushed one way to Figma. Never read tokens back from Figma.
 - Every component works in Windows High Contrast (forced colours: system colours only, DS-A-007) and right to left (logical properties, mirrored directional icons, DS-L-004). Keyboard follows the WAI-ARIA pattern declared in `checks/a11y/apg.ts`.
 - POC components: Button, Input, Select, Checkbox, Card, Modal, plus Icon and IconButton (added in phase 1.8).
+- Page layer (phase 2c): layout components Container, Stack, Grid, Section and PageShell (`kind: layout` in metadata), then page templates with named slots (`kind: template`). Generated screens get layout from these, never from inline styles.
 - Stack: React and TypeScript, Storybook as the component catalogue, Playwright snapshots for visual regression, axe-core for accessibility, Zod for schemas.
 - No existing screens to baseline against. Golden-set briefs are new; baselines come from the first approved components.
 - Cost cap per run is configuration with a low default. Record the cost of every run.

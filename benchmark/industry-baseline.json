@@ -1476,6 +1476,49 @@
       "evidence": [
         ".storybook/main.ts"
       ]
+    },
+    {
+      "id": "layout-primitives",
+      "area": "layout",
+      "name": "Layout primitives: stack, grid and width container",
+      "shippedBy": {
+        "material3": false,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": false
+      },
+      "baseline": true,
+      "verified": false,
+      "status": "done",
+      "phase": "2c",
+      "evidence": [
+        "components/stack/stack.tsx",
+        "components/grid/grid.tsx",
+        "components/container/container.tsx"
+      ],
+      "note": "Carbon Grid and Stack, Atlassian Stack, Inline, Grid and Box, Polaris BlockStack, InlineStack and Grid."
+    },
+    {
+      "id": "page-frame",
+      "area": "layout",
+      "name": "Page frame and titled sections, with a skip link",
+      "shippedBy": {
+        "material3": false,
+        "carbon": true,
+        "atlassian": true,
+        "polaris": true,
+        "fluent2": false
+      },
+      "baseline": true,
+      "verified": false,
+      "status": "done",
+      "phase": "2c",
+      "evidence": [
+        "components/page-shell/page-shell.tsx",
+        "components/section/section.tsx"
+      ],
+      "note": "Carbon UI Shell, Atlassian page layout, Polaris Page and Layout sections."
     }
   ]
 }

@@ -1,0 +1,72 @@
+{
+  "id": "container",
+  "purpose": "Caps the width of page content, centres it and keeps the page side margin.",
+  "variants": [
+    "sm",
+    "md",
+    "lg",
+    "full"
+  ],
+  "states": [
+    "default"
+  ],
+  "props": [
+    {
+      "name": "size",
+      "type": "'sm' | 'md' | 'lg' | 'full'",
+      "required": false,
+      "description": "Content width: sm 384px for sign-in and short forms, md 768px for reading and single-column forms, lg 1024px (default) for wide forms, full 1280px for dashboards"
+    },
+    {
+      "name": "children",
+      "type": "ReactNode",
+      "required": true,
+      "description": "The page content"
+    }
+  ],
+  "whenToUse": [
+    "Around the content of every page, so lines stay readable on wide screens",
+    "sm for sign-in panels and short forms; md for settings and single-column forms"
+  ],
+  "whenNotToUse": [
+    "Inside a Card, Modal or Drawer \u2014 they already set their own width",
+    "To add spacing between elements \u2014 use Stack"
+  ],
+  "related": [
+    "page-shell",
+    "stack",
+    "grid"
+  ],
+  "antiPatterns": [
+    "Full-width form fields on a wide screen",
+    "Nesting one Container in another"
+  ],
+  "spec": {
+    "anatomy": [
+      "One centred column"
+    ],
+    "sizes": [
+      "Max width `size-container-sm`, `size-container-md`, `size-container-lg` or `size-content-max`, plus side margin `layout-margin-md` on each side"
+    ],
+    "typography": [
+      "None"
+    ],
+    "states": [
+      "None"
+    ],
+    "motion": [
+      "None"
+    ]
+  },
+  "tokensUsed": [
+    "layout-margin-md",
+    "size-container-lg",
+    "size-container-md",
+    "size-container-sm",
+    "size-content-max"
+  ],
+  "a11yNotes": [
+    "Purely visual: adds no role or landmark"
+  ],
+  "kind": "layout"
+}

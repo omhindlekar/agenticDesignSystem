@@ -127,6 +127,12 @@
   --size-modal-sm: 24rem;
   --size-modal-md: 32rem;
   --size-modal-lg: 48rem;
+  --size-container-sm: 24rem;
+  --size-container-md: 48rem;
+  --size-container-lg: 64rem;
+  --size-content-max: 80rem;
+  --size-grid-item-sm: 15rem;
+  --size-grid-item-md: 20rem;
   --font-family-body: 'Saira', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-family-display: 'Saira Semi Condensed', 'Saira', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --line-height-body: 1.5;

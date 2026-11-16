@@ -1,0 +1,74 @@
+/* PageShell: full-height page frame. Background, padding and the skip link use tokens only. */
+.ads-page-shell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-block-size: 100vh;
+  color: var(--color-text-primary);
+}
+
+.ads-page-shell[data-variant="page"] {
+  background: var(--color-background-page);
+}
+
+.ads-page-shell[data-variant="sunken"] {
+  background: var(--color-background-sunken);
+}
+
+.ads-page-shell__body {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+}
+
+.ads-page-shell__nav {
+  flex: 0 0 auto;
+}
+
+.ads-page-shell__main {
+  flex: 1 1 var(--size-container-sm);
+  min-inline-size: 0;
+  padding-block: var(--space-layout-section);
+  padding-inline: var(--space-layout-page);
+}
+
+.ads-page-shell__main:focus {
+  outline: none;
+}
+
+.ads-page-shell__footer {
+  padding-block: var(--space-component-padding-md);
+  padding-inline: var(--space-layout-page);
+  border-block-start: var(--border-width-default) solid var(--color-border-default);
+}
+
+.ads-page-shell__skip {
+  position: absolute;
+  inset-block-start: var(--space-component-padding-sm);
+  inset-inline-start: var(--space-component-padding-sm);
+  z-index: var(--z-index-modal);
+  padding-block: var(--space-component-padding-sm);
+  padding-inline: var(--space-component-padding-md);
+  background: var(--color-interactive-default);
+  color: var(--color-text-inverse);
+  font-family: var(--type-label-family);
+  font-weight: var(--type-label-weight);
+  transform: translateY(-200%);
+}
+
+.ads-page-shell__skip:focus-visible {
+  transform: none;
+  outline: var(--border-width-focus) solid var(--color-interactive-focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+@media (forced-colors: active) {
+  .ads-page-shell__skip {
+    background: Canvas;
+    color: LinkText;
+    border: var(--border-width-default) solid CanvasText;
+  }
+  .ads-page-shell__footer {
+    border-block-start-color: CanvasText;
+  }
+}

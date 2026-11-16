@@ -117,6 +117,18 @@ export const APG_CONTRACT: Record<string, ApgEntry> = {
     ],
   },
   divider: { exempt: STATIC },
+  container: { exempt: STATIC },
+  stack: { exempt: STATIC },
+  grid: { exempt: STATIC },
+  section: { exempt: STATIC },
+  'page-shell': {
+    pattern: 'landmarks',
+    url: `${APG}/landmarks/`,
+    keys: [
+      { key: 'Tab', does: 'Reaches the skip link first, when the page has a header or navigation' },
+      { key: 'Enter', does: 'Follows the skip link, moving focus to the main landmark' },
+    ],
+  },
   drawer: DIALOG(true),
   field: { exempt: 'A label and message wrapper: keyboard comes from the control inside it.' },
   heading: { exempt: STATIC },

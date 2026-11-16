@@ -81,3 +81,54 @@ describe('FR-6 ScreenSpecSchema', () => {
     expect(ScreenSpecSchema.safeParse(deep).success).toBe(true);
   });
 });
+
+describe('FR-6 ScreenSpecSchema: page layer (phase 2c)', () => {
+  const page = {
+    taskId: 'task-002',
+    screenType: 'auth',
+    template: 'auth-page',
+    dossierId: 'dossier-login-1',
+    tree: {
+      component: 'AuthPage',
+      props: { variant: 'centred' },
+      tokenRefs: [],
+      states: ['default'],
+      children: [
+        {
+          component: 'Input',
+          slot: 'form',
+          part: 'email-field',
+          props: { label: 'Email address' },
+          tokenRefs: [],
+          states: ['default'],
+        },
+        {
+          component: 'Checkbox',
+          slot: 'form',
+          part: 'remember-me',
+          deviation: 'innovation-1',
+          props: { label: 'Keep me signed in' },
+          tokenRefs: [],
+          states: ['default'],
+        },
+      ],
+    },
+    statesCovered: ['default'],
+  };
+
+  it('FR-6: accepts screenType, template, dossierId, and slot, part and deviation on nodes', () => {
+    const r = ScreenSpecSchema.safeParse(page);
+    expect(r.success).toBe(true);
+    expect(r.success && r.data.tree.children?.[1]?.deviation).toBe('innovation-1');
+  });
+
+  it('FR-6: specs without the page-layer fields stay valid (additive change)', () => {
+    expect(ScreenSpecSchema.safeParse(validSpec).success).toBe(true);
+  });
+
+  it('FR-6: rejects an empty slot name', () => {
+    const bad = structuredClone(page);
+    bad.tree.children[0]!.slot = '';
+    expect(ScreenSpecSchema.safeParse(bad).success).toBe(false);
+  });
+});

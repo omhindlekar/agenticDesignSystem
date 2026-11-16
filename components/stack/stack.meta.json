@@ -1,0 +1,94 @@
+{
+  "id": "stack",
+  "purpose": "Lays out children in one direction with a consistent gap from the spacing scale.",
+  "variants": [
+    "vertical",
+    "horizontal"
+  ],
+  "states": [
+    "default"
+  ],
+  "props": [
+    {
+      "name": "direction",
+      "type": "'vertical' | 'horizontal'",
+      "required": false,
+      "description": "Flow direction; defaults to vertical"
+    },
+    {
+      "name": "gap",
+      "type": "'xs' | 'sm' | 'md' | 'lg' | 'section'",
+      "required": false,
+      "description": "Space between children: xs 4px, sm 8px, md 16px (default), lg 24px, section 32px between page sections"
+    },
+    {
+      "name": "align",
+      "type": "'start' | 'center' | 'end' | 'stretch'",
+      "required": false,
+      "description": "Cross-axis alignment; defaults to stretch"
+    },
+    {
+      "name": "justify",
+      "type": "'start' | 'center' | 'end' | 'between'",
+      "required": false,
+      "description": "Main-axis distribution; defaults to start"
+    },
+    {
+      "name": "wrap",
+      "type": "boolean",
+      "required": false,
+      "description": "Lets a horizontal stack wrap onto new lines"
+    },
+    {
+      "name": "children",
+      "type": "ReactNode",
+      "required": true,
+      "description": "The items"
+    }
+  ],
+  "whenToUse": [
+    "Any group of elements that sit one after another: form fields, button rows, sections of a page",
+    "sm inside a group, md between fields, section between page sections"
+  ],
+  "whenNotToUse": [
+    "For equal columns of cards or tiles \u2014 use Grid",
+    "To indent or pad content \u2014 padding belongs to Card, Section or the template"
+  ],
+  "related": [
+    "grid",
+    "section",
+    "container"
+  ],
+  "antiPatterns": [
+    "Inline margins or padding to space elements instead of a Stack gap",
+    "Mixing gap sizes between siblings at the same level"
+  ],
+  "spec": {
+    "anatomy": [
+      "A flex container"
+    ],
+    "sizes": [
+      "Gaps `space-component-padding-xs`, `space-component-gap-sm`, `space-component-gap-md`, `space-component-padding-lg`, `space-layout-section`"
+    ],
+    "typography": [
+      "None"
+    ],
+    "states": [
+      "None"
+    ],
+    "motion": [
+      "None"
+    ]
+  },
+  "tokensUsed": [
+    "space-component-gap-md",
+    "space-component-gap-sm",
+    "space-component-padding-lg",
+    "space-component-padding-xs",
+    "space-layout-section"
+  ],
+  "a11yNotes": [
+    "Purely visual: adds no role; reading and tab order follow source order, which Stack never changes"
+  ],
+  "kind": "layout"
+}
