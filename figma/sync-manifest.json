@@ -6,12 +6,13 @@
     "variables": 352,
     "textStyles": 12,
     "effectStyles": 5,
-    "components": 47
+    "components": 53
   },
   "hashes": {
     "tokens": "ce19bc09d91483ed",
     "components": {
       "app-header": "f9846667c90e5d98",
+      "auth-page": "c6cc3f5080320929",
       "avatar": "991b717b027927cb",
       "avatar-group": "36b212a698633adc",
       "badge": "a0fc03219bfc4c45",
@@ -22,10 +23,14 @@
       "checkbox": "65c898b817ac1e47",
       "combobox": "7f46023020e466df",
       "container": "98e9d75f8826355b",
+      "dashboard-page": "90449cf54040d6e4",
       "date-picker": "db7be6a5d0680011",
       "divider": "2f334e5693db15f6",
       "drawer": "5c9e67d752916fe2",
+      "empty-state": "a2b4354458561021",
+      "error-page": "16d7d58ad51dcd2b",
       "field": "9b1c20851e062053",
+      "form-page": "255f067240159b72",
       "grid": "df54b6211aaed4a1",
       "heading": "178e5e029813ffe9",
       "icon": "d03a5752cda90953",
@@ -45,6 +50,7 @@
       "section": "23f7c82b05293fd4",
       "segmented-control": "16a9cecefe9126fd",
       "select": "c710b27247060611",
+      "settings-page": "80fe505b4b442783",
       "side-nav": "30f7ebd6b197f224",
       "slider": "31baf16f365ca206",
       "spinner": "7ae04e513dc3a512",

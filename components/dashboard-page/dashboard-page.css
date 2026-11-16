@@ -1,0 +1,65 @@
+/* DashboardPage: header row with filters and actions, KPI tiles, content and an optional aside. */
+.ads-dashboard-page__page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-layout-section);
+}
+
+.ads-dashboard-page__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-component-padding-lg);
+}
+
+.ads-dashboard-page__intro {
+  display: flex;
+  flex: 1 1 var(--size-grid-item-md);
+  flex-direction: column;
+  gap: var(--space-component-gap-sm);
+}
+
+.ads-dashboard-page__tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-component-gap-md);
+}
+
+.ads-dashboard-page__filters,
+.ads-dashboard-page__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-component-gap-sm);
+}
+
+.ads-dashboard-page__kpis {
+  display: grid;
+  gap: var(--layout-gutter-lg);
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--size-grid-item-sm)), 1fr));
+}
+
+.ads-dashboard-page__body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--layout-gutter-lg);
+}
+
+.ads-dashboard-page__content {
+  display: flex;
+  flex: 2 1 var(--size-container-sm);
+  flex-direction: column;
+  gap: var(--layout-gutter-lg);
+  min-inline-size: 0;
+}
+
+.ads-dashboard-page__aside {
+  display: flex;
+  flex: 1 1 var(--size-grid-item-md);
+  flex-direction: column;
+  gap: var(--layout-gutter-lg);
+  min-inline-size: 0;
+}

@@ -1,0 +1,37 @@
+/* SettingsPage: title, optional settings navigation, sections, and the danger zone last. */
+.ads-settings-page__page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-layout-section);
+}
+
+.ads-settings-page__intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-component-gap-sm);
+}
+
+.ads-settings-page__layout {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-layout-section);
+}
+
+/* The navigation keeps its own width (SideNav sets it); the sections take the rest, and wrap below it on narrow screens. */
+.ads-settings-page__nav {
+  flex: 0 0 auto;
+  max-inline-size: 100%;
+}
+
+.ads-settings-page__sections {
+  display: flex;
+  flex: 1 1 var(--size-container-sm);
+  flex-direction: column;
+  gap: var(--space-component-padding-lg);
+  min-inline-size: 0;
+}
+
+.ads-settings-page__danger {
+  margin-block-start: var(--space-component-gap-md);
+}

@@ -1519,6 +1519,31 @@
         "components/section/section.tsx"
       ],
       "note": "Carbon UI Shell, Atlassian page layout, Polaris Page and Layout sections."
+    },
+    {
+      "id": "page-templates",
+      "area": "layout",
+      "name": "Page templates with named regions (sign-in, forms, settings, dashboards, empty and error states)",
+      "shippedBy": {
+        "material3": true,
+        "carbon": true,
+        "atlassian": false,
+        "polaris": true,
+        "fluent2": false
+      },
+      "baseline": true,
+      "verified": false,
+      "status": "done",
+      "phase": "2c",
+      "evidence": [
+        "components/auth-page/auth-page.tsx",
+        "components/form-page/form-page.tsx",
+        "components/settings-page/settings-page.tsx",
+        "components/dashboard-page/dashboard-page.tsx",
+        "components/empty-state/empty-state.tsx",
+        "components/error-page/error-page.tsx"
+      ],
+      "note": "Material 3 canonical layouts, Carbon patterns and page templates, Polaris page layouts and app templates."
     }
   ]
 }

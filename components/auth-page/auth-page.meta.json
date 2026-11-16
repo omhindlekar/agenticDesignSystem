@@ -1,0 +1,239 @@
+{
+  "id": "auth-page",
+  "purpose": "Sign-in, sign-up and account recovery screens: a titled form with one primary action, recovery links and an optional alternative such as single sign-on.",
+  "variants": [
+    "centred",
+    "split"
+  ],
+  "states": [
+    "default"
+  ],
+  "props": [
+    {
+      "name": "variant",
+      "type": "'centred' | 'split'",
+      "required": false,
+      "description": "centred (default) puts the form on a panel over the sunken page; split adds an aside panel for reassurance or brand content"
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "required": true,
+      "description": "Page title, h1"
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "required": false,
+      "description": "One sentence under the title"
+    },
+    {
+      "name": "brand",
+      "type": "ReactNode",
+      "required": false,
+      "description": "Logo or product name, above the form"
+    },
+    {
+      "name": "children",
+      "type": "ReactNode",
+      "required": true,
+      "description": "The form fields"
+    },
+    {
+      "name": "primaryAction",
+      "type": "ReactNode",
+      "required": true,
+      "description": "The one primary button, type submit"
+    },
+    {
+      "name": "secondaryActions",
+      "type": "ReactNode",
+      "required": false,
+      "description": "Links such as Forgot your password?"
+    },
+    {
+      "name": "alternative",
+      "type": "ReactNode",
+      "required": false,
+      "description": "Another way in, such as single sign-on, after an or divider"
+    },
+    {
+      "name": "alternativeLabel",
+      "type": "string",
+      "required": false,
+      "description": "Divider text; defaults to or"
+    },
+    {
+      "name": "footer",
+      "type": "ReactNode",
+      "required": false,
+      "description": "Legal links"
+    },
+    {
+      "name": "aside",
+      "type": "ReactNode",
+      "required": false,
+      "description": "Split variant only: reassurance or brand content"
+    },
+    {
+      "name": "asideLabel",
+      "type": "string",
+      "required": false,
+      "description": "Accessible name of the aside; defaults to About your account"
+    },
+    {
+      "name": "onSubmit",
+      "type": "(event: FormEvent<HTMLFormElement>) => void",
+      "required": false,
+      "description": "Called on submit; the page does not reload"
+    }
+  ],
+  "whenToUse": [
+    "Sign in, sign up, forgot password, reset password and check-your-email screens",
+    "split when there is reassurance or brand content worth the space, such as security cues for banking"
+  ],
+  "whenNotToUse": [
+    "Forms after sign-in, such as profile or checkout — use FormPage",
+    "A sign-in prompt inside a page — use a Modal"
+  ],
+  "related": [
+    "form-page",
+    "input",
+    "button",
+    "link"
+  ],
+  "antiPatterns": [
+    "More than one primary action",
+    "Error messages that reveal whether an account exists",
+    "Hiding account recovery behind a menu"
+  ],
+  "spec": {
+    "anatomy": [
+      "Brand",
+      "Title and description",
+      "Fields",
+      "Secondary actions",
+      "Primary action",
+      "Or divider and alternative",
+      "Footer",
+      "Aside (split)"
+    ],
+    "sizes": [
+      "Form column `size-container-sm`; panels wrap below two `size-modal-md` widths; gaps `space-component-gap-md`, `space-layout-section`"
+    ],
+    "typography": [
+      "Title h1; description body 1 secondary"
+    ],
+    "states": [
+      "Page `color-background-sunken` (centred) or `color-background-page`; panel `color-background-surface`; aside `color-container-primary`"
+    ],
+    "motion": [
+      "None"
+    ]
+  },
+  "tokensUsed": [
+    "border-width-default",
+    "color-background-page",
+    "color-background-sunken",
+    "color-background-surface",
+    "color-border-default",
+    "color-container-primary",
+    "color-on-container-primary",
+    "color-text-primary",
+    "layout-margin-lg",
+    "layout-margin-md",
+    "size-container-sm",
+    "size-modal-md",
+    "space-component-gap-md",
+    "space-component-gap-sm",
+    "space-component-padding-lg",
+    "space-component-padding-md",
+    "space-layout-section"
+  ],
+  "a11yNotes": [
+    "One main landmark; the form is named by the h1",
+    "The aside is a named complementary landmark",
+    "Fields come first in source order, so keyboard and screen reader users reach them before the aside"
+  ],
+  "kind": "template",
+  "slots": [
+    {
+      "name": "title",
+      "required": true,
+      "accepts": [
+        "heading"
+      ],
+      "description": "Says what the page does, in sentence case. Example: Sign in. Up to about 30 characters."
+    },
+    {
+      "name": "description",
+      "required": false,
+      "accepts": [
+        "text"
+      ],
+      "description": "One sentence on which account to use. Example: Use the email address registered to your business account. Up to 140 characters."
+    },
+    {
+      "name": "form",
+      "required": true,
+      "accepts": [
+        "input",
+        "select",
+        "checkbox",
+        "radio-group",
+        "switch",
+        "textarea",
+        "combobox",
+        "date-picker",
+        "number-field",
+        "field"
+      ],
+      "description": "The fields, each with a visible label. Sign-in: email and password, then Keep me signed in if offered."
+    },
+    {
+      "name": "secondaryActions",
+      "required": false,
+      "accepts": [
+        "link"
+      ],
+      "description": "Recovery links. Example: Forgot your password?"
+    },
+    {
+      "name": "primaryAction",
+      "required": true,
+      "accepts": [
+        "button"
+      ],
+      "description": "One contained button that says what happens. Example: Sign in. Never Submit."
+    },
+    {
+      "name": "alternative",
+      "required": false,
+      "accepts": [
+        "button",
+        "link"
+      ],
+      "description": "Another way in, outlined, after or. Example: Sign in with single sign-on."
+    },
+    {
+      "name": "footer",
+      "required": false,
+      "accepts": [
+        "link",
+        "text"
+      ],
+      "description": "Legal links: privacy notice, terms, accessibility."
+    },
+    {
+      "name": "aside",
+      "required": false,
+      "accepts": [
+        "heading",
+        "text",
+        "icon",
+        "list"
+      ],
+      "description": "Split only. Reassurance in plain words, such as how to spot a genuine request."
+    }
+  ]
+}

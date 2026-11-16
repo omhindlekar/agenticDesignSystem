@@ -335,7 +335,7 @@ return {semantic:SEM.length,textStyles:TS.length,effectStyles:ES.length,added:AD
   const iconSrc = readFileSync(join(root, 'components', 'icon', 'icons.generated.ts'), 'utf8');
   const paths = Object.fromEntries([...iconSrc.matchAll(/^ {2}(\w+): '([^']+)',$/gm)].map((m) => [m[1], m[2]]));
   scripts['03-pages-icons.js'] =
-    `const P=${j(paths)};const PAGES=['Cover','Foundations','Icons','Layout','Actions','Inputs','Feedback','Overlays','Navigation','Data display'];
+    `const P=${j(paths)};const PAGES=['Cover','Foundations','Icons','Layout','Templates','Actions','Inputs','Feedback','Overlays','Navigation','Data display'];
 if(figma.root.children[0].name==='Page 1')figma.root.children[0].name='Cover';for(const n of PAGES)if(!figma.root.children.find(p=>p.name===n)){const p=figma.createPage();p.name=n;}
 PAGES.forEach((n,i)=>{const p=figma.root.children.find(x=>x.name===n);if(p&&figma.root.children.indexOf(p)!==i)figma.root.insertChild(i,p);});
 const icons=figma.root.children.find(p=>p.name==='Icons');await figma.setCurrentPageAsync(icons);const tp=(await figma.variables.getLocalVariablesAsync()).find(v=>v.name==='color/text/primary');
@@ -345,7 +345,7 @@ for(const [name,d] of Object.entries(P)){if(GLY_HAVE.has('Glyph/'+name))continue
 for(const ch of [...svg.children]){c.appendChild(ch);ch.constraints={horizontal:'SCALE',vertical:'SCALE'};if('fills' in ch)ch.fills=[figma.variables.setBoundVariableForPaint({type:'SOLID',color:{r:0,g:0,b:0}},'color',tp)];}svg.remove();grid.appendChild(c);}
 return {glyphs:Object.keys(P).length};`;
   const lib = readFileSync(join(root, 'figma', 'push', 'lib.js'), 'utf8');
-  ['actions', 'inputs', 'feedback', 'overlays', 'navigation', 'data', 'layout'].forEach((area, i) => {
+  ['actions', 'inputs', 'feedback', 'overlays', 'navigation', 'data', 'layout', 'templates'].forEach((area, i) => {
     scripts[`${String(i + 4).padStart(2, '0')}-${area}.js`] = readFileSync(
       join(root, 'figma', 'push', `${area}.js`),
       'utf8',

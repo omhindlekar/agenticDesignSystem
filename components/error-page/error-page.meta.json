@@ -1,0 +1,99 @@
+{
+  "id": "error-page",
+  "purpose": "A full-page error in plain words — page not found, a server error or offline — with the way back.",
+  "variants": [
+    "404",
+    "500",
+    "offline"
+  ],
+  "states": [
+    "default"
+  ],
+  "props": [
+    {
+      "name": "variant",
+      "type": "'404' | '500' | 'offline'",
+      "required": false,
+      "description": "Which error; sets the default code, icon and copy"
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "required": false,
+      "description": "Overrides the default title"
+    },
+    {
+      "name": "description",
+      "type": "string",
+      "required": false,
+      "description": "Overrides the default description"
+    },
+    {
+      "name": "primaryAction",
+      "type": "ReactNode",
+      "required": true,
+      "description": "The way back, such as a link to the home page"
+    },
+    {
+      "name": "secondaryAction",
+      "type": "ReactNode",
+      "required": false,
+      "description": "Another way forward, such as Contact support"
+    }
+  ],
+  "whenToUse": [
+    "A page that cannot be shown: missing, failed or offline"
+  ],
+  "whenNotToUse": [
+    "An error in one part of a page — use Banner",
+    "A form error — use the field's error message"
+  ],
+  "related": [
+    "empty-state",
+    "banner",
+    "link"
+  ],
+  "antiPatterns": [
+    "Technical jargon or stack traces",
+    "An error page with no way back"
+  ],
+  "spec": {
+    "anatomy": [
+      "Error code",
+      "Icon",
+      "Title",
+      "Description",
+      "Actions"
+    ],
+    "sizes": [
+      "From EmptyState"
+    ],
+    "typography": [
+      "Code overline; title h1"
+    ],
+    "states": [
+      "Sunken page background `color-background-sunken`"
+    ],
+    "motion": [
+      "None"
+    ]
+  },
+  "tokensUsed": [
+    "color-background-sunken"
+  ],
+  "a11yNotes": [
+    "One main landmark with an h1"
+  ],
+  "kind": "template",
+  "slots": [
+    {
+      "name": "primaryAction",
+      "required": true,
+      "accepts": [
+        "link",
+        "button"
+      ],
+      "description": "The way back. Example: Go to the home page."
+    }
+  ]
+}

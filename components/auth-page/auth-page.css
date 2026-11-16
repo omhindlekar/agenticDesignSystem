@@ -1,0 +1,143 @@
+/*
+ * AuthPage: full-height sign-in frame. Centred puts the form on a surface panel over the
+ * sunken page; split adds an aside panel. The panels wrap without breakpoints: the form comes
+ * first in source order and on narrow screens; row-reverse puts the aside at the inline start.
+ */
+.ads-auth-page {
+  display: flex;
+  flex-direction: column;
+  min-block-size: 100vh;
+  background: var(--color-background-page);
+  color: var(--color-text-primary);
+}
+
+.ads-auth-page[data-variant="centred"] {
+  background: var(--color-background-sunken);
+}
+
+.ads-auth-page__panels {
+  display: flex;
+  flex: 1;
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
+}
+
+.ads-auth-page__main {
+  display: flex;
+  flex: 1 1 var(--size-modal-md);
+  flex-direction: column;
+  gap: var(--space-layout-section);
+  padding-block: var(--space-layout-section);
+  padding-inline: var(--layout-margin-md);
+}
+
+.ads-auth-page__brand {
+  display: flex;
+  align-items: center;
+}
+
+.ads-auth-page[data-variant="centred"] .ads-auth-page__brand {
+  justify-content: center;
+}
+
+.ads-auth-page__content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-component-gap-md);
+  box-sizing: border-box;
+  inline-size: 100%;
+  max-inline-size: var(--size-container-sm);
+  margin-inline: auto;
+}
+
+.ads-auth-page[data-variant="centred"] .ads-auth-page__content {
+  flex: 0 0 auto;
+  max-inline-size: calc(var(--size-container-sm) + 2 * var(--space-component-padding-lg));
+  margin-block: auto;
+  padding: var(--space-component-padding-lg);
+  border: var(--border-width-default) solid var(--color-border-default);
+  background: var(--color-background-surface);
+}
+
+.ads-auth-page__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-component-gap-md);
+}
+
+.ads-auth-page__intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-component-gap-sm);
+  margin-block-end: var(--space-component-gap-sm);
+}
+
+.ads-auth-page__secondary {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--space-component-gap-md);
+}
+
+.ads-auth-page__primary {
+  display: flex;
+  flex-direction: column;
+}
+
+.ads-auth-page__alternative {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-component-gap-md);
+}
+
+.ads-auth-page__or {
+  display: flex;
+  align-items: center;
+  gap: var(--space-component-gap-md);
+}
+
+.ads-auth-page__or > * {
+  flex: 0 0 auto;
+}
+
+.ads-auth-page__or > :first-child,
+.ads-auth-page__or > :last-child {
+  flex: 1;
+}
+
+.ads-auth-page__aside {
+  display: flex;
+  flex: 1 1 var(--size-modal-md);
+  flex-direction: column;
+  justify-content: center;
+  padding-block: var(--space-layout-section);
+  padding-inline: var(--layout-margin-lg);
+  background: var(--color-container-primary);
+  color: var(--color-on-container-primary);
+}
+
+.ads-auth-page__aside-inner {
+  box-sizing: border-box;
+  inline-size: 100%;
+  max-inline-size: var(--size-container-sm);
+  margin-inline: auto;
+}
+
+.ads-auth-page__footer {
+  padding-block: var(--space-component-padding-md);
+  padding-inline: var(--layout-margin-md);
+  border-block-start: var(--border-width-default) solid var(--color-border-default);
+  background: var(--color-background-page);
+}
+
+@media (forced-colors: active) {
+  .ads-auth-page[data-variant="centred"] .ads-auth-page__content,
+  .ads-auth-page__footer {
+    border-color: CanvasText;
+  }
+  .ads-auth-page__aside {
+    border-inline-end: var(--border-width-default) solid CanvasText;
+  }
+}
