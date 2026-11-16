@@ -131,6 +131,22 @@ Priority: P0 must ship in v1, P1 should, P2 later. Each requirement has a test t
 | FR-19 | Full run log is stored and replayable | P0 | A past run can be replayed from its log and produce the same checks |
 | FR-20 | Rejections explain the rule that applies in one sentence | P1 | QA report text includes rule ID and a plain-language reason |
 
+### Phase 2c additions: page layer and Strategist
+
+Added in phase 2c, after real briefs produced bare screens that still passed QA. Pending Om's approval in the phase 2c PRs.
+
+| ID | Requirement | Priority | Acceptance |
+|---|---|---|---|
+| FR-21 | Screens are composed from layout components and page templates with named slots, never from inline layout | P0 | Every generated screen has a template or PageShell root, fills its template's required slots and has no inline layout styles (DS-P-001, DS-P-004, DS-P-007) |
+| FR-22 | A Strategist agent produces a design dossier for every brief before the Composer runs | P0 | The dossier validates against its schema, is stored in the run log and replays without model or web calls |
+| FR-23 | Research is cached as versioned pattern specs per screen type, with an expiry | P1 | A cache hit makes no web calls; a spec older than 90 days counts as a miss; Om's references/ notes outrank web research |
+| FR-24 | Every best-practice item cites its source, and research is in our own words | P0 | Each checklist item has a source URL and retrieval date that the research log shows was fetched; no 8-word run is copied from a source; no screenshots are stored |
+| FR-25 | Deliberate improvements are traceable | P1 | Every departure from the pattern links to an innovation with rationale, risk and a rules check; at most one is unconventional, and it is flagged |
+| FR-26 | The spec contains every required part of the screen's pattern, in order | P0 | The pattern-completeness check passes |
+| FR-27 | Screens carry real copy: specific headings, verb-first buttons, labels and helper text | P1 | Copy rules DS-W-001 to DS-W-006 pass |
+
+Non-functional: **NFR-13** the Strategist writes only `patterns/*.json`; a test proves it cannot write anywhere else.
+
 ## Data contracts and repository layout
 
 Everything agents read or write is a typed file. Claude Code should define each schema first (JSON Schema or Zod), then build against it.
