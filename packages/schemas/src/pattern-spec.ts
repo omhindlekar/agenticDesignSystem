@@ -6,8 +6,16 @@ import { z } from 'zod';
  * copied page text — can be stored. Every string is short, in our own words.
  */
 
-/** Research text: one short statement in our own words. */
-export const OwnWords = z.string().trim().min(1).max(200);
+/** Pixel and other absolute lengths: research names tokens, never sizes (FR-24). */
+export const PIXEL_VALUE = /\b\d+(?:\.\d+)?\s?(?:px|pt|rem|em)\b/i;
+
+/** Research text: one short statement in our own words, with no pixel values. */
+export const OwnWords = z
+  .string()
+  .trim()
+  .min(1)
+  .max(200)
+  .refine((s) => !PIXEL_VALUE.test(s), 'no pixel values: name a token instead');
 const Id = z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'lowercase words joined by hyphens');
 const Day = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'a date as YYYY-MM-DD');
 

@@ -13,3 +13,4 @@ export * from './run-record.js';
 export * from './handoff-registry.js';
 export * from './pattern-spec.js';
 export * from './design-dossier.js';
+export * from './canon-entry.js';
