@@ -3,7 +3,7 @@ import type { StorybookConfig } from '@storybook/react-vite';
 
 const config: StorybookConfig = {
   // generated/stories holds screens made by npm run generate (gitignored, local only).
-  stories: ['../components/**/*.stories.tsx', '../generated/stories/*.stories.tsx'],
+  stories: ['../components/**/*.stories.tsx', '../examples/**/*.stories.tsx', '../generated/stories/*.stories.tsx'],
   addons: ['storybook-addon-pseudo-states'],
   core: {
     disableTelemetry: true,
