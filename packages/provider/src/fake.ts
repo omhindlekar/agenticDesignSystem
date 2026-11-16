@@ -7,6 +7,21 @@ export function hashKey(model: string, maxTokens: number, prompt: string): strin
   return createHash('sha256').update(`${model}|${maxTokens}|${prompt}`).digest('hex');
 }
 
+/** Cache and fixture key: plain calls keep hashKey; calls with web tools get their own. */
+export function cacheKey(model: string, maxTokens: number, prompt: string, tools?: readonly string[]): string {
+  return tools?.length ? hashKey(model, maxTokens, `${prompt}\n|tools:${[...tools].sort().join(',')}`) : hashKey(model, maxTokens, prompt);
+}
+
+/** What a stored response may carry back: never fetched page text. */
+export function storedResult(raw: CompleteResult): CompleteResult {
+  return {
+    text: raw.text,
+    costUsd: 0,
+    ...(raw.toolLog ? { toolLog: raw.toolLog } : {}),
+    ...(raw.usage ? { usage: raw.usage } : {}),
+  };
+}
+
 export class FakeProvider implements ModelProvider {
   /** Looks in each directory in turn (replay also reads the real-model cache). */
   private readonly dirs: string[];
@@ -19,7 +34,7 @@ export class FakeProvider implements ModelProvider {
   }
 
   async complete(prompt: string, opts: CompleteOptions): Promise<CompleteResult> {
-    const key = hashKey(opts.model, opts.maxTokens, prompt);
+    const key = cacheKey(opts.model, opts.maxTokens, prompt, opts.tools);
     const fixturePath = this.dirs.map((d) => join(d, `${key}.json`)).find((p) => existsSync(p));
 
     if (!fixturePath) {
@@ -31,7 +46,6 @@ export class FakeProvider implements ModelProvider {
       );
     }
 
-    const { text } = JSON.parse(readFileSync(fixturePath, 'utf8')) as CompleteResult;
-    return { text, costUsd: 0 };
+    return storedResult(JSON.parse(readFileSync(fixturePath, 'utf8')) as CompleteResult);
   }
 }

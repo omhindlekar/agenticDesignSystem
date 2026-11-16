@@ -1,6 +1,6 @@
 import { mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
-import { hashKey } from './fake.js';
+import { cacheKey, storedResult } from './fake.js';
 import type { ModelProvider, CompleteOptions, CompleteResult } from './types.js';
 
 interface CacheEntry extends CompleteResult {
@@ -16,17 +16,17 @@ export class CachingProvider implements ModelProvider {
   }
 
   async complete(prompt: string, opts: CompleteOptions): Promise<CompleteResult> {
-    const key = hashKey(opts.model, opts.maxTokens, prompt);
+    const key = cacheKey(opts.model, opts.maxTokens, prompt, opts.tools);
     const cachePath = join(this.cacheDir, `${key}.json`);
 
     if (existsSync(cachePath)) {
-      const { text } = JSON.parse(readFileSync(cachePath, 'utf8')) as CacheEntry;
-      return { text, costUsd: 0 };
+      return storedResult(JSON.parse(readFileSync(cachePath, 'utf8')) as CacheEntry);
     }
 
     const result = await this.inner.complete(prompt, opts);
 
-    const entry: CacheEntry = { ...result, cachedAt: new Date().toISOString() };
+    // Fetched page text is never written (FR-24): only the answer, tool log and usage.
+    const entry: CacheEntry = { ...storedResult(result), costUsd: result.costUsd, cachedAt: new Date().toISOString() };
     writeFileSync(cachePath, JSON.stringify(entry), 'utf8');
 
     return result;
